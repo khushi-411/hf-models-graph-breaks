@@ -1,0 +1,33 @@
+# Root causes of graph breaks, and the upstream issues that track them.
+#
+# summarize.py matches every break in results/ against these entries and shows
+# the issue in SUMMARY.md. Breaks that match nothing are shown as NEW. Triage
+# those: search upstream, then add an entry here.
+#
+# Matching (line numbers drift between versions, so they are not used):
+#   file:     path as shown in reports, without the line number (required)
+#   function: function the break happens in (optional, recommended)
+#   match:    substring of the break reason (optional)
+#
+# Fields:
+#   id:      short stable id, used in SUMMARY.md
+#   title:   one-line description
+#   repo:    huggingface/transformers | pytorch/pytorch | ...
+#   issue:   URL of the upstream issue/PR (null until filed)
+#   status:  draft | open | fixed-upstream | wontfix | not-filing
+#   draft:   path to a local issue draft (optional)
+#   notes:   free text
+issues:
+  - id: loss-fn-warning-once
+    title: "`loss_function` calls `logger.warning_once` inside forward when `loss_type` is None"
+    file: transformers/modeling_utils.py
+    function: loss_function
+    match: "logging.Logger method not supported"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/loss-fn-warning-once.md
+    notes: >
+      Affects models whose class name matches no LOSS_MAPPING key (e.g.
+      GPT2LMHeadModel), so loss_type stays None. Only in train mode with labels.
+      Still present on transformers main 58d05ca572 (5.23.0.dev0).

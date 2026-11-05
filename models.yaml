@@ -1,0 +1,43 @@
+# Models tracked for torch.compile graph breaks.
+#
+# Fields:
+#   name:          short id, used for results/<name>/ (required)
+#   hf_id:         Hugging Face Hub repo id (required)
+#   auto_class:    transformers Auto* class used to build the model (required)
+#   inputs:        "text" | "image"   (what dummy inputs to generate; default: text)
+#   config_overrides: dict applied to the config before building the model.
+#                  Graph breaks don't depend on weights or depth, so we shrink
+#                  the model (fewer layers) to keep runs fast and small.
+#   scenarios:     which scenarios to run (default: all applicable).
+#                  - eval_forward:   model.eval(), no_grad, use_cache=False
+#                  - eval_with_cache: model.eval(), no_grad, use_cache=True (decoder LMs)
+#                  - train_forward:  model.train(), labels passed, grad enabled
+#   notes:         free text
+models:
+  - name: gpt2
+    hf_id: openai-community/gpt2
+    auto_class: AutoModelForCausalLM
+    inputs: text
+    config_overrides:
+      n_layer: 2
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: First model added.
+
+  # Add more models below, e.g.:
+  # - name: llama
+  #   hf_id: meta-llama/Llama-3.2-1B          # gated: needs HF_TOKEN
+  #   auto_class: AutoModelForCausalLM
+  #   config_overrides: {num_hidden_layers: 2}
+  #
+  # - name: bert
+  #   hf_id: google-bert/bert-base-uncased
+  #   auto_class: AutoModelForMaskedLM
+  #   config_overrides: {num_hidden_layers: 2}
+  #   scenarios: [eval_forward, train_forward]
+  #
+  # - name: vit
+  #   hf_id: google/vit-base-patch16-224
+  #   auto_class: AutoModelForImageClassification
+  #   inputs: image
+  #   config_overrides: {num_hidden_layers: 2}
+  #   scenarios: [eval_forward, train_forward]
