@@ -1,0 +1,43 @@
+{
+  "model": "ctrl",
+  "hf_id": "Salesforce/ctrl",
+  "auto_class": "AutoModelForCausalLM",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "n_layer": 2,
+    "vocab_size": 32000
+  },
+  "timestamp": "2026-11-07T11:43:55+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 3,
+  "graph_break_count": 2,
+  "op_count": 52,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "torch/nn/modules/module.py:587",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported python_type() call\n  Explanation: This VariableTracker does not implement python_type(), which is required for object protocol operations.\n  Hint: This is likely to be a Dynamo bug. Please report an issue to PyTorch.\n\n  Developer debug context: GetAttrVariable(TensorVariable(), persistent) does not implement python_type()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/ctrl/modeling_ctrl.py:403 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/ctrl/modeling_ctrl.py:317 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "short_reason": "Unsupported python_type() call",
+      "count": 1
+    }
+  ]
+}

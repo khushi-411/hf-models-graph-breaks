@@ -1,0 +1,90 @@
+{
+  "model": "pegasus",
+  "hf_id": "google/pegasus-large",
+  "auto_class": "AutoModelForSeq2SeqLM",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "encoder_layers": 2,
+    "decoder_layers": 2
+  },
+  "timestamp": "2026-11-07T11:42:02+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 9,
+  "graph_break_count": 8,
+  "op_count": 87,
+  "unique_breaks": 4,
+  "breaks": [
+    {
+      "location": "transformers/models/pegasus/modeling_pegasus.py:529",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 528, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 529, in forward, code: if dropout_probability < self.layerdrop:  # skip the layer\n        lt = lt(dropout_probability, 0.0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:965 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:801 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:529 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/pegasus/modeling_pegasus.py:529",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 528, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 529, in forward, code: if dropout_probability < self.layerdrop:  # skip the layer\n        lt = lt(dropout_probability, 0.0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py line 495)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 524\n            for idx, encoder_layer in enumerate(self.layers):\n                                      ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:965 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:801 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:529 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/pegasus/modeling_pegasus.py:681",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 680, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 681, in forward, code: if dropout_probability < self.layerdrop:\n        lt = lt(dropout_probability, 0.0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:965 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:816 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:681 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/pegasus/modeling_pegasus.py:681",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 680, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 681, in forward, code: if dropout_probability < self.layerdrop:\n        lt = lt(dropout_probability, 0.0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py line 613)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/pegasus/modeling_pegasus.py\", line 677\n            for idx, decoder_layer in enumerate(self.layers):\n                                      ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:965 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:816 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/pegasus/modeling_pegasus.py:681 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

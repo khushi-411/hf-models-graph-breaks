@@ -1,0 +1,42 @@
+{
+  "model": "fsmt",
+  "hf_id": "facebook/wmt19-en-de",
+  "auto_class": "AutoModelForSeq2SeqLM",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "encoder_layers": 2,
+    "decoder_layers": 2
+  },
+  "timestamp": "2026-11-07T11:21:19+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 3,
+  "graph_break_count": 2,
+  "op_count": 125,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/models/fsmt/modeling_fsmt.py:266",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: Note: Python `or`/`and` between tensor expressions (e.g. `tensor.any() or other_tensor.any()`) triggers implicit bool conversion. Use `torch.logical_or`/`torch.logical_and` or the `|`/`&` operators instead.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/fsmt/modeling_fsmt.py:853 in forward",
+        "transformers/models/fsmt/modeling_fsmt.py:204 in _prepare_fsmt_decoder_inputs",
+        "transformers/models/fsmt/modeling_fsmt.py:266 in make_padding_mask"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

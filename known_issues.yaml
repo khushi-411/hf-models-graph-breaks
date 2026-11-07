@@ -1,0 +1,363 @@
+# Root causes of graph breaks, and the upstream issues that track them.
+#
+# summarize.py matches every break in results/ against these entries and shows
+# the issue in SUMMARY.md. Breaks that match nothing are shown as NEW. Triage
+# those: search upstream, then add an entry here.
+#
+# Matching (line numbers drift between versions, so they are not used):
+#   file:     path as shown in reports, without the line number (required)
+#   function: function the break happens in (optional, recommended)
+#   match:    substring of the break reason (optional)
+#
+# Fields:
+#   id:      short stable id, used in SUMMARY.md
+#   title:   one-line description
+#   repo:    huggingface/transformers | pytorch/pytorch | ...
+#   issue:   URL of the upstream issue/PR (null until filed)
+#   status:  draft | open | fixed-upstream | wontfix | not-filing
+#   draft:   path to a local issue draft (optional)
+#   notes:   free text
+issues:
+  # ======================================================================= #
+  # PyTorch-side root causes (Dynamo / op coverage). Listed first so they win
+  # over broader HF entries for the same file (matching is first-match).
+  # ======================================================================= #
+  - id: check-tensor-all-item
+    title: "`torch._check_tensor_all` graph-breaks (its implementation calls `.item()`)"
+    file: transformers/utils/import_utils.py
+    function: torch_compilable_check
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/check-tensor-all-item.md
+    notes: >
+      Image-placeholder check in every LLaVA-style VLM. Only break in llava and
+      gemma3_vlm (4 graphs -> 1 without it). Repro: issues/repros/check_tensor_all_item.py.
+
+  - &ctc
+    id: ctc-loss-graph-break
+    title: "CTC loss: `F.ctc_loss` always graph-breaks (no meta kernel for aten._ctc_loss) and `torch.backends.cudnn.flags()` isn't traceable"
+    file: transformers/loss/loss_ctc.py
+    function: ForCTCLoss
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/ctc-loss-graph-break.md
+    notes: >
+      Train mode of every *ForCTC model. masked_select on the targets is the
+      third (dynamic-shape) break. Repros: issues/repros/ctc_loss_no_meta.py,
+      issues/repros/cudnn_flags_ctx.py.
+  - <<: *ctc
+    file: python/contextlib.py   # follow-on "Failed to handle graph break" inside the cudnn.flags context manager
+    function: null
+
+  - &reqgrad
+    id: requires-grad-intermediate
+    title: "`hidden_states.requires_grad = True` on a view of the input (wav2vec2-family feature encoder, train mode)"
+    file: transformers/models/wav2vec2/modeling_wav2vec2.py
+    function: forward
+    match: "requires_grad_() intermediate leaked as output"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/requires-grad-intermediate.md
+    notes: Could also be fixed in HF (only needed for gradient checkpointing). Repro issues/repros/requires_grad_intermediate.py.
+  - <<: *reqgrad
+    file: transformers/models/hubert/modeling_hubert.py
+  - <<: *reqgrad
+    file: transformers/models/wavlm/modeling_wavlm.py
+
+  - id: genexpr-after-graph-break
+    title: "Dynamo: genexpr closing over `self` in a resume function -> 'Could not find a local variable with name self'"
+    file: transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py
+    function: forward
+    match: "Attempted to read undefined local variable"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/genexpr-after-graph-break.md
+    notes: >
+      Qwen2.5-VL vision tower; after it the rest of the vision forward runs eager.
+      Also on Python 3.14 / torch 41b037b. Repro issues/repros/genexpr_after_graph_break.py.
+
+  - id: graph-break-in-loop
+    title: "Any graph break inside a `for` loop skips the whole frame (gb7000); amplifies every in-layer-loop HF break"
+    match: "graph break in loop"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/graph-break-in-loop.md
+    notes: >
+      Never the first cause: shows up as the follow-on of LayerDrop / Longformer
+      breaks, so those entries usually match first. Repro issues/repros/graph_break_in_loop.py.
+      Not fixed by nested_graph_breaks=True.
+
+  # tolist-unbacked-length (issues/tolist-unbacked-length.md, pytorch/pytorch): only
+  # visible with capture_scalar_outputs + capture_dynamic_output_shape_ops (Qwen2.5/3-VL
+  # then hard-error instead of graph-breaking), so no break in results/ matches it.
+
+  # ======================================================================= #
+  # transformers-side root causes
+  # ======================================================================= #
+  - id: loss-fn-warning-once
+    title: "`loss_function` calls `logger.warning_once` inside forward when `loss_type` is None"
+    file: transformers/modeling_utils.py
+    function: loss_function
+    match: "logging.Logger method not supported"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/loss-fn-warning-once.md
+    notes: >
+      Affects models whose class name matches no LOSS_MAPPING key (e.g.
+      GPT2LMHeadModel), so loss_type stays None. Only in train mode with labels.
+      Still present on transformers main 58d05ca572 (5.23.0.dev0).
+
+  # LayerDrop: one entry per file, all grouped under the same id.
+  - &layerdrop
+    id: layerdrop-rand-branch
+    title: "LayerDrop `if torch.rand([]) < self.layerdrop` is data-dependent branching in train mode, even with layerdrop=0.0"
+    file: transformers/models/opt/modeling_opt.py
+    function: forward
+    match: "Data-dependent branching"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/layerdrop-rand-branch.md
+    notes: >
+      Same pattern in 43 model families (bart, whisper, wav2vec2, mbart, ...).
+      Fix: `if self.training and self.layerdrop > 0:` (verified on OPT with
+      issues/repros/layerdrop_rand_branch.py: 4 graphs -> 1, fullgraph OK).
+  - <<: *layerdrop
+    file: transformers/models/bart/modeling_bart.py
+  - <<: *layerdrop
+    file: transformers/models/biogpt/modeling_biogpt.py
+  - <<: *layerdrop
+    file: transformers/models/blenderbot/modeling_blenderbot.py
+  - <<: *layerdrop
+    file: transformers/models/led/modeling_led.py
+  - <<: *layerdrop
+    file: transformers/models/m2m_100/modeling_m2m_100.py
+  - <<: *layerdrop
+    file: transformers/models/marian/modeling_marian.py
+  - <<: *layerdrop
+    file: transformers/models/mbart/modeling_mbart.py
+  - <<: *layerdrop
+    file: transformers/models/pegasus/modeling_pegasus.py
+  - <<: *layerdrop
+    file: transformers/models/xglm/modeling_xglm.py
+  - <<: *layerdrop
+    file: transformers/models/whisper/modeling_whisper.py
+  - <<: *layerdrop
+    file: transformers/models/pegasus_x/modeling_pegasus_x.py
+  - <<: *layerdrop
+    file: transformers/models/fsmt/modeling_fsmt.py
+  - <<: *layerdrop
+    file: transformers/models/wav2vec2/modeling_wav2vec2.py
+    match: "torch.rand([])"
+  - <<: *layerdrop
+    file: transformers/models/hubert/modeling_hubert.py
+    match: "torch.rand([])"
+  - <<: *layerdrop
+    file: transformers/models/wavlm/modeling_wavlm.py
+    match: "torch.rand([])"
+
+  - id: output-capturing-reconstruction
+    title: "`output_capturing` wrapper can't reconstruct dict iterators after an earlier graph break"
+    file: transformers/utils/output_capturing.py
+    function: wrapper
+    match: "sourceless variable Dict"
+    repo: huggingface/transformers
+    issue: null
+    status: not-filing
+    notes: >
+      Follow-on break, seen only after another break inside forward (opt, bart
+      with LayerDrop). Disappears when the earlier break is fixed. File only if it
+      shows up on its own.
+
+  - &global_attn
+    id: longformer-global-attn-item
+    title: "Longformer/LED: `is_index_global_attn.flatten().any().item()` in forward"
+    file: transformers/models/longformer/modeling_longformer.py
+    function: forward
+    match: "Tensor.item()"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Checks if any token uses global attention, then branches on it in Python.
+      Breaks in eval too (once per layer). Not a simple guard fix: the two
+      branches compute different things. Options: always run the global-attention
+      path (masked), or torch.cond. LED's encoder copies this code.
+  - <<: *global_attn
+    file: transformers/models/led/modeling_led.py
+
+  - id: xlm-lengths-assert-item
+    title: "XLM: `assert lengths.max().item() <= slen` input check in forward"
+    file: transformers/models/xlm/modeling_xlm.py
+    function: forward
+    match: "Tensor.item()"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      An input-validation assert forces a .item() sync and a graph break, in
+      eval too. Fix: torch._check(lengths.max() <= slen) or skip under
+      is_torchdynamo_compiling().
+
+  - id: ctrl-buffer-reassign
+    title: "Dynamo: reassigning an `nn.Buffer` attribute in forward -> Unsupported python_type() on `persistent` (CTRL)"
+    file: torch/nn/modules/module.py
+    match: "Unsupported python_type() call"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/nn-buffer-reassign.md
+    notes: >
+      modeling_ctrl.py:317 `self.pos_encoding = self.pos_encoding.to(...)` with the
+      buffer created via nn.Buffer(...). register_buffer works; Dynamo doesn't track
+      the `persistent` attribute through `.to()`. Repro issues/repros/nn_buffer_reassign.py.
+      HF could also use a local variable instead of reassigning.
+
+  - &bigbird_switch
+    id: bigbird-attn-type-switch
+    title: "BigBird switches block_sparse -> original_full inside forward for short inputs (logger.warning + builds new modules)"
+    file: transformers/models/big_bird/modeling_big_bird.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Triggered because SEQ_LEN=32 is shorter than block-sparse needs, so it is
+      partly a harness artifact, but real users with short inputs hit it too.
+      set_attention_type() creates nn.Linear layers in forward (nn.Parameter /
+      Uninitialized nn.Module breaks). The block_sparse path itself is untested.
+  - <<: *bigbird_switch
+    file: torch/nn/modules/linear.py
+
+  - id: reformer-lsh
+    title: "Reformer LSH attention: .item() in hashing, data-dependent branches, RNG seed helpers"
+    file: transformers/models/reformer/modeling_reformer.py
+    repo: huggingface/transformers
+    issue: null
+    status: not-filing
+    notes: >
+      Several breaks (_hash_vectors .item(), forward branching, the skipped
+      _init_*_seed helpers used by reversible layers). Legacy model with
+      intentionally dynamic logic; not worth filing.
+
+  # --- Added in the second sweep (popular models) ---
+  - &specaug
+    id: specaugment-numpy-mask
+    title: "wav2vec2-family `_compute_mask_indices` (SpecAugment) uses numpy RNG + `.item()` in train mode"
+    file: transformers/models/wav2vec2/modeling_wav2vec2.py
+    function: _compute_mask_indices
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      `np.random.rand(1).item()` and numpy index building, then torch.tensor(...) of the
+      mask. Needs a torch implementation of the masking. Copied into hubert, wavlm,
+      data2vec-audio, sew, unispeech, ...
+  - <<: *specaug
+    file: transformers/models/hubert/modeling_hubert.py
+  - <<: *specaug
+    file: transformers/models/wavlm/modeling_wavlm.py
+
+  - &ctclabels
+    id: ctc-labels-max-check
+    title: "`*ForCTC.forward`: `if labels.max() >= vocab_size: raise` is data-dependent branching"
+    file: transformers/models/wav2vec2/modeling_wav2vec2.py
+    function: forward
+    match: "labels.max()"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Fix with torch_compilable_check (once check-tensor-all-item is fixed) or skip while compiling.
+  - <<: *ctclabels
+    file: transformers/models/hubert/modeling_hubert.py
+  - <<: *ctclabels
+    file: transformers/models/wavlm/modeling_wavlm.py
+
+  - id: fsmt-padding-mask-any
+    title: "FSMT `make_padding_mask`: `if not padding_mask.any(): padding_mask = None`"
+    file: transformers/models/fsmt/modeling_fsmt.py
+    function: make_padding_mask
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Breaks in eval too. Always returning the mask is equivalent.
+
+  - id: deberta-att-span-item
+    title: "DeBERTa (v1) `disentangled_att_bias` slices rel_embeddings with a tensor `att_span` (.item())"
+    file: transformers/models/deberta/modeling_deberta.py
+    function: disentangled_att_bias
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Once per layer, in eval too (10 graphs). capture_scalar_outputs=True gives 1
+      graph. att_span depends only on shapes, so computing it as a Python int fixes it.
+      deberta_v2 is clean.
+
+  - &switch
+    id: switch-router-module-to
+    title: "SwitchTransformers router: `self.classifier = self.classifier.to(dtype)` in forward + `nonzero()` expert loop"
+    file: torch/nn/modules/module.py
+    match: "torch.nn.Parameter()"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Module.to() in forward builds new nn.Parameters, which Dynamo breaks on by design
+      (graph_break_on_nn_param_ctor, pytorch#157452). Cast once at init instead. The
+      expert loop over `expert_mask.sum(...).nonzero()` is the second break.
+  - <<: *switch
+    file: transformers/models/switch_transformers/modeling_switch_transformers.py
+    match: null
+
+  - id: dynamic-rope-data-dependent
+    title: "Dynamic RoPE `dynamic_frequency_update`: `if seq_len > max_seq_len_cached` on a tensor"
+    file: transformers/modeling_rope_utils.py
+    function: dynamic_frequency_update
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Seen in internvl (its text config uses dynamic rope). Inherent to dynamic NTK scaling.
+
+  - &qwenvl
+    id: qwen-vl-grid-thw-data-dependent
+    title: "Qwen2.5-VL / Qwen3-VL: vision tower + mRoPE index are driven by `grid_thw` values (.tolist(), .item(), nonzero, repeat_interleave)"
+    file: transformers/vision_utils.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      20-35 breaks per forward. capture_scalar_outputs + capture_dynamic_output_shape_ops
+      don't help: they turn the breaks into a hard GuardOnDataDependentSymNode error
+      (pytorch side: issues/tolist-unbacked-length.md). Passing precomputed
+      cu_seqlens/position ids through kwargs (the code already accepts some) avoids it.
+  - <<: *qwenvl
+    file: transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py
+  - <<: *qwenvl
+    file: transformers/models/qwen3_vl/modeling_qwen3_vl.py
+
+  - &idefics3
+    id: idefics3-image-nonzero
+    title: "SmolVLM/Idefics3: real-image filtering and patch masks use nonzero / .item()"
+    file: transformers/models/idefics3/modeling_idefics3.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: capture_scalar_outputs + capture_dynamic_output_shape_ops -> 1 graph (13 today).
+
+  - &mistral3
+    id: mistral3-image-sizes-tolist
+    title: "Mistral3 (Pixtral): split sizes from `image_sizes ... .tolist()` and per-image Python loops"
+    file: transformers/models/mistral3/modeling_mistral3.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: With capture flags 14 -> 9 graphs; remaining are data-dependent guards in the patch merger.
+  - <<: *mistral3
+    file: transformers/models/pixtral/modeling_pixtral.py
+

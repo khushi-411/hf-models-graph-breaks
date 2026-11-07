@@ -1,0 +1,146 @@
+{
+  "model": "wavlm",
+  "hf_id": "microsoft/wavlm-base-plus",
+  "auto_class": "AutoModelForCTC",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_hidden_layers": 2
+  },
+  "timestamp": "2026-11-07T11:50:00+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 12,
+  "graph_break_count": 11,
+  "op_count": 124,
+  "unique_breaks": 9,
+  "breaks": [
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:1159",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 1159, in forward, code: if labels is not None and labels.max() >= self.config.vocab_size:\n        ge = ge(max_1, 32)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1159 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:862",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1162 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1048 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:999 in _mask_hidden_states",
+        "transformers/models/wavlm/modeling_wavlm.py:862 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:769",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nrequires_grad_() intermediate leaked as output\n  Explanation: An intermediate tensor with requires_grad_() called on it (or a tensor derived from it) is returned from the compiled region. Graph breaking here to preserve partial acceleration.\n  Hint: Call .detach() before returning if you only need values.\n  Hint: Consume the gradient inside the compiled function (call backward() and use .grad), or move requires_grad_() outside torch.compile.\n\n  Developer debug context: call_method TensorVariable() requires_grad_\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1162 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:769 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "short_reason": "requires_grad_() intermediate leaked as output",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:864",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to read undefined local variable\n  Explanation: Could not find a local variable with name `mask_length`\n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n\n  Developer debug context: LOAD_FAST mask_length\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html\n\nStack variable source attribution:\n  CellVariable() originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 864\n        def compute_num_masked_span(input_length):",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1162 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1048 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:999 in _mask_hidden_states",
+        "transformers/models/wavlm/modeling_wavlm.py:864 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:418",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 415, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability_1 = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 417, in forward, code: skip_the_layer = self.training and i > 0 and (dropout_probability < self.config.layerdrop)\n        skip_the_layer = lt(dropout_probability_1, 0.05)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1162 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:418 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:418",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 415, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability_1 = rand([])\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 417, in forward, code: skip_the_layer = self.training and i > 0 and (dropout_probability < self.config.layerdrop)\n        skip_the_layer = lt(dropout_probability_1, 0.05)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py line 394)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/wavlm/modeling_wavlm.py\", line 413\n            for i, layer in enumerate(self.layers):\n                            ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1162 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1052 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:418 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:48",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.masked_select.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.masked_select.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1180 in forward",
+        "transformers/loss/loss_ctc.py:48 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:53",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\ntorch.* op returned non-Tensor\n  Explanation: torch.* ops that return a non-Tensor cannot be traced into the Dynamo FX graph output\n\n\n  Developer debug context: example_value type: _GeneratorContextManager; op: call_function; target: <function flags at 0x7bf46618dd20>\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1180 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "short_reason": "torch.* op returned non-Tensor",
+      "count": 1
+    },
+    {
+      "location": "python/contextlib.py:203",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\ngenerator function over a skipped function\n  Explanation: Cannot trace a generator whose underlying function is skipped by Dynamo (e.g. defined in a skip-listed module), since its body cannot be symbolically traced.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n\n  Developer debug context: SkipFunctionVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [LazyVariableTracker(realized: GenericContextWrappingVariable(_GeneratorContextManager))]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/loss/loss_ctc.py\", line 53\n        with torch.backends.cudnn.flags(enabled=False):\n             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1180 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

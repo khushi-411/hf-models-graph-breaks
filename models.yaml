@@ -1,0 +1,812 @@
+# Models tracked for torch.compile graph breaks.
+#
+# Fields:
+#   name:          short id, used for results/<name>/ (required)
+#   hf_id:         Hugging Face Hub repo id (required)
+#   auto_class:    transformers Auto* class used to build the model (required)
+#   inputs:        what dummy inputs to generate (default: text)
+#                  - text:           input_ids (+ labels / decoder_input_ids)
+#                  - image:          pixel_values (+ class labels)
+#                  - audio_features: log-mel input_features (whisper)
+#                  - audio_waveform: raw 16 kHz input_values (wav2vec2, hubert, moonshine, ...)
+#                  - image_text:     input_ids + pixel_values (CLIP / SigLIP)
+#                  - vlm:            LLaVA-style; the number of image placeholder tokens is
+#                                    found with one eager probe forward
+#                  - qwen_vl:        Qwen2.5-VL / Qwen3-VL (patches + image_grid_thw)
+#   image_size:    override the input image size (int or [h, w])
+#   pixel_ndim:    5 for models taking (batch, num_images, C, H, W) (vlm only)
+#   token_type_ids / image_sizes: true to pass these extra VLM inputs (gemma3 / mistral3)
+#   use_text_config: build a text-only LM from a multimodal checkpoint's text config
+#   config_overrides: dict applied to the config before building the model.
+#                  Graph breaks don't depend on weights or depth, so we shrink
+#                  the model (fewer layers) to keep runs fast and small.
+#                  Dotted keys reach sub-configs: `text_config.num_hidden_layers: 2`.
+#                  pad_token_id is reset automatically if a smaller vocab_size drops it.
+#   scenarios:     which scenarios to run (default: all applicable).
+#                  - eval_forward:   model.eval(), no_grad, use_cache=False
+#                  - eval_with_cache: model.eval(), no_grad, use_cache=True (decoder LMs)
+#                  - train_forward:  model.train(), labels passed, grad enabled
+#   notes:         free text
+models:
+  - name: gpt2
+    hf_id: openai-community/gpt2
+    auto_class: AutoModelForCausalLM
+    inputs: text
+    config_overrides:
+      n_layer: 2
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: First model added.
+
+  - name: qwen2
+    hf_id: Qwen/Qwen2.5-0.5B
+    auto_class: AutoModelForCausalLM
+    inputs: text
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: llama
+    hf_id: unsloth/Llama-3.2-1B             # ungated mirror of meta-llama/Llama-3.2-1B
+    auto_class: AutoModelForCausalLM
+    inputs: text
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: bert
+    hf_id: google-bert/bert-base-uncased
+    auto_class: AutoModelForMaskedLM
+    inputs: text
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: modernbert
+    hf_id: answerdotai/ModernBERT-base
+    auto_class: AutoModelForMaskedLM
+    inputs: text
+    config_overrides: {num_hidden_layers: 2}   # layer 0 global, layer 1 local attention
+    scenarios: [eval_forward, train_forward]
+
+  - name: t5
+    hf_id: google-t5/t5-small
+    auto_class: AutoModelForSeq2SeqLM
+    inputs: text
+    config_overrides: {num_layers: 2, num_decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: vit
+    hf_id: google/vit-base-patch16-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  # --- Batch 2: architectures with different code paths ---------------------
+  # Large configs are shrunk (intermediate size, experts, vocab) to fit in RAM;
+  # graph breaks depend on code paths, not on these sizes.
+  - name: qwen3
+    hf_id: Qwen/Qwen3-0.6B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: mistral
+    hf_id: mistralai/Mistral-7B-v0.1
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, intermediate_size: 1024}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Sliding-window attention.
+
+  - name: gemma2
+    hf_id: unsloth/gemma-2-2b                 # ungated mirror of google/gemma-2-2b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Logit soft-capping, alternating sliding/global layers, hybrid cache.
+
+  - name: gemma3
+    hf_id: unsloth/gemma-3-1b-pt              # ungated mirror of google/gemma-3-1b-pt
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: phi3
+    hf_id: microsoft/Phi-3-mini-4k-instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, intermediate_size: 1024}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: mixtral
+    hf_id: mistralai/Mixtral-8x7B-v0.1
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, intermediate_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Mixture of experts (top-2 routing).
+
+  - name: qwen3_moe
+    hf_id: Qwen/Qwen3-30B-A3B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, num_experts: 8, num_experts_per_tok: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Mixture of experts.
+
+  - name: opt
+    hf_id: facebook/opt-125m
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: bloom
+    hf_id: bigscience/bloom-560m
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: ALiBi positions.
+
+  - name: pythia
+    hf_id: EleutherAI/pythia-160m
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: GPT-NeoX architecture.
+
+  - name: mamba
+    hf_id: state-spaces/mamba-130m-hf
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: State-space model, no attention.
+
+  - name: roberta
+    hf_id: FacebookAI/roberta-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: distilbert
+    hf_id: distilbert/distilbert-base-uncased
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {n_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: deberta_v2
+    hf_id: microsoft/deberta-v3-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: Disentangled relative-position attention.
+
+  - name: bart
+    hf_id: facebook/bart-base
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: dinov2
+    hf_id: facebook/dinov2-small
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: swin
+    hf_id: microsoft/swin-tiny-patch4-window7-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+    notes: Shifted-window attention.
+
+  - name: convnext
+    hf_id: facebook/convnext-tiny-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+    notes: Pure CNN.
+
+  # --- Batch 3a: other models with LayerDrop (issue: layerdrop-rand-branch) --
+  - name: mbart
+    hf_id: facebook/mbart-large-cc25
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: pegasus
+    hf_id: google/pegasus-large
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: marian
+    hf_id: Helsinki-NLP/opus-mt-en-de
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: m2m_100
+    hf_id: facebook/nllb-200-distilled-600M
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: NLLB checkpoint, M2M100 architecture.
+
+  - name: led
+    hf_id: allenai/led-base-16384
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2, attention_window: [16, 16]}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Longformer-style local+global attention in the encoder.
+
+  - name: blenderbot
+    hf_id: facebook/blenderbot-400M-distill
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: xglm
+    hf_id: facebook/xglm-564M
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: biogpt
+    hf_id: microsoft/biogpt
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  # --- Batch 3b: LM classes with loss_type=None (issue: loss-fn-warning-once) -
+  - name: openai_gpt
+    hf_id: openai-community/openai-gpt
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: ctrl
+    hf_id: Salesforce/ctrl
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: xlnet
+    hf_id: xlnet/xlnet-base-cased
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: xlm
+    hf_id: FacebookAI/xlm-mlm-en-2048
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: bert_lm_head
+    hf_id: google-bert/bert-base-uncased
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, is_decoder: true}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: BertLMHeadModel (BERT used as a causal decoder).
+
+  - name: reformer
+    hf_id: google/reformer-crime-and-punishment
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, attn_layers: [local, lsh], axial_pos_shape: [4, 8], local_attn_chunk_length: 16, lsh_attn_chunk_length: 16}
+    scenarios: [eval_forward, train_forward]
+    notes: LSH attention, reversible layers.
+
+  # --- Batch 3c: code paths likely to break -----------------------------------
+  - name: jamba
+    hf_id: ai21labs/Jamba-tiny-dev
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, attn_layer_period: 2, attn_layer_offset: 1, expert_layer_period: 2, expert_layer_offset: 1}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Hybrid Mamba + attention + MoE. 4 layers so every layer type appears.
+
+  - name: falcon_h1
+    hf_id: tiiuae/Falcon-H1-0.5B-Base
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Parallel Mamba2 + attention in every layer.
+
+  - name: zamba2
+    hf_id: Zyphra/Zamba2-1.2B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, layers_block_type: [linear_attention, hybrid], hybrid_layer_ids: [1]}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Mamba2 layers + shared attention blocks. layers_block_type is stored, not derived, so set it directly.
+
+  - name: qwen3_next
+    hf_id: Qwen/Qwen3-Next-80B-A3B-Instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, num_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Gated DeltaNet linear attention (3 of every 4 layers) + MoE.
+
+  - name: deepseek_v3
+    hf_id: deepseek-ai/DeepSeek-V3
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, n_routed_experts: 8, num_experts_per_tok: 2, n_group: 4, topk_group: 2, hidden_size: 1024, num_attention_heads: 16, num_key_value_heads: 16, intermediate_size: 1024, moe_intermediate_size: 256, vocab_size: 32000, quantization_config: null}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: MLA attention + group-limited top-k MoE. Layer 0 dense, layer 1 MoE.
+
+  - name: gpt_oss
+    hf_id: openai/gpt-oss-20b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, num_local_experts: 8, num_experts_per_tok: 2, vocab_size: 32000, pad_token_id: 0, quantization_config: null}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Attention sinks, alternating sliding/full attention, MoE.
+
+  - name: granitemoe
+    hf_id: ibm-granite/granite-3.1-1b-a400m-base
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: longformer
+    hf_id: allenai/longformer-base-4096
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2, attention_window: [16, 16]}
+    scenarios: [eval_forward, train_forward]
+    notes: Sliding-window attention. Window shrunk to 16 so SEQ_LEN=32 spans 2 windows.
+
+  - name: big_bird
+    hf_id: google/bigbird-roberta-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: At SEQ_LEN=32 BigBird falls back from block-sparse to full attention.
+
+  - name: funnel
+    hf_id: funnel-transformer/small
+    auto_class: AutoModelForMaskedLM
+    scenarios: [eval_forward, train_forward]
+    notes: Pools the sequence between blocks.
+
+  # detr / deformable_detr: need timm (whose torchvision wheel doesn't match a
+  # source-built torch). Add them once the env has a matching torchvision.
+  - name: rt_detr
+    hf_id: PekingU/rtdetr_r50vd
+    auto_class: AutoModelForObjectDetection
+    inputs: image
+    config_overrides: {decoder_layers: 2}
+    scenarios: [eval_forward]
+    notes: train_forward needs box labels.
+
+  # ------------------------------------------------------------------------- #
+  # Popular models added in the second sweep. Big configs are shrunk (hidden
+  # size, experts, vocab) so a 2-layer copy fits in a few GB of CPU RAM.
+  # ------------------------------------------------------------------------- #
+
+  # --- Decoder-only LMs ---
+  - name: gemma
+    hf_id: unsloth/gemma-2b                     # ungated mirror of google/gemma-2b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, intermediate_size: 4096, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: gemma3n
+    hf_id: unsloth/gemma-3n-E2B-it              # ungated mirror of google/gemma-3n-E2B-it
+    auto_class: AutoModelForCausalLM
+    use_text_config: true
+    config_overrides:
+      num_hidden_layers: 4
+      num_kv_shared_layers: 2
+      intermediate_size: [2048, 2048, 2048, 2048]
+      layer_types: [sliding_attention, full_attention, sliding_attention, full_attention]  # shared layers need a same-type earlier layer
+      activation_sparsity_pattern: [0.95, 0.95, 0.0, 0.0]
+      vocab_size: 32000
+      vocab_size_per_layer_input: 32000
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Text tower only. AltUp, Laurel, per-layer embeddings, KV sharing, activation sparsity.
+
+  - name: llama4
+    hf_id: unsloth/Llama-4-Scout-17B-16E-Instruct
+    auto_class: AutoModelForCausalLM
+    use_text_config: true
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, num_attention_heads: 16, num_key_value_heads: 4, head_dim: 64, intermediate_size: 1024, intermediate_size_mlp: 2048, num_local_experts: 4, vocab_size: 32000, pad_token_id: null}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Text tower only. MoE every layer, chunked attention, NoPE layers.
+
+  - name: phi
+    hf_id: microsoft/phi-2
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1280, intermediate_size: 5120, num_attention_heads: 16, num_key_value_heads: 16}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: gptj
+    hf_id: EleutherAI/gpt-j-6b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2, n_embd: 1024, n_head: 16}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: gpt_neo
+    hf_id: EleutherAI/gpt-neo-125m
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_layers: 2, attention_types: [[[global, local], 1]], attention_layers: [global, local]}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: gpt_bigcode
+    hf_id: bigcode/gpt_bigcode-santacoder
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: StarCoder 1 architecture (multi-query attention).
+
+  - name: codegen
+    hf_id: Salesforce/codegen-350M-mono
+    auto_class: AutoModelForCausalLM
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: falcon
+    hf_id: tiiuae/falcon-7b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, num_attention_heads: 16}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: starcoder2
+    hf_id: bigcode/starcoder2-3b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 4096, num_attention_heads: 16, num_key_value_heads: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: olmo2
+    hf_id: allenai/OLMo-2-0425-1B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000, pad_token_id: null}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: olmoe
+    hf_id: allenai/OLMoE-1B-7B-0924
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, num_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: stablelm
+    hf_id: stabilityai/stablelm-2-1_6b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: granite
+    hf_id: ibm-granite/granite-3.3-2b-instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: granitemoehybrid
+    hf_id: ibm-granite/granite-4.0-h-tiny
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, layer_types: [linear_attention, linear_attention, linear_attention, full_attention], num_local_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Granite 4.0 (Mamba2 + attention + MoE).
+
+  - name: smollm3
+    hf_id: HuggingFaceTB/SmolLM3-3B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: NoPE every 4th layer.
+
+  - name: deepseek_v2
+    hf_id: deepseek-ai/DeepSeek-V2-Lite
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, n_routed_experts: 8, num_experts_per_tok: 2, intermediate_size: 2048, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: qwen2_moe
+    hf_id: Qwen/Qwen1.5-MoE-A2.7B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, num_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: glm4
+    hf_id: zai-org/GLM-4-9B-0414
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 16, num_key_value_heads: 2, head_dim: 64, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: ernie4_5
+    hf_id: baidu/ERNIE-4.5-0.3B-PT
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: exaone4
+    hf_id: LGAI-EXAONE/EXAONE-4.0-1.2B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: lfm2
+    hf_id: LiquidAI/LFM2-350M
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 4, layer_types: [conv, full_attention, conv, full_attention], vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Short convolutions + attention hybrid.
+
+  - name: falcon_mamba
+    hf_id: tiiuae/falcon-mamba-7b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: bamba
+    hf_id: ibm-ai-platform/Bamba-9B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, attn_layer_indices: [1], hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 16, num_key_value_heads: 8, mamba_n_heads: 32, mamba_d_head: 64, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: rwkv
+    hf_id: RWKV/rwkv-4-169m-pile
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  # --- Encoders ---
+  - name: albert
+    hf_id: albert/albert-base-v2
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: electra
+    hf_id: google/electra-base-discriminator
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: xlm_roberta
+    hf_id: FacebookAI/xlm-roberta-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: Also the architecture of BGE-M3 / multilingual-e5.
+
+  - name: mpnet
+    hf_id: microsoft/mpnet-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: Architecture of all-mpnet-base-v2 (sentence-transformers).
+
+  - name: deberta
+    hf_id: microsoft/deberta-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  # --- Encoder-decoder ---
+  - name: mt5
+    hf_id: google/mt5-small
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {num_layers: 2, num_decoder_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: long_t5
+    hf_id: google/long-t5-tglobal-base
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {num_layers: 2, num_decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: switch_transformers
+    hf_id: google/switch-base-8
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {num_layers: 2, num_decoder_layers: 2, num_sparse_encoder_layers: 1, num_sparse_decoder_layers: 1, encoder_sparse_step: 2, decoder_sparse_step: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: eval_with_cache raises "use_cache can only be set to True if ... is used as a decoder" (HF passes use_cache to the encoder).
+
+  - name: pegasus_x
+    hf_id: google/pegasus-x-base
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: fsmt
+    hf_id: facebook/wmt19-en-de
+    auto_class: AutoModelForSeq2SeqLM
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  # --- Vision ---
+  - name: beit
+    hf_id: microsoft/beit-base-patch16-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: deit
+    hf_id: facebook/deit-base-distilled-patch16-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: resnet
+    hf_id: microsoft/resnet-50
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {depths: [1, 1, 1, 1]}
+    scenarios: [eval_forward, train_forward]
+
+  - name: efficientnet
+    hf_id: google/efficientnet-b0
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+
+  - name: mobilenet_v2
+    hf_id: google/mobilenet_v2_1.0_224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+
+  - name: mobilevit
+    hf_id: apple/mobilevit-small
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+
+  - name: convnextv2
+    hf_id: facebook/convnextv2-tiny-1k-224
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {depths: [1, 1, 1, 1]}
+    scenarios: [eval_forward, train_forward]
+
+  - name: swinv2
+    hf_id: microsoft/swinv2-tiny-patch4-window8-256
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {depths: [1, 1, 2, 1]}
+    scenarios: [eval_forward, train_forward]
+
+  - name: segformer
+    hf_id: nvidia/mit-b0
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    config_overrides: {depths: [1, 1, 1, 1]}
+    scenarios: [eval_forward, train_forward]
+
+  - name: levit
+    hf_id: facebook/levit-128S
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+
+  - name: hiera
+    hf_id: facebook/hiera-tiny-224-hf
+    auto_class: AutoModelForImageClassification
+    inputs: image
+    scenarios: [eval_forward, train_forward]
+
+  - name: yolos
+    hf_id: hustvl/yolos-small
+    auto_class: AutoModelForObjectDetection
+    inputs: image
+    image_size: [512, 512]
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward]
+    notes: train_forward needs box labels.
+
+  - name: depth_anything
+    hf_id: LiheYoung/depth-anything-small-hf
+    auto_class: AutoModelForDepthEstimation
+    inputs: image
+    scenarios: [eval_forward]
+
+  # mask2former: needs scipy (Mask2FormerLoss is built in __init__). Add once the env has it.
+
+  - name: sam
+    hf_id: facebook/sam-vit-base
+    auto_class: AutoModel
+    inputs: image
+    image_size: 1024
+    config_overrides: {vision_config.num_hidden_layers: 2, vision_config.global_attn_indexes: [1]}
+    scenarios: [eval_forward]
+    notes: No prompts (image-only forward).
+
+  # --- Audio ---
+  - name: whisper
+    hf_id: openai/whisper-tiny
+    auto_class: AutoModelForSpeechSeq2Seq
+    inputs: audio_features
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: moonshine
+    hf_id: UsefulSensors/moonshine-tiny
+    auto_class: AutoModelForSpeechSeq2Seq
+    inputs: audio_waveform
+    config_overrides: {encoder_num_hidden_layers: 2, decoder_num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: wav2vec2
+    hf_id: facebook/wav2vec2-base-960h
+    auto_class: AutoModelForCTC
+    inputs: audio_waveform
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: hubert
+    hf_id: facebook/hubert-large-ls960-ft
+    auto_class: AutoModelForCTC
+    inputs: audio_waveform
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: wavlm
+    hf_id: microsoft/wavlm-base-plus
+    auto_class: AutoModelForCTC
+    inputs: audio_waveform
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  # --- Image-text dual encoders ---
+  - name: clip
+    hf_id: openai/clip-vit-base-patch32
+    auto_class: AutoModel
+    inputs: image_text
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  - name: siglip
+    hf_id: google/siglip-base-patch16-224
+    auto_class: AutoModel
+    inputs: image_text
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+
+  # --- Vision-language models ---
+  - name: llava
+    hf_id: llava-hf/llava-1.5-7b-hf
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 1024, text_config.intermediate_size: 2048, text_config.num_attention_heads: 16, text_config.num_key_value_heads: 16, text_config.head_dim: 64, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: qwen2_5_vl
+    hf_id: Qwen/Qwen2.5-VL-3B-Instruct
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, vision_config.depth: 2, vision_config.fullatt_block_indexes: [1], vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: qwen3_vl
+    hf_id: Qwen/Qwen3-VL-2B-Instruct
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, vision_config.depth: 2, vision_config.deepstack_visual_indexes: [0], vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: smolvlm
+    hf_id: HuggingFaceTB/SmolVLM-256M-Instruct
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    pixel_ndim: 5
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Idefics3 architecture.
+
+  - name: internvl
+    hf_id: OpenGVLab/InternVL3-1B-hf
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: gemma3_vlm
+    hf_id: unsloth/gemma-3-4b-it                # ungated mirror of google/gemma-3-4b-it
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    token_type_ids: true
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, vision_config.num_hidden_layers: 2, vision_config.image_size: 224}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+
+  - name: mistral3
+    hf_id: unsloth/Mistral-Small-3.1-24B-Instruct-2503
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    image_sizes: true
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 8, text_config.num_key_value_heads: 2, vision_config.num_hidden_layers: 2, vision_config.image_size: 224}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Pixtral vision tower.

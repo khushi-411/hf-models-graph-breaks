@@ -1,0 +1,50 @@
+{
+  "model": "llava",
+  "hf_id": "llava-hf/llava-1.5-7b-hf",
+  "auto_class": "AutoModelForImageTextToText",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "text_config.num_hidden_layers": 2,
+    "text_config.hidden_size": 1024,
+    "text_config.intermediate_size": 2048,
+    "text_config.num_attention_heads": 16,
+    "text_config.num_key_value_heads": 16,
+    "text_config.head_dim": 64,
+    "vision_config.num_hidden_layers": 2
+  },
+  "timestamp": "2026-11-07T11:31:13+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 4,
+  "graph_break_count": 3,
+  "op_count": 154,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/utils/import_utils.py:1897",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/llava/modeling_llava.py:352 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/llava/modeling_llava.py:255 in forward",
+        "transformers/models/llava/modeling_llava.py:211 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1897 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}
