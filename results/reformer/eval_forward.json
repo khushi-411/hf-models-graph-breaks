@@ -1,0 +1,107 @@
+{
+  "model": "reformer",
+  "hf_id": "google/reformer-crime-and-punishment",
+  "auto_class": "AutoModelForCausalLM",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_hidden_layers": 2,
+    "attn_layers": [
+      "local",
+      "lsh"
+    ],
+    "axial_pos_shape": [
+      4,
+      8
+    ],
+    "local_attn_chunk_length": 16,
+    "lsh_attn_chunk_length": 16
+  },
+  "timestamp": "2026-11-07T11:44:41+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 16,
+  "graph_break_count": 15,
+  "op_count": 149,
+  "unique_breaks": 6,
+  "breaks": [
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2023",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 168, in _get_least_common_mult_chunk_len, code: return np.lcm(config.lsh_attn_chunk_length, config.local_attn_chunk_length)\n        least_common_mult_chunk_length = wrapped_lcm(16, 16)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward, code: input_shape[-1] % least_common_mult_chunk_length != 0\n        wrapped_mod = wrapped_mod(32, least_common_mult_chunk_length)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward, code: input_shape[-1] % least_common_mult_chunk_length != 0\n        wrapped_ne = wrapped_ne(wrapped_mod, 0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with NumpyNdarrayVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2023 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2028",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2028, in torch_dynamo_resume_in_forward_at_2023, code: if must_pad_to_match_chunk_length:\n        l_stack0_: graph input (L_stack0_)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with LazyVariableTracker(realized: NumpyNdarrayVariable())\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2028 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:270",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:270 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:750",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:559 in forward",
+        "transformers/models/reformer/modeling_reformer.py:750 in _hash_vectors"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:750",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py line 1660)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 1680\n            for layer in layers:\n                         ^^^^^^",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:559 in forward",
+        "transformers/models/reformer/modeling_reformer.py:750 in _hash_vectors"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2073",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2073, in torch_dynamo_resume_in_forward_at_2060, code: if must_pad_to_match_chunk_length:\n        l_must_pad_to_match_chunk_length_: graph input (L_must_pad_to_match_chunk_length_)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with LazyVariableTracker(realized: NumpyNdarrayVariable())\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2073 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

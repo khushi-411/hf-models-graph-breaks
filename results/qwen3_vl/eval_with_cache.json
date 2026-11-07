@@ -1,0 +1,325 @@
+{
+  "model": "qwen3_vl",
+  "hf_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "auto_class": "AutoModelForImageTextToText",
+  "scenario": "eval_with_cache",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "text_config.num_hidden_layers": 2,
+    "text_config.hidden_size": 512,
+    "text_config.intermediate_size": 1024,
+    "text_config.num_attention_heads": 4,
+    "text_config.num_key_value_heads": 2,
+    "vision_config.depth": 2,
+    "vision_config.deepstack_visual_indexes": [
+      0
+    ],
+    "vision_config.out_hidden_size": 512
+  },
+  "timestamp": "2026-11-07T11:31:56+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 37,
+  "graph_break_count": 36,
+  "op_count": 306,
+  "unique_breaks": 17,
+  "breaks": [
+    {
+      "location": "transformers/vision_utils.py:276",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward",
+        "transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:277",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward",
+        "transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:278",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward",
+        "transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:280",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward",
+        "transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:112",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:698 in forward",
+        "transformers/vision_utils.py:112 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:64",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:699 in forward",
+        "transformers/vision_utils.py:76 in get_vision_attention_seqlens",
+        "transformers/vision_utils.py:64 in get_vision_cu_seqlens"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:299",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_699 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 699)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 710\n            for layer_num, blk in enumerate(self.blocks):\n                                  ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward",
+        "transformers/modeling_layers.py:111 in __call__",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:299",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward",
+        "transformers/modeling_layers.py:111 in __call__",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/utils/import_utils.py:1897",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1187 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1078 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1897 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:981",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:981",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: get_rope_index (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 925)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 978\n            for batch_idx, current_input_ids in enumerate(input_ids):\n                                                ~~~~~~~~~^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:911",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:911 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:912",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html\n\nStack variable source attribution:\n  ConstantVariable(int: 1) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 911\n                grid_thw[0].item() // temp_merge_size,\n                ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:912 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:913",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html\n\nStack variable source attribution:\n  LazyVariableTracker(unrealized: <class 'int'>) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 912\n                grid_thw[1].item() // spatial_merge_size,\n  ConstantVariable(int: 4) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 912\n                grid_thw[1].item() // spatial_merge_size,\n                ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:913 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:853",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/qwen3_vl/modeling_qwen3_vl.py:853",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 759)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py\", line 821\n            for layer_idx, decoder_layer in enumerate(self.layers):\n                                            ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward",
+        "transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

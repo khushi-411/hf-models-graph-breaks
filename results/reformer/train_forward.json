@@ -1,0 +1,164 @@
+{
+  "model": "reformer",
+  "hf_id": "google/reformer-crime-and-punishment",
+  "auto_class": "AutoModelForCausalLM",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_hidden_layers": 2,
+    "attn_layers": [
+      "local",
+      "lsh"
+    ],
+    "axial_pos_shape": [
+      4,
+      8
+    ],
+    "local_attn_chunk_length": 16,
+    "lsh_attn_chunk_length": 16
+  },
+  "timestamp": "2026-11-07T11:44:45+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 16,
+  "graph_break_count": 15,
+  "op_count": 150,
+  "unique_breaks": 10,
+  "breaks": [
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2023",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 168, in _get_least_common_mult_chunk_len, code: return np.lcm(config.lsh_attn_chunk_length, config.local_attn_chunk_length)\n        least_common_mult_chunk_length = wrapped_lcm(16, 16)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward, code: input_shape[-1] % least_common_mult_chunk_length != 0\n        wrapped_mod = wrapped_mod(32, least_common_mult_chunk_length)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward, code: input_shape[-1] % least_common_mult_chunk_length != 0\n        wrapped_ne = wrapped_ne(wrapped_mod, 0)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with NumpyNdarrayVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2023 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2028",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2028, in torch_dynamo_resume_in_forward_at_2023, code: if must_pad_to_match_chunk_length:\n        l_stack0_: graph input (L_stack0_)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with LazyVariableTracker(realized: NumpyNdarrayVariable())\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2028 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:1511",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nAttempted to call function marked as skipped\n  Higher Order Operator: autograd.Function\n  Explanation: Dynamo does not know how to trace the builtin `<unknown module>.Generator.seed.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).\n  Hint: If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.\n  Hint: If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.\n\n  Developer debug context: module: <unknown module>, qualname: Generator.seed, skip reason: cannot determine source file for  (likely a C extension or builtin)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1791 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1551 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1511 in _init_attention_seed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Attempted to call function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:1511",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo does not know how to trace the builtin `<unknown module>.Generator.seed.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).\n  Hint: If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.\n  Hint: If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.\n\n  Developer debug context: module: <unknown module>, qualname: Generator.seed, skip reason: cannot determine source file for  (likely a C extension or builtin)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py line 1660)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 1680\n            for layer in layers:\n                         ^^^^^^",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1551 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1511 in _init_attention_seed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:1516",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `manual_seed` in file `/home/khushi/Documents/osc/work/pytorch/torch/_compile.py` should not be traced.\n  Hint: Avoid calling the function `manual_seed`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `manual_seed` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: module: torch.random, qualname: manual_seed, skip reason: file matches MOD_SKIPLIST (/home/khushi/Documents/osc/work/pytorch/torch/_compile)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1684 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1551 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1516 in _init_attention_seed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Attempted to call function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:1528",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo does not know how to trace the builtin `<unknown module>.Generator.seed.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).\n  Hint: If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.\n  Hint: If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.\n\n  Developer debug context: module: <unknown module>, qualname: Generator.seed, skip reason: cannot determine source file for  (likely a C extension or builtin)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 1551\n                    self._init_attention_seed()",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1684 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1575 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1528 in _init_feed_forward_seed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Attempted to call function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:1533",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `manual_seed` in file `/home/khushi/Documents/osc/work/pytorch/torch/_compile.py` should not be traced.\n  Hint: Avoid calling the function `manual_seed`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `manual_seed` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: module: torch.random, qualname: manual_seed, skip reason: file matches MOD_SKIPLIST (/home/khushi/Documents/osc/work/pytorch/torch/_compile)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1684 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1575 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1533 in _init_feed_forward_seed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Attempted to call function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:750",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 1551\n                    self._init_attention_seed()",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2060 in forward",
+        "transformers/models/reformer/modeling_reformer.py:1684 in forward",
+        "transformers/models/reformer/modeling_reformer.py:559 in forward",
+        "transformers/models/reformer/modeling_reformer.py:750 in _hash_vectors"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/reformer/modeling_reformer.py:2073",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2073, in torch_dynamo_resume_in_forward_at_2060, code: if must_pad_to_match_chunk_length:\n        l_must_pad_to_match_chunk_length_: graph input (L_must_pad_to_match_chunk_length_)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with LazyVariableTracker(realized: NumpyNdarrayVariable())\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2222 in forward",
+        "transformers/models/reformer/modeling_reformer.py:2073 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/modeling_utils.py:4685",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning_once(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning_once)`. If `warning_once` is defined on the logger class, add the class method `logging.Logger.warning_once` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning_once`) is checked against the ignore set. Ignoring a method that `warning_once` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning_once)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.modeling_utils (WARNING)>.warning_once, args: [ConstantVariable(str: '`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.')], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "user_stack": [
+        "transformers/models/reformer/modeling_reformer.py:2241 in forward",
+        "transformers/modeling_utils.py:4685 in loss_function"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "short_reason": "logging.Logger method not supported for non-export cases",
+      "count": 1
+    }
+  ]
+}

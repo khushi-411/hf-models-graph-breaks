@@ -1,0 +1,79 @@
+{
+  "model": "internvl",
+  "hf_id": "OpenGVLab/InternVL3-1B-hf",
+  "auto_class": "AutoModelForImageTextToText",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "text_config.num_hidden_layers": 2,
+    "vision_config.num_hidden_layers": 2
+  },
+  "timestamp": "2026-11-07T11:32:49+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 9,
+  "graph_break_count": 8,
+  "op_count": 157,
+  "unique_breaks": 3,
+  "breaks": [
+    {
+      "location": "transformers/utils/import_utils.py:1897",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:822 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:649 in forward",
+        "transformers/models/internvl/modeling_internvl.py:607 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1897 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/modeling_rope_utils.py:100",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py\", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1\n        max_1 = max(position_ids_1)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py\", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1\n        seq_len = add(max_1, 1)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py\", line 100, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth\n        gt = gt(seq_len, 32768)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:822 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:654 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen2/modeling_qwen2.py:377 in forward",
+        "transformers/modeling_rope_utils.py:125 in wrapper",
+        "transformers/modeling_rope_utils.py:100 in dynamic_frequency_update"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/modeling_rope_utils.py:112",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py\", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset\n        l_seq_len_: graph input (L_seq_len_)\n    \n        # File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py\", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset\n        lt = lt(l_seq_len_, 32768)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:822 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/internvl/modeling_internvl.py:654 in forward",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/qwen2/modeling_qwen2.py:377 in forward",
+        "transformers/modeling_rope_utils.py:125 in wrapper",
+        "transformers/modeling_rope_utils.py:112 in dynamic_frequency_update"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

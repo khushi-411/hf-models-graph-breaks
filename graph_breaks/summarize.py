@@ -13,6 +13,7 @@ known_issues.yaml stub.
 from __future__ import annotations
 
 import json
+import re
 from collections import OrderedDict
 from pathlib import Path
 
@@ -39,14 +40,19 @@ def load_known_issues() -> list[dict]:
     return data.get("issues") or []
 
 
+def _normalize(path: str) -> str:
+    """Older results kept absolute stdlib paths; show them as python/<module>.py."""
+    return re.sub(r"^.*/lib/python3\.\d+/", "python/", path)
+
+
 def break_file_and_function(b: dict) -> tuple[str, str | None]:
     """'transformers/x.py:123' -> ('transformers/x.py', func from user_stack)."""
-    file = b["location"].rsplit(":", 1)[0]
+    file = _normalize(b["location"].rsplit(":", 1)[0])
     func = None
     for frame in reversed(b.get("user_stack", [])):
         # frames look like 'transformers/x.py:123 in func'
         loc, _, name = frame.partition(" in ")
-        if loc == b["location"]:
+        if _normalize(loc) == _normalize(b["location"]):
             func = name
             break
     return file, func

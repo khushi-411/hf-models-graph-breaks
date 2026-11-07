@@ -1,0 +1,57 @@
+{
+  "model": "deberta",
+  "hf_id": "microsoft/deberta-base",
+  "auto_class": "AutoModelForMaskedLM",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_hidden_layers": 2
+  },
+  "timestamp": "2026-11-07T11:20:12+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 10,
+  "graph_break_count": 9,
+  "op_count": 64,
+  "unique_breaks": 2,
+  "breaks": [
+    {
+      "location": "transformers/models/deberta/modeling_deberta.py:311",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/models/deberta/modeling_deberta.py:579 in forward",
+        "transformers/modeling_layers.py:111 in __call__",
+        "transformers/models/deberta/modeling_deberta.py:264 in forward",
+        "transformers/models/deberta/modeling_deberta.py:311 in disentangled_att_bias"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/deberta/modeling_deberta.py:311",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/deberta/modeling_deberta.py line 559)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/deberta/modeling_deberta.py\", line 578\n            for i, layer_module in enumerate(self.layer):\n                                   ~~~~~~~~~^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/deberta/modeling_deberta.py:863 in forward",
+        "transformers/models/deberta/modeling_deberta.py:688 in forward",
+        "transformers/models/deberta/modeling_deberta.py:579 in forward",
+        "transformers/modeling_layers.py:111 in __call__",
+        "transformers/models/deberta/modeling_deberta.py:264 in forward",
+        "transformers/models/deberta/modeling_deberta.py:311 in disentangled_att_bias"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

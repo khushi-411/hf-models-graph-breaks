@@ -1,0 +1,98 @@
+{
+  "model": "mistral3",
+  "hf_id": "unsloth/Mistral-Small-3.1-24B-Instruct-2503",
+  "auto_class": "AutoModelForImageTextToText",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "text_config.num_hidden_layers": 2,
+    "text_config.hidden_size": 512,
+    "text_config.intermediate_size": 1024,
+    "text_config.num_attention_heads": 8,
+    "text_config.num_key_value_heads": 2,
+    "vision_config.num_hidden_layers": 2,
+    "vision_config.image_size": 224
+  },
+  "timestamp": "2026-11-07T11:33:38+00:00",
+  "env": {
+    "torch": "2.16.0a0+git9933f27",
+    "torch_git": "9933f275f857870234004d951579fa40fd55c403",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/osc/work/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 14,
+  "graph_break_count": 13,
+  "op_count": 245,
+  "unique_breaks": 4,
+  "breaks": [
+    {
+      "location": "transformers/models/pixtral/modeling_pixtral.py:419",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:408 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:297 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:223 in get_image_features",
+        "transformers/utils/output_capturing.py:287 in wrapper",
+        "transformers/models/pixtral/modeling_pixtral.py:419 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/mistral3/modeling_mistral3.py:84",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:408 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:297 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:237 in get_image_features",
+        "transformers/models/mistral3/modeling_mistral3.py:84 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/mistral3/modeling_mistral3.py:240",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:408 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:297 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:240 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/utils/import_utils.py:1897",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:408 in forward",
+        "transformers/utils/generic.py:943 in wrapper",
+        "transformers/models/mistral3/modeling_mistral3.py:308 in forward",
+        "transformers/models/mistral3/modeling_mistral3.py:263 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1897 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}
