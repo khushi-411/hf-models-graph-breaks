@@ -4,7 +4,7 @@
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'n_layer': 2}`
 - **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
-- **Notes:** First model added.
+- **Notes:** First model added. train_forward hits loss-fn-warning-once (GPT2LMHeadModel has no LOSS_MAPPING key, so loss_type=None).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|

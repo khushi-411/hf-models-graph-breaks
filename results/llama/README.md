@@ -4,6 +4,7 @@
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2}`
 - **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **Notes:** LlamaForCausalLM, shared by Llama 2/3.x checkpoints and many derived models.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|

@@ -4,7 +4,7 @@
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'first_k_dense_replace': 1, 'n_routed_experts': 8, 'num_experts_per_tok': 2, 'n_group': 4, 'topk_group': 2, 'hidden_size': 1024, 'num_attention_heads': 16, 'num_key_value_heads': 16, 'intermediate_size': 1024, 'moe_intermediate_size': 256, 'vocab_size': 32000, 'quantization_config': None}`
 - **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
-- **Notes:** MLA attention + group-limited top-k MoE. Layer 0 dense, layer 1 MoE.
+- **Notes:** MLA attention + group-limited top-k MoE. Layer 0 dense, layer 1 MoE. Also covers DeepSeek-R1 (same DeepseekV3 architecture).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|

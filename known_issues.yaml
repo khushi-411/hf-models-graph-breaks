@@ -112,6 +112,11 @@ issues:
       Affects models whose class name matches no LOSS_MAPPING key (e.g.
       GPT2LMHeadModel), so loss_type stays None. Only in train mode with labels.
       Still present on transformers main 58d05ca572 (5.23.0.dev0).
+      Seen in: gpt2, openai_gpt, ctrl, reformer, bert_lm_head (all train_forward).
+      Not fixable on the PyTorch side without a policy change: Dynamo breaks on
+      logger calls by design unless the user opts in via
+      ignore_logging_functions / reorderable_logging_functions (both empty by
+      default), so the fix belongs in transformers.
 
   # LayerDrop: one entry per file, all grouped under the same id.
   - &layerdrop
