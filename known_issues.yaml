@@ -327,7 +327,10 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    notes: Seen in internvl (its text config uses dynamic rope). Inherent to dynamic NTK scaling.
+    notes: >
+      Seen in internvl (its text config uses dynamic rope) and internlm3 (real checkpoint config:
+      rope_type dynamic, factor 6.0; 5 breaks per forward). Inherent to dynamic NTK scaling.
+      Not hit by hunyuan_v1_moe: its rotary embedding relabels "dynamic" + alpha as static `ntk_alpha`.
 
   - &qwenvl
     id: qwen-vl-grid-thw-data-dependent
@@ -366,3 +369,152 @@ issues:
   - <<: *mistral3
     file: transformers/models/pixtral/modeling_pixtral.py
 
+  # ======================================================================= #
+  # Models added to transformers main in Nov 2026 (checked at 84fe6ceb8a)
+  # ======================================================================= #
+  - <<: *layerdrop
+    file: transformers/models/omniasr/modeling_omniasr.py
+    match: "Data-dependent branching"
+
+  # Vision attention splits q/k/v per image with a Python list of lengths (eager varlen path).
+  - &visionsplit
+    id: vision-attn-split-lengths-tolist
+    title: "Vision attention: `torch.split(t, lengths.tolist(), dim=2)` per image in the eager varlen path"
+    file: transformers/models/hy_v4_vl/modeling_hy_v4_vl.py
+    function: forward
+    match: "Data dependent operator"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Same code in hy_v4_vl, inkling2 and dots3_note vision towers. Also triggers graph-break-in-loop (generator expression).
+  - <<: *visionsplit
+    file: transformers/models/inkling2/modeling_inkling2.py
+  - <<: *visionsplit
+    file: transformers/models/dots3_note/modeling_dots3_note.py
+
+  # get_image_features splits the pooled features per image with a Python list.
+  - &splitfeat
+    id: vlm-split-image-features-tolist
+    title: "VLM `get_image_features`: `features.split((grid_thw.prod(-1) // merge**2).tolist())`"
+    file: transformers/models/hy_v4_vl/modeling_hy_v4_vl.py
+    function: get_image_features
+    match: "Data dependent operator"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Same pattern in hy_v4_vl, granite_docling, lfm3_vl, inkling2 and dots3_note. The split sizes are
+      only needed to return per-image tuples; the LM path concatenates them again right after.
+  - <<: *splitfeat
+    file: transformers/models/granite_docling/modeling_granite_docling.py
+  - <<: *splitfeat
+    file: transformers/models/lfm3_vl/modeling_lfm3_vl.py
+  - <<: *splitfeat
+    file: transformers/models/inkling2/modeling_inkling2.py
+  - <<: *splitfeat
+    file: transformers/models/dots3_note/modeling_dots3_note.py
+
+  # Placeholder check uses boolean-mask indexing just to count elements.
+  - &placeholder
+    id: placeholder-mask-bool-index-numel
+    title: "`get_placeholder_mask`: `inputs_embeds[special_mask].numel()` (boolean indexing has a data-dependent shape)"
+    file: transformers/models/inkling2/modeling_inkling2.py
+    function: get_placeholder_mask
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Seen in inkling2, dots3_note and omniasr. Counting with `special_mask.sum() * hidden_size`
+      (or comparing n_tokens to features.shape[0]) gives the same check without a dynamic shape.
+  - <<: *placeholder
+    file: transformers/models/dots3_note/modeling_dots3_note.py
+  - <<: *placeholder
+    file: transformers/models/omniasr/modeling_omniasr.py
+
+  - id: granite-docling-tile-mask-index
+    title: "GraniteDocling: `pixel_values[pixel_attention_mask]` selects real tiles with a boolean mask"
+    file: transformers/models/granite_docling/modeling_granite_docling.py
+    function: get_image_features
+    match: "Dynamic shape operator"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Similar to idefics3-image-nonzero. With all tiles real (as in our inputs) the mask is a no-op.
+
+  - id: apertus1p5-image-sizes-tolist
+    title: "Apertus 1.5: image tokenizer loops over `image_sizes.tolist()` and embeds tokens per image"
+    file: transformers/models/apertus1p5/modeling_apertus1p5.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: get_image_tokens / get_image_features. Similar to mistral3-image-sizes-tolist.
+
+  - &convbuf
+    id: encodec-conv-params-buffers
+    title: "EnCodec-style padded conv: stride / kernel_size / padding_total stored as tensor buffers, so padding math is on tensors"
+    file: transformers/models/encodec/modeling_encodec.py
+    function: _pad1d
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      `self.stride = nn.Buffer(stride)` etc. (EnCodec, copied into Mimi and WavTokenizer) make
+      `_get_extra_padding_for_conv1d` return a tensor, so `if length <= max_pad` in `_pad1d` is
+      data-dependent (encodec, wavtokenizer) or F.pad gets tensor pad sizes (mimi). Hit once per conv
+      layer: 23-35 breaks per forward. Storing them as Python ints fixes it.
+  - <<: *convbuf
+    file: transformers/models/wavtokenizer/modeling_wavtokenizer.py
+  - <<: *convbuf
+    # Mimi's _pad1d passes the tensor pad sizes straight to F.pad; the break is reported inside torch.
+    # Nothing in the reason names Mimi, so any future F.pad-with-tensor-pads break will match here too.
+    file: torch/nn/functional.py
+    function: null
+    match: "aten._local_scalar_dense"
+
+  - id: dynamo-rnn-unsupported
+    title: "Dynamo graph-breaks on nn.LSTM / GRU / RNN by default (torch._dynamo.config.allow_rnn=False)"
+    file: null
+    match: "Dynamo does not support RNN, GRU, or LSTM"
+    repo: pytorch/pytorch
+    issue: null
+    status: not-filing
+    notes: By design; experimental support behind torch._dynamo.config.allow_rnn=True. Seen in wavtokenizer.
+
+  - id: phimoe-longrope-seq-len-branch
+    title: "PhiMoE rotary embedding: LongRoPE picks short/long factors with `if seq_len > original_max_position_embeddings` on a tensor"
+    file: transformers/models/phimoe/modeling_phimoe.py
+    function: forward
+    match: "Data-dependent branching"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      seq_len comes from torch.max(position_ids) + 1. Same family as dynamic-rope-data-dependent;
+      the shared `longrope_frequency_update` in modeling_rope_utils has the same shape of check.
+
+  - id: llava-next-anyres-image-size-tolist
+    title: "LLaVA-NeXT anyres: `image_size.tolist()` in get_anyres_image_grid_shape / image_size_to_num_patches / unpad_image"
+    file: transformers/models/llava_next/modeling_llava_next.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: Tile layout is chosen from image_sizes values in Python. Similar to mistral3-image-sizes-tolist.
+
+  - <<: *visionsplit
+    file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
+  - <<: *splitfeat
+    file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
+
+  # Remaining grid_thw-driven breaks in the new VLMs: same root cause as Qwen-VL.
+  - <<: *qwenvl
+    file: transformers/models/hy_v4_vl/modeling_hy_v4_vl.py
+    notes: "hy_v4_vl: .item() on grid_thw in get_vision_position_ids / interpolate_pos_encoding, boolean indexing in get_rope_index."
+  - <<: *qwenvl
+    file: transformers/models/lfm3_vl/modeling_lfm3_vl.py
+    notes: "lfm3_vl: grid_thw.tolist() in the vision tower forward."
+  - <<: *qwenvl
+    file: transformers/models/inkling2/modeling_inkling2.py
+    notes: "inkling2: repeat_interleave over patches_per_image to build patch_index."
+  - <<: *qwenvl
+    file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
+    notes: "qwen2_vl: .item() on grid_thw in get_vision_position_ids, boolean indexing in get_rope_index."

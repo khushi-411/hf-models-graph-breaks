@@ -96,7 +96,12 @@ def _set_override(config, key: str, value):
 
 
 def build_config(spec: dict):
-    config = AutoConfig.from_pretrained(spec["hf_id"])
+    if spec.get("config_class"):
+        # No usable public checkpoint (unreleased or gated): use the config class defaults,
+        # which transformers documents as matching `hf_id`. Nothing is downloaded.
+        config = getattr(transformers, spec["config_class"])()
+    else:
+        config = AutoConfig.from_pretrained(spec["hf_id"])
     if spec.get("use_text_config"):
         # Text-only LM built from a multimodal checkpoint (e.g. gemma3n, llama4).
         config = config.get_text_config()
@@ -154,7 +159,8 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
     vcfg = cfg.vision_config
     h, w = _hw(spec.get("image_size", getattr(vcfg, "image_size", 224)))
     channels = getattr(vcfg, "num_channels", 3)
-    shape = (BATCH, 1, channels, h, w) if spec.get("pixel_ndim") == 5 else (BATCH, channels, h, w)
+    tiles = spec.get("num_tiles", 1)
+    shape = (BATCH, tiles, channels, h, w) if spec.get("pixel_ndim") == 5 else (BATCH, channels, h, w)
     pixel_values = torch.randn(*shape, device=device)
     image_token = _image_token_id(cfg)
     text = _text_ids(cfg, device, 16)
@@ -166,8 +172,15 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
             out["token_type_ids"] = (ids == image_token).long()
         if spec.get("image_sizes"):
             out["image_sizes"] = torch.tensor([[h, w]] * BATCH, device=device)
+        if spec.get("pixel_attention_mask"):  # tiled models: (batch, num_tiles), all tiles real
+            out["pixel_attention_mask"] = torch.ones(BATCH, shape[1], dtype=torch.bool, device=device)
         return out
 
+    return build(_probe_image_tokens(model, build) // BATCH)
+
+
+def _probe_image_tokens(model, build) -> int:
+    """Total number of image features (all images in the batch) the model produces for `build(1)`'s pixels."""
     # LLaVA-style models validate placeholders in `get_placeholder_mask(input_ids,
     # inputs_embeds, image_features)`; intercept it to read the feature count.
     # (Parsing the mismatch error is unreliable: e.g. llava reports numel there.)
@@ -177,12 +190,12 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
         with torch.no_grad():
             try:
                 model(**build(1))
-                return build(1)
+                return BATCH
             except Exception as e:  # "... tokens: 2, features: 128"
                 m = re.search(r"features: (\d+)", str(e))
                 if not m:
                     raise
-        return build(int(m.group(1)) // BATCH)
+        return int(m.group(1))
 
     original = inner.get_placeholder_mask
     seen = {}
@@ -190,8 +203,13 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
     class _Probe(Exception):
         pass
 
-    def probe(input_ids=None, inputs_embeds=None, image_features=None, **kw):
-        seen["n"] = image_features.numel() // inputs_embeds.shape[-1]
+    def probe(*args, **kw):
+        # Signatures differ: (input_ids, inputs_embeds, image_features) or
+        # (input_ids, inputs_embeds, features, token_id), positional or keyword.
+        names = ("input_ids", "inputs_embeds", "image_features")
+        bound = dict(zip(names, args)) | kw
+        features = next(bound[k] for k in ("image_features", "audio_features", "features") if k in bound)
+        seen["n"] = features.numel() // bound["inputs_embeds"].shape[-1]
         raise _Probe
 
     inner.get_placeholder_mask = probe
@@ -203,7 +221,53 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
     finally:
         del inner.get_placeholder_mask  # drop the instance attribute, back to the class method
     assert inner.get_placeholder_mask.__func__ is original.__func__
-    return build(seen["n"] // BATCH)
+    if "n" not in seen:
+        raise RuntimeError("image-token probe never reached get_placeholder_mask")
+    return seen["n"]
+
+
+def _grid_vlm_inputs(spec: dict, model, device: str) -> dict:
+    """VLMs that take flattened patches + `image_grid_thw` (Qwen-VL style, with per-model layouts).
+
+    pixel_layout:
+      - patches (default): (num_patches, C * T * P * P), as produced by Qwen2VLImageProcessor
+      - pixels:            (num_tokens, P * merge, P * merge, C): one raw-pixel block per language-model
+                           image token, and image_grid_thw counted in LM tokens (inkling2)
+    The number of placeholder tokens depends on each model's merge / pixel-shuffle steps,
+    so it is probed with one eager forward instead of computed here.
+    """
+    cfg = model.config
+    vcfg = cfg.vision_config
+    grid = spec.get("grid", 8)  # grid x grid per image; must divide by the model's total merge factor
+    patch = vcfg.patch_size
+    temporal = getattr(vcfg, "temporal_patch_size", None) or 1
+    channels = getattr(vcfg, "num_channels", None) or getattr(vcfg, "in_channels", 3)
+    n_cells = BATCH * grid * grid
+    if spec.get("pixel_layout", "patches") == "pixels":
+        side = patch * vcfg.spatial_merge_size
+        pixel_values = torch.randn(n_cells, side, side, channels, device=device)
+    else:
+        pixel_values = torch.randn(n_cells, channels * temporal * patch * patch, device=device)
+    image_token = _image_token_id(cfg)
+    start = getattr(cfg, "vision_start_token_id", None)
+    end = getattr(cfg, "vision_end_token_id", None)
+    text = _text_ids(cfg, device, 16)
+    accepts_mm_types = "mm_token_type_ids" in inspect.signature(model.forward).parameters
+
+    def build(n_image_tokens: int) -> dict:
+        prefix = ([start] if start is not None else []) + [image_token] * n_image_tokens + ([end] if end is not None else [])
+        ids = torch.cat([torch.tensor([prefix] * BATCH, device=device), text], dim=1)
+        out = {
+            "input_ids": ids,
+            "attention_mask": torch.ones_like(ids),
+            "pixel_values": pixel_values,
+            "image_grid_thw": torch.tensor([[1, grid, grid]] * BATCH, device=device),
+        }
+        if accepts_mm_types:
+            out["mm_token_type_ids"] = (ids == image_token).int()
+        return out
+
+    return build(_probe_image_tokens(model, build) // BATCH)
 
 
 def _qwen_vl_inputs(model, device: str) -> dict:
@@ -232,7 +296,7 @@ def _qwen_vl_inputs(model, device: str) -> dict:
 
 
 # Input kinds whose models take `use_cache`.
-_GENERATIVE_KINDS = {"text", "audio_features", "audio_waveform", "vlm", "qwen_vl"}
+_GENERATIVE_KINDS = {"text", "audio_features", "audio_waveform", "vlm", "qwen_vl", "grid_vlm", "audio_llm"}
 
 
 def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
@@ -265,6 +329,10 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
             inputs["input_features"] = torch.randn(BATCH, cfg.num_mel_bins, frames, device=device)
         else:  # raw 1s waveform at 16 kHz (wav2vec2, hubert, wavlm, moonshine)
             inputs["input_values"] = torch.randn(BATCH, 16000, device=device)
+            if spec.get("waveform_3d"):  # models taking (batch, 1, samples), e.g. omniasr
+                inputs["input_values"] = inputs["input_values"][:, None]
+            if spec.get("padding_mask"):  # all-ones (batch, samples) mask, for models whose loss needs it
+                inputs["padding_mask"] = torch.ones(BATCH, 16000, dtype=torch.long, device=device)
         dec = torch.randint(1, min(getattr(cfg, "vocab_size", 32), 1000), (BATCH, 8), device=device)
         if train:
             inputs["labels"] = dec
@@ -282,10 +350,27 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
         inputs = _vlm_inputs(spec, model, device)
     elif kind == "qwen_vl":
         inputs = _qwen_vl_inputs(model, device)
+    elif kind == "grid_vlm":
+        inputs = _grid_vlm_inputs(spec, model, device)
+    elif kind == "audio_llm":  # audio encoder + LM decoder with audio placeholder tokens (omniasr)
+        input_values = torch.randn(BATCH, 1, 16000, device=device)  # 1s at 16 kHz, (batch, 1, samples)
+        text = _text_ids(cfg, device, 16)
+
+        def build(n_audio_tokens: int) -> dict:
+            ids = torch.cat([torch.full((BATCH, n_audio_tokens), cfg.audio_token_id, device=device), text], dim=1)
+            return {"input_ids": ids, "attention_mask": torch.ones_like(ids), "input_values": input_values}
+
+        inputs = build(_probe_image_tokens(model, build) // BATCH)
+        if train:
+            inputs["labels"] = inputs["input_ids"].clone()
+    elif kind == "audio_codec":  # waveform -> codes -> waveform, no labels (wavtokenizer)
+        rate = getattr(cfg, "sampling_rate", 16000)
+        channels = getattr(cfg, "audio_channels", 1)
+        inputs["input_values"] = torch.randn(BATCH, channels, rate, device=device)  # 1s
     else:
         raise ValueError(f"Unknown inputs kind: {kind}")
 
-    if train and kind in ("vlm", "qwen_vl"):
+    if train and kind in ("vlm", "qwen_vl", "grid_vlm"):
         inputs["labels"] = inputs["input_ids"].clone()
     if scenario == "eval_forward" and kind in _GENERATIVE_KINDS and (kind != "audio_waveform" or is_seq2seq):
         inputs["use_cache"] = False
@@ -306,7 +391,9 @@ def _short_path(path: str) -> str:
     """Make paths readable: strip everything before 'transformers/' or 'torch/'."""
     for marker in ("/transformers/", "/torch/"):
         if marker in path:
-            return marker.strip("/") + "/" + path.split(marker, 1)[1]
+            # Split on the last marker so a source checkout
+            # (.../transformers/src/transformers/x.py) gives the same path as a pip install.
+            return marker.strip("/") + "/" + path.rsplit(marker, 1)[1]
     # Standard library, e.g. .../lib/python3.15/contextlib.py -> python/contextlib.py
     return re.sub(r"^.*/lib/python3\.\d+/", "python/", path)
 
