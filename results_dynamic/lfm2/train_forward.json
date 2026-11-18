@@ -1,0 +1,191 @@
+{
+  "model": "lfm2",
+  "hf_id": "LiquidAI/LFM2-350M",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:51:11+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 2,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 14
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 18
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 1,
+      "new_shape_events": 18
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 40",
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 40, actual 56\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 56"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 21,
+      "examples": [
+        "s27 >= 3",
+        "Eq(zf53, 0.125)",
+        "Eq(zf88, 0.125)",
+        "Eq(zf79, 2.0)",
+        "-s16 + s27 <= 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 11,
+      "examples": [
+        "s27*s52 <= 4096",
+        "32*s52 <= 4096",
+        "512*s52 <= 4096",
+        "s18*s96 <= 4096",
+        "40*s52 <= 4096"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_copy_",
+      "line": 831,
+      "count": 3,
+      "examples": [
+        "Ne(s27, 3)",
+        "Ne(s16, 3)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 3,
+      "examples": [
+        "9223372036854775807 > s27"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "Eq(s27, 32)",
+        "Eq(s16, 40)",
+        "Eq(s16, 56)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "s27 = 32",
+        "s16 = 40",
+        "s16 = 56"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 2,
+      "examples": [
+        "Eq(s52, s92)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 2,
+      "examples": [
+        "Eq(s16*s52, s18*s96)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4440,
+      "count": 2,
+      "examples": [
+        "s27 = 40",
+        "s27 = 56"
+      ],
+      "model_frames": []
+    }
+  ]
+}

@@ -96,6 +96,84 @@ issues:
   # visible with capture_scalar_outputs + capture_dynamic_output_shape_ops (Qwen2.5/3-VL
   # then hard-error instead of graph-breaking), so no break in results/ matches it.
 
+  # ----------------------------------------------------------------------- #
+  # Dynamic shapes (pytorch/pytorch#137093: Inductor guards/specializes on
+  # sympy.Expr sizes). Found by `python -m graph_breaks.dynamic` (inductor,
+  # dynamic=True, 3 input sizes) -> results_dynamic/. These are recompiles or
+  # compile errors, not graph breaks, so nothing in SUMMARY.md matches them.
+  # ----------------------------------------------------------------------- #
+  - id: sdpa-is-causal-symbool
+    title: "Dynamo passes a SymBool to `F.scaled_dot_product_attention(is_causal=...)` -> 'must be bool, not SymBool' graph break under dynamic shapes"
+    file: transformers/integrations/sdpa_attention.py
+    function: sdpa_attention_forward
+    match: "not SymBool"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    notes: >
+      is_causal computed from shapes is a SymBool with dynamic=True; fake-tensor propagation of the
+      op rejects it (gb0112). Inside HF's attention wrapper the whole function then falls back to
+      eager: moonshine train_forward goes from 1 graph (static) to 16 (dynamic). Expected: Dynamo
+      guards/bool()s SymBools for bool schema args. Repro issues/repros/sdpa_is_causal_symbool.py
+      (fullgraph=True: OK static, fails dynamic). Full list of affected models: pending full sweep.
+
+  - id: conv-backward-stride-guard
+    title: "Inductor `convolution_backward_lowering` calls `guard_int_seq` on the grad-input strides -> sequence length specialized, train recompiles on every new length"
+    file: torch/_inductor/kernel/conv.py
+    function: convolution_backward_lowering
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/conv-backward-stride-guard.md
+    notes: >
+      Added in #178945. Train mode only; CPU (and ROCm/other non-CUDA devices, by reading the code).
+      NVIDIA CUDA returns the aten fallback before the guard. Every conv type is affected on CPU
+      (Conv1d/2d/3d, depthwise, strided, dilated, ConvTranspose1d/2d: 3 graphs for 3 sizes). 12 models: mamba, falcon_mamba, jamba, bamba, zamba2,
+      falcon_h1, nemotron_h, lfm2, granitemoehybrid (causal depthwise Conv1d), wav2vec2, wavlm,
+      hubert (feature encoder). Replacing it with unguarded hints takes 7 of them to 0 recompiles
+      (wav2vec2, wavlm, bamba, zamba2, falcon_h1, lfm2, granitemoehybrid) and removes the
+      ir.py:clamp specialization (a knock-on effect). Fix: ir.get_stride_order(stride, shape_env).
+      Repro issues/repros/conv_backward_stride_guard.py.
+
+  - id: cpp-acc-helper-reduction-guard
+    title: "Inductor CPU codegen `need_use_acc_helper`: `guard_or_false(Gt(reduction_size, 4096))` installs a guard on a symbolic reduction size"
+    file: torch/_inductor/codegen/cpp.py
+    function: need_use_acc_helper
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    notes: >
+      CPU only. The guard fails when the reduction size crosses 4096 -> recompile.
+      hubert train: the only recompile left once conv-backward-stride-guard is fixed
+      ("(-1)*s0 + s0*(s2 // 10) <= 4096"). nemotron_h train: specializes batch (s52 = 2).
+      The acc-helper choice is a perf/accuracy heuristic, so it could use a size hint
+      (or a runtime branch) instead of a guard. No minimal repro yet.
+
+  - id: significant-strides-equal-guard
+    title: "Inductor `ir.py:significant_strides_equal`: `guard_or_false(Eq(s1, s2))` specializes a size when the strides happen to be equal"
+    file: torch/_inductor/ir.py
+    function: significant_strides_equal
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    notes: >
+      qwen2_vl and qwen2_5_vl train (vision tower, after the break at modeling_qwen2_vl.py:714):
+      installs Eq(s87, 1176) and specializes s87. Those models also recompile for HF-side
+      reasons (12 recompiled graphs), so on its own this doesn't make them recompile-free.
+      No minimal repro yet.
+
+  - id: inductor-bounds-truncdiv-nan
+    title: "Inductor value-range analysis crashes: `bounds.py:truncdiv` -> `TypeError: Invalid NaN comparison` with dynamic shapes"
+    file: torch/_inductor/bounds.py
+    function: truncdiv
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    notes: >
+      Hard compile error (not a recompile): longformer eval_forward and train_forward with
+      dynamic=True. ValueRanges.truediv yields NaN bounds that are then compared with min().
+      Repro: python -m graph_breaks.dynamic --model longformer. No minimal repro yet.
+
   # ======================================================================= #
   # transformers-side root causes
   # ======================================================================= #

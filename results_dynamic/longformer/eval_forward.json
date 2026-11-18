@@ -1,0 +1,42 @@
+{
+  "model": "longformer",
+  "hf_id": "allenai/longformer-base-4096",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:55:49+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "InductorError: TypeError: Invalid NaN comparison\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+  "error_inductor_site": "torch/_inductor/bounds.py:truncdiv:268",
+  "traceback": " in compile_wrapper\n    raise e.remove_dynamo_frames() from None\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1345, in _compile_fx_inner\n    raise InductorError(e, currentframe()).with_traceback(\n        e.__traceback__\n    ) from None\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1337, in _compile_fx_inner\n    mb_compiled_graph = fx_codegen_and_compile(\n        gm,\n    ...<3 lines>...\n        **graph_kwargs,\n    )\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/compile_fx.py\", line 2205, in fx_codegen_and_compile\n    return scheme.codegen_and_compile(gm, example_inputs, inputs_to_check, graph_kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1953, in codegen_and_compile\n    compiled_module = graph.compile_to_module()\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/graph.py\", line 3157, in compile_to_module\n    return self._compile_to_module()\n           ~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/graph.py\", line 3163, in _compile_to_module\n    self.codegen_with_cpp_wrapper() if self.cpp_wrapper else self.codegen()\n                                                             ~~~~~~~~~~~~^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/graph.py\", line 3099, in codegen\n    self.scheduler.codegen()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/scheduler.py\", line 12837, in codegen\n    self._codegen_partitions()\n    ~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/scheduler.py\", line 12996, in _codegen_partitions\n    self._codegen(partition)\n    ~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/scheduler.py\", line 13198, in _codegen\n    kernel = self.get_backend(device).codegen_node(node)\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 5909, in codegen_node\n    cpp_kernel_proxy.codegen_nodes(nodes)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 4963, in codegen_nodes\n    self.codegen_functions(fn_list, var_sizes_list)\n    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 4745, in codegen_functions\n    scalar_kernel = codegen_kernel(self.kernel_cls)\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 4715, in codegen_kernel\n    run(kernel)\n    ~~~^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 4728, in run\n    fn(vars, reduction_vars)\n    ~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/cpp.py\", line 4944, in fn\n    return node.codegen(index_vars)\n           ~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/scheduler.py\", line 4297, in codegen\n    V.kernel.set_current_node(self),\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/codegen/common.py\", line 2459, in set_current_node\n    self.node_to_bounds = node._body.bounds().get_bounds()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"<string>\", line 6, in get_bounds_cache_on_self\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/bounds.py\", line 83, in get_bounds\n    interpreter.run(V.get_ops_handler(), initial_env=self._bounds)\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/loop_body.py\", line 65, in run\n    return super().run(*args, **kwargs)\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/fx/interpreter.py\", line 197, in run\n    self.env[node] = self.run_node(node)\n                     ~~~~~~~~~~~~~^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/loop_body.py\", line 61, in run_node\n    return super().run_node(n)\n           ~~~~~~~~~~~~~~~~^^^\n  File \"/home/khushi/Documents/pytorch/torch/fx/interpreter.py\", line 294, in run_node\n    return getattr(self, n.op)(n.target, args, kwargs)\n           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/fx/interpreter.py\", line 402, in call_method\n    return getattr(self_obj, target)(*args_tail, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/_inductor/bounds.py\", line 268, in truncdiv\n    x = cls.truediv(a, b)\n  File \"/home/khushi/Documents/pytorch/torch/utils/_sympy/value_ranges.py\", line 710, in truediv\n    return ValueRanges.coordinatewise_monotone_map(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        a,\n        ^^\n        b,\n        ^^\n        _keep_float(FloatTrueDiv),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/home/khushi/Documents/pytorch/torch/utils/_sympy/value_ranges.py\", line 428, in coordinatewise_monotone_map\n    return ValueRanges(min(products), max(products))\n                       ~~~^^^^^^^^^^\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/sympy/core/decorators.py\", line 248, in _func\n    return func(self, other)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/sympy/core/expr.py\", line 400, in __lt__\n    return StrictLessThan(self, other)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/sympy/core/relational.py\", line 850, in __new__\n    raise TypeError(\"Invalid NaN comparison\")\ntorch._inductor.exc.InductorError: TypeError: Invalid NaN comparison\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n\n"
+}

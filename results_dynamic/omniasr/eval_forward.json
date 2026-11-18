@@ -1,0 +1,40 @@
+{
+  "model": "omniasr",
+  "hf_id": "hf-audio/omniasr-llm-300m-v2",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:39:01+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "ValueError: The checkpoint you are trying to load has model type `omniasr` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.\n\nYou can update Transformers with the command `pip install --upgrade transformers`. If this does not work, and the checkpoint is very new, then there may not be a release version that supports this model yet. In this case, you can get the most up-to-date code by installing Transformers from source with the command `pip install git+https://github.com/huggingface/transformers.git`",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 436, in from_pretrained\n    config_class = CONFIG_MAPPING[config_dict[\"model_type\"]]\n                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 115, in __getitem__\n    raise KeyError(key)\nKeyError: 'omniasr'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 218, in run_scenario\n    model = check.build_model(spec, False, args.device)\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 124, in build_model\n    config = build_config(spec)\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 106, in build_config\n    config = AutoConfig.from_pretrained(spec[\"hf_id\"])\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 438, in from_pretrained\n    raise ValueError(\n    ...<8 lines>...\n    )\nValueError: The checkpoint you are trying to load has model type `omniasr` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.\n\nYou can update Transformers with the command `pip install --upgrade transformers`. If this does not work, and the checkpoint is very new, then there may not be a release version that supports this model yet. In this case, you can get the most up-to-date code by installing Transformers from source with the command `pip install git+https://github.com/huggingface/transformers.git`\n"
+}

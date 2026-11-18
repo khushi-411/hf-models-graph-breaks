@@ -1,0 +1,364 @@
+{
+  "model": "big_bird",
+  "hf_id": "google/bigbird-roberta-base",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:57:17+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 4,
+  "recompiled_graphs": 1,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 4,
+      "new_shape_events": 94
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 34
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function forward in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/big_bird/modeling_big_bird.py:1528\n    triggered by the following guard failure(s):\n    - 4/0: tensor 'input_ids' size mismatch at index 1. expected 32, actual 40"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:clamp"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 11,
+      "examples": [
+        "s27 <= 4096",
+        "s70 <= 4096",
+        "s50 <= 4096",
+        "(s36 >= 0) & (s36 <= 4096)",
+        "(s36 + s70 >= 0) & (s36 + s70 <= 4096)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 4,
+      "examples": [
+        "s27 <= 704",
+        "Eq(s27, 32)",
+        "s50 <= 704",
+        "Eq(s50, 32)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "s27 = 32",
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 943,
+      "count": 2,
+      "examples": [
+        "s70 <= 704",
+        "Eq(s70, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 943,
+      "count": 1,
+      "examples": [
+        "s70 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1081,
+      "count": 2,
+      "examples": [
+        "s50 <= 704",
+        "Eq(s50, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1081"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1081,
+      "count": 1,
+      "examples": [
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1081"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 287,
+      "count": 8,
+      "examples": [
+        "s70 <= 704",
+        "Eq(s70, 32)",
+        "Eq(zf74, 2.0)",
+        "Eq(zf68, 2.0)",
+        "Eq(zf80, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 287,
+      "count": 2,
+      "examples": [
+        "s70 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 3,
+      "examples": [
+        "Eq(s72, s18)",
+        "Eq(s70, s53)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 42,
+      "examples": [
+        "zf4 >= 0.0",
+        "zf4 <= 1.0",
+        "zf5 >= 0.0",
+        "zf5 <= 1.0",
+        "zf51 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 21,
+      "examples": [
+        "Eq(zf4, 0.1)",
+        "Eq(zf5, 0.1)",
+        "Eq(zf51, 0.1)",
+        "Eq(zf35, 0.1)",
+        "Eq(zf52, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 16,
+      "examples": [
+        "Eq(zf21, 1.0e-12)",
+        "Eq(zf34, 1.0e-12)",
+        "Eq(zf73, 1.0e-12)",
+        "Eq(zf77, 1.0e-12)",
+        "Eq(zf48, 1.0e-12)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580",
+      "line": 1591,
+      "count": 3,
+      "examples": [
+        "Eq(zf74, 2.0)",
+        "Eq(zf68, 2.0)",
+        "Eq(zf80, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "s36 + s70 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 6,
+      "examples": [
+        "s18 <= 4096",
+        "s18*s70 <= 4096",
+        "s38*s97 <= 4096",
+        "s11*s68 <= 4096",
+        "s72 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1580:1591",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s86, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s86 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s11*s68, s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1940"
+      ]
+    }
+  ]
+}

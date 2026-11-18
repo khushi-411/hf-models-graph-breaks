@@ -43,6 +43,8 @@ RESULTS_DIR = ROOT / "results"
 
 ALL_SCENARIOS = ["eval_forward", "eval_with_cache", "train_forward"]
 BATCH, SEQ_LEN = 2, 32
+AUDIO_SAMPLES = 16000  # 1s at 16 kHz
+# These are read at call time, so graph_breaks.dynamic can vary them between runs.
 
 
 # --------------------------------------------------------------------------- #
@@ -135,7 +137,8 @@ def _hw(size) -> tuple[int, int]:
     return size, size
 
 
-def _text_ids(cfg, device, seq_len: int = SEQ_LEN) -> torch.Tensor:
+def _text_ids(cfg, device, seq_len: int | None = None) -> torch.Tensor:
+    seq_len = seq_len or SEQ_LEN
     text_cfg = cfg.get_text_config() if hasattr(cfg, "get_text_config") else cfg
     vocab = getattr(text_cfg, "vocab_size", 1000)
     return torch.randint(0, min(vocab, 1000), (BATCH, seq_len), device=device)
@@ -163,7 +166,7 @@ def _vlm_inputs(spec: dict, model, device: str) -> dict:
     shape = (BATCH, tiles, channels, h, w) if spec.get("pixel_ndim") == 5 else (BATCH, channels, h, w)
     pixel_values = torch.randn(*shape, device=device)
     image_token = _image_token_id(cfg)
-    text = _text_ids(cfg, device, 16)
+    text = _text_ids(cfg, device, SEQ_LEN // 2)
 
     def build(n_image_tokens: int) -> dict:
         ids = torch.cat([torch.full((BATCH, n_image_tokens), image_token, device=device), text], dim=1)
@@ -251,7 +254,7 @@ def _grid_vlm_inputs(spec: dict, model, device: str) -> dict:
     image_token = _image_token_id(cfg)
     start = getattr(cfg, "vision_start_token_id", None)
     end = getattr(cfg, "vision_end_token_id", None)
-    text = _text_ids(cfg, device, 16)
+    text = _text_ids(cfg, device, SEQ_LEN // 2)
     accepts_mm_types = "mm_token_type_ids" in inspect.signature(model.forward).parameters
 
     def build(n_image_tokens: int) -> dict:
@@ -279,7 +282,7 @@ def _qwen_vl_inputs(model, device: str) -> dict:
     channels = getattr(vcfg, "in_channels", getattr(vcfg, "in_chans", 3))
     pixel_values = torch.randn(BATCH * grid * grid, channels * temporal * patch * patch, device=device)
     n_tokens = grid * grid // (merge * merge)
-    text = _text_ids(cfg, device, 16)
+    text = _text_ids(cfg, device, SEQ_LEN // 2)
     prefix = [cfg.vision_start_token_id] + [cfg.image_token_id] * n_tokens
     if getattr(cfg, "vision_end_token_id", None) is not None:
         prefix.append(cfg.vision_end_token_id)
@@ -328,11 +331,11 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
             frames = 2 * cfg.max_source_positions
             inputs["input_features"] = torch.randn(BATCH, cfg.num_mel_bins, frames, device=device)
         else:  # raw 1s waveform at 16 kHz (wav2vec2, hubert, wavlm, moonshine)
-            inputs["input_values"] = torch.randn(BATCH, 16000, device=device)
+            inputs["input_values"] = torch.randn(BATCH, AUDIO_SAMPLES, device=device)
             if spec.get("waveform_3d"):  # models taking (batch, 1, samples), e.g. omniasr
                 inputs["input_values"] = inputs["input_values"][:, None]
             if spec.get("padding_mask"):  # all-ones (batch, samples) mask, for models whose loss needs it
-                inputs["padding_mask"] = torch.ones(BATCH, 16000, dtype=torch.long, device=device)
+                inputs["padding_mask"] = torch.ones(BATCH, AUDIO_SAMPLES, dtype=torch.long, device=device)
         dec = torch.randint(1, min(getattr(cfg, "vocab_size", 32), 1000), (BATCH, 8), device=device)
         if train:
             inputs["labels"] = dec
@@ -340,7 +343,7 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
             inputs["decoder_input_ids"] = dec
     elif kind == "image_text":  # CLIP / SigLIP style dual encoders
         h, w = _hw(getattr(cfg.vision_config, "image_size", 224))
-        ids = _text_ids(cfg, device, 16)
+        ids = _text_ids(cfg, device, SEQ_LEN // 2)
         inputs.update(input_ids=ids, pixel_values=torch.randn(BATCH, 3, h, w, device=device))
         if not spec.get("no_attention_mask"):
             inputs["attention_mask"] = torch.ones_like(ids)
@@ -353,8 +356,8 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
     elif kind == "grid_vlm":
         inputs = _grid_vlm_inputs(spec, model, device)
     elif kind == "audio_llm":  # audio encoder + LM decoder with audio placeholder tokens (omniasr)
-        input_values = torch.randn(BATCH, 1, 16000, device=device)  # 1s at 16 kHz, (batch, 1, samples)
-        text = _text_ids(cfg, device, 16)
+        input_values = torch.randn(BATCH, 1, AUDIO_SAMPLES, device=device)  # 1s at 16 kHz, (batch, 1, samples)
+        text = _text_ids(cfg, device, SEQ_LEN // 2)
 
         def build(n_audio_tokens: int) -> dict:
             ids = torch.cat([torch.full((BATCH, n_audio_tokens), cfg.audio_token_id, device=device), text], dim=1)

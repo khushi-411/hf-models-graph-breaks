@@ -1,0 +1,449 @@
+{
+  "model": "whisper",
+  "hf_id": "openai/whisper-tiny",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:38:43+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 8,
+  "recompiled_graphs": 3,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 8,
+      "new_shape_events": 136
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 3,
+      "new_shape_events": 48
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function __call__ in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:82\n    triggered by the following guard failure(s):\n    - 6/0: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)",
+    "Recompiling function __call__ in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:82\n    triggered by the following guard failure(s):\n    - 6/1: kwargs['past_key_values'].is_updated[0] == False         # if is_cross_attention and past_key_values and is_updated:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py:325 in forward\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    -     return self._call_impl(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    -     return forward_call(*args, **kwargs)\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 488, in forward\n    -     hidden_states, _ = self.encoder_attn(\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 325, in forward\n    -     if is_cross_attention and past_key_values and is_updated:\n    - 6/0: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)",
+    "Recompiling function __call__ in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:82\n    triggered by the following guard failure(s):\n    - 6/2: len(args) == 3                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    - 6/1: len(args) == 3                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    - 6/0: args[0].size()[0]*args[0].size()[1] <= 4096  # (_inductor/codegen/cpp.py:2405 in need_use_acc_helper)",
+    "Recompiling function __call__ in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:82\n    triggered by the following guard failure(s):\n    - 6/3: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    - 6/2: self._modules['self_attn'].layer_idx == 1                # is_updated = past_key_values.is_updated.get(self.layer_idx)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py:315 in forward (HINT: torch.compile considers integer attributes of the nn.Module to be static. If you are observing recompilation, you might want to make this integer dynamic using torch._dynamo.config.allow_unspec_int_on_nn_module = True, or convert this integer into a tensor.)\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    -     return self._call_impl(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    -     return forward_call(*args, **kwargs)\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 475, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 315, in forward\n    -     is_updated = past_key_values.is_updated.get(self.layer_idx)\n    - 6/1: args[0].size()[0]*args[2].size()[1] <= 4096  # (_inductor/codegen/cpp.py:2405 in need_use_acc_helper)\n    - 6/0: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)",
+    "Recompiling function __call__ in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:82\n    triggered by the following guard failure(s):\n    - 6/4: kwargs['past_key_values'].is_updated[0] == False         # if is_cross_attention and past_key_values and is_updated:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py:325 in forward\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    -     return self._call_impl(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    -     return forward_call(*args, **kwargs)\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 488, in forward\n    -     hidden_states, _ = self.encoder_attn(\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 325, in forward\n    -     if is_cross_attention and past_key_values and is_updated:\n    - 6/3: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    - 6/2: args[0].size()[0]*args[2].size()[1] <= 4096  # (_inductor/codegen/cpp.py:2405 in need_use_acc_helper)\n    - 6/1: kwargs['past_key_values'].is_updated[0] == False         # if is_cross_attention and past_key_values and is_updated:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py:325 in forward\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    -     return self._call_impl(*args, **kwargs)\n    -   File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    -     return forward_call(*args, **kwargs)\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 488, in forward\n    -     hidden_states, _ = self.encoder_attn(\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/whisper/modeling_whisper.py\", line 325, in forward\n    -     if is_cross_attention and past_key_values and is_updated:\n    - 6/0: len(args) == 2                                           # return super().__call__(*args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py:111 in __call__\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/modeling_layers.py\", line 111, in __call__\n    -     return super().__call__(*args, **kwargs)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 4,
+      "examples": [
+        "s96 <= 448",
+        "Eq(s6, 3000)",
+        "Eq(s69, 3000)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 3,
+      "examples": [
+        "Ne(s96 - 1, 1)",
+        "Ne(s38 - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_copy_",
+      "line": 831,
+      "count": 3,
+      "examples": [
+        "s96 - 1 >= 2",
+        "s38 - 1 >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 3,
+      "examples": [
+        "s6 = 3000",
+        "s69 = 3000"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2333,
+      "count": 7,
+      "examples": [
+        "Eq(s70, 80)",
+        "Eq(s37, 80)",
+        "Eq(s50, 80)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2333,
+      "count": 7,
+      "examples": [
+        "s70 = 80",
+        "s37 = 80",
+        "s50 = 80"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 50,
+      "examples": [
+        "zf43 >= 0.0",
+        "zf43 <= 1.0",
+        "zf97 >= 0.0",
+        "zf97 <= 1.0",
+        "zf35 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 25,
+      "examples": [
+        "Eq(zf43, 0.0)",
+        "Eq(zf97, 0.0)",
+        "Eq(zf35, 0.0)",
+        "Eq(zf61, 0.0)",
+        "Eq(zf25, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/whisper/modeling_whisper.py:forward:1110",
+        "transformers/models/whisper/modeling_whisper.py:forward:950",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 943,
+      "count": 4,
+      "examples": [
+        "s38 <= 448",
+        "Eq(s75, 3000)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 943,
+      "count": 2,
+      "examples": [
+        "s75 = 3000"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1081,
+      "count": 1,
+      "examples": [
+        "Eq(s69, 3000)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1081"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1081,
+      "count": 1,
+      "examples": [
+        "s69 = 3000"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1081"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 287,
+      "count": 1,
+      "examples": [
+        "Eq(s75, 3000)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 287,
+      "count": 1,
+      "examples": [
+        "s75 = 3000"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:287"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 21,
+      "examples": [
+        "Eq(zf38, 1.0e-5)",
+        "Eq(zf34, 1.0e-5)",
+        "Eq(zf27, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:633",
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "Eq(s69, 384)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:633",
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "s69 = 384"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:633",
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/whisper/modeling_whisper.py:forward",
+      "line": 633,
+      "count": 3,
+      "examples": [
+        "Eq(zf94, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:633"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 11,
+      "examples": [
+        "s33*s50 <= 4096",
+        "s33*s95 <= 4096",
+        "s21*s50 <= 4096",
+        "s21*s95 <= 4096",
+        "s11*s68 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:633",
+        "transformers/models/whisper/modeling_whisper.py:forward:807",
+        "transformers/models/whisper/modeling_whisper.py:forward:1110"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/whisper/modeling_whisper.py:forward",
+      "line": 807,
+      "count": 10,
+      "examples": [
+        "Eq(zf94, 0.0)",
+        "Eq(zf96, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 3,
+      "examples": [
+        "Eq(Mod(384*s21*s95, 384*s33), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 3,
+      "examples": [
+        "Eq(384*s21*s95, 384*s33*(((s21*s95)//s33)))"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 3,
+      "examples": [
+        "Eq(s33, s21)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:807"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s86, 384)"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:1110"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s86 = 384"
+      ],
+      "model_frames": [
+        "transformers/models/whisper/modeling_whisper.py:forward:1110"
+      ]
+    }
+  ]
+}

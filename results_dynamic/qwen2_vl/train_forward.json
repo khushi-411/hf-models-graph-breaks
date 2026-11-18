@@ -1,0 +1,1339 @@
+{
+  "model": "qwen2_vl",
+  "hf_id": "Qwen/Qwen2-VL-2B-Instruct",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:58:40+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 31,
+  "recompiled_graphs": 12,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 31,
+      "new_shape_events": 499
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 6,
+      "new_shape_events": 222
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 6,
+      "new_shape_events": 271
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: ___check_obj_id(func.__code__, 110091488414592), type=<class 'code'>  # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: ___check_obj_id(func.__code__, 110091488414592), type=<class 'code'>  # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 9/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 10/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_713 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:713\n    triggered by the following guard failure(s):\n    - 11/0: ___stack0.size()[1] == grid_thw.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_427 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:427\n    triggered by the following guard failure(s):\n    - 23/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:443 in torch_dynamo_resume_in_forward_at_427\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 443, in torch_dynamo_resume_in_forward_at_427\n    -     for q, k, v in zip(*splits)",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_1049 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1049\n    triggered by the following guard failure(s):\n    - 28/0: len(___stack0) == 2                                      # vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1050 in torch_dynamo_resume_in_get_image_features_at_1049\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1050, in torch_dynamo_resume_in_get_image_features_at_1049\n    -     vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1172 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1172\n    triggered by the following guard failure(s):\n    - 29/0: len(___stack0.pooler_output) == 2                        # image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1182 in torch_dynamo_resume_in_forward_at_1172\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1182, in torch_dynamo_resume_in_forward_at_1172\n    -     image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1054\n    triggered by the following guard failure(s):\n    - 30/0: tensor 'image_features' size mismatch at index 0. expected 32, actual 48",
+    "Recompiling function compute_3d_position_ids in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1095\n    triggered by the following guard failure(s):\n    - 34/0: self.rope_deltas is None                                 # if can_compute_mrope and (self.rope_deltas is None or past_key_values_length == 0):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1115 in compute_3d_position_ids\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1115, in compute_3d_position_ids\n    -     if can_compute_mrope and (self.rope_deltas is None or past_key_values_length == 0):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 9/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 9/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 10/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 10/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_427 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:427\n    triggered by the following guard failure(s):\n    - 23/1: len(splits[0]) == 3                                      # for q, k, v in zip(*splits)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:443 in torch_dynamo_resume_in_forward_at_427\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 443, in torch_dynamo_resume_in_forward_at_427\n    -     for q, k, v in zip(*splits)\n    - 23/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:443 in torch_dynamo_resume_in_forward_at_427\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 443, in torch_dynamo_resume_in_forward_at_427\n    -     for q, k, v in zip(*splits)",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_1049 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1049\n    triggered by the following guard failure(s):\n    - 28/1: len(___stack0) == 3                                      # vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1050 in torch_dynamo_resume_in_get_image_features_at_1049\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1050, in torch_dynamo_resume_in_get_image_features_at_1049\n    -     vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)\n    - 28/0: len(___stack0) == 2                                      # vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1050 in torch_dynamo_resume_in_get_image_features_at_1049\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1050, in torch_dynamo_resume_in_get_image_features_at_1049\n    -     vision_outputs.pooler_output = torch.split(vision_outputs.pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1172 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1172\n    triggered by the following guard failure(s):\n    - 29/1: len(___stack0.pooler_output) == 3                        # image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1182 in torch_dynamo_resume_in_forward_at_1172\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1182, in torch_dynamo_resume_in_forward_at_1172\n    -     image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(\n    - 29/0: len(___stack0.pooler_output) == 2                        # image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1182 in torch_dynamo_resume_in_forward_at_1172\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py\", line 1182, in torch_dynamo_resume_in_forward_at_1172\n    -     image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/qwen2_vl/modeling_qwen2_vl.py:1054\n    triggered by the following guard failure(s):\n    - 30/1: tensor 'image_features' size mismatch at index 0. expected 48, actual 64\n    - 30/0: tensor 'image_features' size mismatch at index 0. expected 32, actual 64"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/ir.py:significant_strides_equal"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/fx_passes/reinplace.py:_overlap",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:significant_strides_equal",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 30,
+      "examples": [
+        "Eq(s52, 2)",
+        "Eq(s55, 3)",
+        "Eq(s72, 2)",
+        "Eq(s43, 3)",
+        "Eq(s21, 2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1172",
+        "transformers/utils/generic.py:wrapper:1006",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:get_image_features:1048"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 30,
+      "examples": [
+        "s52 = 2",
+        "s55 = 3",
+        "s72 = 2",
+        "s43 = 3",
+        "s21 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1172",
+        "transformers/utils/generic.py:wrapper:1006",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:get_image_features:1048"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 943,
+      "count": 1,
+      "examples": [
+        "Eq(zf23, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:943"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 31,
+      "examples": [
+        "s87 >= 0",
+        "s80 >= 0",
+        "s5 >= 0",
+        "s18 >= 0",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) + s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 32,
+      "examples": [
+        "Ne(s87, 0)",
+        "Ne(s80, 0)",
+        "Ne(s5, 0)",
+        "Ne(s18, 0)",
+        "Ne(1280*s47*((s87//1176)), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 66,
+      "examples": [
+        "s87 >= 2",
+        "s80 >= 2",
+        "s5 >= 2",
+        "s18 >= 2",
+        "2*s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1346,
+      "count": 9,
+      "examples": [
+        "Ne(s80, 1)",
+        "Ne(s18, 1)",
+        "Ne(s31, 1)",
+        "Ne(s89, 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112",
+      "line": 112,
+      "count": 144,
+      "examples": [
+        "Ne((s87//s75), -1)",
+        "((s87//s75)) > -1",
+        "Ne(s75, -1)",
+        "s75 > -1",
+        "Eq(s80*s87, s75**2*((s80//s75))*((s87//s75)))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 75,
+      "examples": [
+        "Ne((s87//s75), s87)",
+        "Eq(s75, (s87//((s87//s75))))",
+        "Ne((s80//s75), s80)",
+        "Eq(s75, (s80//((s80//s75))))",
+        "Ne((s5//s40), s5)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 55,
+      "examples": [
+        "Eq(Mod(s87, (s87//s75)), 0)",
+        "Eq(Mod(s80, (s80//s75)), 0)",
+        "Eq(Mod(s5, (s5//s40)), 0)",
+        "Eq(Mod(s18, (s18//s40)), 0)",
+        "Eq(Mod(s87, 3), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 92,
+      "examples": [
+        "Ne((s80//s75), 1)",
+        "Eq(Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s87//s75), 1)",
+        "Eq(Max(1, (s80//s75))*Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//s75))*((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s18//s40), 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_repeat",
+      "line": 4876,
+      "count": 9,
+      "examples": [
+        "s88 >= 0",
+        "s78 >= 0",
+        "s38 >= 0",
+        "s70 >= 0"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 9,
+      "examples": [
+        "Ne(0, (s87//((s87//s75))))",
+        "Ne(0, (s5//((s5//s40))))",
+        "Ne(0, (s64//((s64//s26))))",
+        "Ne(0, (s84//((s84//s60))))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 721,
+      "count": 18,
+      "examples": [
+        "Ne(s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), 0)",
+        "Ne(s63, 0)",
+        "Ne(s10, 0)",
+        "Ne(s38*((s31//s26))*((s31//((s31//s26))))*((s64//s26))*((s64//((s64//s26)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 29,
+      "examples": [
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2*((s80//s75)))",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40)",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40**2)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 29,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 27,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward",
+      "line": 713,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:713"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713",
+      "line": 714,
+      "count": 1,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:get_vision_attention_seqlens",
+      "line": 76,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:get_vision_attention_seqlens:76"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 10,
+      "examples": [
+        "Eq(Mod(s47*s87, 1176), 0)",
+        "Eq(Mod(2*s25*s60*s67, s35), 0)",
+        "Eq(Mod(1280*s77, 5120), 0)",
+        "Eq(Mod(3*s25*s60*s67, s36), 0)",
+        "Eq(Mod(4*s25*s60*s67, s36), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2333,
+      "count": 3,
+      "examples": [
+        "Ne(84*s47*((s87//84)), 0)",
+        "Ne(((s47*s87)//1176), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:convert",
+      "line": 2357,
+      "count": 7,
+      "examples": [
+        "Eq(Max(1, (s87//1176)), 1)",
+        "Eq((s87//1176), 1)",
+        "Ne((s87//1176), 0)",
+        "Ne(((s47*s87)//1176), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 9,
+      "examples": [
+        "Eq(zf14, 1.0e-6)",
+        "Eq(zf87, 1.0e-6)",
+        "Eq(zf88, 1.0e-6)",
+        "Eq(zf12, 1.0e-6)",
+        "Eq(zf73, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 21,
+      "examples": [
+        "Eq(s47, s44)",
+        "Eq(s26, 80)",
+        "Eq(s33, s60)",
+        "Eq(s33, s14)",
+        "Eq(s65, 80)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2517,
+      "count": 8,
+      "examples": [
+        "Ne(s48 - 1, 1)",
+        "Ne(s32 - 1, 1)",
+        "Ne(s40 - 1, 1)",
+        "Eq(s2, 1)",
+        "Ne(s37, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_713:714",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:are_strides_like_channels_last_or_false",
+      "line": 2026,
+      "count": 1,
+      "examples": [
+        "Ne((s87//3), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:are_strides_like_channels_last_or_false",
+      "line": 2031,
+      "count": 1,
+      "examples": [
+        "Ne((s87//84), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 22,
+      "examples": [
+        "((s87//3)) < s87",
+        "((s87//6)) < ((s87//3))",
+        "((s87//84)) < ((s87//6))",
+        "((s87//84)) > 1",
+        "s12 >= s60"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:significant_strides_equal",
+      "line": 547,
+      "count": 1,
+      "examples": [
+        "Eq(s87, 1176)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:significant_strides_equal",
+      "line": 547,
+      "count": 1,
+      "examples": [
+        "s87 = 1176"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:716"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "Eq(s50, 1280)",
+        "Eq(s87, 1280)",
+        "Eq(s67, 1280)",
+        "Eq(s27, 1280)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "s50 = 1280",
+        "s87 = 1280",
+        "s67 = 1280",
+        "s27 = 1280"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 6,
+      "examples": [
+        "s26 = 80",
+        "s65 = 80",
+        "s53 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:720",
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 10,
+      "examples": [
+        "s47 <= 4096",
+        "s43 <= 4096",
+        "2*s25 <= 4096",
+        "s38 <= 4096",
+        "((s77//4)) <= 4096"
+      ],
+      "model_frames": [
+        "transformers/modeling_layers.py:__call__:111",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 9,
+      "examples": [
+        "Eq(s87, 1280)",
+        "Eq(s60*s67, 1280)",
+        "Eq(s86, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "s87 = 1280",
+        "s86 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:469",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward",
+      "line": 383,
+      "count": 12,
+      "examples": [
+        "Eq(zf77, 0.111803398874989)",
+        "Eq(zf16, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 8,
+      "examples": [
+        "Ne(s35, -1)",
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)",
+        "Ne(s36, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 7,
+      "examples": [
+        "s35 >= 0",
+        "s68*(s11 + s55) >= 0",
+        "s36 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 6,
+      "examples": [
+        "Ne(s35, 0)",
+        "Ne(s36, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 10,
+      "examples": [
+        "Eq(2*s25, s35)",
+        "Eq(1280*((s77//((s77//4)))), 5120)",
+        "Ne(5120*((s77//4)), s77)",
+        "Eq(3*s25, s36)",
+        "Eq(4*s25, s36)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 6,
+      "examples": [
+        "Eq(2560*s25, 2*s25*s60*s67)",
+        "Eq(3840*s25, 3*s25*s60*s67)",
+        "Eq(5120*s25, 4*s25*s60*s67)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 405,
+      "count": 6,
+      "examples": [
+        "Ne(Mod(s60, s12), 0)",
+        "Ne(Mod(s60*s67, s12), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 6,
+      "examples": [
+        "s12 > s60*s67",
+        "((1280//s67)) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 2,
+      "examples": [
+        "Eq(1280*s77, 5120*((s77//4)))"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1489,
+      "count": 2,
+      "examples": [
+        "Ne((s77//((s77//4))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 2,
+      "examples": [
+        "Ne((s77//((s77//4))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_714:728"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4640,
+      "count": 9,
+      "examples": [
+        "s63 >= 0",
+        "s10 >= 0",
+        "s45 >= 0",
+        "s29 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 3,
+      "examples": [
+        "Eq(s10 + s63, s46)",
+        "Eq(s10 + s45 + s63, s46)",
+        "Eq(s10 + s29 + s45 + s63, s46)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_image_features_at_1048:1049"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_cat_meta",
+      "line": 1881,
+      "count": 12,
+      "examples": [
+        "Eq(s43, s7)",
+        "Eq(s88, s43)",
+        "Eq(s9, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1172"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward",
+      "line": 1172,
+      "count": 3,
+      "examples": [
+        "Eq(s1 + s38, 32)",
+        "Eq(s1 + s38 + s97, 48)",
+        "Eq(s1 + s38 + s62 + s97, 64)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1172"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1172",
+      "line": 1185,
+      "count": 8,
+      "examples": [
+        "Eq(s28, 32)",
+        "Eq(s8, 2)",
+        "Eq(s72, 2)",
+        "Eq(s28, 48)",
+        "Eq(s28, 64)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1172:1185"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1172",
+      "line": 1185,
+      "count": 8,
+      "examples": [
+        "s28 = 32",
+        "s8 = 2",
+        "s72 = 2",
+        "s28 = 48",
+        "s28 = 64"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1172:1185"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 4,
+      "examples": [
+        "Eq(s40, s29)",
+        "Eq(s48, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1172:1185"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185",
+      "line": 1200,
+      "count": 18,
+      "examples": [
+        "Eq(s8, 2)",
+        "Eq(s72, 2)",
+        "Ne(s38, 4)",
+        "s29 - s89 <= 0",
+        "s89 <= s29"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185",
+      "line": 1200,
+      "count": 4,
+      "examples": [
+        "s8 = 2",
+        "s72 = 2",
+        "s8 = 3",
+        "s72 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:compute_3d_position_ids",
+      "line": 1116,
+      "count": 2,
+      "examples": [
+        "Eq(s8, 2)",
+        "Eq(s72, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:compute_3d_position_ids:1116"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:compute_3d_position_ids",
+      "line": 1116,
+      "count": 2,
+      "examples": [
+        "s8 = 2",
+        "s72 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:compute_3d_position_ids:1116"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_904",
+      "line": 905,
+      "count": 2,
+      "examples": [
+        "s41 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_904:905"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2517,
+      "count": 1,
+      "examples": [
+        "s2 = 1"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3241,
+      "count": 2,
+      "examples": [
+        "Ne((s84//s39), -1)",
+        "Ne(s37*((s84//s39)), -1)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1041,
+      "count": 1,
+      "examples": [
+        "s37*((s84//s39)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_clone_meta",
+      "line": 719,
+      "count": 2,
+      "examples": [
+        "s37*((s84//s39)) + 2*Max(1, s37)*Max(1, (s84//s39)) >= 0",
+        "Ne(s37*((s84//s39)) + 2*Max(1, s37)*Max(1, (s84//s39)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 2,
+      "examples": [
+        "((s84//s39)) >= 1",
+        "151936*s11 + 151936*s55 >= 151936"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/fx_passes/reinplace.py:_overlap",
+      "line": 634,
+      "count": 1,
+      "examples": [
+        "s37*((s84//s39)) > 0"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_get_vision_position_ids_at_905:906"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 3,
+      "examples": [
+        "Eq(s38, 1) | Eq(s38, 3)",
+        "Eq(s38*s97, 1) | Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200",
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 2,
+      "examples": [
+        "Eq(s38, 3)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 2,
+      "examples": [
+        "s38 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:torch_dynamo_resume_in_forward_at_1185:1200"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(512*s11, 512*s11 + 512*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1436,
+      "count": 4,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 151936*s68*(s11 + s55)",
+        "151936 < 151936*s68*(s11 + s55)",
+        "151936*s11 + 151936*s55 < 151936*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s11*s68"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 1,
+      "examples": [
+        "Ne(Mod(512, 512*s11 + 512*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/qwen2_vl/modeling_qwen2_vl.py:forward:1323"
+      ]
+    }
+  ]
+}

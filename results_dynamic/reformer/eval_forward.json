@@ -1,0 +1,50 @@
+{
+  "model": "reformer",
+  "hf_id": "google/reformer-crime-and-punishment",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T06:54:48+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 23,
+      "new_shape_events": 595
+    }
+  ],
+  "error": "ValueError: Make sure that config.axial_pos_shape factors: (4, 8) multiply at least to max(sequence_length, least_common_mult_chunk_length): max(48, 16).",
+  "error_inductor_site": null,
+  "traceback": "Traceback (most recent call last):\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 240, in run_scenario\n    out = compiled(**inputs)\n  File \"/home/khushi/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 661, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1363, in compile_wrapper\n    result = fn(*args, **kwargs)\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2222, in forward\n    reformer_outputs = self.reformer(\n        input_ids,\n    ...<8 lines>...\n        return_dict=return_dict,\n    )\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward\n    input_shape[-1] % least_common_mult_chunk_length != 0\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2039, in torch_dynamo_resume_in_forward_at_2023\n    input_ids, inputs_embeds, attention_mask, position_ids, input_shape = self._pad_to_mult_of_chunk_length(\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2053, in torch_dynamo_resume_in_forward_at_2039\n    embedding_output = self.embeddings(\n        input_ids=input_ids,\n    ...<2 lines>...\n        start_idx_pos_encodings=start_idx_pos_encodings,\n    )\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 352, in forward\n    position_embeddings = self.position_embeddings(position_ids)\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 260, in forward\n    raise ValueError(\n    ...<3 lines>...\n    )\nValueError: Make sure that config.axial_pos_shape factors: (4, 8) multiply at least to max(sequence_length, least_common_mult_chunk_length): max(48, 16).\n"
+}

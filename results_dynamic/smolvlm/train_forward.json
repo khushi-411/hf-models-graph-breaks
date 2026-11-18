@@ -1,0 +1,1078 @@
+{
+  "model": "smolvlm",
+  "hf_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T07:07:26+00:00",
+  "env": {
+    "torch": "2.16.0a0+git6b3a750",
+    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
+    "transformers": "5.22.1",
+    "transformers_git": null,
+    "torch_path": "/home/khushi/Documents/pytorch/torch",
+    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
+    "python": "3.14.3",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 18,
+  "recompiled_graphs": 4,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 18,
+      "new_shape_events": 512
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 2,
+      "new_shape_events": 19
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 2,
+      "new_shape_events": 25
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 4",
+    "Recompiling function wrapped_func in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/deprecation.py:119\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 104210544435456), type=<class 'transformers.models.idefics3.modeling_idefics3.Idefics3ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/deprecation.py:124 in wrapped_func (HINT: type Idefics3ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 4",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_613 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:613\n    triggered by the following guard failure(s):\n    - 13/0: tensor '___stack0.__self__' size mismatch at index 0. expected 2, actual 3",
+    "Recompiling function torch_dynamo_resume_in_forward_at_672 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:672\n    triggered by the following guard failure(s):\n    - 14/0: len(___stack0.pooler_output) == 2                        # if image_hidden_states is not None:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:685 in torch_dynamo_resume_in_forward_at_672\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py\", line 685, in torch_dynamo_resume_in_forward_at_672\n    -     if image_hidden_states is not None:",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_613 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:613\n    triggered by the following guard failure(s):\n    - 13/1: tensor '___stack0.__self__' size mismatch at index 0. expected 3, actual 4\n    - 13/0: tensor '___stack0.__self__' size mismatch at index 0. expected 2, actual 4",
+    "Recompiling function torch_dynamo_resume_in_forward_at_672 in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:672\n    triggered by the following guard failure(s):\n    - 14/1: len(___stack0.pooler_output) == 3                        # if image_hidden_states is not None:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:685 in torch_dynamo_resume_in_forward_at_672\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py\", line 685, in torch_dynamo_resume_in_forward_at_672\n    -     if image_hidden_states is not None:\n    - 14/0: len(___stack0.pooler_output) == 2                        # if image_hidden_states is not None:  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py:685 in torch_dynamo_resume_in_forward_at_672\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/idefics3/modeling_idefics3.py\", line 685, in torch_dynamo_resume_in_forward_at_672\n    -     if image_hidden_states is not None:"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 171,
+      "count": 1,
+      "examples": [
+        "Eq(zf69, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:171"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_get_unfold_shape_stride",
+      "line": 4055,
+      "count": 2,
+      "examples": [
+        "s89 >= 16"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 12,
+      "examples": [
+        "16*s89 < s89**2",
+        "s89 > 16",
+        "Max(1, (s89//16)) < Max(1, (s89//16))**2",
+        "Max(1, (s89//16))**2 > 1",
+        "Max(1, (s89//16)) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 405,
+      "count": 3,
+      "examples": [
+        "Ne(Mod(16, s89), 0)",
+        "Ne(Mod(1, Max(1, (s100//16))*Max(1, (s4//16))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 49,
+      "examples": [
+        "Ne((s89//16), 1)",
+        "Eq(s89, 16*((s89//16)))",
+        "Eq(s89**2, 256*((s89//16))**2)",
+        "Ne((s68//16), 1)",
+        "Ne((s58//16), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2333,
+      "count": 16,
+      "examples": [
+        "Eq(s67, 3)",
+        "Eq(s46, 3)",
+        "s58 >= 16",
+        "s68 >= 16",
+        "Eq(s59, 3)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2333,
+      "count": 6,
+      "examples": [
+        "s67 = 3",
+        "s46 = 3",
+        "s59 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 35,
+      "examples": [
+        "Ne(((s89//16))**2, (s89//16))",
+        "Ne(((s58//16))*((s68//16)), (s58//16))",
+        "Eq(s40, s82)",
+        "Ne(((s100//16))*((s4//16)), (s100//16))",
+        "Eq(s99, s30)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 33,
+      "examples": [
+        "Ne(Mod((s89//16), ((s89//16))**2), 0)",
+        "Ne(Mod((s58//16), ((s58//16))*((s68//16))), 0)",
+        "Ne(Mod((s100//16), ((s100//16))*((s4//16))), 0)",
+        "Eq(PythonMod(s11, TruncToInt(FloatPow(ToFloat(s11), 0.5))), 0)",
+        "Eq(PythonMod((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))), TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 544,
+      "count": 1,
+      "examples": [
+        "Ne(Max(1, (s89//16))**2, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:get_image_features:585"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 9,
+      "examples": [
+        "Eq(Mod(s2*s54*s82, s40), 0)",
+        "Eq(Mod(s30*s43*s94, s99), 0)",
+        "Eq(Mod(s30*s43*s94, s56), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/utils/generic.py:wrapper:1081",
+        "transformers/utils/output_capturing.py:wrapper:287",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 27,
+      "examples": [
+        "((s100//16))*((s4//16)) > 1",
+        "((s4//16)) < ((s100//16))*((s4//16))",
+        "Ne(12288*s68*(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 0)",
+        "TruncToInt(FloatPow(ToFloat(s11), 0.5)) > -1",
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), -1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 8,
+      "examples": [
+        "Ne(Mod(((s100//16))*((s4//16)), 768*((s100//16))*((s4//16))), 0)",
+        "Ne(Mod(768, 768*((s4//16))), 0)",
+        "Ne(Mod(768*((s4//16)), 768*Max(1, ((s100//16))*((s4//16)))), 0)",
+        "Ne(Mod(1, (s4//16)), 0)",
+        "Ne(Mod((s4//16), ((s100//16))*((s4//16))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "768*((s4//16)) > 768"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 12,
+      "examples": [
+        "Ne(s56, -1)",
+        "Ne(TruncToInt(FloatPow(ToFloat(s11), 0.5)), -1)",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), -1)",
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), -1)",
+        "Ne(s94*(s14 + s55), -1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 10,
+      "examples": [
+        "s56 >= 0",
+        "TruncToInt(FloatPow(ToFloat(s11), 0.5)) >= 0",
+        "TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) >= 0",
+        "((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))))) >= 0",
+        "s94*(s14 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 4,
+      "examples": [
+        "Ne(s56, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 8,
+      "examples": [
+        "Eq(s90, 768)",
+        "Eq(s79, s9)",
+        "Eq(s95, s44)",
+        "Eq(s89, 576)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_forward_at_672:691"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2516,
+      "count": 4,
+      "examples": [
+        "s90 = 768",
+        "s89 = 576"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_forward_at_672:691"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:forward",
+      "line": 166,
+      "count": 1,
+      "examples": [
+        "Eq(zf14, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:166"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf69, 1.0e-6)",
+        "Eq(zf63, 1.0e-6)",
+        "Eq(zf92, 1.0e-6)",
+        "Eq(zf73, 1.0e-6)",
+        "Eq(zf98, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "Eq(s89, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "s89 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:forward",
+      "line": 478,
+      "count": 10,
+      "examples": [
+        "Eq(zf99, 0.125)",
+        "Eq(zf64, 0.0)",
+        "Eq(s43*s94, s67)",
+        "Eq(zf76, 0.125)",
+        "Eq(zf31, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 3,
+      "examples": [
+        "s38*s43*s94 <= 4096",
+        "s38*s67 <= 4096",
+        "s38*s97 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:478",
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_forward_at_672:691",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 6,
+      "examples": [
+        "Eq(s11*s68*s86, s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))**2)",
+        "Eq(s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))",
+        "Eq(12288*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)",
+        "Eq(s68*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*((((((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))//((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))))*TruncToInt(FloatPow(ToFloat(s11), 0.5)), s11*s68*s86)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 5,
+      "examples": [
+        "Ne(s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5)), 0)",
+        "Ne(576*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, 0)",
+        "Ne(49280*s94*(s14 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 17,
+      "examples": [
+        "s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5)) >= 2",
+        "s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) >= 2",
+        "s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 >= 2",
+        "576*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 >= 2",
+        "576*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1462,
+      "count": 4,
+      "examples": [
+        "Ne(s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 0)",
+        "Ne(s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1489,
+      "count": 4,
+      "examples": [
+        "Ne((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))), 1)",
+        "Ne(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 6,
+      "examples": [
+        "Ne((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))), 0)",
+        "Ne(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))), 0)",
+        "Ne(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))), 0)",
+        "Ne(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 9,
+      "examples": [
+        "Eq(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 4*s86)",
+        "Eq(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 16*s86)",
+        "Eq(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, TruncToInt(IntTrueDiv(s11, 16)))",
+        "Ne(12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), TruncToInt(FloatPow(ToFloat(s11), 0.5)))",
+        "Ne((((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), (s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585",
+      "line": 605,
+      "count": 38,
+      "examples": [
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 1)",
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))))), s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))",
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))))), Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))))",
+        "TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) > -1",
+        "Eq(s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 16*s68*s86*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 7,
+      "examples": [
+        "s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))) >= 0",
+        "s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))) >= 0",
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 0)",
+        "(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))) >= 0",
+        "(((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5))))) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 9,
+      "examples": [
+        "Ne(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 0)",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 0)",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, 0)",
+        "Ne(((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))), 0)",
+        "Ne((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 7,
+      "examples": [
+        "Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))) >= Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))",
+        "Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))**2 >= Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))",
+        "576*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 >= 576",
+        "Max(1, ((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*Max(1, ((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))) >= ((((((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))//((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))))",
+        "49280*s14 + 49280*s55 >= 49280"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 6,
+      "examples": [
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2, 1)",
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))",
+        "Eq(576*s14, 576*s14 + 576*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "Eq(s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 12288)",
+        "Eq(s34, 576)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "Eq(s97, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "s97 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 7,
+      "examples": [
+        "1 < s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "16*s86 < s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "16*s86*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) < s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "16*s86*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 < s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "1 < s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1436,
+      "count": 7,
+      "examples": [
+        "1 < 576*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2",
+        "576 < 576*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2",
+        "576*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 < 576*s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2",
+        "s14 + s55 > -1",
+        "1 < 49280*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605",
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 6,
+      "examples": [
+        "Eq(s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))**2, 4*s68*s86*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))",
+        "Eq(s68*s86*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4*s68*s86*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))**2)",
+        "Eq(s68*s86*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))**2, s68*s86*((s11//16)))",
+        "Eq(s68*s86*((s11//((((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))**2*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4)))), s68*s86*((s11//((((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))",
+        "Eq(s68*s86*((s11//((((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(s11), 0.5)), s68*s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*TruncToInt(FloatPow(ToFloat(s11), 0.5)))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 25,
+      "examples": [
+        "Ne(16*s86, 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5)))",
+        "Ne(4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 4*s86)",
+        "Ne(4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5)))",
+        "Ne(4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)), 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))",
+        "Ne(16*s86, 4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 25,
+      "examples": [
+        "16*s86 < 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))",
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) >= 4*s86",
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) >= 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))",
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) >= 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "16*s86 < 4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 14,
+      "examples": [
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) > 4*s86",
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) > 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))",
+        "4*s68*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)) > 4*s86*TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "TruncToInt(IntTrueDiv(s11, 16)) > TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))",
+        "s68*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2 > TruncToInt(IntTrueDiv(s11, 16))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 2,
+      "examples": [
+        "Ne(Max(1, s86*((s11//(TruncToInt(FloatPow(ToFloat(s11), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(s11), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))), 1)",
+        "Ne(Max(1, ((12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4)))//(TruncToInt(FloatPow(ToFloat(s11), 0.5)))))*Max(1, ((TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))**2)//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(s11), 0.5)), 4))))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_585:605"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4640,
+      "count": 9,
+      "examples": [
+        "s25 >= 0",
+        "s88 >= 0",
+        "s58 >= 0",
+        "s27 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605:613"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 6,
+      "examples": [
+        "Eq(s25 + s88, s30)",
+        "Eq(s30, 2)",
+        "Eq(s25 + s58 + s88, s30)",
+        "Eq(s30, 3)",
+        "Eq(s25 + s27 + s58 + s88, s30)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605:613"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605",
+      "line": 613,
+      "count": 18,
+      "examples": [
+        "Ne(s18*s25*s31, 0)",
+        "Eq(s25, 1)",
+        "Ne(s18*s31*s88, 0)",
+        "Eq(s88, 1)",
+        "Ne(s18*s31*s58, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605:613"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605",
+      "line": 613,
+      "count": 9,
+      "examples": [
+        "s25 = 1",
+        "s88 = 1",
+        "s58 = 1",
+        "s27 = 1"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605:613"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 3,
+      "examples": [
+        "s30 = 2",
+        "s30 = 3",
+        "s30 = 4"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_get_image_features_at_605:613"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_cat_meta",
+      "line": 1881,
+      "count": 12,
+      "examples": [
+        "Eq(s43, s7)",
+        "Eq(s88, s43)",
+        "Eq(s9, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:672"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 2,
+      "examples": [
+        "Eq(s54, s29)",
+        "Eq(s26, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:inputs_merger:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_forward_at_672",
+      "line": 691,
+      "count": 12,
+      "examples": [
+        "-s53 + s67 <= 0",
+        "s53 <= s67",
+        "Eq(zf21, 0.125)",
+        "Eq(zf75, 0.0)",
+        "Eq(zf50, 0.125)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:torch_dynamo_resume_in_forward_at_672:691"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s14)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s34 = 576"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s97, 1) | Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s14*s94"
+      ],
+      "model_frames": [
+        "transformers/models/idefics3/modeling_idefics3.py:forward:841"
+      ]
+    }
+  ]
+}
