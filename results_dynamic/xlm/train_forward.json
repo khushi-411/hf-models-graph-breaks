@@ -1,0 +1,465 @@
+{
+  "model": "xlm",
+  "hf_id": "FacebookAI/xlm-mlm-en-2048",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:46:27+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 4,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 4,
+      "new_shape_events": 85
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/xlm/modeling_xlm.py:forward",
+      "line": 793,
+      "count": 6,
+      "examples": [
+        "s2 <= s56",
+        "Eq(s43, s3) & Eq(s53, s56)",
+        "Eq(zf23, 2.0)",
+        "Eq(zf9, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 2,
+      "examples": [
+        "s56 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 3,
+      "examples": [
+        "s53 <= 512",
+        "(-s55 >= 0) & (-s55 <= s14)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793",
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf92, 1.0e-12)",
+        "Eq(zf39, 1.0e-12)",
+        "Eq(zf69, 1.0e-12)",
+        "Eq(zf20, 1.0e-12)",
+        "Eq(zf50, 1.0e-12)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 20,
+      "examples": [
+        "zf35 >= 0.0",
+        "zf35 <= 1.0",
+        "zf58 >= 0.0",
+        "zf58 <= 1.0",
+        "zf93 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 10,
+      "examples": [
+        "Eq(zf35, 0.1)",
+        "Eq(zf58, 0.1)",
+        "Eq(zf93, 0.1)",
+        "Eq(zf6, 0.1)",
+        "Eq(zf54, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 4,
+      "examples": [
+        "s3*s53 <= 4096",
+        "s3 <= 4096",
+        "s38*s97 <= 4096",
+        "s14*s94 + s55*s94 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:793",
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/xlm/modeling_xlm.py:forward",
+      "line": 999,
+      "count": 3,
+      "examples": [
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s94*(s14 + s55), -1)",
+        "Ne(s14 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s94*(s14 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 4,
+      "examples": [
+        "s34*s94*(s14 + s55) >= 2",
+        "30145*s94*(s14 + s55) >= 2",
+        "s94*(s14 + s55) >= 2",
+        "2048*s94*(s14 + s55) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 1,
+      "examples": [
+        "Ne(s94*(s14 + s55), s94)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 1,
+      "examples": [
+        "Ne(PythonMod(s94, s94*(s14 + s55)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s14 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s34, 2048)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s34 = 2048"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 1,
+      "examples": [
+        "Ne(s94*(s14 + s55), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 1,
+      "examples": [
+        "Ne(30145*s94*(s14 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 1,
+      "examples": [
+        "30145*s14 + 30145*s55 >= 30145"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 5,
+      "examples": [
+        "Eq(2048*s14, 2048*s14 + 2048*s55)",
+        "s14 + s55 > -1",
+        "1 < 30145*s94*(s14 + s55)",
+        "30145 < 30145*s94*(s14 + s55)",
+        "30145*s14 + 30145*s55 < 30145*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s97, 1) | Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s14*s94"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "2048*s14 + 2048*s55 > 2048"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 1,
+      "examples": [
+        "Ne(Mod(2048, 2048*s14 + 2048*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/xlm/modeling_xlm.py:forward:999"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/xlm/modeling_xlm.py:793",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/models/xlm/modeling_xlm.py:793 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}

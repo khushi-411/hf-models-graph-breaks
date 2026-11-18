@@ -1,0 +1,140 @@
+{
+  "model": "electra",
+  "hf_id": "google/electra-base-discriminator",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:58:47+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 51
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 2,
+      "examples": [
+        "s27 <= 512"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 12,
+      "examples": [
+        "Eq(zf18, 1.0e-12)",
+        "Eq(zf56, 1.0e-12)",
+        "Eq(zf72, 1.0e-12)",
+        "Eq(zf76, 1.0e-12)",
+        "Eq(zf41, 1.0e-12)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 20,
+      "examples": [
+        "zf95 >= 0.0",
+        "zf95 <= 1.0",
+        "zf13 >= 0.0",
+        "zf13 <= 1.0",
+        "zf11 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 10,
+      "examples": [
+        "Eq(zf95, 0.1)",
+        "Eq(zf13, 0.1)",
+        "Eq(zf11, 0.1)",
+        "Eq(zf12, 0.1)",
+        "Eq(zf82, 0.1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 7,
+      "examples": [
+        "Eq(zf75, 0.125)",
+        "Eq(zf29, 0.125)",
+        "Eq(zf28, 2.0)",
+        "Eq(zf74, 2.0)",
+        "Eq(zf30, 2.0)"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

@@ -3,7 +3,7 @@
 - **HF id:** `LiquidAI/LFM3-VL-2B`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 3, 'text_config.layer_types': ['conv', 'full_attention', 'sliding_attention'], 'text_config.sliding_window': 16, 'text_config.hidden_size': 512, 'text_config.intermediate_size': 1024, 'text_config.num_attention_heads': 8, 'text_config.num_key_value_heads': 2, 'text_config.head_dim': 64, 'vision_config.num_hidden_layers': 2, 'dtype': 'float32', 'text_config.dtype': 'float32', 'vision_config.dtype': 'float32'}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Hybrid conv / full / sliding attention LM with a Qwen2-VL-style vision tower.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

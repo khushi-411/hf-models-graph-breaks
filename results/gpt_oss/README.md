@@ -3,7 +3,7 @@
 - **HF id:** `openai/gpt-oss-20b`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'num_local_experts': 8, 'num_experts_per_tok': 2, 'vocab_size': 32000, 'pad_token_id': 0, 'quantization_config': None}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Attention sinks, alternating sliding/full attention, MoE.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

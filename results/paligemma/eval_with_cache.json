@@ -14,15 +14,15 @@
     "projection_dim": 512,
     "vision_config.projection_dim": 512
   },
-  "timestamp": "2026-11-17T20:58:24+00:00",
+  "timestamp": "2026-11-18T13:56:02+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "ok",
@@ -32,15 +32,17 @@
   "unique_breaks": 1,
   "breaks": [
     {
-      "location": "transformers/utils/import_utils.py:1897",
+      "location": "transformers/utils/import_utils.py:1975",
       "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
       "user_stack": [
-        "transformers/utils/generic.py:943 in wrapper",
-        "transformers/models/paligemma/modeling_paligemma.py:352 in forward",
-        "transformers/utils/generic.py:943 in wrapper",
-        "transformers/models/paligemma/modeling_paligemma.py:242 in forward",
-        "transformers/models/paligemma/modeling_paligemma.py:167 in get_placeholder_mask",
-        "transformers/utils/import_utils.py:1897 in torch_compilable_check"
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/paligemma/modeling_paligemma.py:359 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/paligemma/modeling_paligemma.py:246 in forward",
+        "transformers/models/paligemma/modeling_paligemma.py:170 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1975 in torch_compilable_check"
       ],
       "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
       "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",

@@ -1,0 +1,460 @@
+{
+  "model": "wavtokenizer",
+  "hf_id": "swiss-ai/wavtokenizer-large-unify-40token",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:02:49+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 22,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 22,
+      "new_shape_events": 161
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: ___check_obj_id(func.__code__, 131111923151280), type=<class 'code'>  # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:155\n    triggered by the following guard failure(s):\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:136\n    triggered by the following guard failure(s):\n    - 6/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_148 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:148\n    triggered by the following guard failure(s):\n    - 7/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_151 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:151\n    triggered by the following guard failure(s):\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/1: tensor '___stack0' size mismatch at index 1. expected 32, actual 16\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 16",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/3: ___check_type_id(self._modules['conv'], 110906440473040), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 9/3: ___check_type_id(self._modules['conv'], 110906440473040), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/5: tensor '___stack0' size mismatch at index 1. expected 64, actual 32\n    - 9/4: ___check_type_id(self._modules['conv'], 110906440475696), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/3: ___check_type_id(self._modules['conv'], 110906440473040), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/6: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 9/5: ___check_type_id(self._modules['conv'], 110906440502720), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 9/3: ___check_type_id(self._modules['conv'], 110906440473040), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_165 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:165\n    triggered by the following guard failure(s):\n    - 9/7: ___check_type_id(self._modules['conv'], 110906440517152), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/6: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 9/5: ___check_type_id(self._modules['conv'], 110906440502720), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 9/3: ___check_type_id(self._modules['conv'], 110906440473040), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 9/1: ___check_type_id(self._modules['conv'], 110906440563776), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:169 in torch_dynamo_resume_in_forward_at_165 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 169, in torch_dynamo_resume_in_forward_at_165\n    -     hidden_states = self.conv(hidden_states)\n    - 9/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:155\n    triggered by the following guard failure(s):\n    - 5/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:136\n    triggered by the following guard failure(s):\n    - 6/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 6/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_148 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py:148\n    triggered by the following guard failure(s):\n    - 7/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 7/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavtokenizer/modeling_wavtokenizer.py:_pad1d",
+      "line": 148,
+      "count": 3,
+      "examples": [
+        "Eq(zf74, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:_pad1d:148"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 4,
+      "examples": [
+        "(-s14 + s89 >= 0) & (-s14 + s89 <= s89)",
+        "(s87 >= 0) & (s87 <= 600*s93)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:torch_dynamo_resume_in__pad1d_at_148:151",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 2,
+      "examples": [
+        "-s14 + s89 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:torch_dynamo_resume_in__pad1d_at_148:151"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 5,
+      "examples": [
+        "s38*(-s14 + s89) >= 2",
+        "s38*s67*(-s14 + s89) >= 2",
+        "64*s38*(((s89//4)) - 1) >= 2",
+        "s63*s87 >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:torch_dynamo_resume_in__pad1d_at_148:151",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 13,
+      "examples": [
+        "Ne(-s14 + s89, 1)",
+        "Eq(s89, -s14 + s89)",
+        "Ne(s89 - 6, 1)",
+        "Eq(s67*s89, s67*(-s14 + s89))",
+        "Ne(s89 - 2, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:torch_dynamo_resume_in__pad1d_at_148:151",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 33,
+      "examples": [
+        "s89 >= 7",
+        "s89 <= 2147483647",
+        "32*s89 - 192 <= 2147483647",
+        "Eq(s67, 32)",
+        "s89 >= 3"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 4,
+      "examples": [
+        "Max(1, s89 - 6) > 1",
+        "Max(1, s89 - 2) > 1",
+        "Max(1, ((s89//4)) - 1) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 20,
+      "examples": [
+        "32*s38*s89 <= 192*s38 + 2147483647",
+        "16*s38*s89 <= 32*s38 + 2147483647",
+        "32*s38*s89 <= 2147483647",
+        "64*s38*((s89//4)) <= 64*s38 + 2147483647",
+        "32*s38*s89 <= 64*s38 + 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:188",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:encode:569",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 7,
+      "examples": [
+        "s67 = 32",
+        "s67 = 16",
+        "s67 = 64"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:165"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 3,
+      "examples": [
+        "Eq(s27, s33)",
+        "Eq(s40, s87)",
+        "Eq(s48, s47)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:188"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/functional_utils.py:has_same_metadata",
+      "line": 424,
+      "count": 1,
+      "examples": [
+        "~(Eq(s27, s40) & Eq(s40, s47) & Eq(s47, s27))"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:188"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s67, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:encode:569"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s67 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:encode:569"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 6,
+      "examples": [
+        "4*s38*s89 <= 2147483647",
+        "s38*s89 <= 2147483647",
+        "s63*s93 <= 2147483647",
+        "32*s63 <= 2147483647",
+        "6*s63*s93 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:encode:569",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:group_norm",
+      "line": 3095,
+      "count": 20,
+      "examples": [
+        "Eq(zf29, 1.0e-6)",
+        "Eq(zf94, 1.0e-6)",
+        "Eq(zf15, 1.0e-6)",
+        "Eq(zf86, 1.0e-6)",
+        "Eq(zf33, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 16,
+      "examples": [
+        "zf74 >= 0.0",
+        "zf74 <= 1.0",
+        "zf39 >= 0.0",
+        "zf39 <= 1.0",
+        "zf95 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 8,
+      "examples": [
+        "Eq(zf74, 0.1)",
+        "Eq(zf39, 0.1)",
+        "Eq(zf95, 0.1)",
+        "Eq(zf64, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 8,
+      "examples": [
+        "Eq(zf60, 1.0e-6)",
+        "Eq(zf24, 1.0e-6)",
+        "Eq(zf26, 1.0e-6)",
+        "Eq(zf17, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward",
+      "line": 675,
+      "count": 6,
+      "examples": [
+        "Eq(zf45, 2.0)",
+        "Eq(zf80, 2.0)",
+        "Eq(zf55, 2.0)",
+        "Eq(zf65, 2.0)",
+        "Eq(zf41, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:forward:675"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/wavtokenizer/modeling_wavtokenizer.py:148",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 129, in _get_extra_padding_for_conv1d, code: length = hidden_states.shape[-1]\n        getitem_5 = getitem(size_1, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 131, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1\n        n_frames_1 = sub(to, 1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        mul = mul(n_frames_1, l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        add_2 = add(mul, l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        ideal_length = sub(add_2, l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 134, in _get_extra_padding_for_conv1d, code: return ideal_length - length\n        extra_padding = sub(ideal_length, getitem_5)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 166, in forward, code: hidden_states, (padding_left, padding_right + extra_padding), mode=self.pad_mode\n        padding_right_1 = add(padding_right, extra_padding)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 163, in forward, code: padding_right = self.padding_total // 2\n        padding_right = floordiv(l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_padding_total_, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 164, in forward, code: padding_left = self.padding_total - padding_right\n        padding_left = sub(l_self_modules_encoder_model_modules_encoder_modules_layers_modules_0_buffers_padding_total_, padding_right)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 146, in _pad1d, code: max_pad = max(padding_left, padding_right)\n        max_pad = maximum(padding_left, padding_right_1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 141, in _pad1d, code: length = hidden_states.shape[-1]\n        getitem_8 = getitem(size_2, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 148, in _pad1d, code: if length <= max_pad:\n        le = le(getitem_8, max_pad)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:675 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:637 in encode",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:569 in encode",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:165 in forward",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:148 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavtokenizer/modeling_wavtokenizer.py:148",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 130, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 129, in _get_extra_padding_for_conv1d, code: length = hidden_states.shape[-1]\n        getitem_2 = getitem(size, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 131, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1\n        n_frames_1 = sub(to, 1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        mul = mul(n_frames_1, l_self_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        add_2 = add(mul, l_self_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 132, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        ideal_length = sub(add_2, l_self_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 134, in _get_extra_padding_for_conv1d, code: return ideal_length - length\n        extra_padding = sub(ideal_length, getitem_2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 166, in forward, code: hidden_states, (padding_left, padding_right + extra_padding), mode=self.pad_mode\n        padding_right_1 = add(padding_right, extra_padding)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 163, in forward, code: padding_right = self.padding_total // 2\n        padding_right = floordiv(l_self_modules_layers_modules_0_buffers_padding_total_, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 164, in forward, code: padding_left = self.padding_total - padding_right\n        padding_left = sub(l_self_modules_layers_modules_0_buffers_padding_total_, padding_right)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 146, in _pad1d, code: max_pad = max(padding_left, padding_right)\n        max_pad = maximum(padding_left, padding_right_1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 141, in _pad1d, code: length = hidden_states.shape[-1]\n        getitem_5 = getitem(size_1, 2)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 148, in _pad1d, code: if length <= max_pad:\n        le = le(getitem_5, max_pad)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py line 255)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavtokenizer/modeling_wavtokenizer.py\", line 256\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:675 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:637 in encode",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:569 in encode",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:165 in forward",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:148 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/functional.py:5952",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:675 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:637 in encode",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:569 in encode",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:257 in forward",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:165 in forward",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:151 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavtokenizer/modeling_wavtokenizer.py:188",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported function call (delayed)\n  Explanation: Dynamo determined that a graph break should occur when calling `L['self']._modules['lstm']`. Reason: Dynamo does not support RNN, GRU, or LSTM. Set torch._dynamo.config.allow_rnn=True to enable experimental support for RNN, GRU, and LSTM in Dynamo\n\n\n  Developer debug context: source: DictGetItemSource(base=AttrSource(base=UnspecializedNNModuleSource(base=LocalSource(local_name='self', is_input=True, dynamism=None, is_derefed_cell_contents=False)), member='_modules'), index='lstm')\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:675 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:637 in encode",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:569 in encode",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:257 in forward",
+        "transformers/models/wavtokenizer/modeling_wavtokenizer.py:188 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html",
+      "short_reason": "Unsupported function call (delayed)",
+      "count": 1
+    }
+  ]
+}

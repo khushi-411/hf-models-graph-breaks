@@ -3,7 +3,7 @@
 - **HF id:** `unsloth/Llama-3.2-1B`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** LlamaForCausalLM, shared by Llama 2/3.x checkpoints and many derived models.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

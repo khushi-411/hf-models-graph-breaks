@@ -3,7 +3,7 @@
 - **HF id:** `google/switch-base-8`
 - **Class:** `AutoModelForSeq2SeqLM`
 - **Config overrides:** `{'num_layers': 2, 'num_decoder_layers': 2, 'num_sparse_encoder_layers': 1, 'num_sparse_decoder_layers': 1, 'encoder_sparse_step': 2, 'decoder_sparse_step': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** eval_with_cache raises "use_cache can only be set to True if ... is used as a decoder" (HF passes use_cache to the encoder).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -36,12 +36,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:98 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward
 ```
 </details>
 
@@ -68,17 +71,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py line 704)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 708)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py", line 775
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py", line 778
             for layer_module in self.block:
                                 ^^^^^^^^^^
 ```
@@ -88,18 +91,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:98 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward
 ```
 </details>
 
 ### 3. Dynamic shape operator
 
-- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:173`  (hit ×1)
+- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:174`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -118,20 +124,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:588 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:227 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:173 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:174 in forward
 ```
 </details>
 
 ### 4. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:175`  (hit ×1)
+- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:176`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -150,13 +158,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_173 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py line 173)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_174 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 174)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   ListIteratorVariable(length=8, index=1) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py", line 174
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py", line 175
             for expert_idx in expert_hit:
                               ^^^^^^^^^^
 ```
@@ -166,15 +174,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:588 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:227 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:195 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:175 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:196 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:176 in forward
 ```
 </details>
 
@@ -204,12 +213,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:98 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward
 ```
 </details>
 
@@ -236,17 +248,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py line 704)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 708)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py", line 775
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py", line 778
             for layer_module in self.block:
                                 ^^^^^^^^^^
 ```
@@ -256,18 +268,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:98 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward
 ```
 </details>
 
 ### 3. Dynamic shape operator
 
-- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:173`  (hit ×1)
+- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:174`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -286,20 +301,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:588 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:227 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:173 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:174 in forward
 ```
 </details>
 
 ### 4. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:175`  (hit ×1)
+- **Location:** `transformers/models/switch_transformers/modeling_switch_transformers.py:176`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -318,13 +335,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_173 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py line 173)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_174 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 174)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   ListIteratorVariable(length=8, index=1) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/switch_transformers/modeling_switch_transformers.py", line 174
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py", line 175
             for expert_idx in expert_hit:
                               ^^^^^^^^^^
 ```
@@ -334,14 +351,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:998 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/switch_transformers/modeling_switch_transformers.py:776 in forward
-transformers/modeling_layers.py:111 in __call__
-transformers/models/switch_transformers/modeling_switch_transformers.py:588 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:227 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:195 in forward
-transformers/models/switch_transformers/modeling_switch_transformers.py:175 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:196 in forward
+transformers/models/switch_transformers/modeling_switch_transformers.py:176 in forward
 ```
 </details>

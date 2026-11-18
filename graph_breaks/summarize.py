@@ -41,8 +41,19 @@ def load_known_issues() -> list[dict]:
 
 
 def _normalize(path: str) -> str:
-    """Older results kept absolute stdlib paths; show them as python/<module>.py."""
+    """Older results kept absolute stdlib paths; show them as python/<module>.py.
+    trust_remote_code modules live in the HF modules cache under a revision hash; show them as
+    hub/<org>/<repo>/<file>.py so known_issues.yaml can match them across users and revisions."""
+    m = re.match(r"^.*/transformers_modules/([^/]+)/([^/]+)/(?:[0-9a-f]{7,40}/)?(.+)$", path)
+    if m:
+        return f"hub/{m.group(1)}/{m.group(2).replace('_hyphen_', '-').replace('_dot_', '.')}/{m.group(3)}"
     return re.sub(r"^.*/lib/python3\.\d+/", "python/", path)
+
+
+def display_location(loc: str) -> str:
+    """`file:line` with the file shown as _normalize() does (no home dirs / revision hashes)."""
+    file, _, line = loc.rpartition(":")
+    return f"{_normalize(file)}:{line}" if file else _normalize(loc)
 
 
 def break_file_and_function(b: dict) -> tuple[str, str | None]:
@@ -84,7 +95,16 @@ def esc(text: str) -> str:
     return text.replace("|", "\\|")
 
 
-def main() -> None:
+def main(argv=None) -> None:
+    import argparse
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--device", default="cpu", help="cpu (results/ -> SUMMARY.md) or cuda (results_cuda/ -> SUMMARY_CUDA.md)")
+    args = p.parse_args(argv)
+    global RESULTS_DIR, SUMMARY
+    if args.device.startswith("cuda"):
+        RESULTS_DIR = ROOT / "results_cuda"
+        SUMMARY = ROOT / "SUMMARY_CUDA.md"
+
     issues = load_known_issues()
     rows, envs = [], set()
     # root-cause key -> info about it and which model/scenarios hit it
@@ -95,7 +115,7 @@ def main() -> None:
             r = json.loads(f.read_text())
             env = r.get("env", {})
             envs.add((env.get("torch"), env.get("transformers"), env.get("transformers_git")))
-            model_link = f"[{r['model']}](results/{model_dir.name}/README.md)"
+            model_link = f"[{r['model']}]({RESULTS_DIR.name}/{model_dir.name}/README.md)"
 
             if r["status"] != "ok":
                 rows.append(
@@ -112,14 +132,14 @@ def main() -> None:
                 cause = causes.setdefault(key, {
                     "issue": issue,
                     "short_reason": b["short_reason"],
-                    "location": b["location"],
+                    "location": display_location(b["location"]),
                     "file": file,
                     "function": func,
                     "doc_url": b.get("doc_url"),
                     "hits": [],
                 })
                 cause["hits"].append(f"{r['model']}/{r['scenario']}")
-                cells.append(f"{issue_label(issue)} {b['short_reason']} (`{b['location']}`)")
+                cells.append(f"{issue_label(issue)} {b['short_reason']} (`{display_location(b['location'])}`)")
 
             rows.append(
                 f"| {model_link} | {r['scenario']} | {r['graph_count']} "

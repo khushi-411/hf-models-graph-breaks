@@ -3,7 +3,7 @@
 - **HF id:** `allenai/longformer-base-4096`
 - **Class:** `AutoModelForMaskedLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'attention_window': [16, 16]}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Sliding-window attention. Window shrunk to 16 so SEQ_LEN=32 spans 2 windows.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

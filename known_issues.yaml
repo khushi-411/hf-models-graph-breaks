@@ -92,9 +92,17 @@ issues:
       breaks, so those entries usually match first. Repro issues/repros/graph_break_in_loop.py.
       Not fixed by nested_graph_breaks=True.
 
-  # tolist-unbacked-length (issues/tolist-unbacked-length.md, pytorch/pytorch): only
-  # visible with capture_scalar_outputs + capture_dynamic_output_shape_ops (Qwen2.5/3-VL
-  # then hard-error instead of graph-breaking), so no break in results/ matches it.
+  - id: tolist-unbacked-length
+    title: "`.tolist()` on a tensor with an unbacked length raises GuardOnDataDependentSymNode instead of graph-breaking"
+    file: null
+    match: "GuardOnDataDependentSymNode"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/tolist-unbacked-length.md
+    notes: >
+      Only visible with capture_scalar_outputs + capture_dynamic_output_shape_ops (Qwen2.5/3-VL then
+      hard-error instead of graph-breaking), so normal runs have no break that matches it.
 
   # ----------------------------------------------------------------------- #
   # Dynamic shapes (pytorch/pytorch#137093: Inductor guards/specializes on
@@ -161,7 +169,8 @@ issues:
     function: significant_strides_equal
     repo: pytorch/pytorch
     issue: null
-    status: not-filing
+    status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
+    draft: issues/significant-strides-equal-guard.md
     notes: >
       qwen2_vl and qwen2_5_vl train (vision tower, patch_embed at modeling_qwen2_vl.py:716):
       installs Eq(s87, 1176) and specializes s87. 1176 = 3 ch * 2 temporal * 14 * 14 is
@@ -184,6 +193,69 @@ issues:
       [2, oo] / [1, oo] has an oo/oo = nan corner and min() raises.
       Repro issues/repros/inductor_bounds_truncdiv_nan.py (static OK, dynamic fails).
 
+  - id: inductor-merge-loops-minmax-not-comparable
+    title: "Inductor `merge_loops` -> `sizevars.stride_vars` -> `sympy_subs` crashes: `ValueError: The argument '-((0))' is not comparable` (Min/Max) with dynamic shapes"
+    file: torch/utils/_sympy/functions.py
+    function: _new_args_filter
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-merge-loops-minmax-not-comparable.md
+    notes: >
+      Hard compile error. inkling2 and inkling2_vlm eval_forward with dynamic=True on CUDA (B200),
+      torch 57f02f8; train_forward compiles. Model-level repro only so far.
+
+  - id: dynamo-guard-python-mod-value-range
+    title: "Dynamo guard building crashes: `value_ranges.python_mod` -> `ValueRangeError: Invalid ranges [0:-0.5]` with dynamic shapes"
+    file: torch/utils/_sympy/value_ranges.py
+    function: python_mod
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/dynamo-guard-python-mod-value-range.md
+    notes: >
+      InternalTorchDynamoError in produce_guards -> _maybe_evaluate_static -> bound_sympy.
+      internvl eval_forward and train_forward with dynamic=True on CUDA, torch 57f02f8.
+
+  - id: floordiv-simplify-compile-time
+    title: "Compile-time blowup with dynamic=True: FloorDiv.eval calls sympy.simplify on deeply nested size expressions (Swin 15-52 min)"
+    file: torch/utils/_sympy/functions.py
+    function: eval
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/floordiv-simplify-compile-time.md
+    notes: >
+      Not a break or recompile: swin dynamic compile succeeds but takes 15.5 min (CUDA eval), 52 min (CUDA
+      train), >25 min (CPU eval) vs ~15 s static. sympy.simplify from FloorDiv.eval dominates; the nested
+      expressions come from per-stage pad-to-window-multiple + (x+1)//2 downsampling.
+
+  - id: inductor-cpu-tiling-stride-at-simplify
+    title: "Inductor CPU codegen spends hours in sympy.simplify via sizevars.stride_at (_select_tiling_indices) with dynamic=True"
+    file: torch/_inductor/sizevars.py
+    function: stride_at
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-cpu-tiling-stride-at-simplify.md
+    notes: >
+      Compile time, not a break. funnel CPU train: 680 s of the first 12 min in stride_at's sympy.simplify
+      (72k calls, exprs up to 7.8k chars). CPU-only: funnel/mobilevit/gemma3_vlm/swin take hours on CPU vs
+      minutes on CUDA with dynamic=True.
+
+  - id: inductor-cpp-half-reduction-redeclare
+    title: "Inductor CPU codegen: fp16/bf16 reduction stored to two outputs declares `auto at_Half_tmp_acc0_vec` twice -> CppCompileError"
+    file: torch/_inductor/codegen/cpp.py
+    function: null
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-cpp-half-reduction-redeclare.md
+    notes: >
+      Hard compile error. pythia (GPT-NeoX parallel residual, fp16 config) train_forward on CPU: the two
+      output-projection bias grads are one fused column sum with two stores. fp16 and bf16 fail with static
+      and dynamic shapes; fp32 is fine. Repro issues/repros/inductor_cpp_half_reduction_redeclare.py.
+
   # ======================================================================= #
   # transformers-side root causes
   # ======================================================================= #
@@ -195,6 +267,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/problem-type-config-mutation.md
     notes: >
       Not a dynamic-shape issue: the 2nd call always recompiles, whatever the input size (also with
       static shapes). Every *ForSequenceClassification / *ForImageClassification train run with
@@ -203,16 +276,16 @@ issues:
       into a local variable instead of mutating the config.
 
   - id: mamba-associative-scan-seq-guard
-    title: "Mamba `associative_scan` path guards on `(seq_len // 8) % 2` -> recompile for new sequence lengths"
+    title: "`associative_scan` recompiles under dynamic=True: generic mode guards on (seq // 8) % 2 (CPU); pointwise mode + autograd specializes batch/seq (CUDA)"
     file: transformers/models/mamba/modeling_mamba.py
-    repo: huggingface/transformers
+    repo: pytorch/pytorch
     issue: null
     status: draft
+    draft: issues/mamba-associative-scan-seq-guard.md
     notes: >
-      `_, all_states = associative_scan(...)` (modeling_mamba.py:236, mamba_selective_scan):
-      guard ((seq // 8) % 2) == 0. Seen in mamba, falcon_mamba, jamba (eval and train; the only
-      recompile left in train once conv-backward-stride-guard is fixed). Not yet checked whether
-      the scan itself or the caller picks the branch from the shape.
+      Root cause is torch._higher_order_ops.associative_scan, not the Mamba code: standalone repro
+      issues/repros/associative_scan_dynamic_guards.py. mamba/jamba CPU eval: seq-parity guard;
+      mamba/jamba/falcon_mamba CUDA train: batch (and seq) specialized at the associative_scan call.
 
   - id: nemotron-h-pad-size-guard
     title: "NemotronH: `if pad_size > 0:` on a shape-derived value -> recompile when seq_len % 16 changes"
@@ -220,6 +293,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/nemotron-h-pad-size-guard.md
     notes: >
       Guard ((16 - seq_len % 16) % 16) <= 0. Padding to a multiple of 16 is branch-free if the pad
       is always applied (F.pad with 0 is a no-op). eval 1 recompile; train 1 left once
@@ -259,6 +333,8 @@ issues:
       Same pattern in 43 model families (bart, whisper, wav2vec2, mbart, ...).
       Fix: `if self.training and self.layerdrop > 0:` (verified on OPT with
       issues/repros/layerdrop_rand_branch.py: 4 graphs -> 1, fullgraph OK).
+      Update 2026-11-18 (transformers main b7fe69cb19): no longer breaks for bart, mbart, marian, m2m_100,
+      blenderbot, pegasus, pegasus_x, opt, whisper, xglm, biogpt, fsmt, led train; still breaks in hubert.
   - <<: *layerdrop
     file: transformers/models/bart/modeling_bart.py
   - <<: *layerdrop
@@ -300,7 +376,8 @@ issues:
     match: "sourceless variable Dict"
     repo: huggingface/transformers
     issue: null
-    status: not-filing
+    status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
+    draft: issues/output-capturing-reconstruction.md
     notes: >
       Follow-on break, seen only after another break inside forward (opt, bart
       with LayerDrop). Disappears when the earlier break is fixed. File only if it
@@ -315,6 +392,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/longformer-global-attn-item.md
     notes: >
       Checks if any token uses global attention, then branches on it in Python.
       Breaks in eval too (once per layer). Not a simple guard fix: the two
@@ -331,6 +409,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/xlm-lengths-assert-item.md
     notes: >
       An input-validation assert forces a .item() sync and a graph break, in
       eval too. Fix: torch._check(lengths.max() <= slen) or skip under
@@ -357,6 +436,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/bigbird-attn-type-switch.md
     notes: >
       Triggered because SEQ_LEN=32 is shorter than block-sparse needs, so it is
       partly a harness artifact, but real users with short inputs hit it too.
@@ -370,7 +450,8 @@ issues:
     file: transformers/models/reformer/modeling_reformer.py
     repo: huggingface/transformers
     issue: null
-    status: not-filing
+    status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
+    draft: issues/reformer-lsh.md
     notes: >
       Several breaks (_hash_vectors .item(), forward branching, the skipped
       _init_*_seed helpers used by reversible layers). Legacy model with
@@ -385,6 +466,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/specaugment-numpy-mask.md
     notes: >
       `np.random.rand(1).item()` and numpy index building, then torch.tensor(...) of the
       mask. Needs a torch implementation of the masking. Copied into hubert, wavlm,
@@ -393,6 +475,21 @@ issues:
     file: transformers/models/hubert/modeling_hubert.py
   - <<: *specaug
     file: transformers/models/wavlm/modeling_wavlm.py
+  - <<: *specaug
+    # dynamic=True: the boolean-mask assignment `hidden_states[mask_time_indices] = ...` of the SpecAugment
+    # mask becomes aten.nonzero, which the backend rejects ("Backend compiler exception").
+    file: transformers/models/wav2vec2/modeling_wav2vec2.py
+    function: _mask_hidden_states
+  - <<: *specaug
+    # dynamic=True: the boolean-mask assignment `hidden_states[mask_time_indices] = ...` of the SpecAugment
+    # mask becomes aten.nonzero, which the backend rejects ("Backend compiler exception").
+    file: transformers/models/hubert/modeling_hubert.py
+    function: _mask_hidden_states
+  - <<: *specaug
+    # dynamic=True: the boolean-mask assignment `hidden_states[mask_time_indices] = ...` of the SpecAugment
+    # mask becomes aten.nonzero, which the backend rejects ("Backend compiler exception").
+    file: transformers/models/wavlm/modeling_wavlm.py
+    function: _mask_hidden_states
 
   - &ctclabels
     id: ctc-labels-max-check
@@ -403,6 +500,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/ctc-labels-max-check.md
     notes: Fix with torch_compilable_check (once check-tensor-all-item is fixed) or skip while compiling.
   - <<: *ctclabels
     file: transformers/models/hubert/modeling_hubert.py
@@ -416,6 +514,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/fsmt-padding-mask-any.md
     notes: Breaks in eval too. Always returning the mask is equivalent.
 
   - id: deberta-att-span-item
@@ -425,6 +524,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/deberta-att-span-item.md
     notes: >
       Once per layer, in eval too (10 graphs). capture_scalar_outputs=True gives 1
       graph. att_span depends only on shapes, so computing it as a Python int fixes it.
@@ -438,6 +538,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/switch-router-module-to.md
     notes: >
       Module.to() in forward builds new nn.Parameters, which Dynamo breaks on by design
       (graph_break_on_nn_param_ctor, pytorch#157452). Cast once at init instead. The
@@ -453,6 +554,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/dynamic-rope-data-dependent.md
     notes: >
       Seen in internvl (its text config uses dynamic rope) and internlm3 (real checkpoint config:
       rope_type dynamic, factor 6.0; 5 breaks per forward). Inherent to dynamic NTK scaling.
@@ -465,6 +567,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/qwen-vl-grid-thw-data-dependent.md
     notes: >
       20-35 breaks per forward. capture_scalar_outputs + capture_dynamic_output_shape_ops
       don't help: they turn the breaks into a hard GuardOnDataDependentSymNode error
@@ -482,6 +585,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/idefics3-image-nonzero.md
     notes: capture_scalar_outputs + capture_dynamic_output_shape_ops -> 1 graph (13 today).
 
   - &mistral3
@@ -491,6 +595,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/mistral3-image-sizes-tolist.md
     notes: With capture flags 14 -> 9 graphs; remaining are data-dependent guards in the patch merger.
   - <<: *mistral3
     file: transformers/models/pixtral/modeling_pixtral.py
@@ -512,6 +617,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/vision-attn-split-lengths-tolist.md
     notes: Same code in hy_v4_vl, inkling2 and dots3_note vision towers. Also triggers graph-break-in-loop (generator expression).
   - <<: *visionsplit
     file: transformers/models/inkling2/modeling_inkling2.py
@@ -528,6 +634,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/vlm-split-image-features-tolist.md
     notes: >
       Same pattern in hy_v4_vl, granite_docling, lfm3_vl, inkling2 and dots3_note. The split sizes are
       only needed to return per-image tuples; the LM path concatenates them again right after.
@@ -549,6 +656,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/placeholder-mask-bool-index-numel.md
     notes: >
       Seen in inkling2, dots3_note and omniasr. Counting with `special_mask.sum() * hidden_size`
       (or comparing n_tokens to features.shape[0]) gives the same check without a dynamic shape.
@@ -565,6 +673,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/granite-docling-tile-mask-index.md
     notes: Similar to idefics3-image-nonzero. With all tiles real (as in our inputs) the mask is a no-op.
 
   - id: apertus1p5-image-sizes-tolist
@@ -573,6 +682,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/apertus1p5-image-sizes-tolist.md
     notes: get_image_tokens / get_image_features. Similar to mistral3-image-sizes-tolist.
 
   - &convbuf
@@ -583,6 +693,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/encodec-conv-params-buffers.md
     notes: >
       `self.stride = nn.Buffer(stride)` etc. (EnCodec, copied into Mimi and WavTokenizer) make
       `_get_extra_padding_for_conv1d` return a tensor, so `if length <= max_pad` in `_pad1d` is
@@ -596,6 +707,67 @@ issues:
     file: torch/nn/functional.py
     function: null
     match: "aten._local_scalar_dense"
+  - <<: *convbuf
+    # dynamic=True (CPU): the same F.pad-with-tensor-pad-value break, reported at Mimi's _pad1d.
+    file: transformers/models/mimi/modeling_mimi.py
+    function: null
+    match: "aten._local_scalar_dense"
+
+  - id: rope-standardize-in-forward-typeddict-isinstance
+    title: "LongRoPE update calls `config.standardize_rope_params()` inside forward; huggingface_hub validation does `isinstance(x, RopeParameters)` (a TypedDict) -> graph break"
+    file: python/site-packages/huggingface_hub/dataclasses.py
+    match: "RopeParameters"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/rope-standardize-in-forward-typeddict-isinstance.md
+    notes: >
+      phimoe eval/train with dynamic=True (CPU and CUDA). longrope_frequency_update -> rope init fn ->
+      config.standardize_rope_params() -> `self.rope_parameters = ...` -> strict-dataclass validation ->
+      isinstance(dict, RopeParameters) raises TypeError (TypedDict); Dynamo can't trace it (gb1583).
+
+  - id: zonos3-moe-unique-expert-loop
+    title: "ZONOS3-Mini MoE `_feed_forward` loops over `torch.unique(choices).tolist()` with `nonzero()` (remote code)"
+    file: hub/Zyphra/ZONOS3-Mini-hf/modeling_zonos3.py
+    # no `function:` -- remote-code breaks are recorded without a user stack
+    repo: Zyphra/ZONOS3-Mini-hf
+    issue: null
+    status: draft
+    draft: issues/zonos3-moe-unique-expert-loop.md
+    notes: >
+      trust_remote_code model (reviewed revision e39d30d). 17 breaks per LM step with 4 layers, CPU and CUDA,
+      static and dynamic. Follow-on "Failed to handle graph break gracefully" breaks match graph-break-in-loop.
+
+  - &sam3coords
+    id: sam3-spatial-shape-tensor-arange
+    title: "SAM3 DETR decoder: `spatial_shapes` is a tensor, so `_get_coords` calls `torch.arange(0, <tensor>)` in every decoder layer"
+    file: transformers/models/sam3/modeling_sam3.py
+    function: _get_coords
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/sam3-spatial-shape-tensor-arange.md
+    notes: >
+      9-12 breaks per forward with 1 decoder layer (+2 per extra layer). Fix: pass a spatial_shapes_list of ints.
+  - <<: *sam3coords
+    # dynamic=True (CPU): the same arange fails in the backend ("Backend compiler exception",
+    # aten._local_scalar_dense) and is reported at the enclosing frames.
+    file: transformers/models/sam3/modeling_sam3.py
+    function: null
+    match: "_get_coords"
+  - <<: *sam3coords
+    file: transformers/pytorch_utils.py      # compile_compatible_method_lru_cache wrapper around _get_coords
+    function: null
+    match: "_get_coords"
+
+  - id: harness-dynamic-loss-selection
+    title: "graph_breaks.dynamic train scenario: _loss() picks a non-scalar loss or an integer tensor for audio codecs"
+    file: graph_breaks/dynamic.py     # harness bug, never a model break location
+    repo: hf-models-graph-breaks (this repo)
+    issue: null
+    status: draft
+    draft: issues/harness-dynamic-loss-selection.md
+    notes: dac, encodec, mimi dynamic train results are harness errors, not model findings.
 
   - id: dynamo-rnn-unsupported
     title: "Dynamo graph-breaks on nn.LSTM / GRU / RNN by default (torch._dynamo.config.allow_rnn=False)"
@@ -603,7 +775,8 @@ issues:
     match: "Dynamo does not support RNN, GRU, or LSTM"
     repo: pytorch/pytorch
     issue: null
-    status: not-filing
+    status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
+    draft: issues/dynamo-rnn-unsupported.md
     notes: By design; experimental support behind torch._dynamo.config.allow_rnn=True. Seen in wavtokenizer.
 
   - id: phimoe-longrope-seq-len-branch
@@ -614,6 +787,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/phimoe-longrope-seq-len-branch.md
     notes: >
       seq_len comes from torch.max(position_ids) + 1. Same family as dynamic-rope-data-dependent;
       the shared `longrope_frequency_update` in modeling_rope_utils has the same shape of check.
@@ -624,12 +798,21 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
+    draft: issues/llava-next-anyres-image-size-tolist.md
     notes: Tile layout is chosen from image_sizes values in Python. Similar to mistral3-image-sizes-tolist.
 
   - <<: *visionsplit
     file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
+  - <<: *visionsplit
+    file: transformers/models/qwen3_5/modeling_qwen3_5.py
+    function: forward
+    match: "Data dependent operator"
   - <<: *splitfeat
     file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
+  - <<: *splitfeat
+    file: transformers/models/qwen3_5/modeling_qwen3_5.py
+    function: get_image_features
+    match: "Data dependent operator"
 
   # Remaining grid_thw-driven breaks in the new VLMs: same root cause as Qwen-VL.
   - <<: *qwenvl
@@ -644,3 +827,6 @@ issues:
   - <<: *qwenvl
     file: transformers/models/qwen2_vl/modeling_qwen2_vl.py
     notes: "qwen2_vl: .item() on grid_thw in get_vision_position_ids, boolean indexing in get_rope_index."
+  - <<: *qwenvl
+    file: transformers/models/qwen3_5/modeling_qwen3_5.py
+    function: null

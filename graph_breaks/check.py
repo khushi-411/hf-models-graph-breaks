@@ -90,7 +90,11 @@ def _set_override(config, key: str, value):
     *parents, attr = key.split(".")
     target = config
     for name in parents:
-        target = getattr(target, name)
+        # Some remote-code configs keep sub-configs as plain dicts (e.g. ZONOS3's `lm`).
+        target = target[name] if isinstance(target, dict) else getattr(target, name)
+    if isinstance(target, dict):
+        target[attr] = value
+        return
     # YAML has no tuples; keep the config's type (e.g. Reformer's axial_pos_shape).
     if isinstance(value, list) and isinstance(getattr(target, attr, None), tuple):
         value = tuple(value)
@@ -103,7 +107,8 @@ def build_config(spec: dict):
         # which transformers documents as matching `hf_id`. Nothing is downloaded.
         config = getattr(transformers, spec["config_class"])()
     else:
-        config = AutoConfig.from_pretrained(spec["hf_id"])
+        # trust_remote_code runs the model repo's own Python code; only set it for reviewed repos.
+        config = AutoConfig.from_pretrained(spec["hf_id"], trust_remote_code=spec.get("trust_remote_code", False))
     if spec.get("use_text_config"):
         # Text-only LM built from a multimodal checkpoint (e.g. gemma3n, llama4).
         config = config.get_text_config()
@@ -122,10 +127,17 @@ def build_model(spec: dict, pretrained: bool, device: str):
     # Only config.json is downloaded unless --pretrained; weights are random.
     # Graph breaks depend on code paths, not weight values, so this is enough.
     config = build_config(spec)
+    remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
     if pretrained:
-        model = auto_cls.from_pretrained(spec["hf_id"], config=config)
+        model = auto_cls.from_pretrained(spec["hf_id"], config=config, **remote)
     else:
-        model = auto_cls.from_config(config)
+        model = auto_cls.from_config(config, **remote)
+        if spec.get("init_weights") == "normal":
+            # For models whose _init_weights is a no-op (all tensors come from the checkpoint), so
+            # from_config leaves uninitialized memory. Values don't change code paths, but NaN/inf can.
+            with torch.no_grad():
+                for p in model.parameters():
+                    p.normal_(0.0, 0.02)
     return model.to(device)
 
 
@@ -370,6 +382,20 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
         rate = getattr(cfg, "sampling_rate", 16000)
         channels = getattr(cfg, "audio_channels", 1)
         inputs["input_values"] = torch.randn(BATCH, channels, rate, device=device)  # 1s
+    elif kind == "sam3":  # image + text concept prompt (Sam3Model)
+        backbone = cfg.vision_config.backbone_config
+        h, w = _hw(spec.get("image_size", backbone.image_size))
+        inputs["pixel_values"] = torch.randn(BATCH, 3, h, w, device=device)
+        tcfg = cfg.text_config
+        seq = min(SEQ_LEN, getattr(tcfg, "max_position_embeddings", SEQ_LEN))
+        ids = torch.randint(1, min(tcfg.vocab_size, 1000), (BATCH, seq), device=device)
+        inputs["input_ids"] = ids
+        inputs["attention_mask"] = torch.ones_like(ids)
+    elif kind == "zonos3_rows":  # ZONOS3-Mini LM step: prompt rows [rows, n_codebooks + 1], batch size 1 only
+        lm = cfg.lm
+        audio = torch.randint(0, lm["codebook_size"] + 2, (SEQ_LEN, lm["n_codebooks"]), device=device)
+        text = torch.randint(0, lm["text_rows"], (SEQ_LEN, 1), device=device)
+        inputs["input_ids"] = torch.cat([audio, text], dim=1)
     else:
         raise ValueError(f"Unknown inputs kind: {kind}")
 
@@ -623,7 +649,14 @@ def main(argv=None) -> int:
                    help="download real weights instead of random init from config")
     p.add_argument("--verbose", action="store_true",
                    help="also print Dynamo's full graph_breaks log to the console")
+    p.add_argument("--results-dir", default=None,
+                   help="where to write results (default: results/, or results_cuda/ with --device cuda)")
     args = p.parse_args(argv)
+    global RESULTS_DIR
+    if args.results_dir:
+        RESULTS_DIR = Path(args.results_dir).resolve()
+    elif args.device.startswith("cuda"):
+        RESULTS_DIR = ROOT / "results_cuda"
 
     models = load_models()
     if args.list:
@@ -659,7 +692,7 @@ def main(argv=None) -> int:
                 print(f"    ERROR: {r['error']}")
             results.append(r)
         report = write_model_report(spec, results)
-        print(f"  -> {report.relative_to(ROOT)}")
+        print(f"  -> {report.relative_to(ROOT) if report.is_relative_to(ROOT) else report}")
     print("\nRun `python -m graph_breaks.summarize` to refresh SUMMARY.md")
     return exit_code
 

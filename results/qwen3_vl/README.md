@@ -3,7 +3,7 @@
 - **HF id:** `Qwen/Qwen3-VL-2B-Instruct`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 2, 'text_config.hidden_size': 512, 'text_config.intermediate_size': 1024, 'text_config.num_attention_heads': 4, 'text_config.num_key_value_heads': 2, 'vision_config.depth': 2, 'vision_config.deepstack_visual_indexes': [0], 'vision_config.out_hidden_size': 512}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
@@ -34,14 +34,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -67,14 +68,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -100,14 +102,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -133,14 +136,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -166,14 +170,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:698 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:687 in forward
 transformers/vision_utils.py:112 in get_vision_position_ids
 ```
 </details>
@@ -199,14 +204,14 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:699 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:688 in forward
 transformers/vision_utils.py:76 in get_vision_attention_seqlens
 transformers/vision_utils.py:64 in get_vision_cu_seqlens
 ```
@@ -233,13 +238,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_699 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 699)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_688 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 688)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 710
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 699
             for layer_num, blk in enumerate(self.blocks):
                                   ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -249,15 +254,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
@@ -283,22 +288,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
 
 ### 9. Data dependent operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -317,18 +322,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044 in get_image_features
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034 in get_image_features
 ```
 </details>
 
 ### 10. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -347,18 +354,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1187 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1078 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1179 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1068 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 11. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -377,18 +386,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 12. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -407,13 +419,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: get_rope_index (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 925)
+  Developer debug context: frame skipped: get_rope_index (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 915)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 978
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 968
             for batch_idx, current_input_ids in enumerate(input_ids):
                                                 ~~~~~~~~~^^^^^^^^^^^
 ```
@@ -423,18 +435,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 13. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:911`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:901`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -453,19 +468,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:911 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:901 in get_vision_position_ids
 ```
 </details>
 
 ### 14. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:912`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:902`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -480,7 +498,7 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   ConstantVariable(int: 1) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 911
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 901
                 grid_thw[0].item() // temp_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~
 ```
@@ -490,19 +508,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:912 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:902 in get_vision_position_ids
 ```
 </details>
 
 ### 15. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:913`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:903`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -517,10 +538,10 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   LazyVariableTracker(unrealized: <class 'int'>) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
   ConstantVariable(int: 4) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~
 ```
@@ -530,19 +551,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:913 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:903 in get_vision_position_ids
 ```
 </details>
 
 ### 16. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -561,19 +585,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>
 
 ### 17. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -592,13 +619,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 759)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 748)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 821
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 811
             for layer_idx, decoder_layer in enumerate(self.layers):
                                             ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -608,13 +635,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>
 
@@ -642,14 +672,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -675,14 +706,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -708,14 +740,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -741,14 +774,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -774,14 +808,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:698 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:687 in forward
 transformers/vision_utils.py:112 in get_vision_position_ids
 ```
 </details>
@@ -807,14 +842,14 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:699 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:688 in forward
 transformers/vision_utils.py:76 in get_vision_attention_seqlens
 transformers/vision_utils.py:64 in get_vision_cu_seqlens
 ```
@@ -841,13 +876,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_699 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 699)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_688 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 688)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 710
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 699
             for layer_num, blk in enumerate(self.blocks):
                                   ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -857,15 +892,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
@@ -891,22 +926,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
 
 ### 9. Data dependent operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -925,18 +960,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044 in get_image_features
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034 in get_image_features
 ```
 </details>
 
 ### 10. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -955,18 +992,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1187 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1078 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1179 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1068 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 11. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -985,18 +1024,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 12. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -1015,13 +1057,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: get_rope_index (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 925)
+  Developer debug context: frame skipped: get_rope_index (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 915)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 978
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 968
             for batch_idx, current_input_ids in enumerate(input_ids):
                                                 ~~~~~~~~~^^^^^^^^^^^
 ```
@@ -1031,18 +1073,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 13. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:911`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:901`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1061,19 +1106,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:911 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:901 in get_vision_position_ids
 ```
 </details>
 
 ### 14. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:912`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:902`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1088,7 +1136,7 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   ConstantVariable(int: 1) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 911
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 901
                 grid_thw[0].item() // temp_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~
 ```
@@ -1098,19 +1146,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:912 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:902 in get_vision_position_ids
 ```
 </details>
 
 ### 15. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:913`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:903`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1125,10 +1176,10 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   LazyVariableTracker(unrealized: <class 'int'>) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
   ConstantVariable(int: 4) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~
 ```
@@ -1138,19 +1189,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:913 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:903 in get_vision_position_ids
 ```
 </details>
 
 ### 16. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -1169,19 +1223,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>
 
 ### 17. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -1200,13 +1257,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 759)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 748)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 821
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 811
             for layer_idx, decoder_layer in enumerate(self.layers):
                                             ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -1216,13 +1273,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>
 
@@ -1250,14 +1310,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -1283,14 +1344,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -1316,14 +1378,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -1349,14 +1412,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:690 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:679 in forward
 transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights
 ```
 </details>
@@ -1382,14 +1446,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:698 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:687 in forward
 transformers/vision_utils.py:112 in get_vision_position_ids
 ```
 </details>
@@ -1415,14 +1480,14 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:699 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:688 in forward
 transformers/vision_utils.py:76 in get_vision_attention_seqlens
 transformers/vision_utils.py:64 in get_vision_cu_seqlens
 ```
@@ -1449,13 +1514,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_699 (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 699)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_688 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 688)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 710
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 699
             for layer_num, blk in enumerate(self.blocks):
                                   ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -1465,15 +1530,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
@@ -1499,22 +1564,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1040 in get_image_features
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:711 in forward
-transformers/modeling_layers.py:111 in __call__
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1030 in get_image_features
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:700 in forward
+transformers/modeling_layers.py:122 in forward_with_checkpointing
 transformers/models/qwen3_vl/modeling_qwen3_vl.py:299 in forward
 ```
 </details>
 
 ### 9. Data dependent operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1533,18 +1598,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1174 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1044 in get_image_features
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1166 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1034 in get_image_features
 ```
 </details>
 
 ### 10. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -1563,18 +1630,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1187 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1078 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1179 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1068 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 11. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):
@@ -1593,18 +1662,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 12. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:981`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:971`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -1623,13 +1695,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: get_rope_index (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 925)
+  Developer debug context: frame skipped: get_rope_index (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 915)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 978
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 968
             for batch_idx, current_input_ids in enumerate(input_ids):
                                                 ~~~~~~~~~^^^^^^^^^^^
 ```
@@ -1639,18 +1711,21 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:981 in get_rope_index
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:971 in get_rope_index
 ```
 </details>
 
 ### 13. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:911`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:901`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1669,19 +1744,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:911 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:901 in get_vision_position_ids
 ```
 </details>
 
 ### 14. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:912`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:902`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1696,7 +1774,7 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   ConstantVariable(int: 1) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 911
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 901
                 grid_thw[0].item() // temp_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~
 ```
@@ -1706,19 +1784,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:912 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:902 in get_vision_position_ids
 ```
 </details>
 
 ### 15. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:913`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:903`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):
@@ -1733,10 +1814,10 @@ Unsupported Tensor.item() call with capture_scalar_outputs=False
 
 Stack variable source attribution:
   LazyVariableTracker(unrealized: <class 'int'>) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
   ConstantVariable(int: 4) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 912
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 902
                 grid_thw[1].item() // spatial_merge_size,
                 ~~~~~~~~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~
 ```
@@ -1746,19 +1827,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1229 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1113 in compute_3d_position_ids
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1004 in get_rope_index
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:913 in get_vision_position_ids
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1221 in forward
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1104 in compute_3d_position_ids
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:994 in get_rope_index
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:903 in get_vision_position_ids
 ```
 </details>
 
 ### 16. Dynamic shape operator
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -1777,19 +1861,22 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>
 
 ### 17. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
-- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:853`  (hit ×1)
+- **Location:** `transformers/models/qwen3_vl/modeling_qwen3_vl.py:843`  (hit ×1)
 
 ```
 Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
@@ -1808,13 +1895,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 759)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py line 748)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 821
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_vl/modeling_qwen3_vl.py", line 811
             for layer_idx, decoder_layer in enumerate(self.layers):
                                             ~~~~~~~~~^^^^^^^^^^^^^
 ```
@@ -1824,12 +1911,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1364 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:1239 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:834 in forward
-transformers/models/qwen3_vl/modeling_qwen3_vl.py:853 in _deepstack_process
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1342 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:1231 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:824 in forward
+transformers/models/qwen3_vl/modeling_qwen3_vl.py:843 in _deepstack_process
 ```
 </details>

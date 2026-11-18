@@ -1,0 +1,848 @@
+{
+  "model": "moonshine",
+  "hf_id": "UsefulSensors/moonshine-tiny",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T13:58:19+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 16,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 16,
+      "new_shape_events": 564
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: ___check_type_id(args[0], 96006703289168), type=<class 'transformers.models.moonshine.modeling_moonshine.MoonshineForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type MoonshineForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/3: ___check_obj_id(func.__code__, 96006699787888), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/4: not args                                                 # return func(*args, **kwargs)  # transformers/src/transformers/utils/deprecation.py:173 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    - 1/3: ___check_obj_id(func.__code__, 96006699787888), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/5: len(args) == 4                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/4: not args                                                 # return func(*args, **kwargs)  # transformers/src/transformers/utils/deprecation.py:173 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    - 1/3: ___check_obj_id(func.__code__, 96006699787888), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/2: ___check_type_id(args[0], 96006703277664), type=<class 'transformers.models.moonshine.modeling_moonshine.MoonshineDecoder'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type MoonshineDecoder)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: ___check_type_id(args[0], 96006703289168), type=<class 'transformers.models.moonshine.modeling_moonshine.MoonshineForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type MoonshineForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py:272\n    triggered by the following guard failure(s):\n    - 12/0: cache.self_attention_cache.layers[0].is_initialized == False  # if not self.is_initialized:  # transformers/src/transformers/cache_utils.py:133 in update\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py\", line 322, in forward\n    -     key_states, value_states = cache.update(key_states, value_states, self.layer_idx, kwargs=kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1570, in update\n    -     keys, values = self.layers[layer_idx].update(key_states, value_states, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 133, in update\n    -     if not self.is_initialized:",
+    "Recompiling function torch_dynamo_resume_in_forward_at_448 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py:448\n    triggered by the following guard failure(s):\n    - 15/0: cache.is_updated[0] == False                             # if is_cross_attention and cache and is_updated:  # transformers/src/transformers/models/moonshine/modeling_moonshine.py:300 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py\", line 462, in torch_dynamo_resume_in_forward_at_448\n    -     hidden_states, _ = self.encoder_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py\", line 300, in forward\n    -     if is_cross_attention and cache and is_updated:",
+    "Recompiling function __init__ in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:459\n    triggered by the following guard failure(s):\n    - 16/0: ___check_obj_id(init.__code__, 127053895141616), type=<class 'code'>  # init(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:462 in __init__\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 462, in __init__\n    -     init(self, *args, **kwargs)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:is_aligned_realized_tensor",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 23,
+      "examples": [
+        "Ne(s96 - 1, 1)",
+        "Ne((((s22 - 127)//64)) + 1, 1)",
+        "Ne(s18*((((s22 - 127)//384)) - 1), 1)",
+        "Ne(s38 - 1, 1)",
+        "Ne((((s76 - 127)//64)) + 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_copy_",
+      "line": 831,
+      "count": 8,
+      "examples": [
+        "s96 - 1 >= 2",
+        "s38 - 1 >= 2",
+        "Ne(8*s29*s47*(36 - 2*((s37//2))), 0)",
+        "36 - 2*((s37//2)) >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 56,
+      "examples": [
+        "s22 >= 127",
+        "s22 <= 2147483647",
+        "288*(((s22 - 127)//64)) + 288 <= 2147483647",
+        "(((s22 - 127)//64)) + 1 >= 7",
+        "576*(((s22 - 127)//192)) - 576 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:group_norm",
+      "line": 3095,
+      "count": 8,
+      "examples": [
+        "Eq(zf62, 1.0e-5)",
+        "Eq(zf42, 1.0e-5)",
+        "Eq(zf41, 1.0e-5)",
+        "Eq(zf23, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 16,
+      "examples": [
+        "Ne((((s22 - 127)//192)) - 1, 1)",
+        "Ne((((s22 - 127)//384)) - 1, 1)",
+        "Ne((((s76 - 127)//192)) - 1, 1)",
+        "Ne((((s76 - 127)//384)) - 1, 1)",
+        "Ne((((s50 - 127)//192)) - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 60,
+      "examples": [
+        "576*s18*((((s22 - 127)//192)) - 1) >= 2",
+        "288*s18*((((s22 - 127)//384)) - 1) >= 2",
+        "s18*((((s22 - 127)//384)) - 1) >= 2",
+        "256*s18*((((s22 - 127)//384)) - 1) >= 2",
+        "128*s18*((((s22 - 127)//384)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:_is_non_overlapping_and_dense_or_false",
+      "line": 426,
+      "count": 8,
+      "examples": [
+        "(((s22 - 127)//384)) - 1 >= 2",
+        "(((s76 - 127)//384)) - 1 >= 2",
+        "(((s50 - 127)//384)) - 1 >= 2",
+        "(((s81 - 127)//384)) - 1 >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 64,
+      "examples": [
+        "Eq(zf44, 1.0e-5)",
+        "Eq(zf5, 1.0e-5)",
+        "Eq(zf98, 1.0e-5)",
+        "Eq(zf28, 1.0e-5)",
+        "Eq(zf31, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:785",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 9,
+      "examples": [
+        "Ne(s18*((((s22 - 127)//384)) - 1), -1)",
+        "Ne(s97*((((s76 - 127)//384)) - 1), -1)",
+        "Ne(s33*((((s50 - 127)//384)) - 1), -1)",
+        "Ne(s6*((((s81 - 127)//384)) - 1), -1)",
+        "Ne(s6*((((s76 - 127)//384)) - 1), -1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 9,
+      "examples": [
+        "s18*((((s22 - 127)//384)) - 1) >= 0",
+        "s97*((((s76 - 127)//384)) - 1) >= 0",
+        "s33*((((s50 - 127)//384)) - 1) >= 0",
+        "s6*((((s81 - 127)//384)) - 1) >= 0",
+        "s6*((((s76 - 127)//384)) - 1) >= 0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 8,
+      "examples": [
+        "Ne(288*s18*((((s22 - 127)//384)) - 1), 0)",
+        "Ne(288*s97*((((s76 - 127)//384)) - 1), 0)",
+        "Ne(288*s33*((((s50 - 127)//384)) - 1), 0)",
+        "Ne(288*s6*((((s81 - 127)//384)) - 1), 0)",
+        "Ne(288*s6*((((s76 - 127)//384)) - 1), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 16,
+      "examples": [
+        "Ne(s18*((((s22 - 127)//384)) - 1), s18)",
+        "Ne(s97*((((s76 - 127)//384)) - 1), s97)",
+        "Ne(s33*((((s50 - 127)//384)) - 1), s33)",
+        "Ne(s6*((((s81 - 127)//384)) - 1), s6)",
+        "Ne(s6*((((s76 - 127)//384)) - 1), s6)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 17,
+      "examples": [
+        "Ne(Mod(s18, s18*((((s22 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(s97, s97*((((s76 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(s33, s33*((((s50 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(s6, s6*((((s81 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(s6, s6*((((s76 - 127)//384)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 8,
+      "examples": [
+        "Eq(zf55, 0.166666666666667)",
+        "Eq(zf40, 0.0)",
+        "Eq(zf30, 0.166666666666667)",
+        "Eq(zf45, 0.0)",
+        "Eq(zf43, 0.166666666666667)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 8,
+      "examples": [
+        "Ne(Mod(1, Max(1, (((s22 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, (((s76 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, (((s50 - 127)//384)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, (((s81 - 127)//384)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 8,
+      "examples": [
+        "Eq(zf9, 0.166666666666667)",
+        "Eq(zf48, 0.0)",
+        "Eq(zf85, 0.166666666666667)",
+        "Eq(zf19, 0.0)",
+        "Eq(zf56, 0.166666666666667)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 16,
+      "examples": [
+        "Eq(zf55, 0.166666666666667)",
+        "Eq(zf40, 0.0)",
+        "Eq(zf30, 0.166666666666667)",
+        "Eq(zf45, 0.0)",
+        "Eq(zf43, 0.166666666666667)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "9223372036854775807 > s38"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 28,
+      "examples": [
+        "s38*s97 <= 2147483647",
+        "32*s6*(((s76 - 127)//384)) <= 32*s6 + 2147483647",
+        "288*s6*(((s76 - 127)//64)) + 288*s6 <= 2147483647",
+        "576*s6*(((s76 - 127)//192)) <= 576*s6 + 2147483647",
+        "288*s6*(((s76 - 127)//384)) <= 288*s6 + 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:683",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 6,
+      "examples": [
+        "1 < 288*s6*((((s76 - 127)//384)) - 1)",
+        "288 < 288*s6*((((s76 - 127)//384)) - 1)",
+        "288*(((s76 - 127)//384)) - 288 < 288*s6*((((s76 - 127)//384)) - 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 2,
+      "examples": [
+        "1 < 1152*s6*((((s76 - 127)//384)) - 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_clone_meta",
+      "line": 719,
+      "count": 4,
+      "examples": [
+        "320*(s6 - 1)*Max(1, (((s76 - 127)//384)) - 1) + 320*(((s76 - 127)//384)) - 320 >= 0",
+        "Ne(320*(s6 - 1)*Max(1, (((s76 - 127)//384)) - 1) + 320*(((s76 - 127)//384)) - 320, 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 5,
+      "examples": [
+        "Ne(Mod(1, Max(1, (((s76 - 127)//64)) + 1)), 0)",
+        "Ne(Mod(1, Max(1, (((s76 - 127)//192)) - 1)), 0)",
+        "Ne(Mod(320, 320*(((s76 - 127)//384)) - 320), 0)",
+        "Ne(Mod(288, 288*(((s76 - 127)//384)) - 288), 0)",
+        "Ne(Mod((((s76 - 127)//192)) - 1, 576*(((s76 - 127)//192)) - 576), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 26,
+      "examples": [
+        "320*s6*(((s76 - 127)//384)) <= 320*s6 + 2147483683",
+        "9*s6 <= 2147483647",
+        "s6 <= 2147483647",
+        "3*s6*(((s76 - 127)//384)) <= 3*s6 + 2147483647",
+        "s6*(((s76 - 127)//384)) <= s6 + 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:683",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 5,
+      "examples": [
+        "288*s6*(((s76 - 127)//384)) - 288*s6 < 5242880",
+        "288*s6 < 5242880",
+        "288*s47*s87 < 5242880",
+        "288*s26*s37 < 5242880"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 9,
+      "examples": [
+        "Eq(s69, 288)",
+        "Eq(s7, 288)",
+        "Eq(s33, 288)",
+        "Eq(s80, 288)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 9,
+      "examples": [
+        "s69 = 288",
+        "s7 = 288",
+        "s33 = 288",
+        "s80 = 288"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 16,
+      "examples": [
+        "((s6//2)) <= s6",
+        "2*((s6//2)) <= 36",
+        "((s8//2)) <= s8",
+        "2*((s8//2)) <= 36",
+        "((s38//2)) <= s38"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1345,
+      "count": 8,
+      "examples": [
+        "Ne((s6//2), 1)",
+        "Ne((s8//2), 1)",
+        "Ne((s38//2), 1)",
+        "Ne((s37//2), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 24,
+      "examples": [
+        "Eq(s50, s26)",
+        "Eq(s26, s91)",
+        "Eq(s81, s26)",
+        "Eq(s87, s65)",
+        "Eq(s65, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:686",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 7,
+      "examples": [
+        "Eq(s22, 288)",
+        "Eq(s33, 288)",
+        "Eq(s27*(s21 - 4), 288)",
+        "Eq(s86, 288)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "s22 = 288",
+        "s33 = 288",
+        "s86 = 288"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/moonshine/modeling_moonshine.py:forward:911"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 721,
+      "count": 2,
+      "examples": [
+        "Ne(36 - 2*((s37//2)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1041,
+      "count": 2,
+      "examples": [
+        "((s37//2)) > 1"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/moonshine/modeling_moonshine.py:forward",
+      "line": 335,
+      "count": 39,
+      "examples": [
+        "s0 <= s50",
+        "Eq(zf2, 0.166666666666667)",
+        "Eq(zf80, 0.0)",
+        "s38 <= 256",
+        "Eq(s50, s0)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 2,
+      "examples": [
+        "Eq(s43, s0)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_aligned_realized_tensor",
+      "line": 524,
+      "count": 2,
+      "examples": [
+        "Eq(Mod(s38, 8), 0) & Eq(Mod(s0*s38, 8), 0) & Eq(Mod(s0*s38*s83, 8), 0)",
+        "Eq(Mod(s38, 8), 0) & Eq(Mod(s38*s83, 8), 0) & Eq(Mod(s0*s38*s83, 8), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 1,
+      "examples": [
+        "-s21 <= -4"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 2,
+      "examples": [
+        "Eq(s27*s40*s48*(s21 - 4), s29*s71*(((s27*s40*s48*(s21 - 4))//(s29*s71))))",
+        "Eq(288*s29*s40, s27*s29*s40*(s21 - 4))"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:335"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 4,
+      "examples": [
+        "Eq(Mod(288*s31*s74, 288*s26), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 4,
+      "examples": [
+        "Eq(288*s31*s74, 288*s26*(((s31*s74)//s26)))"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/moonshine/modeling_moonshine.py:forward",
+      "line": 448,
+      "count": 8,
+      "examples": [
+        "Eq(zf55, 0.166666666666667)",
+        "Eq(zf28, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/moonshine/modeling_moonshine.py:forward:448"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/integrations/sdpa_attention.py:182",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nTypeError when making fake tensor call\n  Explanation: \n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n\n  Developer debug context: TypeError <built-in function scaled_dot_product_attention>: scaled_dot_product_attention(): argument 'is_causal' must be bool, not SymBool\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0112.html",
+      "user_stack": [
+        "transformers/models/moonshine/modeling_moonshine.py:785 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:686 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:448 in forward",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:335 in forward",
+        "transformers/integrations/sdpa_attention.py:182 in sdpa_attention_forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0112.html",
+      "short_reason": "TypeError when making fake tensor call",
+      "count": 1
+    },
+    {
+      "location": "transformers/integrations/sdpa_attention.py:182",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nTypeError when making fake tensor call\n  Explanation: \n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n\n  Developer debug context: TypeError <built-in function scaled_dot_product_attention>: scaled_dot_product_attention(): argument 'is_causal' must be bool, not SymBool\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0112.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py line 629)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/moonshine/modeling_moonshine.py\", line 685\n            for decoder_layer in self.layers:\n                                 ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/moonshine/modeling_moonshine.py:785 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:686 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:448 in forward",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/moonshine/modeling_moonshine.py:335 in forward",
+        "transformers/integrations/sdpa_attention.py:182 in sdpa_attention_forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0112.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

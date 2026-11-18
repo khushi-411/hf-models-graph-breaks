@@ -5,6 +5,7 @@
   "device": "cpu",
   "dynamic": true,
   "backend": "inductor",
+  "unbacked": false,
   "sizes": [
     [
       2,
@@ -22,19 +23,762 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T06:39:01+00:00",
+  "timestamp": "2026-11-18T15:10:10+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
-  "status": "error",
-  "runs": [],
-  "error": "ValueError: The checkpoint you are trying to load has model type `omniasr` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.\n\nYou can update Transformers with the command `pip install --upgrade transformers`. If this does not work, and the checkpoint is very new, then there may not be a release version that supports this model yet. In this case, you can get the most up-to-date code by installing Transformers from source with the command `pip install git+https://github.com/huggingface/transformers.git`",
-  "traceback": "Traceback (most recent call last):\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 436, in from_pretrained\n    config_class = CONFIG_MAPPING[config_dict[\"model_type\"]]\n                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 115, in __getitem__\n    raise KeyError(key)\nKeyError: 'omniasr'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 218, in run_scenario\n    model = check.build_model(spec, False, args.device)\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 124, in build_model\n    config = build_config(spec)\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 106, in build_config\n    config = AutoConfig.from_pretrained(spec[\"hf_id\"])\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/auto/configuration_auto.py\", line 438, in from_pretrained\n    raise ValueError(\n    ...<8 lines>...\n    )\nValueError: The checkpoint you are trying to load has model type `omniasr` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.\n\nYou can update Transformers with the command `pip install --upgrade transformers`. If this does not work, and the checkpoint is very new, then there may not be a release version that supports this model yet. In this case, you can get the most up-to-date code by installing Transformers from source with the command `pip install git+https://github.com/huggingface/transformers.git`\n"
+  "status": "ok",
+  "graphs_first_run": 13,
+  "recompiled_graphs": 7,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 13,
+      "new_shape_events": 623
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 4,
+      "new_shape_events": 129
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 3,
+      "new_shape_events": 82
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: ___check_obj_id(func.__code__, 96761244677840), type=<class 'code'>  # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: ___check_obj_id(func.__code__, 96761244677840), type=<class 'code'>  # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:277\n    triggered by the following guard failure(s):\n    - 8/0: (((-3) + (hidden_states.size()[2] // 80)) // 2) == 98  # (_inductor/kernel/conv.py:1190 in convolution_backward_lowering)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:56\n    triggered by the following guard failure(s):\n    - 10/0: tensor 'hidden_states' size mismatch at index 1. expected 49, actual 54",
+    "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_493 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:493\n    triggered by the following guard failure(s):\n    - 16/0: n_audio_features == 98  # f\"Audio features and audio tokens do not match, tokens: {n_audio_tokens}, features: {n_audio_features}\",  # Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:494 in torch_dynamo_resume_in_get_placeholder_mask_at_493 (Documents/hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:277\n    triggered by the following guard failure(s):\n    - 8/1: (((-3) + (hidden_states.size()[2] // 80)) // 2) == 108  # (_inductor/kernel/conv.py:1190 in convolution_backward_lowering)\n    - 8/0: (((-3) + (hidden_states.size()[2] // 80)) // 2) == 98  # (_inductor/kernel/conv.py:1190 in convolution_backward_lowering)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:56\n    triggered by the following guard failure(s):\n    - 10/1: tensor 'hidden_states' size mismatch at index 1. expected 54, actual 59\n    - 10/0: tensor 'hidden_states' size mismatch at index 1. expected 49, actual 59",
+    "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_493 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:493\n    triggered by the following guard failure(s):\n    - 16/1: n_audio_features == 162  # f\"Audio features and audio tokens do not match, tokens: {n_audio_tokens}, features: {n_audio_features}\",  # Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:494 in torch_dynamo_resume_in_get_placeholder_mask_at_493 (Documents/hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)\n    - 16/0: n_audio_features == 98  # f\"Audio features and audio tokens do not match, tokens: {n_audio_tokens}, features: {n_audio_features}\",  # Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py:494 in torch_dynamo_resume_in_get_placeholder_mask_at_493 (Documents/hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 183,
+      "examples": [
+        "s14 >= 10",
+        "((s14//5)) - 1 >= 3",
+        "Ne(512*s52*(((s14//5)) - 1), 0)",
+        "((s14//10)) - 1 >= 3",
+        "Ne(512*s52*(((s14//10)) - 1), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 124,
+      "examples": [
+        "Eq(zf98, 1.0e-5)",
+        "Eq(zf28, 1.0e-5)",
+        "Eq(zf15, 1.0e-5)",
+        "Eq(zf24, 1.0e-5)",
+        "Eq(zf58, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 154,
+      "examples": [
+        "512*s52*(((s14//5)) - 1) >= 2",
+        "s52*(((s14//5)) - 1) >= 2",
+        "512*s52*(((s14//10)) - 1) >= 2",
+        "s52*(((s14//10)) - 1) >= 2",
+        "512*s52*(((s14//20)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 106,
+      "examples": [
+        "Ne(Max(1, ((s14//5)) - 1), 1)",
+        "Ne(Max(1, ((s14//10)) - 1), 1)",
+        "Ne(Max(1, ((s14//20)) - 1), 1)",
+        "Ne(Max(1, ((s14//40)) - 1), 1)",
+        "Ne(Max(1, ((s14//80)) - 1), 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 16,
+      "examples": [
+        "Ne(s52*(((((((((s14//80)) - 3)//2)) - 1)//2)) + 1), s52)",
+        "Ne(s72*(((((((((s2//80)) - 3)//2)) - 1)//2)) + 1), s72)",
+        "Ne(s33*(((((((((s69//80)) - 3)//2)) - 1)//2)) + 1), s33)",
+        "Ne(s6*(((((((((s2//80)) - 3)//2)) - 1)//2)) + 1), s6)",
+        "Ne(s47*(((((((((s33//80)) - 3)//2)) - 1)//2)) + 1), s47)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 16,
+      "examples": [
+        "Ne(Mod(s52, s52*(((((((((s14//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(s72, s72*(((((((((s2//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(s33, s33*(((((((((s69//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(s6, s6*(((((((((s2//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(s47, s47*(((((((((s33//80)) - 3)//2)) - 1)//2)) + 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 1,
+      "examples": [
+        "Eq(zf23, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 40,
+      "examples": [
+        "Max(1, ((((((((s33//80)) - 3)//2)) - 1)//2)) + 1) > 1",
+        "Ne(Mod(1, Max(1, ((((((((s33//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(1, Max(1, (((((s33//80)) - 3)//2)) + 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//80)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//40)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:383"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 46,
+      "examples": [
+        "Ne(Mod(512, 512*Max(1, ((s33//5)) - 1)), 0)",
+        "Ne(Mod(((s33//5)) - 1, 512*((s33//5)) - 512), 0)",
+        "Ne(Mod(512, 512*Max(1, ((s33//10)) - 1)), 0)",
+        "Ne(Mod(((s33//10)) - 1, 512*((s33//10)) - 512), 0)",
+        "Ne(Mod(512, 512*Max(1, ((s33//20)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:383",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 21,
+      "examples": [
+        "Eq(((((s33//80)) - 3)//2), 98)",
+        "Eq((s33//80), 200)",
+        "Eq((s33//40), 400)",
+        "Eq((s33//20), 800)",
+        "Eq((s33//10), 1600)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:383",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:397"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 25,
+      "examples": [
+        "s47*((((((((s33//80)) - 3)//2)) - 1)//2)) + s47 <= 4096",
+        "s47*((((((s33//80)) - 3)//2)) + 1) <= 4096",
+        "s47*(((s33//80)) - 1) <= 4096",
+        "s47*(((s33//40)) - 1) <= 4096",
+        "s47*(((s33//20)) - 1) <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:383",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408",
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 3,
+      "examples": [
+        "s33 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:397"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "s87 = 49",
+        "s87 = 54",
+        "s87 = 59"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:397"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "Eq(s69, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "s69 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 4,
+      "examples": [
+        "Eq(zf44, 0.125)",
+        "Eq(zf29, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 12,
+      "examples": [
+        "zf26 >= 0.0",
+        "zf26 <= 1.0",
+        "zf30 >= 0.0",
+        "zf30 <= 1.0",
+        "zf55 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 6,
+      "examples": [
+        "Eq(zf26, 0.1)",
+        "Eq(zf30, 0.1)",
+        "Eq(zf55, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:408"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "Eq(s86, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "s86 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:get_audio_features:464",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 7,
+      "examples": [
+        "Eq(s59, s72) | Eq(s72, 1)",
+        "Eq(s29, s70) | Eq(s70, 1)",
+        "Eq(s38*s97, 1) | Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522",
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 6,
+      "examples": [
+        "Eq(s72, s59)",
+        "Eq(s70, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:517",
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/omniasr/modeling_omniasr.py:get_placeholder_mask",
+      "line": 493,
+      "count": 6,
+      "examples": [
+        "Eq(s39, 98)",
+        "Eq(s98, s18*s99)",
+        "Eq(s39, 162)",
+        "Eq(s39, 236)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:get_placeholder_mask:493"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/omniasr/modeling_omniasr.py:get_placeholder_mask",
+      "line": 493,
+      "count": 3,
+      "examples": [
+        "s39 = 98",
+        "s39 = 162",
+        "s39 = 236"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:get_placeholder_mask:493"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 6,
+      "examples": [
+        "Eq(s89, s53)",
+        "Eq(s67, s29)",
+        "Eq(s38, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517",
+      "line": 522,
+      "count": 12,
+      "examples": [
+        "-s16 + s29 <= 0",
+        "s16 <= s29",
+        "Eq(zf60, 0.0883883476483184)",
+        "Eq(zf3, 0.0)",
+        "Eq(zf94, 0.0883883476483184)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "Eq(s53, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "s53 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517",
+      "line": 522,
+      "count": 2,
+      "examples": [
+        "s89 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:torch_dynamo_resume_in_forward_at_517:522"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(1024*s11, 1024*s11 + 1024*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s68*(s11 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 1,
+      "examples": [
+        "Ne(11984*s68*(s11 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 1,
+      "examples": [
+        "11984*s11 + 11984*s55 >= 11984"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 11984*s68*(s11 + s55)",
+        "11984 < 11984*s68*(s11 + s55)",
+        "11984*s11 + 11984*s55 < 11984*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s11*s68"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "1024*s11 + 1024*s55 > 1024"
+      ],
+      "model_frames": [
+        "transformers/models/omniasr/modeling_omniasr.py:forward:597"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/omniasr/modeling_omniasr.py:404",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py\", line 403, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py\", line 404, in forward, code: if dropout_probability < self.layerdrop:  # skip the layer\n        lt = lt(dropout_probability, item_9)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:597 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:517 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:464 in get_audio_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:404 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/omniasr/modeling_omniasr.py:404",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py\", line 403, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py\", line 404, in forward, code: if dropout_probability < self.layerdrop:  # skip the layer\n        lt = lt(dropout_probability, item_8)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py line 367)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/omniasr/modeling_omniasr.py\", line 399\n            for encoder_layer in self.layers:\n                                 ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:597 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:517 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:464 in get_audio_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:404 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/omniasr/modeling_omniasr.py:493",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:597 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:522 in forward",
+        "transformers/models/omniasr/modeling_omniasr.py:493 in get_placeholder_mask"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
 }

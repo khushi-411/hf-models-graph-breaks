@@ -3,7 +3,7 @@
 - **HF id:** `unsloth/gemma-3n-E2B-it`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 4, 'num_kv_shared_layers': 2, 'intermediate_size': [2048, 2048, 2048, 2048], 'layer_types': ['sliding_attention', 'full_attention', 'sliding_attention', 'full_attention'], 'activation_sparsity_pattern': [0.95, 0.95, 0.0, 0.0], 'vocab_size': 32000, 'vocab_size_per_layer_input': 32000}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Text tower only. AltUp, Laurel, per-layer embeddings, KV sharing, activation sparsity.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

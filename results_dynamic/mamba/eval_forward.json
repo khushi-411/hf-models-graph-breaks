@@ -5,6 +5,7 @@
   "device": "cpu",
   "dynamic": true,
   "backend": "inductor",
+  "unbacked": false,
   "sizes": [
     [
       2,
@@ -22,15 +23,15 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T06:41:14+00:00",
+  "timestamp": "2026-11-18T14:46:17+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "ok",
@@ -42,26 +43,26 @@
       "seq": 32,
       "audio": 16000,
       "new_graphs": 2,
-      "new_shape_events": 162
+      "new_shape_events": 134
     },
     {
       "batch": 3,
       "seq": 40,
       "audio": 17600,
       "new_graphs": 1,
-      "new_shape_events": 84
+      "new_shape_events": 70
     },
     {
       "batch": 4,
       "seq": 56,
       "audio": 19200,
       "new_graphs": 1,
-      "new_shape_events": 81
+      "new_shape_events": 67
     }
   ],
   "recompile_reasons": [
-    "Recompiling function forward in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mamba/modeling_mamba.py:750\n    triggered by the following guard failure(s):\n    - 0/0: ((input_ids.size()[1] // 8) % 2) == 0  # _, all_states = associative_scan(  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mamba/modeling_mamba.py:236 in mamba_selective_scan (_dynamo/variables/tensor.py:3158 in evaluate_expr)",
-    "Recompiling function forward in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mamba/modeling_mamba.py:750\n    triggered by the following guard failure(s):\n    - 0/1: (((-1) + (input_ids.size()[1] // 4)) // 2) == 4  # if batch_sizes and any(size != batch_sizes[0] for size in batch_sizes):  # _functorch/vmap.py:72 in _validate_and_get_batch_size (_dynamo/variables/tensor.py:3158 in evaluate_expr)\n    - 0/0: ((input_ids.size()[1] // 8) % 2) == 0  # _, all_states = associative_scan(  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mamba/modeling_mamba.py:236 in mamba_selective_scan (_dynamo/variables/tensor.py:3158 in evaluate_expr)"
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: ((kwargs['input_ids'].size()[1] // 8) % 2) == 0  # _, all_states = associative_scan(  # Documents/transformers/src/transformers/models/mamba/modeling_mamba.py:237 in mamba_selective_scan (_dynamo/variables/tensor.py:3158 in evaluate_expr)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/1: (((-1) + (kwargs['input_ids'].size()[1] // 4)) // 2) == 4  # if batch_sizes and any(size != batch_sizes[0] for size in batch_sizes):  # _functorch/vmap.py:72 in _validate_and_get_batch_size (_dynamo/variables/tensor.py:3158 in evaluate_expr)\n    - 0/0: ((kwargs['input_ids'].size()[1] // 8) % 2) == 0  # _, all_states = associative_scan(  # Documents/transformers/src/transformers/models/mamba/modeling_mamba.py:237 in mamba_selective_scan (_dynamo/variables/tensor.py:3158 in evaluate_expr)"
   ],
   "inductor_specialization_sites": [],
   "inductor_guard_sites": [],
@@ -70,14 +71,14 @@
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:infer_size",
-      "line": 2517,
+      "line": 2514,
       "count": 24,
       "examples": [
-        "Ne((s70//2), 1)",
-        "Ne((s70//4), 1)",
-        "Ne((s70//8), 1)",
-        "Ne((s70//16), 1)",
-        "Eq((s70//32), 1)"
+        "Ne((s27//2), 1)",
+        "Ne((s27//4), 1)",
+        "Ne((s27//8), 1)",
+        "Ne((s27//16), 1)",
+        "Eq((s27//32), 1)"
       ],
       "model_frames": []
     },
@@ -88,11 +89,11 @@
       "line": 544,
       "count": 20,
       "examples": [
-        "Ne(16*s70, 32)",
-        "Ne(16*Max(1, (s70//2)), 32)",
-        "Ne(16*Max(1, (s70//4)), 32)",
-        "Ne(16*Max(1, (s70//8)), 32)",
-        "Eq(16*Max(1, (s70//16)), 32)"
+        "Ne(16*s27, 32)",
+        "Ne(16*Max(1, (s27//2)), 32)",
+        "Ne(16*Max(1, (s27//4)), 32)",
+        "Ne(16*Max(1, (s27//8)), 32)",
+        "Eq(16*Max(1, (s27//16)), 32)"
       ],
       "model_frames": []
     },
@@ -103,11 +104,11 @@
       "line": 535,
       "count": 123,
       "examples": [
-        "16*s70 > 32",
-        "16*Max(1, (s70//2)) > 16",
-        "Ne(Mod(16, 16*Max(1, (s70//2))), 0)",
-        "Ne(Mod(32, 24576*Max(1, (s70//2))), 0)",
-        "16*Max(1, (s70//2)) > 32"
+        "16*s27 > 32",
+        "16*Max(1, (s27//2)) > 16",
+        "Ne(Mod(16, 16*Max(1, (s27//2))), 0)",
+        "Ne(Mod(32, 24576*Max(1, (s27//2))), 0)",
+        "16*Max(1, (s27//2)) > 32"
       ],
       "model_frames": []
     },
@@ -118,11 +119,11 @@
       "line": 1798,
       "count": 66,
       "examples": [
-        "((s70//32)) < 2",
-        "Eq(Mod((s70//16), 2), 0)",
-        "Eq(((((s70//16)) - 1)//2), ((s70//32)) - 1)",
-        "s72*(24576*((s70//32)) - 24576) <= 0",
-        "24576*s72*(((((s70//16)) - 1)//2)) <= 0"
+        "((s27//32)) < 2",
+        "Eq(Mod((s27//16), 2), 0)",
+        "Eq(((((s27//16)) - 1)//2), ((s27//32)) - 1)",
+        "s52*(24576*((s27//32)) - 24576) <= 0",
+        "24576*s52*(((((s27//16)) - 1)//2)) <= 0"
       ],
       "model_frames": []
     },
@@ -131,13 +132,12 @@
       "phase": "aot/decomp",
       "site": "torch/_prims_common/__init__.py:is_contiguous",
       "line": 283,
-      "count": 14,
+      "count": 6,
       "examples": [
-        "24576*s72*(((s70//32)) - 1) < 2",
-        "24576*s72*(((((s70//16)) - 1)//2)) < 2",
-        "768*s72*(s55 + s70) >= 2",
-        "50280*s72*(s55 + s70) >= 2",
-        "24576*s43*(((s53//32)) - 1) < 2"
+        "24576*s52*(((s27//32)) - 1) < 2",
+        "24576*s52*(((((s27//16)) - 1)//2)) < 2",
+        "24576*s52*(((s17//32)) - 1) < 2",
+        "24576*s52*(((((s17//16)) - 1)//2)) < 2"
       ],
       "model_frames": []
     },
@@ -146,13 +146,13 @@
       "phase": "aot/decomp",
       "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
       "line": 4176,
-      "count": 15,
+      "count": 11,
       "examples": [
-        "Ne(Mod((((((s70//8)) - 1)//2)) + 1, 2*(((((s70//8)) - 1)//2)) + 2), 0)",
-        "Ne(Mod((((((s70//4)) - 1)//2)) + 1, 2*(((((s70//4)) - 1)//2)) + 2), 0)",
-        "Ne(Mod((((((s70//2)) - 1)//2)) + 1, 2*(((((s70//2)) - 1)//2)) + 2), 0)",
-        "Ne(PythonMod(s72, s72*(s55 + s70)), 0)",
-        "Ne(Mod((((((s53//4)) - 1)//2)) + 1, 2*(((((s53//4)) - 1)//2)) + 2), 0)"
+        "Ne(Mod((((((s27//8)) - 1)//2)) + 1, 2*(((((s27//8)) - 1)//2)) + 2), 0)",
+        "Ne(Mod((((((s27//4)) - 1)//2)) + 1, 2*(((((s27//4)) - 1)//2)) + 2), 0)",
+        "Ne(Mod((((((s27//2)) - 1)//2)) + 1, 2*(((((s27//2)) - 1)//2)) + 2), 0)",
+        "Ne(Mod((((((s17//4)) - 1)//2)) + 1, 2*(((((s17//4)) - 1)//2)) + 2), 0)",
+        "Ne(Mod((((((s17//2)) - 1)//2)) + 1, 2*(((((s17//2)) - 1)//2)) + 2), 0)"
       ],
       "model_frames": []
     },
@@ -160,14 +160,14 @@
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:infer_size",
-      "line": 2516,
+      "line": 2513,
       "count": 17,
       "examples": [
-        "Eq(((((s70//4)) - 1)//2), 2*(((((s70//8)) - 1)//2)) + 1)",
-        "Eq(((((s70//2)) - 1)//2), 2*(((((s70//4)) - 1)//2)) + 1)",
-        "Eq(((s70 - 1)//2), 2*(((((s70//2)) - 1)//2)) + 1)",
-        "Eq(s70, s53)",
-        "Eq(s72, s43)"
+        "Eq(((((s27//4)) - 1)//2), 2*(((((s27//8)) - 1)//2)) + 1)",
+        "Eq(((((s27//2)) - 1)//2), 2*(((((s27//4)) - 1)//2)) + 1)",
+        "Eq(((s27 - 1)//2), 2*(((((s27//2)) - 1)//2)) + 1)",
+        "Eq(s27, s17)",
+        "Eq(s52, s92)"
       ],
       "model_frames": []
     },
@@ -178,111 +178,11 @@
       "line": 453,
       "count": 4,
       "examples": [
-        "Eq(s70, 2*(((s70 - 1)//2)) + 2)",
-        "Eq(s53, 2*(((s53 - 1)//2)) + 2)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
-      "line": 1557,
-      "count": 4,
-      "examples": [
-        "(-s55 >= 0) & (-s55 <= s70)",
-        "(-s55 >= 0) & (-s55 <= s53)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_subclasses/fake_impls.py:slice_forward",
-      "line": 1610,
-      "count": 4,
-      "examples": [
-        "s70 >= -s55",
-        "s53 >= -s55"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_decomp/decompositions.py:matmul",
-      "line": 5450,
-      "count": 12,
-      "examples": [
-        "Ne(768*s72*(s55 + s70), 0)",
-        "Ne(s55 + s70, 1)",
-        "Eq(768*s70, 768*s55 + 768*s70)",
-        "Ne(768*s43*(s53 + s55), 0)",
-        "Ne(s53 + s55, 1)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_prims_common/__init__.py:infer_size",
-      "line": 1006,
-      "count": 8,
-      "examples": [
-        "Ne(s72*(s55 + s70), -1)",
-        "Ne(s55 + s70, -1)",
-        "Ne(s43*(s53 + s55), -1)",
-        "Ne(s53 + s55, -1)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_prims_common/__init__.py:infer_size",
-      "line": 1010,
-      "count": 4,
-      "examples": [
-        "s72*(s55 + s70) >= 0",
-        "s43*(s53 + s55) >= 0"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
-      "line": 4170,
-      "count": 4,
-      "examples": [
-        "Ne(s72*(s55 + s70), s72)",
-        "Ne(s43*(s53 + s55), s43)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_prims/__init__.py:_collapse_view_helper",
-      "line": 1497,
-      "count": 4,
-      "examples": [
-        "Ne(s55 + s70, 0)",
-        "Ne(s53 + s55, 0)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
-      "line": 267,
-      "count": 4,
-      "examples": [
-        "Ne(s72*(s55 + s70), 1)",
-        "Ne(s43*(s53 + s55), 1)"
+        "Eq(s27, 2*(((s27 - 1)//2)) + 2)",
+        "Eq(s17, 2*(((s17 - 1)//2)) + 2)"
       ],
       "model_frames": []
     }
-  ]
+  ],
+  "graph_breaks": []
 }

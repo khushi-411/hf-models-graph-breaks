@@ -3,7 +3,7 @@
 - **HF id:** `google/paligemma2-3b-pt-224`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 2, 'text_config.hidden_size': 512, 'text_config.intermediate_size': 1024, 'text_config.head_dim': 64, 'vision_config.num_hidden_layers': 2, 'projection_dim': 512, 'vision_config.projection_dim': 512}`
-- **torch:** `2.16.0a0+git6b3a750`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Built from PaliGemmaConfig defaults (gated checkpoint). Idefics3 is not listed separately; `smolvlm` covers that architecture.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -16,7 +16,7 @@
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -35,12 +35,14 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:352 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:242 in forward
-transformers/models/paligemma/modeling_paligemma.py:167 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:359 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:246 in forward
+transformers/models/paligemma/modeling_paligemma.py:170 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
@@ -49,7 +51,7 @@ transformers/utils/import_utils.py:1897 in torch_compilable_check
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -68,12 +70,14 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:352 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:242 in forward
-transformers/models/paligemma/modeling_paligemma.py:167 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:359 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:246 in forward
+transformers/models/paligemma/modeling_paligemma.py:170 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
@@ -82,7 +86,7 @@ transformers/utils/import_utils.py:1897 in torch_compilable_check
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -101,11 +105,13 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:352 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/paligemma/modeling_paligemma.py:242 in forward
-transformers/models/paligemma/modeling_paligemma.py:167 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:359 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/paligemma/modeling_paligemma.py:246 in forward
+transformers/models/paligemma/modeling_paligemma.py:170 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>

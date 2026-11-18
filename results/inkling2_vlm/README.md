@@ -3,7 +3,7 @@
 - **HF id:** `thinkingmachines/Inkling-2-Small-MXFP8`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 7, 'text_config.layer_types': ['hybrid_sliding', 'hybrid_sliding', 'hybrid_sliding', 'hybrid_sliding', 'hybrid_sliding', 'hybrid', 'hybrid_sliding'], 'text_config.hidden_size': 512, 'text_config.num_attention_heads': 8, 'text_config.num_key_value_heads': 2, 'text_config.head_dim': 64, 'text_config.swa_num_attention_heads': 8, 'text_config.swa_num_key_value_heads': 2, 'text_config.swa_head_dim': 64, 'text_config.sliding_window_size': 16, 'text_config.rel_extent': 16, 'text_config.moe_intermediate_size': 256, 'text_config.n_routed_experts': 8, 'text_config.num_experts_per_tok': 2, 'text_config.dtype': 'float32', 'quantization_config': None, 'dtype': 'float32', 'vision_config.num_hidden_layers': 2, 'vision_config.text_hidden_size': 512, 'vision_config.dtype': 'float32'}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Full Inkling-2 (vision tower + LM). Text overrides match the `inkling2` entry.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -239,17 +239,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
             for layer in self.layers:
                          ^^^^^^^^^^^
 ```
@@ -323,7 +323,7 @@ Data dependent operator
 
 Stack variable source attribution:
   GetAttrVariable(TensorVariable(), split) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
             image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
@@ -603,17 +603,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
             for layer in self.layers:
                          ^^^^^^^^^^^
 ```
@@ -687,7 +687,7 @@ Data dependent operator
 
 Stack variable source attribution:
   GetAttrVariable(TensorVariable(), split) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
             image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
@@ -967,17 +967,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1452 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1452)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1456
             for layer in self.layers:
                          ^^^^^^^^^^^
 ```
@@ -1051,7 +1051,7 @@ Data dependent operator
 
 Stack variable source attribution:
   GetAttrVariable(TensorVariable(), split) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py", line 1490
             image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```

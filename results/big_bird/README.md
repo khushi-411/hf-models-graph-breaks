@@ -3,7 +3,7 @@
 - **HF id:** `google/bigbird-roberta-base`
 - **Class:** `AutoModelForMaskedLM`
 - **Config overrides:** `{'num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** At SEQ_LEN=32 BigBird falls back from block-sparse to full attention.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -15,7 +15,7 @@
 
 ### 1. logging.Logger method not supported for non-export cases
 
-- **Location:** `transformers/models/big_bird/modeling_big_bird.py:1580`  (hit ×1)
+- **Location:** `transformers/models/big_bird/modeling_big_bird.py:1583`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -37,10 +37,11 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1580 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1583 in forward
 ```
 </details>
 
@@ -67,12 +68,13 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:145 in __init__
+transformers/models/big_bird/modeling_big_bird.py:144 in __init__
 ```
 </details>
 
@@ -99,13 +101,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: set_attention_type (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/big_bird/modeling_big_bird.py line 1275)
+  Developer debug context: frame skipped: set_attention_type (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py line 1277)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/big_bird/modeling_big_bird.py", line 1284
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py", line 1286
             for i, layer in enumerate(self.layer):
                             ~~~~~~~~~^^^^^^^^^^^^
 ```
@@ -115,18 +117,19 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:145 in __init__
+transformers/models/big_bird/modeling_big_bird.py:144 in __init__
 ```
 </details>
 
 ### 4. Uninitialized nn.Module
 
-- **Location:** `transformers/models/big_bird/modeling_big_bird.py:134`  (hit ×1)
+- **Location:** `transformers/models/big_bird/modeling_big_bird.py:133`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION: a call to a regular function, e.g. f(x, y):
@@ -146,12 +149,13 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0119.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:134 in __init__
+transformers/models/big_bird/modeling_big_bird.py:133 in __init__
 ```
 </details>
 
@@ -160,7 +164,7 @@ transformers/models/big_bird/modeling_big_bird.py:134 in __init__
 
 ### 1. logging.Logger method not supported for non-export cases
 
-- **Location:** `transformers/models/big_bird/modeling_big_bird.py:1580`  (hit ×1)
+- **Location:** `transformers/models/big_bird/modeling_big_bird.py:1583`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -182,10 +186,11 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1580 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1583 in forward
 ```
 </details>
 
@@ -212,12 +217,13 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:145 in __init__
+transformers/models/big_bird/modeling_big_bird.py:144 in __init__
 ```
 </details>
 
@@ -244,13 +250,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: set_attention_type (/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/big_bird/modeling_big_bird.py line 1275)
+  Developer debug context: frame skipped: set_attention_type (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py line 1277)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   LocalGeneratorObjectVariable(enumerate) originated from:
-  File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/models/big_bird/modeling_big_bird.py", line 1284
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py", line 1286
             for i, layer in enumerate(self.layer):
                             ~~~~~~~~~^^^^^^^^^^^^
 ```
@@ -260,18 +266,19 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:145 in __init__
+transformers/models/big_bird/modeling_big_bird.py:144 in __init__
 ```
 </details>
 
 ### 4. Uninitialized nn.Module
 
-- **Location:** `transformers/models/big_bird/modeling_big_bird.py:134`  (hit ×1)
+- **Location:** `transformers/models/big_bird/modeling_big_bird.py:133`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION: a call to a regular function, e.g. f(x, y):
@@ -291,11 +298,12 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0119.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1940 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/big_bird/modeling_big_bird.py:1591 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/models/big_bird/modeling_big_bird.py:1950 in forward
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/big_bird/modeling_big_bird.py:1594 in forward
 transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type
-transformers/models/big_bird/modeling_big_bird.py:134 in __init__
+transformers/models/big_bird/modeling_big_bird.py:133 in __init__
 ```
 </details>

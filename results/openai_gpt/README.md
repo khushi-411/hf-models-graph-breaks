@@ -3,7 +3,7 @@
 - **HF id:** `openai-community/openai-gpt`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'n_layer': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
@@ -18,7 +18,7 @@ No graph breaks. ✅
 
 ### 1. logging.Logger method not supported for non-export cases
 
-- **Location:** `transformers/modeling_utils.py:4685`  (hit ×1)
+- **Location:** `transformers/modeling_utils.py:4778`  (hit ×1)
 
 ```
 Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:
@@ -40,7 +40,7 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/openai/modeling_openai.py:465 in forward
-transformers/modeling_utils.py:4685 in loss_function
+transformers/models/openai/modeling_openai.py:463 in forward
+transformers/modeling_utils.py:4778 in loss_function
 ```
 </details>

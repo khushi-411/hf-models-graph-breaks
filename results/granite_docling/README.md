@@ -3,7 +3,7 @@
 - **HF id:** `ibm-granite/granite-for-docling-500m`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 2, 'vision_config.num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Built from GraniteDoclingConfig defaults (no public checkpoint for this class).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

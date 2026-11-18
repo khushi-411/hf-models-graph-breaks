@@ -3,7 +3,7 @@
 - **HF id:** `dots-studio/dots3-note-prev`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 3, 'text_config.layer_types': ['indexed_attention', 'indexed_attention', 'sliding_attention'], 'text_config.mlp_layer_types': ['dense', 'sparse', 'sparse'], 'text_config.hidden_size': 512, 'text_config.intermediate_size': 1024, 'text_config.moe_intermediate_size': 128, 'text_config.shared_experts_intermediate_size': 128, 'text_config.num_attention_heads': 8, 'text_config.num_key_value_heads': 8, 'text_config.head_dim': 128, 'text_config.q_lora_rank': 128, 'text_config.kv_lora_rank': 64, 'text_config.qk_rope_head_dim': 32, 'text_config.qk_nope_head_dim': 32, 'text_config.v_head_dim': 32, 'text_config.index_topk': 16, 'text_config.index_head_dim': 64, 'text_config.index_n_heads': 4, 'text_config.n_routed_experts': 8, 'text_config.num_experts_per_tok': 2, 'text_config.sliding_window': 16, 'vision_config.num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Full dots3-note with the image path (vision tower + adapter). Audio input not exercised. Text overrides match `dots3_note`.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -103,17 +103,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
             for block in self.blocks:
                          ^^^^^^^^^^^
 ```
@@ -325,17 +325,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
             for block in self.blocks:
                          ^^^^^^^^^^^
 ```
@@ -547,17 +547,17 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
+  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/osc/work/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
   NullVariable originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py", line 1550
             for block in self.blocks:
                          ^^^^^^^^^^^
 ```

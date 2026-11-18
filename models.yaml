@@ -1119,3 +1119,37 @@ models:
     config_overrides: {num_hidden_layers: 2}
     scenarios: [eval_forward, train_forward]
     notes: Mimi codec (conv + transformer encoder/decoder + RVQ), used by Moshi.
+
+  # ----------------------------------------------------------------------- #
+  # Added 2026-11-18 (second batch), on transformers main. Not added: Hy4-flash (needs unmerged
+  # transformers PR #50903), SenseNova-Loop-9B (gated), MiniMax-H3-Image / LongCat-Video-Avatar-1.6 /
+  # FastFrames-L (diffusion pipelines, not transformers models). qwen3_8 needs CPU BLAS (CUDA only here).
+  # ----------------------------------------------------------------------- #
+  - name: qwen3_8
+    hf_id: Qwen/Qwen3.8-27B
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    # 4 text layers keep the 3 linear-attention (gated delta net) : 1 full-attention pattern.
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Qwen3.8-27B (model_type qwen3_5). Hybrid gated-delta-net / gated full attention LM + ViT.
+
+  - name: sam3
+    hf_id: facebook/sam3      # gated; built from Sam3Config defaults
+    auto_class: AutoModel
+    config_class: Sam3Config
+    inputs: sam3
+    config_overrides: {vision_config.backbone_config.num_hidden_layers: 2, text_config.num_hidden_layers: 2, geometry_encoder_config.num_layers: 1, detr_encoder_config.num_layers: 1, detr_decoder_config.num_layers: 1}
+    scenarios: [eval_forward]
+    notes: Segment Anything 3 with a text concept prompt (no boxes). Built from Sam3Config defaults (gated hf_id).
+
+  - name: zonos3_mini
+    hf_id: Zyphra/ZONOS3-Mini-hf
+    auto_class: AutoModel
+    trust_remote_code: true   # modeling_zonos3.py reviewed 2026-11-18 (revision e39d30d)
+    init_weights: normal      # its _init_weights is a no-op
+    inputs: zonos3_rows
+    # 4 LM layers: dense FFN (0), GDN + MoE (1, 2), global attention + MoE (3).
+    config_overrides: {lm.n_layers: 4}
+    scenarios: [eval_forward]
+    notes: TTS LM step (batch size 1, forward is @torch.no_grad, so no train scenario). Remote code.

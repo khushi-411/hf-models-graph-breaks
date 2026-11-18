@@ -23,15 +23,15 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T08:49:15+00:00",
+  "timestamp": "2026-11-18T15:15:13+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "ok",
@@ -43,7 +43,7 @@
       "seq": 32,
       "audio": 16000,
       "new_graphs": 3,
-      "new_shape_events": 167
+      "new_shape_events": 191
     },
     {
       "batch": 3,
@@ -71,7 +71,7 @@
       "phase": "aot/decomp",
       "site": "torch/nn/functional.py:dropout",
       "line": 1541,
-      "count": 40,
+      "count": 50,
       "examples": [
         "zf49 >= 0.0",
         "zf49 <= 1.0",
@@ -80,7 +80,8 @@
         "zf84 >= 0.0"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -88,7 +89,7 @@
       "phase": "aot/decomp",
       "site": "torch/nn/functional.py:dropout",
       "line": 1544,
-      "count": 20,
+      "count": 25,
       "examples": [
         "Eq(zf49, 0.1)",
         "Eq(zf18, 0.1)",
@@ -97,7 +98,8 @@
         "Eq(zf66, 0.1)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -105,7 +107,7 @@
       "phase": "aot/decomp",
       "site": "torch/nn/functional.py:layer_norm",
       "line": 3040,
-      "count": 20,
+      "count": 25,
       "examples": [
         "Eq(zf98, 1.0e-5)",
         "Eq(zf32, 1.0e-5)",
@@ -114,7 +116,8 @@
         "Eq(zf80, 1.0e-5)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -135,7 +138,23 @@
       "kind": "guard",
       "phase": "model",
       "site": "transformers/utils/generic.py:wrapper",
-      "line": 943,
+      "line": 1036,
+      "count": 4,
+      "examples": [
+        "Eq(zf62, 0.125)",
+        "Eq(zf53, 0.1)",
+        "Eq(zf13, 0.125)",
+        "Eq(zf70, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
       "count": 14,
       "examples": [
         "Eq(zf1, 0.125)",
@@ -145,7 +164,7 @@
         "Eq(zf15, 2.0)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -158,7 +177,7 @@
         "(-s55 >= 0) & (-s55 <= s70)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -171,7 +190,7 @@
         "s70 >= -s55"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -186,7 +205,7 @@
         "Eq(768*s70, 768*s55 + 768*s70)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -201,8 +220,8 @@
         "Ne(s8, -1)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -216,8 +235,8 @@
         "s8 >= 0"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -231,7 +250,7 @@
         "50257*s72*(s55 + s70) >= 2"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -246,8 +265,8 @@
         "Eq(s8, s85)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -262,8 +281,8 @@
         "Eq(Mod(s3*s88, ((s3*s85*s88)//s8)), 0)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -276,7 +295,7 @@
         "Ne(s55 + s70, 0)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -289,14 +308,14 @@
         "Ne(s72*(s55 + s70), 1)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_ops.py:__call__",
-      "line": 1436,
+      "line": 1496,
       "count": 8,
       "examples": [
         "s55 + s70 > -1",
@@ -305,7 +324,7 @@
         "50257*s55 + 50257*s70 < 50257*s72*(s55 + s70)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -318,7 +337,7 @@
         "50257*s55 + 50257*s70 >= 50257"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
@@ -335,34 +354,34 @@
         "s38*s97 <= 4096"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
       "kind": "guard",
       "phase": "model",
       "site": "transformers/models/gpt2/modeling_gpt2.py:forward",
-      "line": 702,
+      "line": 704,
       "count": 1,
       "examples": [
         "Eq(s42, -100)"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
       "kind": "specialize",
       "phase": "model",
       "site": "transformers/models/gpt2/modeling_gpt2.py:forward",
-      "line": 702,
+      "line": 704,
       "count": 1,
       "examples": [
         "s42 = -100"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -375,7 +394,7 @@
         "Ne(s8, 0)"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -388,7 +407,7 @@
         "Eq(Mod(s3*s85*s88, s8), 0)"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -401,7 +420,7 @@
         "Eq(s3*s88, ((s3*s85*s88)//s8))"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     },
     {
@@ -414,18 +433,19 @@
         "Eq(s3*s88, s38*s97)"
       ],
       "model_frames": [
-        "transformers/models/gpt2/modeling_gpt2.py:forward:702"
+        "transformers/models/gpt2/modeling_gpt2.py:forward:704"
       ]
     }
   ],
   "graph_breaks": [
     {
-      "location": "transformers/modeling_utils.py:4685",
+      "location": "transformers/modeling_utils.py:4778",
       "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning_once(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning_once)`. If `warning_once` is defined on the logger class, add the class method `logging.Logger.warning_once` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning_once`) is checked against the ignore set. Ignoring a method that `warning_once` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning_once)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.modeling_utils (WARNING)>.warning_once, args: [ConstantVariable(str: '`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.')], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
       "user_stack": [
-        "transformers/utils/generic.py:943 in wrapper",
-        "transformers/models/gpt2/modeling_gpt2.py:702 in forward",
-        "transformers/modeling_utils.py:4685 in loss_function"
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt2/modeling_gpt2.py:704 in forward",
+        "transformers/modeling_utils.py:4778 in loss_function"
       ],
       "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
       "short_reason": "logging.Logger method not supported for non-export cases",

@@ -3,7 +3,7 @@
 - **HF id:** `OpenGVLab/InternVL3-1B-hf`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 2, 'vision_config.num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
@@ -15,7 +15,7 @@
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -34,18 +34,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:649 in forward
-transformers/models/internvl/modeling_internvl.py:607 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/models/internvl/modeling_internvl.py:606 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 2. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:100`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:101`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -54,13 +56,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 100, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -77,30 +79,32 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:100 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:101 in dynamic_frequency_update
 ```
 </details>
 
 ### 3. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:112`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:113`  (hit ×1)
 
 ```
 Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -117,14 +121,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:112 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:113 in dynamic_frequency_update
 ```
 </details>
 
@@ -133,7 +139,7 @@ transformers/modeling_rope_utils.py:112 in dynamic_frequency_update
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -152,18 +158,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:649 in forward
-transformers/models/internvl/modeling_internvl.py:607 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/models/internvl/modeling_internvl.py:606 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 2. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:100`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:101`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -172,13 +180,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 100, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -195,30 +203,32 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:100 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:101 in dynamic_frequency_update
 ```
 </details>
 
 ### 3. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:112`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:113`  (hit ×1)
 
 ```
 Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -235,14 +245,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:112 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:113 in dynamic_frequency_update
 ```
 </details>
 
@@ -251,7 +263,7 @@ transformers/modeling_rope_utils.py:112 in dynamic_frequency_update
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/utils/import_utils.py:1897`  (hit ×1)
+- **Location:** `transformers/utils/import_utils.py:1975`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -270,18 +282,20 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:649 in forward
-transformers/models/internvl/modeling_internvl.py:607 in get_placeholder_mask
-transformers/utils/import_utils.py:1897 in torch_compilable_check
+transformers/models/internvl/modeling_internvl.py:606 in get_placeholder_mask
+transformers/utils/import_utils.py:1975 in torch_compilable_check
 ```
 </details>
 
 ### 2. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:100`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:101`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -290,13 +304,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 88, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 100, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -313,30 +327,32 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:100 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:101 in dynamic_frequency_update
 ```
 </details>
 
 ### 3. Data-dependent branching
 
-- **Location:** `transformers/modeling_rope_utils.py:112`  (hit ×1)
+- **Location:** `transformers/modeling_rope_utils.py:113`  (hit ×1)
 
 ```
 Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/anaconda3/envs/pt2dev/lib/python3.15/site-packages/transformers/modeling_rope_utils.py", line 112, in torch_dynamo_resume_in_dynamic_frequency_update_at_100, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -353,13 +369,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/internvl/modeling_internvl.py:822 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/internvl/modeling_internvl.py:823 in forward
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
 transformers/models/internvl/modeling_internvl.py:654 in forward
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/qwen2/modeling_qwen2.py:377 in forward
-transformers/modeling_rope_utils.py:125 in wrapper
-transformers/modeling_rope_utils.py:112 in dynamic_frequency_update
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/qwen2/modeling_qwen2.py:380 in forward
+transformers/modeling_rope_utils.py:126 in wrapper
+transformers/modeling_rope_utils.py:113 in dynamic_frequency_update
 ```
 </details>

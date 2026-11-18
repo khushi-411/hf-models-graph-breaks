@@ -1,0 +1,398 @@
+{
+  "model": "internlm3",
+  "hf_id": "internlm/internlm3-8b-instruct",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:15:17+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 8,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 8,
+      "new_shape_events": 49
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: ___check_type_id(args[0], 108550424395120), type=<class 'transformers.models.llama.modeling_llama.LlamaForCausalLM'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type LlamaForCausalLM)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\""
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 1,
+      "examples": [
+        "Eq(zf3, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/modeling_rope_utils.py:torch_dynamo_resume_in_dynamic_frequency_update_at_101",
+      "line": 113,
+      "count": 1,
+      "examples": [
+        "s25 <= 32768"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:torch_dynamo_resume_in_dynamic_frequency_update_at_101:113"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 8,
+      "examples": [
+        "Eq(s33, 1024)",
+        "Eq(s27, 128)",
+        "Eq(s87, s40)",
+        "Eq(s40, s9)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:392"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "s33 = 1024",
+        "s27 = 128"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:392"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llama/modeling_llama.py:forward",
+      "line": 392,
+      "count": 10,
+      "examples": [
+        "Eq(zf23, 0.0883883476483184)",
+        "Eq(s34, s40)",
+        "Eq(s30, s34)",
+        "Eq(s84, s47)",
+        "Eq(zf50, 0.0883883476483184)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:392"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(1024*s11, 1024*s11 + 1024*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s68*(s11 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 3,
+      "examples": [
+        "s68*s86*(s11 + s55) >= 2",
+        "32000*s68*(s11 + s55) >= 2",
+        "1024*s68*(s11 + s55) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 1,
+      "examples": [
+        "Ne(s68*(s11 + s55), s68)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 1,
+      "examples": [
+        "Ne(PythonMod(s68, s68*(s11 + s55)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s86, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s86 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 1,
+      "examples": [
+        "Ne(32000*s68*(s11 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 1,
+      "examples": [
+        "Ne(s68*(s11 + s55), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 32000*s68*(s11 + s55)",
+        "32000 < 32000*s68*(s11 + s55)",
+        "32000*s11 + 32000*s55 < 32000*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "32000*s11 + 32000*s55 > 32000"
+      ],
+      "model_frames": [
+        "transformers/models/llama/modeling_llama.py:forward:460"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/modeling_rope_utils.py:101",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1\n        max_1 = max(position_ids_1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1\n        seq_len = add(max_1, 1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth\n        gt_2 = gt(seq_len, 32768)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/llama/modeling_llama.py:460 in forward",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/llama/modeling_llama.py:392 in forward",
+        "transformers/modeling_rope_utils.py:126 in wrapper",
+        "transformers/modeling_rope_utils.py:101 in dynamic_frequency_update"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/modeling_rope_utils.py:113",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset\n        l_seq_len_: graph input (L_seq_len_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset\n        lt = lt(l_seq_len_, 32768)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/llama/modeling_llama.py:460 in forward",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/llama/modeling_llama.py:392 in forward",
+        "transformers/modeling_rope_utils.py:126 in wrapper",
+        "transformers/modeling_rope_utils.py:113 in dynamic_frequency_update"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

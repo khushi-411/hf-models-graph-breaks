@@ -23,15 +23,15 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T06:55:16+00:00",
+  "timestamp": "2026-11-18T14:51:12+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "error",
@@ -40,11 +40,11 @@
       "batch": 2,
       "seq": 32,
       "audio": 16000,
-      "new_graphs": 24,
-      "new_shape_events": 524
+      "new_graphs": 26,
+      "new_shape_events": 525
     }
   ],
   "error": "ValueError: If training, sequence length 40 has to be a multiple of least common multiple chunk_length 16. Please consider padding the input to a length of 48.",
   "error_inductor_site": null,
-  "traceback": "Traceback (most recent call last):\n  File \"/home/khushi/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 240, in run_scenario\n    out = compiled(**inputs)\n  File \"/home/khushi/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 661, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1363, in compile_wrapper\n    result = fn(*args, **kwargs)\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2222, in forward\n    reformer_outputs = self.reformer(\n        input_ids,\n    ...<8 lines>...\n        return_dict=return_dict,\n    )\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/khushi/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward\n    input_shape[-1] % least_common_mult_chunk_length != 0\n  File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/reformer/modeling_reformer.py\", line 2032, in torch_dynamo_resume_in_forward_at_2023\n    raise ValueError(\n    ...<3 lines>...\n    )\nValueError: If training, sequence length 40 has to be a multiple of least common multiple chunk_length 16. Please consider padding the input to a length of 48.\n"
+  "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 243, in run_scenario\n    out = compiled(**inputs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 661, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 1363, in compile_wrapper\n    result = fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/reformer/modeling_reformer.py\", line 2222, in forward\n    reformer_outputs = self.reformer(\n        input_ids,\n    ...<8 lines>...\n        return_dict=return_dict,\n    )\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/reformer/modeling_reformer.py\", line 2023, in forward\n    input_shape[-1] % least_common_mult_chunk_length != 0\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/reformer/modeling_reformer.py\", line 2032, in torch_dynamo_resume_in_forward_at_2023\n    raise ValueError(\n    ...<3 lines>...\n    )\nValueError: If training, sequence length 40 has to be a multiple of least common multiple chunk_length 16. Please consider padding the input to a length of 48.\n"
 }

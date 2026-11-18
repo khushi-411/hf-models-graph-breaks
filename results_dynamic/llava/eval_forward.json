@@ -23,15 +23,15 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T07:03:33+00:00",
+  "timestamp": "2026-11-18T16:20:59+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "ok",
@@ -43,7 +43,7 @@
       "seq": 32,
       "audio": 16000,
       "new_graphs": 6,
-      "new_shape_events": 127
+      "new_shape_events": 155
     },
     {
       "batch": 3,
@@ -61,11 +61,12 @@
     }
   ],
   "recompile_reasons": [
-    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: ___check_obj_id(func.__code__, 107081037666976), type=<class 'code'>  # output = func(self, *args, **kwargs)  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:943 in wrapper\n    - User stack trace:\n    -   File \"/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py\", line 943, in wrapper\n    -     output = func(self, *args, **kwargs)",
-    "Recompiling function forward in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:217\n    triggered by the following guard failure(s):\n    - 2/0: tensor 'input_ids' size mismatch at index 0. expected 2, actual 3",
-    "Recompiling function get_placeholder_mask in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:193\n    triggered by the following guard failure(s):\n    - 3/0: (image_features.size()[1]*image_features.size()[0]) == 1179648  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)",
-    "Recompiling function forward in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:217\n    triggered by the following guard failure(s):\n    - 2/1: tensor 'pixel_values' size mismatch at index 0. expected 3, actual 4\n    - 2/0: tensor 'input_ids' size mismatch at index 0. expected 2, actual 4",
-    "Recompiling function get_placeholder_mask in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:193\n    triggered by the following guard failure(s):\n    - 3/1: (image_features.size()[1]*image_features.size()[0]) == 1769472  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)\n    - 3/0: (image_features.size()[1]*image_features.size()[0]) == 1179648  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)"
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 4",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 101604751742384), type=<class 'transformers.models.llava.modeling_llava.LlavaForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type LlavaForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava/modeling_llava.py:217\n    triggered by the following guard failure(s):\n    - 3/0: tensor 'input_ids' size mismatch at index 0. expected 2, actual 3",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava/modeling_llava.py:193\n    triggered by the following guard failure(s):\n    - 4/0: (image_features.size()[1]*image_features.size()[0]) == 1179648  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # Documents/transformers/src/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava/modeling_llava.py:217\n    triggered by the following guard failure(s):\n    - 3/1: tensor 'pixel_values' size mismatch at index 0. expected 3, actual 4\n    - 3/0: tensor 'input_ids' size mismatch at index 0. expected 2, actual 4",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava/modeling_llava.py:193\n    triggered by the following guard failure(s):\n    - 4/1: (image_features.size()[1]*image_features.size()[0]) == 1769472  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # Documents/transformers/src/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)\n    - 4/0: (image_features.size()[1]*image_features.size()[0]) == 1179648  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # Documents/transformers/src/transformers/models/llava/modeling_llava.py:213 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)"
   ],
   "inductor_specialization_sites": [],
   "inductor_guard_sites": [
@@ -86,7 +87,7 @@
         "Eq(zf13, 0.125)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -100,37 +101,39 @@
         "s52 = 2"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:conv",
-      "line": 2333,
-      "count": 12,
+      "line": 2330,
+      "count": 14,
       "examples": [
         "Eq(s46, 3)",
         "Eq(s59, 3)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
       "kind": "specialize",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:conv",
-      "line": 2333,
-      "count": 12,
+      "line": 2330,
+      "count": 14,
       "examples": [
         "s46 = 3",
         "s59 = 3"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -138,7 +141,7 @@
       "phase": "aot/decomp",
       "site": "torch/nn/functional.py:layer_norm",
       "line": 3040,
-      "count": 72,
+      "count": 84,
       "examples": [
         "Eq(zf67, 1.0e-5)",
         "Eq(zf48, 1.0e-5)",
@@ -147,15 +150,47 @@
         "Eq(zf28, 1.0e-5)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943",
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
       "kind": "guard",
       "phase": "model",
       "site": "transformers/utils/generic.py:wrapper",
-      "line": 943,
+      "line": 1036,
+      "count": 8,
+      "examples": [
+        "Eq(s58, 336)",
+        "Eq(zf59, 0.125)",
+        "Eq(zf45, 0.125)",
+        "Eq(s52, 2)",
+        "Eq(zf0, 0.125)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 4,
+      "examples": [
+        "s58 = 336",
+        "s52 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
       "count": 46,
       "examples": [
         "Eq(s99, 336)",
@@ -165,14 +200,14 @@
         "Eq(zf13, 0.125)"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
       "kind": "specialize",
       "phase": "model",
-      "site": "transformers/utils/generic.py:wrapper",
-      "line": 943,
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
       "count": 20,
       "examples": [
         "s99 = 336",
@@ -182,14 +217,14 @@
         "s99 = 4"
       ],
       "model_frames": [
-        "transformers/utils/generic.py:wrapper:943"
+        "transformers/utils/deprecation.py:wrapped_func:173"
       ]
     },
     {
       "kind": "guard",
       "phase": "model",
       "site": "transformers/models/llava/modeling_llava.py:forward",
-      "line": 255,
+      "line": 256,
       "count": 12,
       "examples": [
         "Eq(s11*s28, 1179648)",
@@ -199,7 +234,7 @@
         "Eq(s11*s28, 1769472)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:255"
+        "transformers/models/llava/modeling_llava.py:forward:256"
       ]
     },
     {
@@ -213,33 +248,33 @@
         "Eq(s38, s59)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:255"
+        "transformers/models/llava/modeling_llava.py:forward:256"
       ]
     },
     {
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:infer_size",
-      "line": 2516,
+      "line": 2513,
       "count": 2,
       "examples": [
         "Eq(s53, 1024)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:255"
+        "transformers/models/llava/modeling_llava.py:forward:256"
       ]
     },
     {
       "kind": "specialize",
       "phase": "aot/decomp",
       "site": "torch/_subclasses/fake_impls.py:infer_size",
-      "line": 2516,
+      "line": 2513,
       "count": 2,
       "examples": [
         "s53 = 1024"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:255"
+        "transformers/models/llava/modeling_llava.py:forward:256"
       ]
     },
     {
@@ -252,7 +287,7 @@
         "(-s55 >= 0) & (-s55 <= s14)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -265,7 +300,7 @@
         "s14 >= -s55"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -281,7 +316,7 @@
         "Eq(1024*s14, 1024*s14 + 1024*s55)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -295,7 +330,7 @@
         "Ne(s14 + s55, -1)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -308,7 +343,7 @@
         "s94*(s14 + s55) >= 0"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -323,7 +358,7 @@
         "1024*s94*(s14 + s55) >= 2"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -336,7 +371,7 @@
         "Ne(s94*(s14 + s55), s94)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -349,7 +384,7 @@
         "Ne(PythonMod(s94, s94*(s14 + s55)), 0)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -362,7 +397,7 @@
         "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -375,7 +410,7 @@
         "Ne(s14 + s55, 0)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -388,7 +423,7 @@
         "Eq(s34, 1024)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -401,7 +436,7 @@
         "s34 = 1024"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -414,7 +449,7 @@
         "Ne(32064*s94*(s14 + s55), 0)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -427,14 +462,14 @@
         "Ne(s94*(s14 + s55), 1)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
       "kind": "guard",
       "phase": "aot/decomp",
       "site": "torch/_ops.py:__call__",
-      "line": 1436,
+      "line": 1496,
       "count": 4,
       "examples": [
         "s14 + s55 > -1",
@@ -443,7 +478,7 @@
         "32064*s14 + 32064*s55 < 32064*s94*(s14 + s55)"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
     },
     {
@@ -456,8 +491,27 @@
         "32064*s14 + 32064*s55 > 32064"
       ],
       "model_frames": [
-        "transformers/models/llava/modeling_llava.py:forward:352"
+        "transformers/models/llava/modeling_llava.py:forward:354"
       ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/utils/import_utils.py:1975",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava/modeling_llava.py:354 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava/modeling_llava.py:256 in forward",
+        "transformers/models/llava/modeling_llava.py:211 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1975 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
     }
   ]
 }

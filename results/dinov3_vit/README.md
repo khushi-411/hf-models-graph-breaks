@@ -3,7 +3,7 @@
 - **HF id:** `facebook/dinov3-vits16-pretrain-lvd1689m`
 - **Class:** `AutoModel`
 - **Config overrides:** `{'num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git6b3a750`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** DINOv3 ViT-S/16 backbone (no head, so train_forward has no loss). Built from DINOv3ViTConfig defaults (gated checkpoint).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

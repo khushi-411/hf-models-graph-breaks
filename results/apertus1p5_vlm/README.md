@@ -3,7 +3,7 @@
 - **HF id:** `swiss-ai/Apertus-v1.5-8B`
 - **Class:** `AutoModelForImageTextToText`
 - **Config overrides:** `{'text_config.num_hidden_layers': 2, 'text_config.hidden_size': 512, 'text_config.intermediate_size': 1024, 'text_config.num_attention_heads': 8, 'text_config.num_key_value_heads': 8}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Full Apertus 1.5 with its image tokenizer. Built from Apertus1p5Config defaults (gated checkpoint). Audio input not exercised.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -64,7 +64,7 @@ Attempted to read undefined local variable
 
 Stack variable source attribution:
   ListVariable(length=0) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
             image_features = tuple(self.get_input_embeddings()(tokens) for tokens in image_tokens)
                              ^^^^^
 ```
@@ -170,7 +170,7 @@ Attempted to read undefined local variable
 
 Stack variable source attribution:
   ListVariable(length=0) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
             image_features = tuple(self.get_input_embeddings()(tokens) for tokens in image_tokens)
                              ^^^^^
 ```
@@ -276,7 +276,7 @@ Attempted to read undefined local variable
 
 Stack variable source attribution:
   ListVariable(length=0) originated from:
-  File "/home/khushi/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/apertus1p5/modeling_apertus1p5.py", line 829
             image_features = tuple(self.get_input_embeddings()(tokens) for tokens in image_tokens)
                              ^^^^^
 ```

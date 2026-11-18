@@ -3,7 +3,7 @@
 - **HF id:** `facebook/encodec_24khz`
 - **Class:** `AutoModel`
 - **Config overrides:** `{'num_lstm_layers': 1}`
-- **torch:** `2.16.0a0+git6b3a750`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
@@ -23,34 +23,34 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
         n_frames_1 = sub(to, 1)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         add_2 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         ideal_length = sub(add_2, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
         extra_padding = sub(ideal_length, 24000)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
         max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
         ge = ge(max_pad, 24000)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -67,9 +67,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:162 in forward
 transformers/models/encodec/modeling_encodec.py:150 in _pad1d
 ```
@@ -86,34 +86,34 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
         n_frames_1 = sub(to, 1)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         add_2 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         ideal_length = sub(add_2, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
         extra_padding = sub(ideal_length, 24000)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
         max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
         ge = ge(max_pad, 24000)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -130,13 +130,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: encode (/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py line 525)
+  Developer debug context: frame skipped: encode (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py line 524)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   RangeIteratorVariable() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 588
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 587
             for offset in range(0, input_length, stride):
                           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
@@ -146,9 +146,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:162 in forward
 transformers/models/encodec/modeling_encodec.py:150 in _pad1d
 ```
@@ -175,9 +175,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:312 in forward
 transformers/models/encodec/modeling_encodec.py:247 in forward
 ```
@@ -197,34 +197,34 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
         n_frames_1 = sub(to, 1)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         add_2 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         ideal_length = sub(add_2, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
         extra_padding = sub(ideal_length, 24000)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
         max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
         ge = ge(max_pad, 24000)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -241,9 +241,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:162 in forward
 transformers/models/encodec/modeling_encodec.py:150 in _pad1d
 ```
@@ -260,34 +260,34 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1
         l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1
         n_frames_1 = sub(to, 1)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         add_2 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total
         ideal_length = sub(add_2, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length
         extra_padding = sub(ideal_length, 24000)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)
         max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)
     
-        # File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 150, in _pad1d, code: if length <= max_pad:
         ge = ge(max_pad, 24000)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -304,13 +304,13 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: encode (/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py line 525)
+  Developer debug context: frame skipped: encode (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py line 524)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   RangeIteratorVariable() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/encodec/modeling_encodec.py", line 588
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py", line 587
             for offset in range(0, input_length, stride):
                           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
@@ -320,9 +320,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:162 in forward
 transformers/models/encodec/modeling_encodec.py:150 in _pad1d
 ```
@@ -349,9 +349,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/encodec/modeling_encodec.py:794 in forward
-transformers/models/encodec/modeling_encodec.py:591 in encode
-transformers/models/encodec/modeling_encodec.py:520 in _encode_frame
+transformers/models/encodec/modeling_encodec.py:793 in forward
+transformers/models/encodec/modeling_encodec.py:590 in encode
+transformers/models/encodec/modeling_encodec.py:519 in _encode_frame
 transformers/models/encodec/modeling_encodec.py:312 in forward
 transformers/models/encodec/modeling_encodec.py:247 in forward
 ```

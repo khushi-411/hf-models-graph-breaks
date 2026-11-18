@@ -3,7 +3,7 @@
 - **HF id:** `internlm/internlm3-8b-instruct`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'hidden_size': 1024, 'intermediate_size': 2048, 'num_attention_heads': 8, 'num_key_value_heads': 2, 'vocab_size': 32000}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.24.0.dev0` (git `84fe6ceb8a`)
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Config-only model; transformers maps it to LlamaForCausalLM.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -25,13 +25,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -68,10 +68,10 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -113,13 +113,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -156,10 +156,10 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -201,13 +201,13 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         max_1 = max(position_ids_1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 89, in dynamic_frequency_update, code: seq_len = torch.max(position_ids) + 1
         seq_len = add(max_1, 1)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 101, in dynamic_frequency_update, code: if seq_len > max_seq_len_cached:  # growth
         gt = gt(seq_len, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.
@@ -244,10 +244,10 @@ Data-dependent branching
   Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.
 
       The branch condition involves a tensor computed as follows:
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         l_seq_len_: graph input (L_seq_len_)
     
-        # File "/home/khushi/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+        # File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py", line 113, in torch_dynamo_resume_in_dynamic_frequency_update_at_101, code: if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
         lt = lt(l_seq_len_, 32768)
     
   Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.

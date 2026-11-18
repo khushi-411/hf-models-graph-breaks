@@ -5,6 +5,7 @@
   "device": "cpu",
   "dynamic": true,
   "backend": "inductor",
+  "unbacked": false,
   "sizes": [
     [
       2,
@@ -22,15 +23,15 @@
       19200
     ]
   ],
-  "timestamp": "2026-11-18T06:44:18+00:00",
+  "timestamp": "2026-11-18T15:47:25+00:00",
   "env": {
-    "torch": "2.16.0a0+git6b3a750",
-    "torch_git": "6b3a7506470fdeaf95a985150683cfe5b7d13990",
-    "transformers": "5.22.1",
-    "transformers_git": null,
-    "torch_path": "/home/khushi/Documents/pytorch/torch",
-    "transformers_path": "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers",
-    "python": "3.14.3",
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
     "cuda": "12.8"
   },
   "status": "ok",
@@ -42,26 +43,26 @@
       "seq": 32,
       "audio": 16000,
       "new_graphs": 2,
-      "new_shape_events": 284
+      "new_shape_events": 370
     },
     {
       "batch": 3,
       "seq": 40,
       "audio": 17600,
       "new_graphs": 1,
-      "new_shape_events": 218
+      "new_shape_events": 172
     },
     {
       "batch": 4,
       "seq": 56,
       "audio": 19200,
       "new_graphs": 1,
-      "new_shape_events": 218
+      "new_shape_events": 172
     }
   ],
   "recompile_reasons": [
-    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 40",
-    "Recompiling function wrapper in /home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/generic.py:937\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 40, actual 56\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 56"
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 40",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 40, actual 56\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 56"
   ],
   "inductor_specialization_sites": [
     "torch/_inductor/ir.py:clamp",
@@ -114,9 +115,9 @@
       "examples": [
         "Ne(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256), s27 + (Mod(256 - (Mod(s27, 256)), 256)))",
         "Eq(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))), 256)",
+        "Ne((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))",
         "Eq(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))), ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))**2)))",
-        "Ne(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256), s16 + (Mod(256 - (Mod(s16, 256)), 256)))",
-        "Eq(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))), 256)"
+        "Ne(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256), s16 + (Mod(256 - (Mod(s16, 256)), 256)))"
       ],
       "model_frames": []
     },
@@ -185,9 +186,9 @@
       "examples": [
         "32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2 >= 2",
         "32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**3 >= 2",
+        "4096*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) >= 2",
         "32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2 >= 2",
-        "32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) >= 2",
-        "4096*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) >= 2"
+        "2048*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) >= 2"
       ],
       "model_frames": []
     },
@@ -200,9 +201,9 @@
       "examples": [
         "Eq(Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))",
         "Ne(0, (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2)",
+        "Eq(128*Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))))",
         "Ne(Max(1, (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))))*Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 1)",
-        "Ne(Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2, 1)",
-        "Ne(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))**2)), 1)"
+        "Ne(Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2, 1)"
       ],
       "model_frames": []
     },
@@ -230,9 +231,9 @@
       "examples": [
         "Ne((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))*Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 0)",
         "Ne(32*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 0)",
+        "Ne((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) - (Mod(256 - (Mod(s27, 256)), 256)), 0)",
         "Ne(32*s27*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) + 32*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(Mod(256 - (Mod(s27, 256)), 256)), 0)",
-        "Ne((((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))*Max(1, ((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), 0)",
-        "Ne(32*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), 0)"
+        "Ne((((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))*Max(1, ((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), 0)"
       ],
       "model_frames": []
     },
@@ -273,11 +274,11 @@
       "line": 372,
       "count": 66,
       "examples": [
+        "Ne(4096*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 0)",
         "Eq(4096*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 4096*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))))",
         "Ne(4096, 128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))",
         "1 < 128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))",
-        "1 < (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))",
-        "Eq(Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*Max(1, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2, (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))**2)"
+        "1 < (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))"
       ],
       "model_frames": []
     },
@@ -317,9 +318,32 @@
       "examples": [
         "262144*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) > 1",
         "128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) > 1",
+        "2048*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) > 1",
         "262144*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)) > 1",
-        "128*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) > 1",
-        "2048*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) > 1"
+        "128*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) > 1"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "Eq((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), s27 + (Mod(256 - (Mod(s27, 256)), 256)))",
+        "Eq(s52, s92)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 2,
+      "examples": [
+        "s27 <= (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))"
       ],
       "model_frames": []
     },
@@ -328,13 +352,13 @@
       "phase": "aot/decomp",
       "site": "torch/autograd/graph.py:_engine_run_backward",
       "line": 1113,
-      "count": 48,
+      "count": 46,
       "examples": [
+        "2048*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) > 1",
         "2 - (((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) >= 0",
         "32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) > 32",
         "32*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) < 32*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))",
-        "Ne(8192*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)), 16384)",
-        "8192*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)) > 1"
+        "Ne(8192*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)), 16384)"
       ],
       "model_frames": []
     },
@@ -346,8 +370,19 @@
       "count": 6,
       "examples": [
         "(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) - (Mod(256 - (Mod(s27, 256)), 256)) >= 0",
-        "(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) - (Mod(256 - (Mod(s16, 256)), 256)) >= 0",
-        "(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) - (Mod(256 - (Mod(s16, 256)), 256)) >= 0"
+        "(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) - (Mod(256 - (Mod(s27, 256)), 256)) >= 0",
+        "(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) - (Mod(256 - (Mod(s16, 256)), 256)) >= 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3241,
+      "count": 2,
+      "examples": [
+        "Ne((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) - (Mod(256 - (Mod(s27, 256)), 256)), -1)"
       ],
       "model_frames": []
     },
@@ -356,13 +391,13 @@
       "phase": "inductor",
       "site": "torch/_inductor/ir.py:compare_sizes",
       "line": 4117,
-      "count": 11,
+      "count": 10,
       "examples": [
         "Eq(256, s27 + (Mod(256 - (Mod(s27, 256)), 256)))",
         "Ne(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256), s52)",
         "Ne(128, ((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))",
-        "Eq(256, s16 + (Mod(256 - (Mod(s16, 256)), 256)))",
-        "Ne(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256), s52)"
+        "Eq((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 256)",
+        "Eq(256, s16 + (Mod(256 - (Mod(s16, 256)), 256)))"
       ],
       "model_frames": []
     },
@@ -385,11 +420,11 @@
       "phase": "inductor",
       "site": "torch/_inductor/ir.py:resolve_negative_size",
       "line": 4079,
-      "count": 5,
+      "count": 4,
       "examples": [
         "Eq(256*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)), s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))))",
-        "Eq(256*s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)), s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))))",
-        "Eq(256*s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)), s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))))"
+        "Eq(256*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)), s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))))",
+        "Eq(256*s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)), s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))))"
       ],
       "model_frames": []
     },
@@ -437,12 +472,15 @@
     },
     {
       "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
-      "line": 1048,
-      "count": 1,
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 5,
       "examples": [
-        "Eq(2048*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 524288*s52*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))"
+        "Ne(Mod(2048, 2048*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))), 0)",
+        "Ne(Mod(8192, 16384*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))), 0)",
+        "Ne(Mod((((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))), 128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))), 0)",
+        "Ne(Mod(8192, 16384*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))), 0)"
       ],
       "model_frames": []
     },
@@ -462,13 +500,10 @@
       "kind": "guard",
       "phase": "inductor",
       "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
-      "line": 4738,
-      "count": 7,
+      "line": 4736,
+      "count": 1,
       "examples": [
-        "Ne(Mod(8192, 16384*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))), 0)",
-        "Ne(Mod(2048, 2048*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))), 0)",
-        "Ne(Mod(8192, 16384*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))), 0)",
-        "Ne(Mod((((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), 128*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))), 0)"
+        "(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256)))) < 128*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))*(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//(((s27 + (Mod(256 - (Mod(s27, 256)), 256)))//256))))"
       ],
       "model_frames": []
     },
@@ -557,29 +592,6 @@
     {
       "kind": "guard",
       "phase": "aot/decomp",
-      "site": "torch/_subclasses/fake_impls.py:infer_size",
-      "line": 2516,
-      "count": 4,
-      "examples": [
-        "Eq(s52, s92)",
-        "Eq((((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), s16 + (Mod(256 - (Mod(s16, 256)), 256)))"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
-      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
-      "line": 1557,
-      "count": 2,
-      "examples": [
-        "s16 <= (((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "aot/decomp",
       "site": "torch/nn/functional.py:cross_entropy",
       "line": 3608,
       "count": 2,
@@ -591,22 +603,11 @@
     {
       "kind": "guard",
       "phase": "aot/decomp",
-      "site": "torch/_refs/__init__.py:expand",
-      "line": 3241,
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1048,
       "count": 2,
       "examples": [
-        "Ne((((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) - (Mod(256 - (Mod(s16, 256)), 256)), -1)"
-      ],
-      "model_frames": []
-    },
-    {
-      "kind": "guard",
-      "phase": "inductor",
-      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
-      "line": 4736,
-      "count": 2,
-      "examples": [
-        "(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))) < 128*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))))"
+        "Eq(2048*s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256))*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))), 524288*s52*(((s16 + (Mod(256 - (Mod(s16, 256)), 256)))//256)))"
       ],
       "model_frames": []
     },
@@ -622,5 +623,6 @@
       ],
       "model_frames": []
     }
-  ]
+  ],
+  "graph_breaks": []
 }

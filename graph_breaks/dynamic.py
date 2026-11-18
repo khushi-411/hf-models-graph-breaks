@@ -384,11 +384,20 @@ def main(argv=None) -> int:
     p.add_argument("--unbacked", action="store_true",
                    help="capture .item()/nonzero()-style ops into the graph (unbacked SymInts reach "
                         "Inductor) and write to results_dynamic_unbacked/")
+    p.add_argument("--results-dir", default=None,
+                   help="where to write results (default: results_dynamic[_unbacked][_cuda]/)")
     args = p.parse_args(argv)
+    global OUT_DIR, SUMMARY_FILE
+    cuda = "_cuda" if args.device.startswith("cuda") else ""
     if args.unbacked:
-        global OUT_DIR, SUMMARY_FILE
-        OUT_DIR = ROOT / "results_dynamic_unbacked"
-        SUMMARY_FILE = ROOT / "DYNAMIC_UNBACKED_SUMMARY.md"
+        OUT_DIR = ROOT / f"results_dynamic_unbacked{cuda}"
+        SUMMARY_FILE = ROOT / f"DYNAMIC_UNBACKED{cuda.upper()}_SUMMARY.md"
+    elif cuda:
+        OUT_DIR = ROOT / "results_dynamic_cuda"
+        SUMMARY_FILE = ROOT / "DYNAMIC_CUDA_SUMMARY.md"
+    if args.results_dir:
+        OUT_DIR = Path(args.results_dir).resolve()
+    if args.unbacked:
         dynamo.config.capture_scalar_outputs = True
         dynamo.config.capture_dynamic_output_shape_ops = True
 

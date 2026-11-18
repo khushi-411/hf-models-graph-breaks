@@ -1,0 +1,95 @@
+<!-- Draft for: pytorch/pytorch (labels: oncall: cpu inductor, module: dynamic shapes, module: compile-time). Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# [dynamic shapes] Inductor CPU codegen spends hours in `sympy.simplify` via `sizevars.stride_at` while choosing vectorization tiling
+
+### System info
+
+- torch: `2.16.0a0+git57f02f8` (source build)
+- CPU: Intel Xeon Platinum 8488C (`pick_vec_isa()` = `avx512 avx512_vnni amx_tile`), g++ 13.4
+- transformers: `5.24.0.dev0` (git `b7fe69cb19`)
+- Python 3.15, Linux
+
+### Description
+
+With `torch.compile(model, backend="inductor", dynamic=True)`, several Hugging Face models take **hours**
+to compile on CPU, while the same models compile in minutes on CUDA (same torch build, same inputs):
+
+| model (train_forward unless noted) | CPU, dynamic | CUDA (B200), dynamic |
+|---|---|---|
+| funnel | > 2 h 30 min (still compiling) | ~4 min |
+| mobilevit | > 2 h 50 min (still compiling) | ~13 min |
+| gemma3_vlm (eval + train) | 1 h 02 min | ~3 min |
+| swin (eval_forward) | > 1 h 40 min (still compiling) | 15.5 min |
+
+Wrapping `sympy.simplify` during funnel's CPU train compile (first 12 minutes) puts almost all of the
+time in the CPU tiling selection:
+
+| time in `sympy.simplify` | calls | caller | largest expr (chars) |
+|---|---|---|---|
+| **680 s** | 72,816 | `sizevars.stride_at` <- `stride_at_vec_range` <- `codegen/cpp.py:4353 _select_tiling_indices` | 7,826 |
+| **128 s** | 16,778 | `sizevars.stride_at` <- `stride_at_vec_range` <- `codegen/cpp.py:4192 _try_get_stride` | 3,874 |
+| 34 s | 13,494 | (direct) | 280 |
+| 18 s | 6,997 | `functions.py:356 eval` <- `_size_hinting._sympy_subs` <- `utils.sympy_subs` | 312 |
+
+`stride_at` (`torch/_inductor/sizevars.py:153`):
+
+```python
+@functools.lru_cache
+def stride_at(index: sympy.Expr, var: sympy.Symbol):
+    if not index.has(var):
+        return sympy.S.Zero
+    replacement = {var: var + 1}
+    new_index = sympy_subs(index, replacement)
+    return sympy.simplify(new_index - index)
+```
+
+and `_select_tiling_indices` calls it for every index expression and every loop variable of every kernel:
+
+```python
+for index in all_index:
+    for var in index.free_symbols:
+        if not re.search(r"^d\d+$", var.name):
+            continue
+        stride = stride_at_vec_range(index, var, tiling_factor)
+```
+
+With dynamic shapes the index expressions are deeply nested `ModularIndexing` terms (from views /
+reshapes / pooling), e.g. (truncated):
+
+```
+64*(ModularIndexing((ModularIndexing((ModularIndexing((ModularIndexing(32*d0 + 2016*d1 + 24192*d2 + d3 - 32, 1, 63))
+ + 63*(ModularIndexing(32*d0 + 2016*d1 + 24192*d2 + d3 - 32, 63, 32)) + 2016*(ModularIndexing(..., 2016, 12))
+ + 24192*(ModularIndexing(..., 24192, s72)) ...
+```
+
+so each `sympy.simplify(new_index - index)` is very expensive, and the `lru_cache` rarely hits because
+the expressions differ per kernel. The same file already caps expensive sympy reasoning
+(`_MAX_SYMBOLS_FOR_EXPENSIVE_SYMPY_OPS = 20`, "polynomial-domain conversions inside sympy ... dominate
+compile time"), but `stride_at` has no such guard. The CUDA (Triton) codegen doesn't go through
+`_select_tiling_indices`, which explains the CPU/CUDA gap.
+
+### Reproduction
+
+Model-level (from the hf-models-graph-breaks harness):
+
+```bash
+python -m graph_breaks.dynamic --model funnel --scenario train_forward     # CPU, compiles for hours
+python -m graph_breaks.dynamic --model funnel --scenario train_forward --device cuda   # minutes
+```
+
+(config-only model, reduced layers, `torch.compile(backend="inductor", dynamic=True)`, batch/seq
+(2, 32), (3, 40), (4, 56)).
+
+### Expected behavior
+
+CPU compile time of the same order as CUDA. Options: compute the stride without a full `simplify`
+(e.g. `sympy.expand` + `ModularIndexing`/`FloorDiv` rules, or evaluate the difference with
+`_simplify_with_ranges` using the loop ranges), give up (treat as non-contiguous) above an
+expression-size / symbol-count threshold like `_MAX_SYMBOLS_FOR_EXPENSIVE_SYMPY_OPS`, or skip the
+tiling probe for indices whose free symbols include dynamic sizes.
+
+### Notes
+
+- mobilevit, gemma3_vlm and swin were not traced individually; they show the same CPU-only slowdown.
+  swin's trace (eval) is dominated by a different site, `FloorDiv.eval` -> `sympy.simplify`
+  (`floordiv-simplify-compile-time`), with `stride_at` from `_select_tiling_indices` also present.

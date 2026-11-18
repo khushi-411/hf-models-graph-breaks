@@ -3,13 +3,13 @@
 - **HF id:** `kyutai/mimi`
 - **Class:** `AutoModel`
 - **Config overrides:** `{'num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git6b3a750`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Mimi codec (conv + transformer encoder/decoder + RVQ), used by Moshi.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
-| eval_forward | ok | 25 | 24 | 4 |
-| train_forward | ok | 25 | 24 | 4 |
+| eval_forward | ok | 25 | 24 | 2 |
+| train_forward | ok | 25 | 24 | 2 |
 
 ## eval_forward
 
@@ -34,109 +34,19 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1516 in forward
+transformers/utils/generic.py:1036 in wrapper
 transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/mimi/modeling_mimi.py:377 in forward
-transformers/models/mimi/modeling_mimi.py:326 in _pad1d
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:378 in forward
+transformers/models/mimi/modeling_mimi.py:327 in _pad1d
 ```
 </details>
 
-### 2. Reconstruction failure
-
-- **Location:** `transformers/utils/output_capturing.py:272`  (hit ×1)
-
-```
-Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:
-
-Reconstruction failure
-  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable DictItemsIterator().
-  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.
-  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
-  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.
-
-  Developer debug context: DictItemsIterator()
-
- For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-Stack variable source attribution:
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 272
-                collected_outputs = {k.replace("output_", ""): [] for k, v in recordable_keys.items() if v}
-                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 257
-                recordable_keys = {
-                                  ^
-                ...<2 lines>...
-                }
-                ^
-  DictItemsIterator() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 272
-                collected_outputs = {k.replace("output_", ""): [] for k, v in recordable_keys.items() if v}
-                                                                              ~~~~~~~~~~~~~~~~~~~~~^^
-```
-
-Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-<details><summary>User stack</summary>
-
-```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:272 in wrapper
-```
-</details>
-
-### 3. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
-
-- **Location:** `transformers/utils/output_capturing.py:257`  (hit ×1)
-
-```
-Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
-
-Reconstruction failure
-  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable DictIterator().
-  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.
-  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
-  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.
-
-  Developer debug context: DictIterator()
-
- For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-Stack variable source attribution:
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 257
-                recordable_keys = {
-                                  ^
-                ...<2 lines>...
-                }
-                ^
-  DictIterator() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 259
-                    for k in capturable_flags
-                             ^^^^^^^^^^^^^^^^
-```
-
-Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-<details><summary>User stack</summary>
-
-```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:257 in wrapper
-```
-</details>
-
-### 4. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
+### 2. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
 - **Location:** `torch/nn/functional.py:5952`  (hit ×1)
 
@@ -157,15 +67,19 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mimi/modeling_mimi.py line 524)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py line 525)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  NullVariable originated from:
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py", line 526
+            for layer in self.layers:
+                         ^^^^^^^^^^^
 ```
 
 Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
@@ -173,14 +87,16 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1516 in forward
+transformers/utils/generic.py:1036 in wrapper
 transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/mimi/modeling_mimi.py:1262 in forward
-transformers/models/mimi/modeling_mimi.py:377 in forward
-transformers/models/mimi/modeling_mimi.py:326 in _pad1d
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1265 in forward
+transformers/models/mimi/modeling_mimi.py:378 in forward
+transformers/models/mimi/modeling_mimi.py:327 in _pad1d
 ```
 </details>
 
@@ -208,109 +124,19 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1516 in forward
+transformers/utils/generic.py:1036 in wrapper
 transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/mimi/modeling_mimi.py:377 in forward
-transformers/models/mimi/modeling_mimi.py:326 in _pad1d
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:378 in forward
+transformers/models/mimi/modeling_mimi.py:327 in _pad1d
 ```
 </details>
 
-### 2. Reconstruction failure
-
-- **Location:** `transformers/utils/output_capturing.py:272`  (hit ×1)
-
-```
-Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:
-
-Reconstruction failure
-  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable DictItemsIterator().
-  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.
-  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
-  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.
-
-  Developer debug context: DictItemsIterator()
-
- For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-Stack variable source attribution:
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 272
-                collected_outputs = {k.replace("output_", ""): [] for k, v in recordable_keys.items() if v}
-                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 257
-                recordable_keys = {
-                                  ^
-                ...<2 lines>...
-                }
-                ^
-  DictItemsIterator() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 272
-                collected_outputs = {k.replace("output_", ""): [] for k, v in recordable_keys.items() if v}
-                                                                              ~~~~~~~~~~~~~~~~~~~~~^^
-```
-
-Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-<details><summary>User stack</summary>
-
-```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:272 in wrapper
-```
-</details>
-
-### 3. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
-
-- **Location:** `transformers/utils/output_capturing.py:257`  (hit ×1)
-
-```
-Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
-
-Reconstruction failure
-  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable DictIterator().
-  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.
-  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
-  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.
-
-  Developer debug context: DictIterator()
-
- For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-Stack variable source attribution:
-  NullVariable originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 257
-                recordable_keys = {
-                                  ^
-                ...<2 lines>...
-                }
-                ^
-  DictIterator() originated from:
-  File "/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/utils/output_capturing.py", line 259
-                    for k in capturable_flags
-                             ^^^^^^^^^^^^^^^^
-```
-
-Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html
-
-<details><summary>User stack</summary>
-
-```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:257 in wrapper
-```
-</details>
-
-### 4. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
+### 2. Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:
 
 - **Location:** `torch/nn/functional.py:5952`  (hit ×1)
 
@@ -331,15 +157,19 @@ graph break in loop
   Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.
   Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.
 
-  Developer debug context: frame skipped: forward (/home/khushi/anaconda3/envs/torch-dev/lib/python3.14/site-packages/transformers/models/mimi/modeling_mimi.py line 524)
+  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py line 525)
 
  For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html
 
 Stack variable source attribution:
   DictValuesIterator() originated from:
-  File "/home/khushi/Documents/pytorch/torch/nn/modules/container.py", line 416
+  File "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py", line 416
             return iter(self._modules.values())
                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  NullVariable originated from:
+  File "/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py", line 526
+            for layer in self.layers:
+                         ^^^^^^^^^^^
 ```
 
 Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
@@ -347,13 +177,15 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/mimi/modeling_mimi.py:1515 in forward
-transformers/utils/generic.py:943 in wrapper
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1516 in forward
+transformers/utils/generic.py:1036 in wrapper
 transformers/models/mimi/modeling_mimi.py:1413 in encode
-transformers/utils/output_capturing.py:287 in wrapper
-transformers/models/mimi/modeling_mimi.py:1262 in forward
-transformers/models/mimi/modeling_mimi.py:377 in forward
-transformers/models/mimi/modeling_mimi.py:326 in _pad1d
+transformers/utils/output_capturing.py:361 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/mimi/modeling_mimi.py:1265 in forward
+transformers/models/mimi/modeling_mimi.py:378 in forward
+transformers/models/mimi/modeling_mimi.py:327 in _pad1d
 ```
 </details>

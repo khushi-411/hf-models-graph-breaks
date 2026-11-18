@@ -3,7 +3,7 @@
 - **HF id:** `Zyphra/Zamba2-1.2B`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'layers_block_type': ['linear_attention', 'hybrid'], 'hybrid_layer_ids': [1]}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Mamba2 layers + shared attention blocks. layers_block_type is stored, not derived, so set it directly.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

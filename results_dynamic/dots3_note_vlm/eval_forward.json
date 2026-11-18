@@ -1,0 +1,1168 @@
+{
+  "model": "dots3_note_vlm",
+  "hf_id": "dots-studio/dots3-note-prev",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T16:36:21+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 23,
+  "recompiled_graphs": 10,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 23,
+      "new_shape_events": 384
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 5,
+      "new_shape_events": 182
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 5,
+      "new_shape_events": 228
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 103561336861856), type=<class 'transformers.models.dots3_note.modeling_dots3_note.Dots3NoteForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Dots3NoteForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 11/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 12/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1545 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1545\n    triggered by the following guard failure(s):\n    - 13/0: ___stack0.size()[1] == grid_thw.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1412 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1412\n    triggered by the following guard failure(s):\n    - 25/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1428 in torch_dynamo_resume_in_forward_at_1412\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1428, in torch_dynamo_resume_in_forward_at_1412\n    -     for q, k, v in zip(*splits)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1677 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1677\n    triggered by the following guard failure(s):\n    - 31/0: len(___stack0.pooler_output) == 2                        # image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1681 in torch_dynamo_resume_in_forward_at_1677\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1681, in torch_dynamo_resume_in_forward_at_1677\n    -     image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)",
+    "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_1639 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1639\n    triggered by the following guard failure(s):\n    - 33/0: tensor 'features' size mismatch at index 0. expected 32, actual 48",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 11/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 11/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 12/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 12/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1412 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1412\n    triggered by the following guard failure(s):\n    - 25/1: len(splits[0]) == 3                                      # for q, k, v in zip(*splits)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1428 in torch_dynamo_resume_in_forward_at_1412\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1428, in torch_dynamo_resume_in_forward_at_1412\n    -     for q, k, v in zip(*splits)\n    - 25/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1428 in torch_dynamo_resume_in_forward_at_1412\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1428, in torch_dynamo_resume_in_forward_at_1412\n    -     for q, k, v in zip(*splits)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1677 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1677\n    triggered by the following guard failure(s):\n    - 31/1: len(___stack0.pooler_output) == 3                        # image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1681 in torch_dynamo_resume_in_forward_at_1677\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1681, in torch_dynamo_resume_in_forward_at_1677\n    -     image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)\n    - 31/0: len(___stack0.pooler_output) == 2                        # image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)  # Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1681 in torch_dynamo_resume_in_forward_at_1677\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1681, in torch_dynamo_resume_in_forward_at_1677\n    -     image_embeddings = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0)",
+    "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_1639 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py:1639\n    triggered by the following guard failure(s):\n    - 33/1: tensor 'features' size mismatch at index 0. expected 48, actual 64\n    - 33/0: tensor 'features' size mismatch at index 0. expected 32, actual 64"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/kernel/mm_common.py:mm_args",
+    "torch/_inductor/lowering.py:broadcast_symbolic_shapes",
+    "torch/_inductor/lowering.py:sort_stable",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 36,
+      "examples": [
+        "Eq(s52, 2)",
+        "Eq(s55, 3)",
+        "Eq(s72, 2)",
+        "Eq(s43, 3)",
+        "Eq(s21, 2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1677",
+        "transformers/utils/generic.py:wrapper:1099"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 36,
+      "examples": [
+        "s52 = 2",
+        "s55 = 3",
+        "s72 = 2",
+        "s43 = 3",
+        "s21 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1677",
+        "transformers/utils/generic.py:wrapper:1099"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 1,
+      "examples": [
+        "Eq(zf23, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 23,
+      "examples": [
+        "s87 >= 0",
+        "s80 >= 0",
+        "s5 >= 0",
+        "s18 >= 0",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) + s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 21,
+      "examples": [
+        "Ne(s87, 0)",
+        "Ne(s80, 0)",
+        "Ne(s5, 0)",
+        "Ne(s18, 0)",
+        "Ne(1536*s99*((s59//588)), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 44,
+      "examples": [
+        "s87 >= 2",
+        "s80 >= 2",
+        "s5 >= 2",
+        "s18 >= 2",
+        "2*s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1551",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1346,
+      "count": 9,
+      "examples": [
+        "Ne(s80, 1)",
+        "Ne(s18, 1)",
+        "Ne(s31, 1)",
+        "Ne(s89, 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112",
+      "line": 112,
+      "count": 144,
+      "examples": [
+        "Ne((s87//s75), -1)",
+        "((s87//s75)) > -1",
+        "Ne(s75, -1)",
+        "s75 > -1",
+        "Eq(s80*s87, s75**2*((s80//s75))*((s87//s75)))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 57,
+      "examples": [
+        "Ne((s87//s75), s87)",
+        "Eq(s75, (s87//((s87//s75))))",
+        "Ne((s80//s75), s80)",
+        "Eq(s75, (s80//((s80//s75))))",
+        "Ne((s5//s40), s5)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 41,
+      "examples": [
+        "Eq(Mod(s87, (s87//s75)), 0)",
+        "Eq(Mod(s80, (s80//s75)), 0)",
+        "Eq(Mod(s5, (s5//s40)), 0)",
+        "Eq(Mod(s18, (s18//s40)), 0)",
+        "Eq(Mod(s59, 3), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 63,
+      "examples": [
+        "Ne((s80//s75), 1)",
+        "Eq(Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s87//s75), 1)",
+        "Eq(Max(1, (s80//s75))*Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//s75))*((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s18//s40), 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_repeat",
+      "line": 4876,
+      "count": 9,
+      "examples": [
+        "s88 >= 0",
+        "s78 >= 0",
+        "s38 >= 0",
+        "s70 >= 0"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 9,
+      "examples": [
+        "Ne(0, (s87//((s87//s75))))",
+        "Ne(0, (s5//((s5//s40))))",
+        "Ne(0, (s64//((s64//s26))))",
+        "Ne(0, (s84//((s84//s60))))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 721,
+      "count": 9,
+      "examples": [
+        "Ne(s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), 0)",
+        "Ne(s38*((s31//s26))*((s31//((s31//s26))))*((s64//s26))*((s64//((s64//s26)))), 0)",
+        "Ne(s70*((s84//s60))*((s84//((s84//s60))))*((s89//s60))*((s89//((s89//s60)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 28,
+      "examples": [
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2*((s80//s75)))",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40)",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40**2)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 28,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 27,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:forward",
+      "line": 1545,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1545"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545",
+      "line": 1546,
+      "count": 1,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:get_vision_attention_seqlens",
+      "line": 76,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:get_vision_attention_seqlens:76"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 10,
+      "examples": [
+        "Eq(Mod(s59*s99, 588), 0)",
+        "Eq(Mod(2*s60**2*s67, s35), 0)",
+        "Eq(Mod(1536*s77, 6144), 0)",
+        "Eq(Mod(3*s60**2*s67, s36), 0)",
+        "Eq(Mod(4*s60**2*s67, s36), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:_is_non_overlapping_and_dense_or_false",
+      "line": 426,
+      "count": 2,
+      "examples": [
+        "42*s99*((s59//42)) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 8,
+      "examples": [
+        "((s59//3)) < s59",
+        "((s59//42)) < ((s59//3))",
+        "((s59//42)) > 1",
+        "1536*((s77//((s77//4)))) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:convert",
+      "line": 2354,
+      "count": 2,
+      "examples": [
+        "Ne((s59//588), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 21,
+      "examples": [
+        "Eq(s99, s44)",
+        "Eq(s50, 1536)",
+        "Eq(s26, 64)",
+        "Eq(s33, s60)",
+        "Eq(s33, s14)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1551",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1457",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1559"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 5,
+      "examples": [
+        "Ne(s48 - 1, 1)",
+        "Ne(s32 - 1, 1)",
+        "Ne(s40 - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1545:1546",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1551",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1457"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 1,
+      "examples": [
+        "Ne(((s59*s99)//588), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:broadcast_symbolic_shapes",
+      "line": 617,
+      "count": 1,
+      "examples": [
+        "Ne(((s59*s99)//588), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1547"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 11,
+      "examples": [
+        "s50 = 1536",
+        "s26 = 64",
+        "s87 = 1536",
+        "s65 = 64",
+        "s67 = 1536"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1551",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1457",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1559",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 9,
+      "examples": [
+        "Eq(s87, 1536)",
+        "Eq(s60*s67, 1536)",
+        "Eq(s86, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1457",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "s87 = 1536",
+        "s86 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1457",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:forward",
+      "line": 1365,
+      "count": 6,
+      "examples": [
+        "Eq(zf77, 0.125)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 8,
+      "examples": [
+        "Ne(s35, -1)",
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)",
+        "Ne(s36, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 7,
+      "examples": [
+        "s35 >= 0",
+        "s68*(s11 + s55) >= 0",
+        "s36 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 6,
+      "examples": [
+        "Ne(s35, 0)",
+        "Ne(s36, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 8,
+      "examples": [
+        "Eq(2*s60, s35)",
+        "Eq(1536*((s77//((s77//4)))), 6144)",
+        "Eq(3*s60, s36)",
+        "Eq(4*s60, s36)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 13,
+      "examples": [
+        "s12 >= s60",
+        "s12 > s60",
+        "s12 >= s60*s67",
+        "s12 > s60*s67",
+        "152064*s11 + 152064*s55 > 152064"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365",
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 3,
+      "examples": [
+        "Ne(Mod(s60, s12), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/mm_common.py:mm_args",
+      "line": 94,
+      "count": 3,
+      "examples": [
+        "Eq(((s60**2*s67)//s60), 1536)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1365"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 6,
+      "examples": [
+        "Eq(zf73, 1.0e-6)",
+        "Eq(zf94, 1.0e-6)",
+        "Eq(zf40, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "Eq(s27, 1536)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "s27 = 1536"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 2,
+      "examples": [
+        "Eq(1536*s77, 6144*((s77//4)))"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1489,
+      "count": 2,
+      "examples": [
+        "Ne((s77//((s77//4))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 2,
+      "examples": [
+        "Ne((s77//((s77//4))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1546:1560"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 10,
+      "examples": [
+        "Eq(s59, s72) | Eq(s72, 1)",
+        "Eq(s29, s70) | Eq(s70, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1677",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 10,
+      "examples": [
+        "Eq(s72, s59)",
+        "Eq(s70, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1677",
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:get_placeholder_mask",
+      "line": 1639,
+      "count": 6,
+      "examples": [
+        "Eq(s97, 32)",
+        "Eq(s98, 32*s65)",
+        "Eq(s97, 48)",
+        "Eq(s98, 48*s65)",
+        "Eq(s97, 64)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:get_placeholder_mask:1639"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:get_placeholder_mask",
+      "line": 1639,
+      "count": 3,
+      "examples": [
+        "s97 = 32",
+        "s97 = 48",
+        "s97 = 64"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:get_placeholder_mask:1639"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 8,
+      "examples": [
+        "Eq(s89, s53)",
+        "Eq(s67, s29)",
+        "Eq(s38, s59)",
+        "Eq(s29, s54)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:topk_meta",
+      "line": 8224,
+      "count": 2,
+      "examples": [
+        "Min(16, s29) <= s29"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677",
+      "line": 1682,
+      "count": 6,
+      "examples": [
+        "Eq(zf62, 0.125)",
+        "Eq(zf96, 0.125)",
+        "Eq(zf68, 0.0668153104781061)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677",
+      "line": 1682,
+      "count": 2,
+      "examples": [
+        "s89 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:sort_stable",
+      "line": 8618,
+      "count": 1,
+      "examples": [
+        "2*s29*s38 < 32767"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 1,
+      "examples": [
+        "s29 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:torch_dynamo_resume_in_forward_at_1677:1682"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(512*s11, 512*s11 + 512*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 152064*s68*(s11 + s55)",
+        "152064 < 152064*s68*(s11 + s55)",
+        "152064*s11 + 152064*s55 < 152064*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:forward:1768"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/vision_utils.py:112",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1677 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1587 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1545 in forward",
+        "transformers/vision_utils.py:112 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:64",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1677 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1587 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1546 in forward",
+        "transformers/vision_utils.py:76 in get_vision_attention_seqlens",
+        "transformers/vision_utils.py:64 in get_vision_cu_seqlens"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/dots3_note/modeling_dots3_note.py:1413",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1546 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py line 1546)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/dots3_note/modeling_dots3_note.py\", line 1550\n            for block in self.blocks:\n                         ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1677 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1587 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1551 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1413 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/dots3_note/modeling_dots3_note.py:1413",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1677 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1587 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1551 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1413 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/dots3_note/modeling_dots3_note.py:1594",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1677 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1594 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/dots3_note/modeling_dots3_note.py:1639",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1768 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1682 in forward",
+        "transformers/models/dots3_note/modeling_dots3_note.py:1639 in get_placeholder_mask"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

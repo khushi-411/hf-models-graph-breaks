@@ -1,0 +1,838 @@
+{
+  "model": "wavlm",
+  "hf_id": "microsoft/wavlm-base-plus",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:04:45+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 19,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 19,
+      "new_shape_events": 605
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 18/0: kwargs['position_bias'] is None                          # if position_bias is None:  # transformers/src/transformers/models/wavlm/modeling_wavlm.py:164 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 327, in forward\n    -     hidden_states, _, position_bias = self.attention(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 164, in forward\n    -     if position_bias is None:"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 27,
+      "examples": [
+        "s38*s97 <= 2147483647",
+        "512*s47*((s33//5)) <= 512*s47 + 2147483647",
+        "512*s47*((s33//10)) <= 512*s47 + 2147483647",
+        "512*s47*((s33//20)) <= 512*s47 + 2147483647",
+        "512*s47*((s33//40)) <= 512*s47 + 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:771",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:406",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 180,
+      "examples": [
+        "s76 >= 10",
+        "s76 <= 2147483647",
+        "512*((s76//5)) - 512 <= 2147483647",
+        "((s76//5)) - 1 >= 3",
+        "512*((s76//10)) - 512 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:_verify_batch_size",
+      "line": 2906,
+      "count": 9,
+      "examples": [
+        "Ne(s6*(((s76//5)) - 1), 1)",
+        "Ne(s33*(((s50//5)) - 1), 1)",
+        "Ne(s47*(((s33//5)) - 1), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:group_norm",
+      "line": 3095,
+      "count": 9,
+      "examples": [
+        "Eq(zf54, 1.0e-5)",
+        "Eq(zf38, 1.0e-5)",
+        "Eq(zf66, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 9,
+      "examples": [
+        "Ne(512*s6*(((s76//5)) - 1), 0)",
+        "Ne(512*s33*(((s50//5)) - 1), 0)",
+        "Ne(512*s47*(((s33//5)) - 1), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 45,
+      "examples": [
+        "512*s6*(((s76//5)) - 1) >= 2",
+        "512*s6*(((s76//10)) - 1) >= 2",
+        "512*s6*(((s76//20)) - 1) >= 2",
+        "512*s6*(((s76//40)) - 1) >= 2",
+        "512*s6*(((s76//80)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 9,
+      "examples": [
+        "Ne(((s76//5)) - 1, 1)",
+        "Ne(((s50//5)) - 1, 1)",
+        "Ne(((s33//5)) - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 18,
+      "examples": [
+        "Ne(Mod(1, ((s76//5)) - 1), 0)",
+        "Ne(Mod(s6, s6*(((((((((s76//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(1, ((s50//5)) - 1), 0)",
+        "Ne(Mod(s33, s33*(((((((((s50//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(1, ((s33//5)) - 1), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 54,
+      "examples": [
+        "Ne(((s76//10)) - 1, 1)",
+        "Ne(((s76//20)) - 1, 1)",
+        "Ne(((s76//40)) - 1, 1)",
+        "Ne(((s76//80)) - 1, 1)",
+        "Ne((((((s76//80)) - 3)//2)) + 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 21,
+      "examples": [
+        "Eq(zf57, 1.0e-5)",
+        "Eq(zf88, 1.0e-5)",
+        "Eq(zf34, 1.0e-5)",
+        "Eq(zf1, 1.0e-5)",
+        "Eq(zf3, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 11,
+      "examples": [
+        "Ne(s6*(((((((((s76//80)) - 3)//2)) - 1)//2)) + 1), s6)",
+        "Ne(s33*(((((((((s50//80)) - 3)//2)) - 1)//2)) + 1), s33)",
+        "Ne(s69, 12)",
+        "Eq(((12*s19*s33*s50)//(s50**2)), 12*s33)",
+        "Eq(s50, s19)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 68,
+      "examples": [
+        "zf75 >= 0.0",
+        "zf75 <= 1.0",
+        "zf12 >= 0.0",
+        "zf12 <= 1.0",
+        "zf31 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 34,
+      "examples": [
+        "Eq(zf75, 0.1)",
+        "Eq(zf12, 0.1)",
+        "Eq(zf31, 0.1)",
+        "Eq(zf14, 0.1)",
+        "Eq(zf23, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavlm/modeling_wavlm.py:forward",
+      "line": 1161,
+      "count": 2,
+      "examples": [
+        "zf79 > 0.0",
+        "((((((((s76//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1161"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 13,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10",
+        "zf55 > 0.0",
+        "Ne((s69//12), 1)",
+        "Ne(s69, (s69//12))"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1050:1054",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1174,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s76//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 13,
+      "examples": [
+        "Ne(Mod(1, Max(1, ((s33//10)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//20)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//40)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//80)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, (((((s33//80)) - 3)//2)) + 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "Max(1, ((((((((s33//80)) - 3)//2)) - 1)//2)) + 1) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 13,
+      "examples": [
+        "512*s47 <= 2147483647",
+        "4*s38*s89 <= 2147483647",
+        "s38*s89 <= 2147483647",
+        "96*s33*s50 <= 2147483647",
+        "12*s33*s50 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:771",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1164:1182"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "Eq(s67, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "s67 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavlm/modeling_wavlm.py:forward",
+      "line": 1040,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "s89 >= 10"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 3,
+      "examples": [
+        "512*s38*s89 < 5242880",
+        "768*s33*s50 < 5242880",
+        "768*s19*s33 < 5242880"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:1040",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1040",
+      "line": 1050,
+      "count": 5,
+      "examples": [
+        "zf88 > 0.0",
+        "s87 >= 10",
+        "zf87 > 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1040:1050"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/wavlm/modeling_wavlm.py:_mask_hidden_states",
+      "line": 1001,
+      "count": 6,
+      "examples": [
+        "s22 >= 1",
+        "s22 <= s52",
+        "zf96 <= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:_mask_hidden_states:1001"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 3,
+      "examples": [
+        "s89 = 768",
+        "s33 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1040:1050",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1050:1054",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:multi_head_attention_forward",
+      "line": 7169,
+      "count": 5,
+      "examples": [
+        "zf14 > 0.0",
+        "zf29 > 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1040:1050",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1050:1054",
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 4,
+      "examples": [
+        "Eq(Mod(s33*s50*s69, 12*s33*s50), 0)",
+        "Eq(Mod(12*s19*s33*s50, s50**2), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 3,
+      "examples": [
+        "Eq(s33*s50*s69, 12*s33*s50*((s69//12)))"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 6,
+      "examples": [
+        "1 < ((s69//12))",
+        "Ne((s69//12), s50*s69)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 3,
+      "examples": [
+        "12*s50*Max(1, (s69//12)) >= Max(1, (s69//12))"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "Eq((s69//12), 64)",
+        "Eq(s86, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422",
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:multi_head_attention_forward",
+      "line": 6968,
+      "count": 3,
+      "examples": [
+        "Eq(s69, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:multi_head_attention_forward",
+      "line": 6968,
+      "count": 3,
+      "examples": [
+        "s69 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "Eq(s50, s77)",
+        "Eq(12*s33, s57)"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:forward:422"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "s86 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/wavlm/modeling_wavlm.py:torch_dynamo_resume_in_forward_at_1161:1164"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:1161",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 1161, in forward, code: if labels is not None and labels.max() >= self.config.vocab_size:\n        ge = ge(max_1, 32)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1161 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:864",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1050 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:1001 in _mask_hidden_states",
+        "transformers/models/wavlm/modeling_wavlm.py:864 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:771",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nrequires_grad_() intermediate leaked as output\n  Explanation: An intermediate tensor with requires_grad_() called on it (or a tensor derived from it) is returned from the compiled region. Graph breaking here to preserve partial acceleration.\n  Hint: Call .detach() before returning if you only need values.\n  Hint: Consume the gradient inside the compiled function (call backward() and use .grad), or move requires_grad_() outside torch.compile.\n\n  Developer debug context: call_method TensorVariable() requires_grad_\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:771 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "short_reason": "requires_grad_() intermediate leaked as output",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:866",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to read undefined local variable\n  Explanation: Could not find a local variable with name `mask_length`\n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n\n  Developer debug context: LOAD_FAST mask_length\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html\n\nStack variable source attribution:\n  CellVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 866\n        def compute_num_masked_span(input_length):",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1050 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:1001 in _mask_hidden_states",
+        "transformers/models/wavlm/modeling_wavlm.py:866 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:1001",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nBackend compiler exception\n  Explanation: Backend compiler `<torch._dynamo.testing.CompileCounterWithBackend object at 0x74fc34d46e90>` failed with aten.nonzero.default. Adding a graph break.\n  Hint: Set `fullgraph=False` to allow this backend fallback to run eagerly.\n\n  Developer debug context: Backend: <torch._dynamo.testing.CompileCounterWithBackend object at 0x74fc34d46e90>\n    Exception:aten.nonzero.default\n    Traceback:\n      File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 1023, in torch_dynamo_resume_in__mask_hidden_states_at_1001\n        return hidden_states\n        ^^^^^^^^^^^^^^^^^^^^\n\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html\n\nStack variable source attribution:\n  TensorVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 1008\n                mask_time_indices = torch.tensor(mask_time_indices, device=hidden_states.device, dtype=torch.bool)\n                                                 ^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1050 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:1001 in _mask_hidden_states"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html",
+      "short_reason": "Backend compiler exception",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:420",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 418, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 419, in forward, code: skip_the_layer = dropout_probability < self.config.layerdrop\n        skip_the_layer = lt(dropout_probability, item_9)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:420 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/wavlm/modeling_wavlm.py:420",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 418, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 419, in forward, code: skip_the_layer = dropout_probability < self.config.layerdrop\n        skip_the_layer = lt(dropout_probability, item_9)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py line 395)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/wavlm/modeling_wavlm.py\", line 414\n            for i, layer in enumerate(self.layers):\n                            ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1164 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1054 in forward",
+        "transformers/models/wavlm/modeling_wavlm.py:420 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:48",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.masked_select.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.masked_select.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1182 in forward",
+        "transformers/loss/loss_ctc.py:48 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:53",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\ntorch.* op returned non-Tensor\n  Explanation: torch.* ops that return a non-Tensor cannot be traced into the Dynamo FX graph output\n\n\n  Developer debug context: example_value type: _GeneratorContextManager; op: call_function; target: <function flags at 0x74fc46637a00>\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1182 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "short_reason": "torch.* op returned non-Tensor",
+      "count": 1
+    },
+    {
+      "location": "python/contextlib.py:203",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\ngenerator function over a skipped function\n  Explanation: Cannot trace a generator whose underlying function is skipped by Dynamo (e.g. defined in a skip-listed module), since its body cannot be symbolically traced.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n\n  Developer debug context: SkipFunctionVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [LazyVariableTracker(realized: GenericContextWrappingVariable(_GeneratorContextManager))]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/loss/loss_ctc.py\", line 53\n        with torch.backends.cudnn.flags(enabled=False):\n             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/wavlm/modeling_wavlm.py:1182 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 - **HF id:** `tencent/Hunyuan-A13B-Instruct`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'hidden_size': 512, 'num_attention_heads': 8, 'num_key_value_heads': 2, 'head_dim': 64, 'intermediate_size': 512, 'num_experts': 8, 'moe_topk': [2, 2], 'moe_intermediate_size': [256, 256], 'num_shared_expert': [1, 1], 'vocab_size': 128167}`
-- **torch:** `2.16.0a0+git6b3a750`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Hunyuan-A13B. Its checkpoint config uses dynamic rope (rope_type dynamic).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

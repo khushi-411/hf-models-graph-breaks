@@ -1,0 +1,559 @@
+{
+  "model": "encodec",
+  "hf_id": "facebook/encodec_24khz",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:02:26+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 33,
+  "recompiled_graphs": 4,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 33,
+      "new_shape_events": 159
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 4,
+      "new_shape_events": 26
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:157\n    triggered by the following guard failure(s):\n    - 4/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:138\n    triggered by the following guard failure(s):\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_150 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:150\n    triggered by the following guard failure(s):\n    - 6/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_153 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:153\n    triggered by the following guard failure(s):\n    - 7/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/1: tensor '___stack0' size mismatch at index 1. expected 32, actual 16\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 16",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/3: ___check_type_id(self._modules['conv'], 97797621846784), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 8/3: ___check_type_id(self._modules['conv'], 97797621846784), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/5: tensor '___stack0' size mismatch at index 1. expected 64, actual 32\n    - 8/4: ___check_type_id(self._modules['conv'], 97797621973232), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/3: ___check_type_id(self._modules['conv'], 97797621846784), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 32\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/6: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 8/5: ___check_type_id(self._modules['conv'], 97797621874928), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 8/3: ___check_type_id(self._modules['conv'], 97797621846784), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_162 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:162\n    triggered by the following guard failure(s):\n    - 8/7: ___check_type_id(self._modules['conv'], 97797621987328), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/6: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 8/5: ___check_type_id(self._modules['conv'], 97797621874928), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/4: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 8/3: ___check_type_id(self._modules['conv'], 97797621846784), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/2: tensor '___stack0' size mismatch at index 1. expected 16, actual 64\n    - 8/1: ___check_type_id(self._modules['conv'], 97797619633184), type=<class 'torch.nn.utils.parametrize.ParametrizedConv1d'>  # hidden_states = self.conv(hidden_states)  # transformers/src/transformers/models/encodec/modeling_encodec.py:171 in torch_dynamo_resume_in_forward_at_162 (HINT: type ParametrizedConv1d)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 171, in torch_dynamo_resume_in_forward_at_162\n    -     hidden_states = self.conv(hidden_states)\n    - 8/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:157\n    triggered by the following guard failure(s):\n    - 4/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 4/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:138\n    triggered by the following guard failure(s):\n    - 5/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_150 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:150\n    triggered by the following guard failure(s):\n    - 6/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 1024\n    - 6/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:157\n    triggered by the following guard failure(s):\n    - 4/2: hidden_states.stride()[0] == hidden_states.size()[1]  # (unknown source hidden_states.stride()[0], please file a bug)\n    - 4/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 128\n    - 4/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:138\n    triggered by the following guard failure(s):\n    - 5/2: hidden_states.stride()[0] == hidden_states.size()[1]  # (unknown source hidden_states.stride()[0], please file a bug)\n    - 5/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 128\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function torch_dynamo_resume_in__pad1d_at_150 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:150\n    triggered by the following guard failure(s):\n    - 6/2: hidden_states.stride()[0] == hidden_states.size()[1]  # (unknown source hidden_states.stride()[0], please file a bug)\n    - 6/1: tensor 'hidden_states' stride mismatch at index 2. expected 1, actual 128\n    - 6/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:157\n    triggered by the following guard failure(s):\n    - 4/1: hidden_states.stride()[0] == hidden_states.size()[2]*hidden_states.size()[1]  # (unknown source hidden_states.stride()[0], please file a bug)\n    - 4/3: tensor 'hidden_states' stride mismatch at index 1. expected 1, actual 608\n    - 4/2: tensor 'hidden_states' stride mismatch at index 1. expected 1, actual 608\n    - 4/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 256",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py:138\n    triggered by the following guard failure(s):\n    - 5/1: hidden_states.stride()[0] == hidden_states.size()[2]*hidden_states.size()[1]  # (unknown source hidden_states.stride()[0], please file a bug)\n    - 5/3: tensor 'hidden_states' stride mismatch at index 1. expected 1, actual 608\n    - 5/2: tensor 'hidden_states' stride mismatch at index 1. expected 1, actual 608\n    - 5/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 256"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 5,
+      "examples": [
+        "Eq(s2, 24000)",
+        "Eq(zf23, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 1,
+      "examples": [
+        "s2 = 24000"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 21,
+      "examples": [
+        "s2*s6 <= 2147483647",
+        "32*s38*s89 <= 192*s38 + 2147483647",
+        "16*s38*s89 <= 32*s38 + 2147483647",
+        "32*s38*s89 <= 2147483647",
+        "64*s38*((s89//2)) <= 64*s38 + 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:162",
+        "transformers/models/encodec/modeling_encodec.py:forward:247",
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519",
+        "transformers/models/encodec/modeling_encodec.py:decode:696",
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:forward",
+      "line": 793,
+      "count": 5,
+      "examples": [
+        "Eq(s2, 24000)",
+        "s45 <= 0",
+        "Eq(s40, 2)",
+        "Eq(s27, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:forward",
+      "line": 793,
+      "count": 3,
+      "examples": [
+        "s2 = 24000",
+        "s40 = 2",
+        "s27 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 15,
+      "examples": [
+        "s42 >= 24000",
+        "(-s14 + s89 >= 0) & (-s14 + s89 <= s89)",
+        "(8 - CeilToInt(8.0*zf23) >= 0) & (8 - CeilToInt(8.0*zf23) <= 8*s33 + 8)",
+        "(8*s33 - CeilToInt(8.0*zf23) + 8 >= 0) & (8*s33 - CeilToInt(8.0*zf23) + 8 <= 8*s33 + 8)",
+        "(5 - CeilToInt(5.0*zf23) >= 0) & (5 - CeilToInt(5.0*zf23) <= 5*s33 + 5)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793",
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in__pad1d_at_150:153",
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "Eq(s60, s6)",
+        "Eq(s27, s33)",
+        "Eq(s40, s87)",
+        "Eq(s48, s47)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793",
+        "transformers/models/encodec/modeling_encodec.py:forward:247"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 10,
+      "examples": [
+        "Eq(s42, 24000)",
+        "Ne(-s14 + s89, 1)",
+        "Eq(s89, -s14 + s89)",
+        "Ne(s89 - 6, 1)",
+        "Eq(s67*s89, s67*(-s14 + s89))"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793",
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in__pad1d_at_150:153",
+        "transformers/models/encodec/modeling_encodec.py:forward:162"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 1,
+      "examples": [
+        "s42 = 24000"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:793"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:_pad1d",
+      "line": 150,
+      "count": 5,
+      "examples": [
+        "Eq(zf74, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_pad1d:150"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 2,
+      "examples": [
+        "-s14 + s89 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in__pad1d_at_150:153"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 3,
+      "examples": [
+        "s38*(-s14 + s89) >= 2",
+        "s38*s67*(-s14 + s89) >= 2",
+        "64*s38*(((s89//2)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in__pad1d_at_150:153",
+        "transformers/models/encodec/modeling_encodec.py:forward:162"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 43,
+      "examples": [
+        "s89 >= 7",
+        "s89 <= 2147483647",
+        "32*s89 - 192 <= 2147483647",
+        "Eq(s67, 32)",
+        "s89 >= 3"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:162",
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 4,
+      "examples": [
+        "Max(1, s89 - 6) > 1",
+        "Max(1, s89 - 2) > 1",
+        "Max(1, ((s89//2)) - 1) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:162"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 13,
+      "examples": [
+        "s67 = 32",
+        "s67 = 16",
+        "s67 = 64",
+        "s87 = 512",
+        "s87 = 256"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:162",
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/functional_utils.py:has_same_metadata",
+      "line": 424,
+      "count": 5,
+      "examples": [
+        "~(Eq(s27, s40) & Eq(s40, s47) & Eq(s47, s27))",
+        "Eq(s38, 2)",
+        "Ne(s38, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:247",
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:_encode_frame",
+      "line": 519,
+      "count": 8,
+      "examples": [
+        "zf50 > 0.0",
+        "Eq(Max(1, FloorToInt(FloatTrueDiv(1000.0*zf50, 750.0))), 2)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 4,
+      "examples": [
+        "Eq(s67, 128)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 4,
+      "examples": [
+        "s67 = 128"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/functional_utils.py:has_same_metadata",
+      "line": 424,
+      "count": 2,
+      "examples": [
+        "s38 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 4,
+      "examples": [
+        "2*s89 <= 2147483647",
+        "2*s83*s90 <= 2147483647",
+        "s38*s89 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:_encode_frame:519",
+        "transformers/models/encodec/modeling_encodec.py:decode:696"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in_forward_at_793",
+      "line": 797,
+      "count": 6,
+      "examples": [
+        "s73 <= 0",
+        "Eq(s96, 2)",
+        "Eq(s2, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in_forward_at_793:797"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in_forward_at_793",
+      "line": 797,
+      "count": 2,
+      "examples": [
+        "s96 = 2",
+        "s2 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:torch_dynamo_resume_in_forward_at_793:797"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:decode",
+      "line": 696,
+      "count": 5,
+      "examples": [
+        "Eq(s53, 2)",
+        "s42 >= s89"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:decode:696"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/encodec/modeling_encodec.py:decode",
+      "line": 696,
+      "count": 4,
+      "examples": [
+        "s53 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:decode:696"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/utils/_python_dispatch.py:alias_non_inplace_storage",
+      "line": 701,
+      "count": 2,
+      "examples": [
+        "8 - CeilToInt(8.0*zf23) >= 0",
+        "5 - CeilToInt(5.0*zf23) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_compile.py:_apply_tensorify_python_scalars",
+      "line": 335,
+      "count": 4,
+      "examples": [
+        "Eq(8 - CeilToInt(8.0*zf23), 0)",
+        "Eq(CeilToInt(8.0*zf23), 8)",
+        "Eq(5 - CeilToInt(5.0*zf23), 0)",
+        "Eq(CeilToInt(5.0*zf23), 5)"
+      ],
+      "model_frames": [
+        "transformers/models/encodec/modeling_encodec.py:forward:346"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/encodec/modeling_encodec.py:150",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1\n        n_frames_1 = sub(to, 1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        add_4 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        ideal_length = sub(add_4, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length\n        extra_padding = sub(ideal_length, 24000)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)\n        max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 150, in _pad1d, code: if length <= max_pad:\n        ge = ge(max_pad, 24000)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/models/encodec/modeling_encodec.py:793 in forward",
+        "transformers/models/encodec/modeling_encodec.py:590 in encode",
+        "transformers/models/encodec/modeling_encodec.py:519 in _encode_frame",
+        "transformers/models/encodec/modeling_encodec.py:162 in forward",
+        "transformers/models/encodec/modeling_encodec.py:150 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/encodec/modeling_encodec.py:150",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_stride_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 132, in _get_extra_padding_for_conv1d, code: n_frames = (length - self.kernel_size + self.padding_total) / self.stride + 1\n        l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_: graph input (L_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 133, in _get_extra_padding_for_conv1d, code: n_frames = torch.ceil(n_frames).to(torch.int64) - 1\n        n_frames_1 = sub(to, 1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        mul_1 = mul(n_frames_1, l_self_modules_encoder_modules_layers_modules_0_buffers_stride_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        add_4 = add(mul_1, l_self_modules_encoder_modules_layers_modules_0_buffers_kernel_size_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 134, in _get_extra_padding_for_conv1d, code: ideal_length = n_frames * self.stride + self.kernel_size - self.padding_total\n        ideal_length = sub(add_4, l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 136, in _get_extra_padding_for_conv1d, code: return ideal_length - length\n        extra_padding = sub(ideal_length, 24000)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 148, in _pad1d, code: max_pad = max(padding_left, padding_right)\n        max_pad = maximum(l_self_modules_encoder_modules_layers_modules_0_buffers_padding_total_, extra_padding)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 150, in _pad1d, code: if length <= max_pad:\n        ge = ge(max_pad, 24000)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: encode (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py line 524)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  RangeIteratorVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 587\n            for offset in range(0, input_length, stride):\n                          ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/encodec/modeling_encodec.py:793 in forward",
+        "transformers/models/encodec/modeling_encodec.py:590 in encode",
+        "transformers/models/encodec/modeling_encodec.py:519 in _encode_frame",
+        "transformers/models/encodec/modeling_encodec.py:162 in forward",
+        "transformers/models/encodec/modeling_encodec.py:150 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/functional.py:5952",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/models/encodec/modeling_encodec.py:793 in forward",
+        "transformers/models/encodec/modeling_encodec.py:590 in encode",
+        "transformers/models/encodec/modeling_encodec.py:519 in _encode_frame",
+        "transformers/models/encodec/modeling_encodec.py:312 in forward",
+        "transformers/models/encodec/modeling_encodec.py:162 in forward",
+        "transformers/models/encodec/modeling_encodec.py:153 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/encodec/modeling_encodec.py:247",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported function call (delayed)\n  Explanation: Dynamo determined that a graph break should occur when calling `L['self']._modules['lstm']`. Reason: Dynamo does not support RNN, GRU, or LSTM. Set torch._dynamo.config.allow_rnn=True to enable experimental support for RNN, GRU, and LSTM in Dynamo\n\n\n  Developer debug context: source: DictGetItemSource(base=AttrSource(base=UnspecializedNNModuleSource(base=LocalSource(local_name='self', is_input=True, dynamism=None, is_derefed_cell_contents=False)), member='_modules'), index='lstm')\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html",
+      "user_stack": [
+        "transformers/models/encodec/modeling_encodec.py:793 in forward",
+        "transformers/models/encodec/modeling_encodec.py:590 in encode",
+        "transformers/models/encodec/modeling_encodec.py:519 in _encode_frame",
+        "transformers/models/encodec/modeling_encodec.py:312 in forward",
+        "transformers/models/encodec/modeling_encodec.py:247 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0148.html",
+      "short_reason": "Unsupported function call (delayed)",
+      "count": 1
+    }
+  ]
+}

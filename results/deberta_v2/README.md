@@ -3,7 +3,7 @@
 - **HF id:** `microsoft/deberta-v3-base`
 - **Class:** `AutoModelForMaskedLM`
 - **Config overrides:** `{'num_hidden_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** Covers DeBERTa-v3 (v3 checkpoints use the DebertaV2 architecture). Disentangled relative-position attention. For DeBERTa v1 see the `deberta` entry.
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |

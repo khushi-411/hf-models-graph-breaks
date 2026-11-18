@@ -3,7 +3,7 @@
 - **HF id:** `google-bert/bert-base-uncased`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'num_hidden_layers': 2, 'is_decoder': True}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 - **Notes:** BertLMHeadModel (BERT used as a causal decoder).
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
@@ -24,7 +24,7 @@ No graph breaks. ✅
 
 ### 1. logging.Logger method not supported for non-export cases
 
-- **Location:** `transformers/modeling_utils.py:4685`  (hit ×1)
+- **Location:** `transformers/modeling_utils.py:4778`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -46,8 +46,9 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html
 <details><summary>User stack</summary>
 
 ```
-transformers/utils/generic.py:943 in wrapper
-transformers/models/bert/modeling_bert.py:895 in forward
-transformers/modeling_utils.py:4685 in loss_function
+transformers/utils/generic.py:1036 in wrapper
+transformers/utils/deprecation.py:173 in wrapped_func
+transformers/models/bert/modeling_bert.py:900 in forward
+transformers/modeling_utils.py:4778 in loss_function
 ```
 </details>

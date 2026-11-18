@@ -1,0 +1,70 @@
+<!-- Draft for: pytorch/pytorch (label: module: dynamic shapes, module: dynamo). Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# [dynamic shapes] `size % 0.5` crashes guard building: `ValueRangeError: Invalid ranges [0:-0.5]` in `value_ranges.python_mod`
+
+### System info
+
+- torch: `2.16.0a0+git57f02f8` (source build)
+- Python 3.15, Linux
+- Reproduces on CPU (standalone repro below) and on CUDA (B200, InternVL model)
+
+### Description
+
+Taking the modulo of a dynamic size by a Python **float smaller than 1** makes Dynamo crash while it builds
+guards, with `torch.compile(backend="inductor", dynamic=True)`:
+
+```
+File "torch/_dynamo/guards.py", line 4085, in _get_code_parts
+File "torch/fx/experimental/symbolic_shapes.py", line 6893, in produce_guards_verbose
+File "torch/fx/experimental/symbolic_shapes.py", line 7596, in _maybe_evaluate_static
+File "torch/fx/experimental/symbolic_shapes.py", line 2647, in _maybe_evaluate_static_worker
+    out = bound_sympy(new_expr, new_range_env)
+File "torch/utils/_sympy/value_ranges.py", line 1304, in bound_sympy
+File "torch/utils/_sympy/value_ranges.py", line 798, in python_mod
+File "torch/utils/_sympy/value_ranges.py", line 166, in __init__
+    raise ValueRangeError(f"Invalid ranges [{lower}:{upper}]")
+torch._dynamo.exc.InternalTorchDynamoError: ValueRangeError: Invalid ranges [0:-0.500000000000000]
+```
+
+The code is the pixel-shuffle in Hugging Face InternVL (`modeling_internvl.py`), with
+`scale_factor = config.downsample_ratio = 0.5`:
+
+```python
+batch_size, width, height, channels = vision_features.size()
+if height % scale_factor != 0 or width % scale_factor != 0:
+    raise ValueError("Height and width must be divisible by scale_factor for proper downsampling.")
+```
+
+With `TORCH_LOGS=+dynamic`, Dynamo turns `downsample_ratio` into a float symbol (`create_symbol zf44 = 0.5
+for L['self'].config.downsample_ratio`), installs guards such as
+
+```
+Eq(PythonMod(ToFloat(TruncToInt(FloatPow(ToFloat(((s99//14))**2), 0.5))), zf44), 0.0)   [guard added]
+```
+
+and later replaces `zf44` with `0.5`. Bounding `PythonMod(<int expr>, 0.5)` then gives the range
+`[0, -0.5]`. That looks like the integer-modulus bound `[0, divisor - 1]` applied to a float divisor
+`< 1`; the valid range for a positive float divisor `d` is `[0, d)`.
+
+- `backend="eager"` with `dynamic=True`: OK.
+- static shapes: OK.
+- `backend="inductor"`, `dynamic=True`: crash. (Not yet checked why only the Inductor backend triggers
+  it; the failing guard is evaluated in `produce_guards`, after compilation.)
+
+### Reproduction
+
+`issues/repros/dynamo_guard_python_mod_value_range.py` (standalone, CPU, ~40 lines, InternVL's code with
+a single conv as the "vision tower"):
+
+```
+2.16.0a0+git57f02f8
+[dynamic=True, backend=eager]    OK (2, 256, 128)
+[dynamic=True, backend=inductor] InternalTorchDynamoError: ValueRangeError: Invalid ranges [0:-0.500000000000000]
+[static]                         OK (2, 256, 128)
+```
+
+### Expected behavior
+
+`python_mod` should handle float divisors (range `[0, d)` for `d > 0`, or fall back to an unbounded range
+for floats), and the model should compile. Using the real InternVL model, `eval_forward` and
+`train_forward` both fail this way on CUDA with `dynamic=True`.

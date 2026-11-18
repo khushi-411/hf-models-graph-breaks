@@ -1,0 +1,611 @@
+{
+  "model": "zonos3_mini",
+  "hf_id": "Zyphra/ZONOS3-Mini-hf",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T18:29:49+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 25,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 25,
+      "new_shape_events": 352
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function _rms in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:48\n    triggered by the following guard failure(s):\n    - 3/0: weight is None                                           # return torch.rms_norm(input, normalized_shape, weight, eps)  # nn/functional.py:3059 in rms_norm\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 49, in _rms\n    -     return F.rms_norm(x, (x.shape[-1],), weight=weight, eps=eps)\n    -   File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/functional.py\", line 3059, in rms_norm\n    -     return torch.rms_norm(input, normalized_shape, weight, eps)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function _gdn in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:279\n    triggered by the following guard failure(s):\n    - 5/0: not ___dict_contains(0, cache.gdn_state)                 # out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:299 in _gdn (HINT: Dictionary cache.gdn_state must not contain key 0; Dynamo specialized the compiled code on this key being absent.)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 299, in _gdn\n    -     out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function _feed_forward in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:307\n    triggered by the following guard failure(s):\n    - 6/0: layer == 0  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/3: len(sources) == 4                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function _gdn in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:279\n    triggered by the following guard failure(s):\n    - 5/1: not ___dict_contains(1, cache.gdn_state)                 # out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:299 in _gdn (HINT: Dictionary cache.gdn_state must not contain key 1; Dynamo specialized the compiled code on this key being absent.)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 299, in _gdn\n    -     out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))\n    - 5/0: not ___dict_contains(0, cache.gdn_state)                 # out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:299 in _gdn (HINT: Dictionary cache.gdn_state must not contain key 0; Dynamo specialized the compiled code on this key being absent.)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 299, in _gdn\n    -     out, state = rule(q[None], k[None], v[None], g[None], beta[None], initial_state=cache.gdn_state.get(layer))",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/4: len(sources) == 5                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/3: len(sources) == 4                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function _feed_forward in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:307\n    triggered by the following guard failure(s):\n    - 6/1: layer == 1  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)\n    - 6/0: layer == 0  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/5: len(sources) == 6                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/4: len(sources) == 5                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/3: len(sources) == 4                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/6: len(sources) == 7                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/5: len(sources) == 6                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/4: len(sources) == 5                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/3: len(sources) == 4                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)",
+    "Recompiling function _feed_forward in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:307\n    triggered by the following guard failure(s):\n    - 6/2: layer == 2  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)\n    - 6/1: layer == 1  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)\n    - 6/0: layer == 0  # idx = operator.index(idx)  # nn/modules/container.py:374 in _get_abs_string_index (hf-models-graph-breaks/graph_breaks/dynamic.py:131 in _set_replacement)",
+    "Recompiling function full_attnres_route in /admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:52\n    triggered by the following guard failure(s):\n    - 4/7: len(sources) == 8                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/6: len(sources) == 7                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/5: len(sources) == 6                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/4: len(sources) == 5                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/3: len(sources) == 4                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/2: len(sources) == 3                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/1: len(sources) == 2                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)\n    - 4/0: len(sources) == 1                                        # bank = torch.stack(sources)  # .cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:53 in full_attnres_route\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 53, in full_attnres_route\n    -     bank = torch.stack(sources)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:compare_sizes"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 28,
+      "examples": [
+        "s72 <= 32768",
+        "s70 > 2",
+        "s70 > 3",
+        "s70 > 4",
+        "s70 > 5"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 10,
+      "examples": [
+        "Eq(Mod(512*s72 + 512*(Mod(64 - (Mod(s72, 64)), 64)), 32768), 0)",
+        "Eq(Mod(4*s72 + 4*(Mod(64 - (Mod(s72, 64)), 64)), 256), 0)",
+        "Eq(Mod(512*s23 + 512*(Mod(64 - (Mod(s23, 64)), 64)), 32768), 0)",
+        "Eq(Mod(4*s23 + 4*(Mod(64 - (Mod(s23, 64)), 64)), 256), 0)",
+        "Eq(Mod(512*s77 + 512*(Mod(64 - (Mod(s77, 64)), 64)), 32768), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 5,
+      "examples": [
+        "Eq(512*s72 + 512*(Mod(64 - (Mod(s72, 64)), 64)), 32768*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))",
+        "Eq(512*s23 + 512*(Mod(64 - (Mod(s23, 64)), 64)), 32768*(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))",
+        "Eq(512*s77 + 512*(Mod(64 - (Mod(s77, 64)), 64)), 32768*(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 10,
+      "examples": [
+        "Ne(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64), s72 + (Mod(64 - (Mod(s72, 64)), 64)))",
+        "Eq(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))), 64)",
+        "Ne(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64), s23 + (Mod(64 - (Mod(s23, 64)), 64)))",
+        "Eq(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))), 64)",
+        "Ne(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64), s77 + (Mod(64 - (Mod(s77, 64)), 64)))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 10,
+      "examples": [
+        "Eq(Mod(s72 + (Mod(64 - (Mod(s72, 64)), 64)), ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)), 0)",
+        "Ne(Mod(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), 0)",
+        "Eq(Mod(s23 + (Mod(64 - (Mod(s23, 64)), 64)), ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)), 0)",
+        "Ne(Mod(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))), 0)",
+        "Eq(Mod(s77 + (Mod(64 - (Mod(s77, 64)), 64)), ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1345,
+      "count": 10,
+      "examples": [
+        "Eq(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64), 1)",
+        "Ne(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))), 1)",
+        "Eq(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64), 1)",
+        "Ne(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))), 1)",
+        "Eq(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 49,
+      "examples": [
+        "(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2 >= 2",
+        "(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2 >= 2",
+        "(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2 >= 2",
+        "Eq(s29, s55)",
+        "Eq(s91, s39)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 23,
+      "examples": [
+        "4*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2 >= 2",
+        "512*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))) >= 2",
+        "4*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))) >= 2",
+        "512*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))*(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))) >= 2",
+        "4*(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2 >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 13,
+      "examples": [
+        "Eq(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))",
+        "Ne(0, (((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2)",
+        "Eq(Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))), ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))",
+        "Ne(0, (((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2)",
+        "Eq(Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))), ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 544,
+      "count": 26,
+      "examples": [
+        "Ne(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), 1)",
+        "Ne(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), (((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))*Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))))",
+        "Eq(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))), s72 + (Mod(64 - (Mod(s72, 64)), 64)))",
+        "Ne(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2)",
+        "Ne(Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 541,
+      "count": 13,
+      "examples": [
+        "Ne((((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))*Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))), 0)",
+        "Ne(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))), 0)",
+        "Ne((((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))*Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))), 0)",
+        "Ne(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))), 0)",
+        "Ne((((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))*Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 13,
+      "examples": [
+        "(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))*Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64)))) >= Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))",
+        "Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2 >= Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))",
+        "(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))*Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64)))) >= Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))",
+        "Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2 >= Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))",
+        "(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))*Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))) >= Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:tril",
+      "line": 6488,
+      "count": 5,
+      "examples": [
+        "Eq(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2, (((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2)",
+        "Eq(Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2, (((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2)",
+        "Eq(Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2, (((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5509,
+      "count": 5,
+      "examples": [
+        "1 < (((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))",
+        "1 < (((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))",
+        "1 < (((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 5,
+      "examples": [
+        "Ne(Max(1, ((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//(((s72 + (Mod(64 - (Mod(s72, 64)), 64)))//64))))**2, 1)",
+        "Ne(Max(1, ((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//(((s23 + (Mod(64 - (Mod(s23, 64)), 64)))//64))))**2, 1)",
+        "Ne(Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 5,
+      "examples": [
+        "s72 <= 64",
+        "s23 <= 64",
+        "s77 <= 64"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 362,
+      "count": 2,
+      "examples": [
+        "Eq(zf49, 1.0e-5)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 9,
+      "examples": [
+        "s27 <= 4096",
+        "s36 <= 4096",
+        "s39 <= 4096"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 367,
+      "count": 6,
+      "examples": [
+        "Eq(zf49, 1.0e-5)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 1,
+      "examples": [
+        "Eq(s39, s36)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 368,
+      "count": 2,
+      "examples": [
+        "Eq(zf49, 1.0e-5)",
+        "Eq(1024, s27)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 368,
+      "count": 1,
+      "examples": [
+        "s27 = 1024"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 370,
+      "count": 12,
+      "examples": [
+        "Eq(s12, 0)",
+        "Eq(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64), 1)",
+        "(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)) > 0",
+        "(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))) > 0",
+        "Eq(s12, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 370,
+      "count": 3,
+      "examples": [
+        "s12 = 0",
+        "s12 = 1",
+        "s12 = 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "Eq(s27, 1024)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "s27 = 1024"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5495,
+      "count": 3,
+      "examples": [
+        "Eq(4096, (((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 3,
+      "examples": [
+        "Eq(64, s77 + (Mod(64 - (Mod(s77, 64)), 64)))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 3,
+      "examples": [
+        "Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))) < Max(1, ((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 405,
+      "count": 6,
+      "examples": [
+        "Eq(Mod(128*s77 + 128*(Mod(64 - (Mod(s77, 64)), 64)), 128*(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64))))), 0)",
+        "Eq(Mod(128*(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//(((s77 + (Mod(64 - (Mod(s77, 64)), 64)))//64)))), 128*s77 + 128*(Mod(64 - (Mod(s77, 64)), 64))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 373,
+      "count": 4,
+      "examples": [
+        "Eq(zf49, 1.0e-5)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 374,
+      "count": 28,
+      "examples": [
+        "Eq(s12, 0)",
+        "Eq(s12, 1)",
+        "Eq(zf87, 1.0e-5)",
+        "Eq(1024, s27)",
+        "Eq(s12, 2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 374,
+      "count": 19,
+      "examples": [
+        "s12 = 0",
+        "s12 = 1",
+        "s27 = 1024",
+        "s12 = 2",
+        "s12 = 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "Eq(s38, 18)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "s38 = 18"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 372,
+      "count": 3,
+      "examples": [
+        "Eq(s12, 3)",
+        "Eq(zf40, 10000.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:forward",
+      "line": 372,
+      "count": 2,
+      "examples": [
+        "s12 = 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_compile.py:_apply_tensorify_python_scalars",
+      "line": 335,
+      "count": 1,
+      "examples": [
+        "Eq(zf40, 10000.0)"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:321",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten._unique2.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten._unique2.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:321",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten._unique2.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten._unique2.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py line 349)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  RangeIteratorVariable() originated from:\n  File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 365\n            for layer in range(c[\"n_layers\"]):\n                         ~~~~~^^^^^^^^^^^^^^^\n  CallMethodVariable(ListVariable(length=4), append) originated from:\n  File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 374\n                sources.append(self._feed_forward(_rms(mixed, block.ffn_norm.weight, c[\"norm_eps\"]), layer))\n                ^^^^^^^^^^^^^^",
+      "user_stack": [],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:321",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py:322",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in__feed_forward_at_321 (/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py line 321)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  ListIteratorVariable(length=18, index=1) originated from:\n  File \"/admin/home/khushi_agrawal/.cache/huggingface/modules/transformers_modules/Zyphra/ZONOS3_hyphen_Mini_hyphen_hf/e39d30df560125d9c434acd5cb0e83e4c2d64e0d/modeling_zonos3.py\", line 321\n            for expert in torch.unique(choices).tolist():\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^",
+      "user_stack": [],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 - **HF id:** `FacebookAI/xlm-mlm-en-2048`
 - **Class:** `AutoModelForCausalLM`
 - **Config overrides:** `{'n_layers': 2}`
-- **torch:** `2.16.0a0+git9933f27`  |  **transformers:** `5.22.1`
+- **torch:** `2.16.0a0+git57f02f8`  |  **transformers:** `5.24.0.dev0` (git `b7fe69cb19`)
 
 | Scenario | Status | Graphs | Graph breaks | Unique breaks |
 |---|---|---|---|---|
@@ -14,7 +14,7 @@
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/xlm/modeling_xlm.py:794`  (hit ×1)
+- **Location:** `transformers/models/xlm/modeling_xlm.py:793`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -33,7 +33,7 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/xlm/modeling_xlm.py:794 in forward
+transformers/models/xlm/modeling_xlm.py:793 in forward
 ```
 </details>
 
@@ -42,7 +42,7 @@ transformers/models/xlm/modeling_xlm.py:794 in forward
 
 ### 1. Unsupported Tensor.item() call with capture_scalar_outputs=False
 
-- **Location:** `transformers/models/xlm/modeling_xlm.py:794`  (hit ×1)
+- **Location:** `transformers/models/xlm/modeling_xlm.py:793`  (hit ×1)
 
 ```
 Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):
@@ -61,6 +61,6 @@ Docs: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html
 <details><summary>User stack</summary>
 
 ```
-transformers/models/xlm/modeling_xlm.py:794 in forward
+transformers/models/xlm/modeling_xlm.py:793 in forward
 ```
 </details>
