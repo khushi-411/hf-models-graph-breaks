@@ -99,8 +99,9 @@ issues:
   # ----------------------------------------------------------------------- #
   # Dynamic shapes (pytorch/pytorch#137093: Inductor guards/specializes on
   # sympy.Expr sizes). Found by `python -m graph_breaks.dynamic` (inductor,
-  # dynamic=True, 3 input sizes) -> results_dynamic/. These are recompiles or
-  # compile errors, not graph breaks, so nothing in SUMMARY.md matches them.
+  # dynamic=True, 3 input sizes) -> results_dynamic/. Except sdpa-is-causal-symbool
+  # (a graph break), these are recompiles or compile errors, so nothing in
+  # SUMMARY.md (static results/) matches them.
   # ----------------------------------------------------------------------- #
   - id: sdpa-is-causal-symbool
     title: "Dynamo passes a SymBool to `F.scaled_dot_product_attention(is_causal=...)` -> 'must be bool, not SymBool' graph break under dynamic shapes"
@@ -110,12 +111,15 @@ issues:
     repo: pytorch/pytorch
     issue: null
     status: draft
+    draft: issues/sdpa-is-causal-symbool.md
     notes: >
       is_causal computed from shapes is a SymBool with dynamic=True; fake-tensor propagation of the
       op rejects it (gb0112). Inside HF's attention wrapper the whole function then falls back to
       eager: moonshine train_forward goes from 1 graph (static) to 16 (dynamic). Expected: Dynamo
       guards/bool()s SymBools for bool schema args. Repro issues/repros/sdpa_is_causal_symbool.py
-      (fullgraph=True: OK static, fails dynamic). Full list of affected models: pending full sweep.
+      (fullgraph=True: OK static, fails dynamic). HF code with the pattern
+      (`... and q_len > 1` last, so `and` returns the SymBool): moonshine, moonshine_streaming,
+      falcon (both SDPA paths). falcon not yet run with break capture.
 
   - id: conv-backward-stride-guard
     title: "Inductor `convolution_backward_lowering` calls `guard_int_seq` on the grad-input strides -> sequence length specialized, train recompiles on every new length"
@@ -142,12 +146,14 @@ issues:
     repo: pytorch/pytorch
     issue: null
     status: draft
+    draft: issues/cpp-acc-helper-reduction-guard.md
     notes: >
       CPU only. The guard fails when the reduction size crosses 4096 -> recompile.
       hubert train: the only recompile left once conv-backward-stride-guard is fixed
       ("(-1)*s0 + s0*(s2 // 10) <= 4096"). nemotron_h train: specializes batch (s52 = 2).
       The acc-helper choice is a perf/accuracy heuristic, so it could use a size hint
-      (or a runtime branch) instead of a guard. No minimal repro yet.
+      (or a runtime branch) instead of a guard. Repro issues/repros/cpp_acc_helper_reduction_guard.py
+      (x.sum(-1) on sizes 1000/3000/5000/9000 -> 2 graphs).
 
   - id: significant-strides-equal-guard
     title: "Inductor `ir.py:significant_strides_equal`: `guard_or_false(Eq(s1, s2))` specializes a size when the strides happen to be equal"
@@ -155,12 +161,13 @@ issues:
     function: significant_strides_equal
     repo: pytorch/pytorch
     issue: null
-    status: draft
+    status: not-filing
     notes: >
-      qwen2_vl and qwen2_5_vl train (vision tower, after the break at modeling_qwen2_vl.py:714):
-      installs Eq(s87, 1176) and specializes s87. Those models also recompile for HF-side
-      reasons (12 recompiled graphs), so on its own this doesn't make them recompile-free.
-      No minimal repro yet.
+      qwen2_vl and qwen2_5_vl train (vision tower, patch_embed at modeling_qwen2_vl.py:716):
+      installs Eq(s87, 1176) and specializes s87. 1176 = 3 ch * 2 temporal * 14 * 14 is
+      pixel_values.shape[-1], fixed by the model config, so it never changes between inputs and
+      causes no recompile; it only shows because dynamic=True marks every dim dynamic.
+      guard_or_false guarding a backed symbol is by design. Revisit only if a model varies that dim.
 
   - id: inductor-bounds-truncdiv-nan
     title: "Inductor value-range analysis crashes: `bounds.py:truncdiv` -> `TypeError: Invalid NaN comparison` with dynamic shapes"
@@ -169,14 +176,55 @@ issues:
     repo: pytorch/pytorch
     issue: null
     status: draft
+    draft: issues/inductor-bounds-truncdiv-nan.md
     notes: >
       Hard compile error (not a recompile): longformer eval_forward and train_forward with
-      dynamic=True. ValueRanges.truediv yields NaN bounds that are then compared with min().
-      Repro: python -m graph_breaks.dynamic --model longformer. No minimal repro yet.
+      dynamic=True, from modeling_longformer.py:822 `torch.div(seq_len, window_overlap,
+      rounding_mode="trunc")` -> ops.truncdiv(s14, s55). truncdiv bounds go through float truediv;
+      [2, oo] / [1, oo] has an oo/oo = nan corner and min() raises.
+      Repro issues/repros/inductor_bounds_truncdiv_nan.py (static OK, dynamic fails).
 
   # ======================================================================= #
   # transformers-side root causes
   # ======================================================================= #
+  # --- Dynamic shapes (results_dynamic/): recompiles caused by model code ---
+  - id: problem-type-config-mutation
+    title: "`ForSequenceClassificationLoss` sets `config.problem_type` on the first call -> `problem_type is None` guard fails, recompile"
+    file: transformers/loss/loss_utils.py
+    function: ForSequenceClassificationLoss
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Not a dynamic-shape issue: the 2nd call always recompiles, whatever the input size (also with
+      static shapes). Every *ForSequenceClassification / *ForImageClassification train run with
+      problem_type unset (seen: vit). Not visible to check.py (explain() calls the model once).
+      graph_breaks.dynamic pre-sets problem_type so it doesn't hide shape issues. Fix: infer it
+      into a local variable instead of mutating the config.
+
+  - id: mamba-associative-scan-seq-guard
+    title: "Mamba `associative_scan` path guards on `(seq_len // 8) % 2` -> recompile for new sequence lengths"
+    file: transformers/models/mamba/modeling_mamba.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      `_, all_states = associative_scan(...)` (modeling_mamba.py:236, mamba_selective_scan):
+      guard ((seq // 8) % 2) == 0. Seen in mamba, falcon_mamba, jamba (eval and train; the only
+      recompile left in train once conv-backward-stride-guard is fixed). Not yet checked whether
+      the scan itself or the caller picks the branch from the shape.
+
+  - id: nemotron-h-pad-size-guard
+    title: "NemotronH: `if pad_size > 0:` on a shape-derived value -> recompile when seq_len % 16 changes"
+    file: transformers/models/nemotron_h/modeling_nemotron_h.py
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    notes: >
+      Guard ((16 - seq_len % 16) % 16) <= 0. Padding to a multiple of 16 is branch-free if the pad
+      is always applied (F.pad with 0 is a no-op). eval 1 recompile; train 1 left once
+      conv-backward-stride-guard is fixed.
+
   - id: loss-fn-warning-once
     title: "`loss_function` calls `logger.warning_once` inside forward when `loss_type` is None"
     file: transformers/modeling_utils.py
