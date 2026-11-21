@@ -1,0 +1,42 @@
+{
+  "model": "internvl",
+  "hf_id": "OpenGVLab/InternVL3-1B-hf",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:01:07+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "InternalTorchDynamoError: ValueRangeError: Invalid ranges [0:-0.500000000000000]\n",
+  "error_inductor_site": null,
+  "traceback": "/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 2770, in __call__\n    result = self._torchdynamo_orig_backend(\n        frame, cache_entry, self.hooks, frame_state, skip=1\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 2433, in __call__\n    result = self._inner_convert(\n        frame, cache_entry, hooks, frame_state, skip=skip + 1\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 791, in __call__\n    result = _compile(\n        frame.f_code,\n    ...<18 lines>...\n        convert_frame_box=self._box,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 2276, in _compile\n    raise InternalTorchDynamoError(\n        f\"{type(e).__qualname__}: {str(e)}\"\n    ).with_traceback(e.__traceback__) from None\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 2199, in _compile\n    guarded_code, tracer_output = compile_inner(code, one_graph, hooks)\n                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_utils_internal.py\", line 169, in wrapper_function\n    return function(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 1771, in compile_inner\n    result = _compile_inner(code, one_graph, hooks)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 1994, in _compile_inner\n    check_fn = dynamo_output.build_guards(\n        code,\n    ...<2 lines>...\n        cache_entries=cache_entries,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 1054, in build_guards\n    return self._build_guards(\n           ~~~~~~~~~~~~~~~~~~^\n        code, output_graph, cache_entries, hooks, save, strict_error\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/convert_frame.py\", line 1077, in _build_guards\n    return CheckFunctionManager(\n        code,\n    ...<5 lines>...\n        strict_error=strict_error,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/guards.py\", line 6206, in __init__\n    builder, guard_manager = self.build_guards(\n                             ~~~~~~~~~~~~~~~~~^\n        sorted_guards,\n        ^^^^^^^^^^^^^^\n    ...<4 lines>...\n        guard_filter_fn=guard_filter_fn,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/guards.py\", line 6564, in build_guards\n    guard.create(builder)\n    ~~~~~~~~~~~~^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_guards.py\", line 377, in create\n    return self.create_fn(builder, self)\n           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/guards.py\", line 4112, in SHAPE_ENV\n    python_code_parts, verbose_code_parts = _get_code_parts(\n                                            ~~~~~~~~~~~~~~~^\n        (\"python\", \"verbose_python\")\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/guards.py\", line 4085, in _get_code_parts\n    return output_graph.shape_env.produce_guards_verbose(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        [a.fake for a in fs],  # type: ignore[misc]\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<7 lines>...\n        langs=langs,\n        ^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/symbolic_shapes.py\", line 6893, in produce_guards_verbose\n    self._maybe_evaluate_static(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        guard.expr, axioms=(), size_oblivious=guard.size_oblivious\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/symbolic_shapes.py\", line 2844, in wrapper\n    return fn_cache(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/symbolic_shapes.py\", line 7596, in _maybe_evaluate_static\n    r = _maybe_evaluate_static_worker(\n        expr, symbol_info, unbacked_only, size_oblivious\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/symbolic_shapes.py\", line 2647, in _maybe_evaluate_static_worker\n    out = bound_sympy(new_expr, new_range_env)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/value_ranges.py\", line 1304, in bound_sympy\n    return sympy_interp(\n        SymPyValueRangeAnalysis, ranges, expr, missing_handler=_default_symbol_range\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/interp.py\", line 228, in sympy_interp\n    sympy_interp(\n    ~~~~~~~~~~~~^\n        analysis,\n        ^^^^^^^^^\n    ...<3 lines>...\n        missing_handler=missing_handler,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/interp.py\", line 225, in sympy_interp\n    return _run_sympy_handler(\n        analysis,\n    ...<11 lines>...\n        index_dtype=index_dtype,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/interp.py\", line 184, in _run_sympy_handler\n    r = handler(*args)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/value_ranges.py\", line 798, in python_mod\n    return ValueRanges(lower, upper)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/value_ranges.py\", line 166, in __init__\n    raise ValueRangeError(f\"Invalid ranges [{lower}:{upper}]\")\ntorch._dynamo.exc.InternalTorchDynamoError: ValueRangeError: Invalid ranges [0:-0.500000000000000]\n\n"
+}

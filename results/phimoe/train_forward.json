@@ -1,0 +1,68 @@
+{
+  "model": "phimoe",
+  "hf_id": "microsoft/Phi-3.5-MoE-instruct",
+  "auto_class": "AutoModelForCausalLM",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_hidden_layers": 2,
+    "hidden_size": 1024,
+    "intermediate_size": 1024,
+    "num_attention_heads": 8,
+    "num_key_value_heads": 2,
+    "num_local_experts": 8
+  },
+  "timestamp": "2026-11-18T13:53:21+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 7,
+  "graph_break_count": 6,
+  "op_count": 245,
+  "unique_breaks": 2,
+  "breaks": [
+    {
+      "location": "transformers/models/phimoe/modeling_phimoe.py:84",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 83, in forward, code: seq_len = torch.max(position_ids) + 1\n        max_2 = max(position_ids_1)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 83, in forward, code: seq_len = torch.max(position_ids) + 1\n        seq_len_1 = add(max_2, 1)\n    \n  Hint: The branch condition uses a scalar integer tensor. Consider rewriting the computation to use plain Python ints (e.g. use int attributes instead of tensor buffers) so the condition becomes a shape guard instead of data-dependent branching.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:798 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:647 in forward",
+        "transformers/modeling_rope_utils.py:129 in wrapper",
+        "transformers/models/phimoe/modeling_phimoe.py:84 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/phimoe/modeling_phimoe.py:87",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 87, in torch_dynamo_resume_in_forward_at_84, code: if seq_len > self.config.rope_parameters[\"original_max_position_embeddings\"]\n        l_seq_len_: graph input (L_seq_len_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 87, in torch_dynamo_resume_in_forward_at_84, code: if seq_len > self.config.rope_parameters[\"original_max_position_embeddings\"]\n        gt = gt(l_seq_len_, 4096)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:798 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:647 in forward",
+        "transformers/modeling_rope_utils.py:129 in wrapper",
+        "transformers/models/phimoe/modeling_phimoe.py:87 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,560 @@
+{
+  "model": "ctrl",
+  "hf_id": "Salesforce/ctrl",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:49:07+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 6,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 6,
+      "new_shape_events": 118
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\""
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 1,
+      "examples": [
+        "Eq(zf93, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "Eq(s53, 1280)",
+        "Eq(s29, s9)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "s53 = 1280"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 20,
+      "examples": [
+        "zf26 >= 0.0",
+        "zf26 <= 1.0",
+        "zf60 >= 0.0",
+        "zf60 <= 1.0",
+        "zf41 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 10,
+      "examples": [
+        "Eq(zf26, 0.1)",
+        "Eq(zf60, 0.1)",
+        "Eq(zf41, 0.1)",
+        "Eq(zf64, 0.1)",
+        "Eq(zf63, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf99, 1.0e-6)",
+        "Eq(zf51, 1.0e-6)",
+        "Eq(zf56, 1.0e-6)",
+        "Eq(zf62, 1.0e-6)",
+        "Eq(zf21, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:forward",
+      "line": 319,
+      "count": 10,
+      "examples": [
+        "Eq(zf54, 0.111803398874989)",
+        "Eq(s33, s29)",
+        "Eq(s30, s29)",
+        "Eq(s84, s59)",
+        "Eq(zf71, 0.111803398874989)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 4,
+      "examples": [
+        "s29*s59 <= 4096",
+        "s14*s94 + s55*s94 <= 4096",
+        "s8 > 4096",
+        "s38*s97 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:319",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406",
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 2,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s14)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 2,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:forward",
+      "line": 406,
+      "count": 6,
+      "examples": [
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 5,
+      "examples": [
+        "Ne(s94*(s14 + s55), -1)",
+        "Ne(s14 + s55, -1)",
+        "Ne(s8, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406",
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 3,
+      "examples": [
+        "s94*(s14 + s55) >= 0",
+        "s8 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406",
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 5,
+      "examples": [
+        "s34*s94*(s14 + s55) >= 2",
+        "32000*s94*(s14 + s55) >= 2",
+        "1280*s94*(s14 + s55) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 4,
+      "examples": [
+        "Ne(s94*(s14 + s55), s94)",
+        "Ne(((s3*s85*s88)//s8), s88)",
+        "Eq(s8, s85)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406",
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 4,
+      "examples": [
+        "Ne(PythonMod(s94, s94*(s14 + s55)), 0)",
+        "Ne(Mod(s88, ((s3*s85*s88)//s8)), 0)",
+        "Eq(Mod(s3*s88, ((s3*s85*s88)//s8)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406",
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 2,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 2,
+      "examples": [
+        "Ne(s14 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "Eq(s34, 1280)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "s34 = 1280"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 2,
+      "examples": [
+        "Ne(s94*(s14 + s55), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 2,
+      "examples": [
+        "Ne(32000*s94*(s14 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 5,
+      "examples": [
+        "Eq(1280*s14, 1280*s14 + 1280*s55)",
+        "s14 + s55 > -1",
+        "1 < 32000*s94*(s14 + s55)",
+        "32000 < 32000*s94*(s14 + s55)",
+        "32000*s14 + 32000*s55 < 32000*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 1,
+      "examples": [
+        "32000*s14 + 32000*s55 >= 32000"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "1280*s14 + 1280*s55 > 1280"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 1,
+      "examples": [
+        "Ne(Mod(1280, 1280*s14 + 1280*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:406"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406",
+      "line": 423,
+      "count": 1,
+      "examples": [
+        "Eq(s42, -100)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406",
+      "line": 423,
+      "count": 1,
+      "examples": [
+        "s42 = -100"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 1,
+      "examples": [
+        "Ne(s8, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 1,
+      "examples": [
+        "Eq(Mod(s3*s85*s88, s8), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 1,
+      "examples": [
+        "Eq(s3*s88, ((s3*s85*s88)//s8))"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s3*s88, s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:torch_dynamo_resume_in_forward_at_406:423"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "torch/nn/modules/module.py:587",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported python_type() call\n  Explanation: This VariableTracker does not implement python_type(), which is required for object protocol operations.\n  Hint: This is likely to be a Dynamo bug. Please report an issue to PyTorch.\n\n  Developer debug context: GetAttrVariable(TensorVariable(), persistent) does not implement python_type()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/ctrl/modeling_ctrl.py:406 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/ctrl/modeling_ctrl.py:319 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "short_reason": "Unsupported python_type() call",
+      "count": 1
+    },
+    {
+      "location": "transformers/modeling_utils.py:4778",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning_once(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning_once)`. If `warning_once` is defined on the logger class, add the class method `logging.Logger.warning_once` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning_once`) is checked against the ignore set. Ignoring a method that `warning_once` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning_once)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.modeling_utils (WARNING)>.warning_once, args: [ConstantVariable(str: '`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.')], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/ctrl/modeling_ctrl.py:423 in forward",
+        "transformers/modeling_utils.py:4778 in loss_function"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "short_reason": "logging.Logger method not supported for non-export cases",
+      "count": 1
+    }
+  ]
+}

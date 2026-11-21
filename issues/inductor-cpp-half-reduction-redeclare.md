@@ -1,0 +1,80 @@
+<!-- Draft for: pytorch/pytorch (label: module: inductor, oncall: cpu inductor). Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# Inductor CPU: fp16/bf16 reduction stored to two outputs declares `auto at_Half_tmp_acc0_vec` twice -> `CppCompileError`
+
+### System info
+
+- torch: `2.16.0a0+git57f02f8` (source build)
+- CPU: Intel Xeon Platinum 8488C (AVX-512, `pick_vec_isa()` = `avx512 avx512_vnni amx_tile`)
+- Compiler: g++ 13.4 (conda-forge); the generated code is invalid C++ for any compiler
+- Python 3.15, Linux
+
+### Description
+
+When one low-precision reduction result is written to **two output buffers**, the CPU vectorized codegen
+emits the accumulator conversion once per store, re-declaring the same variable:
+
+```cpp
+float tmp_acc0 = 0;
+at::vec::VectorizedN<float,2> tmp_acc0_vec = at::vec::VectorizedN<float,2>(0);
+for(int64_t x1=0; x1<ks0*ks1; x1+=1) { ... tmp_acc0_vec = tmp_acc0_vec + tmp1; }
+if(C10_LIKELY(x0 >= 0 && x0 < 768L))
+{
+    auto at_Half_tmp_acc0_vec = at::vec::convert<at::Half,1,float,2>(tmp_acc0_vec);
+    at_Half_tmp_acc0_vec.store(out_ptr0 + x0, 32);
+    auto at_Half_tmp_acc0_vec = at::vec::convert<at::Half,1,float,2>(tmp_acc0_vec);   // <- redeclared
+    at_Half_tmp_acc0_vec.store(out_ptr1 + x0, 32);
+}
+```
+
+```
+error: conflicting declaration 'auto at_Half_tmp_acc0_vec'
+note: previous declaration as 'at::vec::CPU_CAPABILITY::Vectorized<c10::Half> at_Half_tmp_acc0_vec'
+torch._inductor.exc.InductorError: CppCompileError: C++ compile error
+```
+
+This shows up in the backward of GPT-NeoX-style **parallel residual** blocks
+(`h = x + attn(ln1(x)) + mlp(ln2(x))`, e.g. Pythia): the attention and MLP output projections receive the
+same `grad_output`, so their two bias gradients are the same column sum, which Inductor fuses into one
+reduction with two stores. Found with `EleutherAI/pythia-160m` (HF transformers, config dtype float16) in
+training mode on CPU; the eval forward compiles fine.
+
+- float16: fails (static and dynamic shapes)
+- bfloat16: fails
+- float32: OK (no conversion variable is emitted)
+
+### Reproduction
+
+`issues/repros/inductor_cpp_half_reduction_redeclare.py` (standalone, ~30 lines):
+
+```python
+class ParallelResidual(nn.Module):
+    def __init__(self, d=768):
+        super().__init__()
+        self.attn_out = nn.Linear(d, d)
+        self.mlp_out = nn.Linear(d, d)
+
+    def forward(self, a, b):
+        return self.attn_out(a) + self.mlp_out(b)
+
+m = ParallelResidual().half()
+c = torch.compile(m)
+a = torch.randn(2, 32, 768, dtype=torch.half, requires_grad=True)
+b = torch.randn(2, 32, 768, dtype=torch.half, requires_grad=True)
+c(a, b).float().pow(2).sum().backward()
+```
+
+Output:
+
+```
+2.16.0a0+git57f02f8
+[torch.float16, dynamic=True]  InductorError: CppCompileError: C++ compile error
+[torch.float16, dynamic=False] InductorError: CppCompileError: C++ compile error
+[torch.float32, dynamic=True]  OK
+[torch.bfloat16, dynamic=True] InductorError: CppCompileError: C++ compile error
+```
+
+### Expected behavior
+
+The converted accumulator should be declared once and stored to both outputs (or each store should use
+a unique variable name).

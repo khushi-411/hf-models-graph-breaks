@@ -1,0 +1,623 @@
+{
+  "model": "phimoe",
+  "hf_id": "microsoft/Phi-3.5-MoE-instruct",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T13:56:33+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 14,
+  "recompiled_graphs": 1,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 14,
+      "new_shape_events": 396
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 3
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 100053151972384), type=<class 'transformers.models.phimoe.modeling_phimoe.PhimoeForCausalLM'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type PhimoeForCausalLM)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function torch_dynamo_resume_in__compute_longrope_parameters_at_543 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py:543\n    triggered by the following guard failure(s):\n    - 10/0: device == device(type='cuda', index=0)                   # ext_factors = torch.tensor(long_factor, dtype=torch.float32, device=device)  # transformers/src/transformers/modeling_rope_utils.py:572 in torch_dynamo_resume_in__compute_longrope_parameters_at_543\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 572, in torch_dynamo_resume_in__compute_longrope_parameters_at_543\n    -     ext_factors = torch.tensor(long_factor, dtype=torch.float32, device=device)",
+    "Recompiling function longrope_frequency_update in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py:47\n    triggered by the following guard failure(s):\n    - 8/0: not hasattr(self, 'long_inv_freq')                       # long_inv_freq = getattr(self, f\"{prefix}long_inv_freq\", None)  # transformers/src/transformers/modeling_rope_utils.py:64 in longrope_frequency_update\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_rope_utils.py\", line 64, in longrope_frequency_update\n    -     long_inv_freq = getattr(self, f\"{prefix}long_inv_freq\", None)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/lowering.py:sort_stable",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 1,
+      "examples": [
+        "Eq(zf3, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 13,
+      "examples": [
+        "1024*s70*s72 <= 2147483647",
+        "s70 <= 2147483647",
+        "s70**2*s72 <= 2147483647",
+        "s9 <= 2147483647",
+        "s48 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/modeling_rope_utils.py:wrapper:128",
+        "transformers/modeling_rope_utils.py:longrope_frequency_update:67",
+        "transformers/modeling_rope_utils.py:torch_dynamo_resume_in_wrapper_at_128:129",
+        "transformers/models/phimoe/modeling_phimoe.py:torch_dynamo_resume_in_forward_at_87:90"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 8,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "s9 <= 2147483647",
+        "s48 <= 2147483647",
+        "s30*s47 <= 2147483647",
+        "128*s30 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/phimoe/modeling_phimoe.py:torch_dynamo_resume_in_forward_at_87:90",
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/modeling_rope_utils.py:_compute_longrope_parameters",
+      "line": 543,
+      "count": 146,
+      "examples": [
+        "(IntTrueDiv(s20, s39)) > 1.0",
+        "Eq(IntTrueDiv(s20, s39), 32.0)",
+        "Eq(s39, 4096)",
+        "Ne(s21, 0)",
+        "s21 > 4096"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/modeling_rope_utils.py:_compute_longrope_parameters",
+      "line": 543,
+      "count": 4,
+      "examples": [
+        "s39 = 4096"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 13,
+      "examples": [
+        "TruncToInt(1.0*ToFloat((s92//s82))) >= 0",
+        "(((TruncToInt(1.0*ToFloat((s92//s82))) + 1)//2)) >= 0",
+        "Ne(((TruncToInt(1.0*ToFloat((s92//s82))) + 1)//2), 0)",
+        "Ne(s68*(s11 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543",
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:_is_non_overlapping_and_dense_or_false",
+      "line": 426,
+      "count": 4,
+      "examples": [
+        "(((TruncToInt(1.0*ToFloat((s92//s82))) + 1)//2)) >= 2"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 4,
+      "examples": [
+        "Ne(((TruncToInt(1.0*ToFloat((s92//s82))) + 1)//2), 1)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 12,
+      "examples": [
+        "Eq(((TruncToInt(1.0*ToFloat((s92//s82))) + 1)//2), 64)",
+        "Eq(s27, 128)",
+        "Eq(s87, s40)",
+        "Eq(s37, 128)",
+        "Eq(s40, s9)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543",
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 9,
+      "examples": [
+        "Eq(IntTrueDiv(s20, 4096), 32.0)",
+        "Eq(1024*s11, 1024*s11 + 1024*s55)",
+        "s11 + s55 > -1",
+        "1 < 32064*s68*(s11 + s55)",
+        "32064 < 32064*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543",
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_compile.py:_apply_tensorify_python_scalars",
+      "line": 335,
+      "count": 130,
+      "examples": [
+        "Eq(zf42, 10000.0)",
+        "Eq(zf35, 64.9599990844727)",
+        "Eq(zf86, 64.75)",
+        "Eq(zf56, 64.2099990844727)",
+        "Eq(zf84, 64.1900024414063)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:_compute_longrope_parameters:543"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/phimoe/modeling_phimoe.py:torch_dynamo_resume_in_forward_at_87",
+      "line": 90,
+      "count": 1,
+      "examples": [
+        "Eq(zf67, 1.24316312101612)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:torch_dynamo_resume_in_forward_at_87:90"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf12, 1.0e-5)",
+        "Eq(zf60, 1.0e-5)",
+        "Eq(zf42, 1.0e-5)",
+        "Eq(zf2, 1.0e-5)",
+        "Eq(zf0, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "Eq(s33, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "s33 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "s27 = 128",
+        "s37 = 128"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/phimoe/modeling_phimoe.py:forward",
+      "line": 647,
+      "count": 14,
+      "examples": [
+        "Eq(zf23, 0.0883883476483184)",
+        "Eq(s34, s40)",
+        "Eq(s30, s34)",
+        "Eq(s84, s47)",
+        "s47 <= 65535"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:sort_stable",
+      "line": 8618,
+      "count": 1,
+      "examples": [
+        "2*s30*s47 < 32767"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:647"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/phimoe/modeling_phimoe.py:forward",
+      "line": 798,
+      "count": 3,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s68*(s11 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 3,
+      "examples": [
+        "s68*s86*(s11 + s55) >= 2",
+        "32064*s68*(s11 + s55) >= 2",
+        "1024*s68*(s11 + s55) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 1,
+      "examples": [
+        "Ne(s68*(s11 + s55), s68)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 1,
+      "examples": [
+        "Ne(PythonMod(s68, s68*(s11 + s55)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 1,
+      "examples": [
+        "Ne(s68*(s11 + s55), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s86, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s86 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "32064*s11 + 32064*s55 > 32064"
+      ],
+      "model_frames": [
+        "transformers/models/phimoe/modeling_phimoe.py:forward:798"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 1,
+      "examples": [
+        "Eq(s0, 64)"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:wrapper:128"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 1,
+      "examples": [
+        "s0 = 64"
+      ],
+      "model_frames": [
+        "transformers/modeling_rope_utils.py:wrapper:128"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "python/site-packages/huggingface_hub/dataclasses.py:626",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nbuiltin isinstance() with classinfo that does not support issubclass()\n  Explanation: issubclass(<class 'dict'>, <class 'transformers.modeling_rope_utils.RopeParameters'>) raised TypeError: TypedDict does not support instance and class checks. Dynamo emulates isinstance() with issubclass() for this argument and cannot determine the result.\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: isinstance(ConstDictVariable(), <class 'transformers.modeling_rope_utils.RopeParameters'>)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb1583.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:798 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:647 in forward",
+        "transformers/modeling_rope_utils.py:128 in wrapper",
+        "transformers/modeling_rope_utils.py:67 in longrope_frequency_update",
+        "transformers/modeling_rope_utils.py:543 in _compute_longrope_parameters",
+        "transformers/modeling_rope_utils.py:866 in standardize_rope_params"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb1583.html",
+      "short_reason": "builtin isinstance() with classinfo that does not support issubclass()",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/phimoe/modeling_phimoe.py:84",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 83, in forward, code: seq_len = torch.max(position_ids) + 1\n        l_position_ids_: graph input (L_position_ids_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 83, in forward, code: seq_len = torch.max(position_ids) + 1\n        max_1 = max(l_position_ids_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 83, in forward, code: seq_len = torch.max(position_ids) + 1\n        seq_len = add(max_1, 1)\n    \n  Hint: The branch condition uses a scalar integer tensor. Consider rewriting the computation to use plain Python ints (e.g. use int attributes instead of tensor buffers) so the condition becomes a shape guard instead of data-dependent branching.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:798 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:647 in forward",
+        "transformers/modeling_rope_utils.py:129 in wrapper",
+        "transformers/models/phimoe/modeling_phimoe.py:84 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/phimoe/modeling_phimoe.py:87",
+      "reason": "Data-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 87, in torch_dynamo_resume_in_forward_at_84, code: if seq_len > self.config.rope_parameters[\"original_max_position_embeddings\"]\n        l_seq_len_: graph input (L_seq_len_)\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/phimoe/modeling_phimoe.py\", line 87, in torch_dynamo_resume_in_forward_at_84, code: if seq_len > self.config.rope_parameters[\"original_max_position_embeddings\"]\n        gt = gt(l_seq_len_, 4096)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:798 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/phimoe/modeling_phimoe.py:647 in forward",
+        "transformers/modeling_rope_utils.py:129 in wrapper",
+        "transformers/models/phimoe/modeling_phimoe.py:87 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    }
+  ]
+}

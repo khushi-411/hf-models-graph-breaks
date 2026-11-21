@@ -1,0 +1,83 @@
+<!-- Draft for: pytorch/pytorch (labels: module: dynamic shapes, module: compile-time). Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# [dynamic shapes] Compile time blowup: `FloorDiv.eval` calls `sympy.simplify` on deeply nested size expressions (Swin: 15-52 min to compile with `dynamic=True`)
+
+### System info
+
+- torch: `2.16.0a0+git57f02f8` (source build, CUDA 12.8, Triton 3.9.0)
+- transformers: `5.24.0.dev0` (git `b7fe69cb19`)
+- GPU: NVIDIA B200; CPU: Intel Xeon Platinum 8488C
+- Python 3.15, Linux
+
+### Description
+
+`torch.compile(model, backend="inductor", dynamic=True)` on Hugging Face Swin
+(`microsoft/swin-tiny-patch4-window7-224` config, random weights) succeeds, with no recompiles over three
+input sizes, but compiling takes extremely long:
+
+| | eval_forward | train_forward |
+|---|---|---|
+| static shapes (Dynamo `explain`) | ~15 s for both scenarios together | |
+| `dynamic=True`, CUDA (B200) | **15.5 min** | **52 min** |
+| `dynamic=True`, CPU | **> 25 min** (stopped) | not measured |
+
+Wrapping `sympy.simplify` during the CPU eval compile (first ~12 minutes) attributes the time to
+`FloorDiv.eval` (`torch/utils/_sympy/functions.py:314`):
+
+```python
+gcd = simple_floordiv_gcd(base, divisor)
+...
+if not equal_valued(gcd, 1):
+    return FloorDiv(
+        sympy.simplify(base / gcd), sympy.simplify(divisor / gcd)
+    )
+```
+
+| time in `sympy.simplify` | calls | caller | largest expr (chars) |
+|---|---|---|---|
+| 130 s | 16,070 | `FloorDiv.eval` <- `sym_node._sympy_floordiv` <- `binary_magic_impl` | 1,698 |
+| 49 s | 9,784 | `FloorDiv.eval` <- `_inductor/ir.py:resolve_negative_size` <- `create` | 717 |
+| 24 s | 1,534 | `FloorDiv.eval` <- `FloorDiv.eval` <- `_sympy_floordiv` | 485 |
+| 14 s | 14,248 | `FloorDiv.eval` | 118 |
+| 5 s | 2,996 | `sizevars.stride_at` <- `stride_at_vec_range` <- `codegen/cpp.py:_select_tiling_indices` | 1,566 |
+
+The expressions come from Swin's padding. Every stage pads the feature map to a multiple of the window
+size, and patch merging downsamples by 2 with odd-size padding (`modeling_swin.py:611`, `:305`):
+
+```python
+pad_right = (self.window_size - width % self.window_size) % self.window_size
+pad_bottom = (self.window_size - height % self.window_size) % self.window_size
+...
+if (height % 2 == 1) or (width % 2 == 1):
+    input_feature = nn.functional.pad(input_feature, (0, 0, 0, width % 2, 0, height % 2))
+```
+
+so each stage nests the previous stage's size expression. A typical one (s58 = image size):
+
+```
+(((((((((((s58//4))**2)//((s58//4)))) + 1)//2)) + 1)//2)) + (Mod(7 - (Mod((((((((s58//4)) + 1)//2)) + 1)//2), 7)), 7))
+```
+
+and the largest ones (1,500+ chars) are products of these with the batch size and channel counts.
+`sympy.simplify` is a very general (and slow) simplifier, and it runs on every such `FloorDiv`
+construction where a common factor is found, tens of thousands of times per compile.
+
+### Reproduction
+
+Model-level (from the hf-models-graph-breaks harness):
+
+```bash
+python -m graph_breaks.dynamic --model swin --scenario eval_forward               # CPU
+python -m graph_breaks.dynamic --model swin --scenario eval_forward --device cuda  # CUDA
+```
+
+(builds the model from its config and runs `torch.compile(model, backend="inductor", dynamic=True)`
+on 224x224 images with batch 2, 3, 4; the image size is still symbolic (`s58`) because `dynamic=True`
+marks every dim dynamic). A standalone repro would chain
+`pad-to-multiple-of-7` and `(x + 1) // 2` on a symbolic size a few times.
+
+### Expected behavior
+
+Compile time with `dynamic=True` within a small factor of static shapes. Possible directions: replace
+`sympy.simplify` in `FloorDiv.eval` with a cheaper normalization (e.g. `sympy.cancel` / `factor_terms`, or
+just dividing out the integer gcd), cache it, or skip it above an expression-size threshold.

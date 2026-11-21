@@ -1,0 +1,170 @@
+{
+  "model": "funnel",
+  "hf_id": "funnel-transformer/small",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:37:48+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 3,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 429
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 2,
+      "new_shape_events": 442
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 1,
+      "new_shape_events": 221
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/funnel/modeling_funnel.py:1011\n    triggered by the following guard failure(s):\n    - 0/0: tensor 'input_ids' size mismatch at index 1. expected 32, actual 40",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/funnel/modeling_funnel.py:1011\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'input_ids' size mismatch at index 1. expected 40, actual 56\n    - 0/0: tensor 'input_ids' size mismatch at index 1. expected 32, actual 56"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 145,
+      "examples": [
+        "Eq(zf43, 1.0e-9)",
+        "Eq(zf67, 1.0e-9)",
+        "Eq(zf10, 1.0e-9)",
+        "Eq(zf6, 1.0e-9)",
+        "Eq(zf58, 1.0e-9)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 610,
+      "examples": [
+        "zf9 >= 0.0",
+        "zf9 <= 1.0",
+        "zf94 >= 0.0",
+        "zf94 <= 1.0",
+        "zf19 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 305,
+      "examples": [
+        "Eq(zf9, 0.1)",
+        "Eq(zf94, 0.1)",
+        "Eq(zf19, 0.1)",
+        "Eq(zf27, 0.1)",
+        "Eq(zf23, 0.1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 18,
+      "examples": [
+        "Eq(s70, 32)",
+        "Eq(zf75, 2.0)",
+        "Eq(s70, 40)",
+        "Eq(zf45, 0.125)",
+        "Eq(zf100, 0.125)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 5,
+      "examples": [
+        "s70 = 32",
+        "s70 = 40",
+        "s70 = 56"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 6,
+      "examples": [
+        "Eq(s53, 40)",
+        "Eq(s72, s43)",
+        "Eq(s53, 56)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 3,
+      "examples": [
+        "s53 = 40",
+        "s53 = 56"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

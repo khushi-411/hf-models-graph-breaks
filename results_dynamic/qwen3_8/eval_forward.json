@@ -1,0 +1,42 @@
+{
+  "model": "qwen3_8",
+  "hf_id": "Qwen/Qwen3.8-27B",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T18:33:05+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "RuntimeError: Calling torch.triangular_solve on a CPU tensor requires compiling PyTorch with BLAS. Please use PyTorch built with BLAS support.",
+  "error_inductor_site": "torch/_inductor/output_code.py:__call__:888",
+  "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 243, in run_scenario\n    out = compiled(**inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 661, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1363, in compile_wrapper\n    result = fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1830, in forward\n    outputs = self.model(\n        input_ids=input_ids,\n    ...<10 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1601, in forward\n    mm_encoder_outputs[\"image\"] = self.get_image_features(\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1614, in torch_dynamo_resume_in_forward_at_1601\n    image_mask, _ = self.get_placeholder_mask(\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1629, in torch_dynamo_resume_in_forward_at_1614\n    position_ids = self.compute_3d_position_ids(\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1629, in torch_dynamo_resume_in_forward_at_1629\n    position_ids = self.compute_3d_position_ids(\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1652, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/aot_autograd.py\", line 1290, in forward\n    return runtime_fn([*params_buffers_flat, *runtime_args])\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/runtime_wrappers.py\", line 1207, in runtime_wrapper\n    return _codegen_runtime_wrapper(\n        _inner_compiled_fn, _first_invocation_ctx, nothing, args\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/codegen.py:codegen(runtime_wrapper_orchestration)\", line 8, in _runtime_wrapper\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/output_code.py\", line 888, in __call__\n    return self.current_callable(inputs)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/tmp/inductor_new_435526_0/tmp1b40l8vz/kh/ckhysl4lrylvar2la2spsfdvobdacqfle3vk6a7rn5nee3p5w7jj.py\", line 2793, in call\n    buf36 = torch.ops.aten.linalg_solve_triangular.default(buf32, buf35, upper=False, unitriangular=True)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_ops.py\", line 999, in __call__\n    return self._op(*args, **kwargs)\n           ~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_compile.py\", line 54, in inner\n    return disable_fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1652, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/runtime_wrappers.py\", line 496, in __torch_dispatch__\n    res = func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_ops.py\", line 999, in __call__\n    return self._op(*args, **kwargs)\n           ~~~~~~~~^^^^^^^^^^^^^^^^^\nRuntimeError: Calling torch.triangular_solve on a CPU tensor requires compiling PyTorch with BLAS. Please use PyTorch built with BLAS support.\n"
+}

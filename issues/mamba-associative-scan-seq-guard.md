@@ -1,0 +1,62 @@
+<!-- Draft for: pytorch/pytorch (labels: module: higher order operators, module: dynamic shapes). Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# [dynamic shapes] `associative_scan` recompiles for every new size: `generic` mode guards on `(seq // 8) % 2` (CPU), `pointwise` mode with grad specializes batch and seq (CUDA)
+
+### System info
+
+- torch: `2.16.0a0+git57f02f8` (source build, CUDA 12.8, Triton 3.9.0)
+- GPU: NVIDIA B200; CPU: Intel Xeon Platinum 8488C
+- Python 3.15, Linux
+
+### Description
+
+`torch._higher_order_ops.associative_scan` under `torch.compile(dynamic=True)` does not stay dynamic:
+
+1. **`combine_mode="generic"` (CPU)**: compiling installs the guard `((seq // 8) % 2) == 0` (the
+   recursive even/odd split of the generic scan), so each new sequence length can recompile. With
+   seq 32 / 40 / 56: 3 compiled graphs.
+2. **`combine_mode="pointwise"` (CUDA), with autograd**: the batch and sequence dims get specialized
+   (`eval Eq(s52, 2) [guard added] ... set_replacement s52 = 2 (range_refined_to_singleton)`), so every
+   new batch size or sequence length recompiles. Without grad (eval) the same call stays dynamic.
+
+Found through Hugging Face transformers' Mamba (`modeling_mamba.py:237`, `mamba_selective_scan`), which
+uses exactly this call when compiled (`combine_mode="pointwise"` on CUDA/XPU, `"generic"` otherwise):
+
+```python
+def combine_fn(left, right):
+    a_left, b_left = left
+    a_right, b_right = right
+    return a_left * a_right, a_right * b_left + b_right
+
+_, all_states = associative_scan(combine_fn, (discrete_A, deltaB_u), dim=2, combine_mode=combine_mode)
+```
+
+With `torch.compile(model, dynamic=True)` + Inductor over inputs (2, 32), (3, 40), (4, 56):
+
+| model | CPU eval | CUDA eval | CUDA train |
+|---|---|---|---|
+| mamba | 2 recompiles: `((input_ids.size()[1] // 8) % 2) == 0  # _, all_states = associative_scan(` | 0 | 2 recompiles: `size mismatch at index 0. expected 2, actual 3` |
+| jamba | 2 recompiles (same guard) | 0 | 2 recompiles (same) |
+| falcon_mamba | (same code path) | 0 | 2 recompiles (same) |
+
+### Reproduction
+
+`issues/repros/associative_scan_dynamic_guards.py` (standalone, no transformers; shapes
+(batch, 64, seq, 16), scan over dim 2):
+
+```
+2.16.0a0+git57f02f8
+[cpu generic   eval ] seq 32/40/56: compiled graphs = 3
+[cpu generic   eval ] batch 2/3/4: compiled graphs = 1
+[cuda pointwise eval ] batch 2/3/4: compiled graphs = 1
+[cuda pointwise eval ] seq 32/40/56: compiled graphs = 1
+[cuda pointwise train] batch 2/3/4: compiled graphs = 3
+[cuda pointwise train] seq 32/40/56: compiled graphs = 3
+```
+
+### Expected behavior
+
+One compiled graph for all sizes in each row, as with `dynamic=True` for ordinary ops. For `generic`,
+the even/odd split could handle the odd tail without branching on the size's parity at trace time; for
+`pointwise` + autograd, the backward (or the joint graph) should not specialize the batch and sequence
+dims.

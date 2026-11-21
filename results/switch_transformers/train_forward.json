@@ -1,0 +1,108 @@
+{
+  "model": "switch_transformers",
+  "hf_id": "google/switch-base-8",
+  "auto_class": "AutoModelForSeq2SeqLM",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "num_layers": 2,
+    "num_decoder_layers": 2,
+    "num_sparse_encoder_layers": 1,
+    "num_sparse_decoder_layers": 1,
+    "encoder_sparse_step": 2,
+    "decoder_sparse_step": 2
+  },
+  "timestamp": "2026-11-18T13:51:06+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 19,
+  "graph_break_count": 18,
+  "op_count": 250,
+  "unique_breaks": 4,
+  "breaks": [
+    {
+      "location": "torch/nn/modules/module.py:1005",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Attempted to use `torch.nn.Parameter()` constructor with Dynamo",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/modules/module.py:1005",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 708)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 778\n            for layer_module in self.block:\n                                ^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/switch_transformers/modeling_switch_transformers.py:174",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:174 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/switch_transformers/modeling_switch_transformers.py:176",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_174 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 174)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  ListIteratorVariable(length=8, index=1) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 175\n            for expert_idx in expert_hit:\n                              ^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:196 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:176 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,363 @@
+{
+  "model": "efficientnet",
+  "hf_id": "google/efficientnet-b0",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:56:22+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 572
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/lowering.py:pooling_size"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 10,
+      "examples": [
+        "Eq(zf36, 0.0)",
+        "Eq(zf32, 0.0)",
+        "Eq(zf98, 0.0)",
+        "Eq(zf25, 0.0)",
+        "Eq(zf43, 0.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 86,
+      "examples": [
+        "Eq(s59, 3)",
+        "3*(s100 + 1)**2 <= 2147483647",
+        "32*((s100//2))**2 <= 2147483647",
+        "(Mod(32*s99*((s100//2))**2 - 1, (s100//2))) + (Mod(((32*s99*((s100//2))**2 - 1)//((s100//2))), (s100//2)))*Max(1, (s100//2)) + (Mod(((32*s99*((s100//2))**2 - 1)//(((s100//2))**2)), 32))*Max(1, (s100//2))**2 + 32*(Mod(((32*s99*((s100//2))**2 - 1)//(32*((s100//2))**2)), s99))*Max(1, (s100//2))**2 < 2147483647",
+        "16*((s100//2))**2 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 2,
+      "examples": [
+        "s59 = 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2948,
+      "count": 98,
+      "examples": [
+        "zf53 >= 0.0",
+        "zf97 >= 0.0",
+        "zf67 >= 0.0",
+        "zf5 >= 0.0",
+        "zf68 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2951,
+      "count": 238,
+      "examples": [
+        "Eq(zf53, 0.001)",
+        "Eq(zf66, 0.99)",
+        "s99 <= 880801",
+        "s99 <= 65535",
+        "32*s99*((s100//2))**2 < 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 10,
+      "examples": [
+        "Ne((s100//2), 1)",
+        "Ne((s100//4), 1)",
+        "Ne((s100//8), 1)",
+        "Ne((s100//16), 1)",
+        "Ne((s100//32), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 10,
+      "examples": [
+        "Ne(Max(1, (s100//2))**2, 1)",
+        "Ne(Max(1, (s100//4))**2, 1)",
+        "Ne(Max(1, (s100//8))**2, 1)",
+        "Ne(Max(1, (s100//16))**2, 1)",
+        "Ne(Max(1, (s100//32))**2, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 40,
+      "examples": [
+        "zf24 >= 0.0",
+        "zf24 <= 1.0",
+        "zf86 >= 0.0",
+        "zf86 <= 1.0",
+        "zf29 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 20,
+      "examples": [
+        "Eq(zf24, 0.025)",
+        "Eq(zf86, 0.05)",
+        "Eq(zf29, 0.075)",
+        "Eq(zf33, 0.0875)",
+        "Eq(zf93, 0.1125)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:pooling_output_shape_pad_lr",
+      "line": 5257,
+      "count": 2,
+      "examples": [
+        "1280*(((((s100//32)) - 1)//1280)) < ((s100//32))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 2,
+      "examples": [
+        "Eq(1280*s99*((((((s100//32)) - 1)//1280)) + 1)**2, 1280*s99)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 4,
+      "examples": [
+        "Eq((((((s100//32)) - 1)//1280)) + 1, 1)",
+        "Eq(Max(1, (((((s100//32)) - 1)//1280)) + 1)**2, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 6,
+      "examples": [
+        "Max(1, (s100//2)) < Max(1, (s100//2))**2",
+        "Max(1, (s100//4)) < Max(1, (s100//4))**2",
+        "Max(1, (s100//8)) < Max(1, (s100//8))**2",
+        "Max(1, (s100//16)) < Max(1, (s100//16))**2",
+        "Max(1, (s100//32)) < Max(1, (s100//32))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 31,
+      "examples": [
+        "Ne(Mod(1, (s100//2)), 0)",
+        "Ne(Mod((s100//2), ((s100//2))**2), 0)",
+        "Ne(Mod(((s100//2))**2, 32*((s100//2))**2), 0)",
+        "Ne(Mod(((s100//2))**2, 16*((s100//2))**2), 0)",
+        "Ne(Mod(1, ((s100//2)) + 1), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:pooling_size",
+      "line": 6076,
+      "count": 1,
+      "examples": [
+        "-((s100//32)) + 1280*(((((s100//32)) + 1279)//1280)) - 1280 < 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:pooling_size",
+      "line": 6081,
+      "count": 1,
+      "examples": [
+        "Ne((s100//40960), ((((s100//32)) + 1279)//1280))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 1,
+      "examples": [
+        "Eq(s99*(((((s100//32)) + 1279)//1280))**2, s99)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 3,
+      "examples": [
+        "Ne(1280, ((((s100//32)) + 1279)//1280))",
+        "Ne(1280, (((((s100//32)) + 1279)//1280))**2)",
+        "Eq(1280, 1280*(((((s100//32)) + 1279)//1280))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 2,
+      "examples": [
+        "1280 >= (((((s100//32)) + 1279)//1280))",
+        "1280 >= (((((s100//32)) + 1279)//1280))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 2,
+      "examples": [
+        "1280 > (((((s100//32)) + 1279)//1280))",
+        "1280 > (((((s100//32)) + 1279)//1280))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 2,
+      "examples": [
+        "3*s100**2*s99 + 6*s100*s99 + 3*s99 <= 2147483647",
+        "1280*s99*(((((s100//32)) + 1279)//1280))**2 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 1,
+      "examples": [
+        "3*s100**2*s99 <= 2147483647"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

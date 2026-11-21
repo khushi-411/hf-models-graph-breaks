@@ -1,0 +1,362 @@
+{
+  "model": "depth_anything",
+  "hf_id": "LiheYoung/depth-anything-small-hf",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:51:11+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 221
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:is_stride_ordered",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 34,
+      "examples": [
+        "Eq(s59, 3)",
+        "Ne(((s100//14))**2, 1369)",
+        "Eq(zf6, 0.125)",
+        "Eq(zf34, 0.125)",
+        "Eq(zf66, 0.125)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "s59 = 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 14,
+      "examples": [
+        "s100 >= 14",
+        "(((((s100//14))**2)//((s100//14)))) >= 1",
+        "4*(((((s100//14))**2)//((s100//14)))) + 2 >= 3",
+        "2*(((((s100//14))**2)//((s100//14)))) + 2 >= 3",
+        "((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 3 >= 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 8,
+      "examples": [
+        "Ne((s100//14), 1)",
+        "Eq(Max(1, 8*(((((s100//14))**2)//((s100//14))))), 8*(((((s100//14))**2)//((s100//14)))))",
+        "Eq(Max(1, 8*((s100//14)))*Max(1, 8*(((((s100//14))**2)//((s100//14))))), 64*((s100//14))*(((((s100//14))**2)//((s100//14)))))",
+        "Ne(384*((s100//14))**2 + 384, 384*((s100//14))*(((((s100//14))**2)//((s100//14)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 4,
+      "examples": [
+        "Ne(((s100//14))**2, (s100//14))",
+        "Eq((s100//14), ((((s100//14))**2)//((s100//14))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 4,
+      "examples": [
+        "Ne(Mod((s100//14), ((s100//14))**2), 0)",
+        "Ne(Mod(s99, s99*(((s100//14))**2 + 1)), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:_is_non_overlapping_and_dense_or_false",
+      "line": 426,
+      "count": 4,
+      "examples": [
+        "((s100//14)) >= 2",
+        "(((((s100//14))**2)//((s100//14)))) >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 4,
+      "examples": [
+        "zf12 >= 0.0",
+        "zf12 <= 1.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 2,
+      "examples": [
+        "Eq(zf12, 0.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 50,
+      "examples": [
+        "Eq(zf3, 1.0e-6)",
+        "Eq(zf32, 1.0e-6)",
+        "Eq(zf53, 1.0e-6)",
+        "Eq(zf97, 1.0e-6)",
+        "Eq(zf8, 1.0e-6)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2340,
+      "count": 6,
+      "examples": [
+        "Ne(((((s100//14))**2)//((s100//14))), 0)",
+        "1 < 64*((s100//14))*(((((s100//14))**2)//((s100//14))))",
+        "1 < 256*((s100//14))*(((((s100//14))**2)//((s100//14))))",
+        "1 < 1024*((s100//14))*(((((s100//14))**2)//((s100//14))))",
+        "1 < 4096*((s100//14))*(((((s100//14))**2)//((s100//14))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:convert",
+      "line": 2354,
+      "count": 2,
+      "examples": [
+        "Ne(((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1, 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 12,
+      "examples": [
+        "Ne(((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1, 1)",
+        "Ne((((((s100//14)) - 1)//2)) + 1, 1)",
+        "64*s99*((((((s100//14)) - 1)//2)) + 1)*(((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1) >= 2",
+        "Ne(Max(1, (((((s100//14)) - 1)//2)) + 1)*Max(1, ((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1), 1)",
+        "Ne(Max(1, 14*((s100//14))), Max(1, 14*((s100//14)))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:_compute_scale",
+      "line": 4734,
+      "count": 8,
+      "examples": [
+        "(((((s100//14))**2)//((s100//14)))) > 1",
+        "2*(((((s100//14))**2)//((s100//14)))) > 1",
+        "4*(((((s100//14))**2)//((s100//14)))) > 1",
+        "8*(((((s100//14))**2)//((s100//14)))) > 1"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 22,
+      "examples": [
+        "64*s99*((s100//14))*(((((s100//14))**2)//((s100//14)))) >= 2",
+        "256*s99*((s100//14))*(((((s100//14))**2)//((s100//14)))) >= 2",
+        "1024*s99*((s100//14))*(((((s100//14))**2)//((s100//14)))) >= 2",
+        "4096*s99*((s100//14))*(((((s100//14))**2)//((s100//14)))) >= 2",
+        "384*s99*((s100//14))*(((((s100//14))**2)//((s100//14)))) >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 2,
+      "examples": [
+        "Ne(Max(1, (s100//14))*Max(1, ((((s100//14))**2)//((s100//14)))), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 29,
+      "examples": [
+        "Ne(Mod(384, 384*((s100//14))**2 + 384), 0)",
+        "Ne(Mod(1, (s100//14)), 0)",
+        "Ne(Mod(((s100//14))**2, 384*((s100//14))**2), 0)",
+        "Ne(Mod(1, Max(1, (((((s100//14)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(Max(1, (((((s100//14)) - 1)//2)) + 1), Max(1, (((((s100//14)) - 1)//2)) + 1)**2), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 3,
+      "examples": [
+        "Max(1, ((((s100//14))**2)//((s100//14)))) < Max(1, (s100//14))*Max(1, ((((s100//14))**2)//((s100//14))))",
+        "Max(1, ((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1) < Max(1, (((((s100//14)) - 1)//2)) + 1)*Max(1, ((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1)",
+        "Max(1, ((((((((s100//14))**2)//((s100//14)))) - 1)//2)) + 1) > 1"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 4,
+      "examples": [
+        "1 < Max(1, (((((s100//14)) - 1)//2)) + 1)",
+        "((s100//14))*(((((s100//14))**2)//((s100//14)))) < 64*((s100//14))*(((((s100//14))**2)//((s100//14))))",
+        "Max(1, 2*((s100//14))) < Max(1, 2*((s100//14)))**2",
+        "Max(1, 4*((s100//14))) < Max(1, 4*((s100//14)))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4729,
+      "count": 1,
+      "examples": [
+        "Ne(((s100//14))*(((((s100//14))**2)//((s100//14)))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 4,
+      "examples": [
+        "Max(1, 2*(((((s100//14))**2)//((s100//14))))) < Max(1, 2*((s100//14)))*Max(1, 2*(((((s100//14))**2)//((s100//14)))))",
+        "Max(1, 4*(((((s100//14))**2)//((s100//14))))) < Max(1, 4*((s100//14)))*Max(1, 4*(((((s100//14))**2)//((s100//14)))))",
+        "Max(1, 8*(((((s100//14))**2)//((s100//14))))) < Max(1, 8*((s100//14)))*Max(1, 8*(((((s100//14))**2)//((s100//14)))))",
+        "Max(1, 14*((s100//14))) < Max(1, 14*((s100//14)))**2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_stride_ordered",
+      "line": 4770,
+      "count": 2,
+      "examples": [
+        "Ne(Max(1, 2*((s100//14))), Max(1, 2*((s100//14)))**2)",
+        "Ne(Max(1, 4*((s100//14))), Max(1, 4*((s100//14)))**2)"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

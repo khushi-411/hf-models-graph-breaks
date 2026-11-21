@@ -1,0 +1,669 @@
+{
+  "model": "long_t5",
+  "hf_id": "google/long-t5-tglobal-base",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:01:55+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 2,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 412
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 2,
+      "new_shape_events": 446
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: (1 + (kwargs['input_ids'].size()[1] // 16)) == 3  # one_hot_block_ids = nn.functional.one_hot(block_ids.type(torch.int64), global_seq_len + 1)[:, :, :-1]  # transformers/src/transformers/models/longt5/modeling_longt5.py:246 in _create_global_aggregates (_dynamo/utils.py:4626 in run_node)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:is_stride_ordered",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 176,
+      "examples": [
+        "zf90 >= 0.0",
+        "zf90 <= 1.0",
+        "zf97 >= 0.0",
+        "zf97 <= 1.0",
+        "zf26 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 88,
+      "examples": [
+        "Eq(zf90, 0.1)",
+        "Eq(zf97, 0.1)",
+        "Eq(zf26, 0.1)",
+        "Eq(zf1, 0.1)",
+        "Eq(zf9, 0.1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 45,
+      "examples": [
+        "((s27//16)) > 0",
+        "Eq(((s27//16)) + 1, 3)",
+        "Ne(Mod(s27, 128), 0)",
+        "Eq(12*s52*(s27 + (PythonMod(-s27, 128)))*((s27//16)), 1536*s52*((s27//16))*(((s27 + (PythonMod(-s27, 128)))//128)))",
+        "128*((s27//16)) >= (s27 + (PythonMod(-s27, 128)))*((s27//16))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1345,
+      "count": 4,
+      "examples": [
+        "Ne((s27//16), 1)",
+        "Ne((s16//16), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 16,
+      "examples": [
+        "((s27//16))**2 >= 2",
+        "Eq(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))), s27 + (PythonMod(-s27, 128)))",
+        "Eq(((s27//16)) + 384, 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)",
+        "Ne(Max(1, 64*(((s27 + (PythonMod(-s27, 128)))//128))), 12*Max(1, 64*(((s27 + (PythonMod(-s27, 128)))//128)))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(12*Max(1, 64*(((s27 + (PythonMod(-s27, 128)))//128)))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, 64*(((s27 + (PythonMod(-s27, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 20,
+      "examples": [
+        "Max(1, (s27//16)) > 1",
+        "12*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= 12*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) > 1",
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) > 1",
+        "Max(1, ((s27 + (PythonMod(-s27, 128)))//128)) < 64*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 22,
+      "examples": [
+        "Eq(768*s52*(s27 + (PythonMod(-s27, 128))), 98304*s52*(((s27 + (PythonMod(-s27, 128)))//128)))",
+        "Eq(12*s52*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*s52*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(12*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*s52*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(12*s52*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(768*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 768*s52*(s27 + (PythonMod(-s27, 128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 24,
+      "examples": [
+        "Ne(((s27 + (PythonMod(-s27, 128)))//128), s27 + (PythonMod(-s27, 128)))",
+        "Ne((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), ((s27 + (PythonMod(-s27, 128)))//128))",
+        "Ne(((s27 + (PythonMod(-s27, 128)))//128), 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)",
+        "Eq(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "Ne(s52, s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/functional.py:einsum",
+      "line": 372,
+      "count": 30,
+      "examples": [
+        "Eq(((s27 + (PythonMod(-s27, 128)))//128), 1)",
+        "Eq(768*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 768*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(768, 64*(((s27 + (PythonMod(-s27, 128)))//128)))",
+        "Ne(12*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 0)",
+        "Eq(768*s52*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128)), 768*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 90,
+      "examples": [
+        "Eq(64*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 64*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*Max(1, ((s27 + (PythonMod(-s27, 128)))//128)), 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)",
+        "Eq(Max(1, (3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128)))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), (3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(12*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 44,
+      "examples": [
+        "Ne(Mod(((s27 + (PythonMod(-s27, 128)))//128), (3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))), 0)",
+        "Ne(Mod(((s27 + (PythonMod(-s27, 128)))//128), 64*(((s27 + (PythonMod(-s27, 128)))//128))), 0)",
+        "Ne(Mod(((s27 + (PythonMod(-s27, 128)))//128), (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)",
+        "Ne(Mod(1, (3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))), 0)",
+        "Eq(Mod(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2, (3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 4,
+      "examples": [
+        "s27 <= (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "s16 <= (((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(768*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 768*s27)",
+        "Ne(768*Max(1, ((s16 + (PythonMod(-s16, 128)))//128))*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))), 768*s16)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:TensorMeta",
+      "line": 277,
+      "count": 4,
+      "examples": [
+        "Ne(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))), 0)",
+        "Ne(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 20,
+      "examples": [
+        "12*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= 2",
+        "768*s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))) >= 2",
+        "768*s52*((((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))) >= 2",
+        "s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))) >= 2",
+        "12*s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*((s27//16)) >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_3d",
+      "line": 298,
+      "count": 4,
+      "examples": [
+        "Eq(12*(s27 + (PythonMod(-s27, 128)))*((s27//16)), 12*((s27//16))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(12*(s16 + (PythonMod(-s16, 128)))*((s16//16)), 12*((s16//16))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:_softmax_unbacked_safe_amax",
+      "line": 1365,
+      "count": 4,
+      "examples": [
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) > 0",
+        "(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))) > 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 32,
+      "examples": [
+        "64*(((s27 + (PythonMod(-s27, 128)))//128)) < 768*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "-3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + (((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= 0",
+        "Eq(768*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 768*s52*(s27 + (PythonMod(-s27, 128))))",
+        "Ne(768*s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))), 0)",
+        "Ne(768*s52*((((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 407,
+      "count": 4,
+      "examples": [
+        "Eq(12*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(12*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))), 12*Max(1, ((s16 + (PythonMod(-s16, 128)))//128))*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 405,
+      "count": 20,
+      "examples": [
+        "Eq(Mod(12*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)",
+        "Eq(Mod(768*Max(1, 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))), 768*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))), 0)",
+        "Eq(Mod(Max(1, 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))), Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, 3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))), 0)",
+        "Ne(Mod(1, 12*((s27//16))), 0)",
+        "Eq(Mod(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 4,
+      "examples": [
+        "12*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "12*Max(1, ((s16 + (PythonMod(-s16, 128)))//128))*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))) >= Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 4,
+      "examples": [
+        "Eq((((s27 + (PythonMod(-s27, 128)))//128))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 1) | Eq((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128)), (((s27 + (PythonMod(-s27, 128)))//128))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq((((s16 + (PythonMod(-s16, 128)))//128))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))), 1) | Eq((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)*(((s16 + (PythonMod(-s16, 128)))//128)), (((s16 + (PythonMod(-s16, 128)))//128))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:new_empty",
+      "line": 5315,
+      "count": 8,
+      "examples": [
+        "s52*((((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))) >= 0",
+        "s52*((((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128))) >= 0",
+        "s18*((((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) - (PythonMod(-s16, 128))) >= 0",
+        "s18*((((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) - (PythonMod(-s16, 128))) >= 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 16,
+      "examples": [
+        "Max(1, (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*Max(1, (s27//16)) > 1",
+        "Ne(Mod(1, Max(1, (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*Max(1, (s27//16))), 0)",
+        "Max(1, (s27//16)) < Max(1, (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*Max(1, (s27//16))",
+        "Ne(Mod(Max(1, (s27//16)), Max(1, (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*Max(1, (s27//16))), 0)",
+        "Max(1, (((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) - (PythonMod(-s16, 128)))*Max(1, (s16//16)) > 1"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 544,
+      "count": 4,
+      "examples": [
+        "Ne(Max(1, (((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) - (PythonMod(-s27, 128)))*Max(1, (s27//16)), Max(1, (s27//16)))",
+        "Ne(Max(1, (((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) - (PythonMod(-s16, 128)))*Max(1, (s16//16)), Max(1, (s16//16)))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 18,
+      "examples": [
+        "Eq(128, s27 + (PythonMod(-s27, 128)))",
+        "Ne(((s27 + (PythonMod(-s27, 128)))//128), s52)",
+        "Eq(s52*(((s27 + (PythonMod(-s27, 128)))//128)), s52)",
+        "Ne(64, ((s27 + (PythonMod(-s27, 128)))//128))",
+        "Eq(3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2*(((s27 + (PythonMod(-s27, 128)))//128)), 386)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 10,
+      "examples": [
+        "(((s27 + (PythonMod(-s27, 128)))//128)) < s52",
+        "64 >= (((s27 + (PythonMod(-s27, 128)))//128))",
+        "(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) >= (((s27 + (PythonMod(-s27, 128)))//128))",
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= (((s27 + (PythonMod(-s27, 128)))//128))",
+        "12 >= (((s27 + (PythonMod(-s27, 128)))//128))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 4,
+      "examples": [
+        "Eq(128*s52*(((s27 + (PythonMod(-s27, 128)))//128)), s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(386*s52*(((s27 + (PythonMod(-s27, 128)))//128)), 3*s52*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2*s52)",
+        "Eq(128*s18*(((s16 + (PythonMod(-s16, 128)))//128)), s18*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))))",
+        "Eq(129*s18*(((s16 + (PythonMod(-s16, 128)))//128)), s18*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + s18)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 8,
+      "examples": [
+        "64 > (((s27 + (PythonMod(-s27, 128)))//128))",
+        "(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) > (((s27 + (PythonMod(-s27, 128)))//128))",
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) > (((s27 + (PythonMod(-s27, 128)))//128))",
+        "12 > (((s27 + (PythonMod(-s27, 128)))//128))",
+        "64 > (((s16 + (PythonMod(-s16, 128)))//128))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_stride_ordered",
+      "line": 4770,
+      "count": 4,
+      "examples": [
+        "Ne(3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2*(((s27 + (PythonMod(-s27, 128)))//128)), 3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 2*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))), (((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3*(((s16 + (PythonMod(-s16, 128)))//128)), 3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))**2 + 3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))))",
+        "Ne(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128))), (((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 8,
+      "examples": [
+        "3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2*(((s27 + (PythonMod(-s27, 128)))//128)) < 3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 2*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) >= 1",
+        "(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))) < (((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "64*(((s27 + (PythonMod(-s27, 128)))//128)) < 64*(((s27 + (PythonMod(-s27, 128)))//128))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3*(((s16 + (PythonMod(-s16, 128)))//128)) < 3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))**2 + 3*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 14,
+      "examples": [
+        "Ne(Mod(3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2*(((s27 + (PythonMod(-s27, 128)))//128)), 3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 2*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)",
+        "Ne(Mod(3*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 2*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 36*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 24*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)",
+        "Ne(Mod(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 0)",
+        "Ne(Mod(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))), (((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)",
+        "Ne(Mod(64*(((s27 + (PythonMod(-s27, 128)))//128)), 64*(((s27 + (PythonMod(-s27, 128)))//128))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1036,
+      "count": 6,
+      "examples": [
+        "Eq(36*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))**2 + 24*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))**2*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Ne(2304*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 1536*(((s27 + (PythonMod(-s27, 128)))//128)), 64*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))**2)",
+        "Ne(2304*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 1536*(((s27 + (PythonMod(-s27, 128)))//128)), 128*(((s27 + (PythonMod(-s27, 128)))//128))**2)",
+        "Eq(36*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))**2 + 36*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))), 12*(3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)*(((s16 + (PythonMod(-s16, 128)))//128))**2*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))))",
+        "Ne(2304*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 2304*(((s16 + (PythonMod(-s16, 128)))//128)), 64*(3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)*(((s16 + (PythonMod(-s16, 128)))//128))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 2,
+      "examples": [
+        "9223372036854775807 > s27",
+        "9223372036854775807 > s98"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4729,
+      "count": 2,
+      "examples": [
+        "Ne((((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 0)",
+        "Ne((((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 49,
+      "examples": [
+        "s27*s52 <= 2147483647",
+        "2*s27*s52 <= 2147483647",
+        "s27*s52*((s27//16)) <= 2147483647",
+        "384*s52*(((s27 + (PythonMod(-s27, 128)))//128)) <= 2147483647",
+        "s27**2 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 25,
+      "examples": [
+        "s52 <= 2147483647",
+        "2*s52 <= 2147483647",
+        "296448*s52*(((s27 + (PythonMod(-s27, 128)))//128)) <= 2147778559",
+        "12*s27*s52 <= 2147483647",
+        "296448*s52*(((s27 + (PythonMod(-s27, 128)))//128)) <= 2147485183"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 2,
+      "examples": [
+        "Eq(s52, 1) | Eq(12*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 0) | Eq(12*Max(1, ((s27 + (PythonMod(-s27, 128)))//128))*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))), 12*Max(1, ((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*Max(1, ((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128)))))",
+        "Eq(s18, 1) | Eq(12*s18*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))), 0) | Eq(12*Max(1, ((s16 + (PythonMod(-s16, 128)))//128))*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))), 12*Max(1, ((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*Max(1, ((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128)))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_copy_",
+      "line": 831,
+      "count": 4,
+      "examples": [
+        "(((s27 + (PythonMod(-s27, 128)))//128)) < 2",
+        "s98 - 1 >= 2",
+        "(((s16 + (PythonMod(-s16, 128)))//128)) < 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1041,
+      "count": 2,
+      "examples": [
+        "12*(3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) < 12*s52*(((s27 + (PythonMod(-s27, 128)))//128))*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128))))*(((3*(((s27 + (PythonMod(-s27, 128)))//(((s27 + (PythonMod(-s27, 128)))//128)))) + 2)//(((s27 + (PythonMod(-s27, 128)))//128))))",
+        "12*(3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) < 12*s18*(((s16 + (PythonMod(-s16, 128)))//128))*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128))))*(((3*(((s16 + (PythonMod(-s16, 128)))//(((s16 + (PythonMod(-s16, 128)))//128)))) + 3)//(((s16 + (PythonMod(-s16, 128)))//128))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 5,
+      "examples": [
+        "768*s27*s52 < 5242880",
+        "1536*s52 < 5242880",
+        "768*s18*s98 < 5242880",
+        "768*s16*s18 < 5242880",
+        "2304*s18 < 5242880"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 2,
+      "examples": [
+        "Eq(s52, s18)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 2,
+      "examples": [
+        "Eq(12*s18*(s16 + (PythonMod(-s16, 128)))*((s16//16)), 1536*s18*((s16//16))*(((s16 + (PythonMod(-s16, 128)))//128)))"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

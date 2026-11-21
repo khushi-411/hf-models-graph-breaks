@@ -1,0 +1,47 @@
+{
+  "model": "led",
+  "hf_id": "allenai/led-base-16384",
+  "auto_class": "AutoModelForSeq2SeqLM",
+  "scenario": "eval_with_cache",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "encoder_layers": 2,
+    "decoder_layers": 2,
+    "attention_window": [
+      16,
+      16
+    ]
+  },
+  "timestamp": "2026-11-18T13:49:53+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 4,
+  "graph_break_count": 3,
+  "op_count": 278,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/models/led/modeling_led.py:1446",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/led/modeling_led.py:2011 in forward",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/led/modeling_led.py:1446 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,1119 @@
+{
+  "model": "llava_next",
+  "hf_id": "llava-hf/llava-v1.6-mistral-7b-hf",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T13:56:58+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 11,
+  "recompiled_graphs": 12,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 11,
+      "new_shape_events": 316
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 8,
+      "new_shape_events": 269
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 4,
+      "new_shape_events": 205
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 1/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 2/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 1/1: len(args) == 1                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 1/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/1: len(args) == 1                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/0: kwargs['image_sizes'].size()[1] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 2/1: len(args) == 2                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 2/0: kwargs['image_sizes'].size()[1] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:559\n    triggered by the following guard failure(s):\n    - 3/0: image_sizes.size()[1] == input_ids.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 1/3: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/1: kwargs['image_sizes'].size()[1] == args[0].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 1/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 2/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 2/1: kwargs['image_sizes'].size()[1] == args[1].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 2/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:430\n    triggered by the following guard failure(s):\n    - 4/0: image_sizes.size()[1] == input_ids.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 1/4: len(args) == 1                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/3: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/2: args[1].size()[1] == args[0].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 1/1: len(args) == 1                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 1/0: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py:294\n    triggered by the following guard failure(s):\n    - 5/0: args[1].size()[1] == args[0].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function get_image_features in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:333\n    triggered by the following guard failure(s):\n    - 6/0: image_sizes.size()[1] == image_sizes.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function image_size_to_num_patches in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:74\n    triggered by the following guard failure(s):\n    - 7/0: image_size._base.size()[0] == image_size.size()[0]  # (unknown var s19, please file a bug)",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_361 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:361\n    triggered by the following guard failure(s):\n    - 9/0: tensor 'image_sizes' size mismatch at index 0. expected 2, actual 3",
+    "Recompiling function get_anyres_image_grid_shape in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:43\n    triggered by the following guard failure(s):\n    - 11/0: image_size._base.size()[0] == image_size.size()[0]  # (unknown var s19, please file a bug)",
+    "Recompiling function unpad_image in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:111\n    triggered by the following guard failure(s):\n    - 13/0: original_size._base.size()[0] == original_size.size()[0]  # (unknown var s75, please file a bug)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_466 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:466\n    triggered by the following guard failure(s):\n    - 16/0: len(___stack0.pooler_output) == 2                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # transformers/src/transformers/models/llava_next/modeling_llava_next.py:475 in torch_dynamo_resume_in_forward_at_466\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py\", line 475, in torch_dynamo_resume_in_forward_at_466\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:407\n    triggered by the following guard failure(s):\n    - 17/0: tensor 'image_features' size mismatch at index 0. expected 2352, actual 3528",
+    "Recompiling function torch_dynamo_resume_in_forward_at_478 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:478\n    triggered by the following guard failure(s):\n    - 20/0: (inputs_embeds.size()[1] % 8) == 0 and ((inputs_embeds.size()[1]*inputs_embeds.size()[1]) % 8) == 0  # (_inductor/ir.py:524 in is_aligned_realized_tensor)",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_361 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py:361\n    triggered by the following guard failure(s):\n    - 9/1: tensor 'pixel_values' size mismatch at index 0. expected 3, actual 4\n    - 9/0: tensor 'image_sizes' size mismatch at index 0. expected 2, actual 4"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:is_aligned_realized_tensor",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 1,
+      "examples": [
+        "Eq(s52, 2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 1,
+      "examples": [
+        "s52 = 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1174,
+      "count": 6,
+      "examples": [
+        "Eq(s52, 2)",
+        "Eq(s33, 2)",
+        "Eq(s6, 2)",
+        "Eq(s11, 3)",
+        "Eq(s6, 3)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1174,
+      "count": 6,
+      "examples": [
+        "s52 = 2",
+        "s33 = 2",
+        "s6 = 2",
+        "s11 = 3",
+        "s6 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 6,
+      "examples": [
+        "Eq(s52, 2)",
+        "Eq(s6, 2)",
+        "Eq(s11, 3)",
+        "Eq(s6, 3)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 6,
+      "examples": [
+        "s52 = 2",
+        "s6 = 2",
+        "s11 = 3",
+        "s6 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 6,
+      "examples": [
+        "Eq(s72, 2)",
+        "Eq(zf23, 2.0)",
+        "Eq(s97, 3)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 4,
+      "examples": [
+        "s72 = 2",
+        "s97 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 21,
+      "examples": [
+        "1024*s70*s72 <= 2147483647",
+        "2*s38*s7 <= 2147483647",
+        "s70*s72 <= 2147483647",
+        "1024*s29*s38 <= 2147483647",
+        "512*s29*s38 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:466",
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 14,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "s38*s7 <= 2147483647",
+        "s29*s38 <= 2147483647",
+        "s11*s28 <= 2147483647",
+        "s43*s54 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:466",
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 303,
+      "count": 2,
+      "examples": [
+        "Eq(s97, 2)",
+        "Eq(s97, 3)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:303"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 303,
+      "count": 2,
+      "examples": [
+        "s97 = 2",
+        "s97 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:303"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 18,
+      "examples": [
+        "Eq(s19, 2)",
+        "Eq(s97, 2)",
+        "Eq(s75, 2)",
+        "Eq(s14, 2)",
+        "Eq(s31, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:__comprehension_get_image_features_at_361_162:362",
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_get_image_features_at_361:397",
+        "transformers/models/llava_next/modeling_llava_next.py:pack_image_features:292",
+        "transformers/models/llava_next/modeling_llava_next.py:pack_image_features:311",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 18,
+      "examples": [
+        "s19 = 2",
+        "s97 = 2",
+        "s75 = 2",
+        "s14 = 2",
+        "s31 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:__comprehension_get_image_features_at_361_162:362",
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_get_image_features_at_361:397",
+        "transformers/models/llava_next/modeling_llava_next.py:pack_image_features:292",
+        "transformers/models/llava_next/modeling_llava_next.py:pack_image_features:311",
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:image_size_to_num_patches",
+      "line": 97,
+      "count": 16,
+      "examples": [
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))) > 0",
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))) <= Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))",
+        "Eq(Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))), Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))))",
+        "s0*s20 - Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))) >= s27*s95 - Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))",
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s51, s63), IntTrueDiv(s87, s10)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s51, s63), IntTrueDiv(s87, s10)))) <= Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:image_size_to_num_patches:97"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:image_size_to_num_patches",
+      "line": 97,
+      "count": 3,
+      "examples": [
+        "s95 = 336",
+        "s21 = 336",
+        "s27 = 672"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:image_size_to_num_patches:97"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:get_image_features",
+      "line": 333,
+      "count": 132,
+      "examples": [
+        "Eq(s99, 2)",
+        "Ne(s79, 0)",
+        "s79 >= -3",
+        "s79 < 3",
+        "Eq(PythonMod(s79, 3), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:get_image_features",
+      "line": 333,
+      "count": 27,
+      "examples": [
+        "s99 = 2",
+        "s4 = 336",
+        "s85 = -2",
+        "s99 = 3",
+        "s99 = 4"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 47,
+      "examples": [
+        "(s54 >= 0) & (s54 <= s59)",
+        "(s39 >= 0) & (s39 <= s59)",
+        "(s54 >= 0) & (s54 <= 3)",
+        "(s39 >= 0) & (s39 <= 3)",
+        "((((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)) >= 0) & ((((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)) <= s64)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 9,
+      "examples": [
+        "Ne(s39 + s54, 0)",
+        "Ne(s39 + s54 + s92, 0)",
+        "Ne(s39 + s48 + s54 + s92, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:_is_non_overlapping_and_dense_or_false",
+      "line": 426,
+      "count": 15,
+      "examples": [
+        "112896*s59*(s39 + s54) >= 2",
+        "338688*s39 + 338688*s54 >= 2",
+        "112896*s59*(s39 + s54 + s92) >= 2",
+        "338688*s39 + 338688*s54 + 338688*s92 >= 2",
+        "112896*s59*(s39 + s48 + s54 + s92) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 40,
+      "examples": [
+        "Ne(s39 + s54, 1)",
+        "Ne(577*s39 + 577*s54, 1)",
+        "Ne(s54, 1)",
+        "Ne(s39, 1)",
+        "Ne(s64 - 2*(((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 9,
+      "examples": [
+        "Eq(s59, 3)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 9,
+      "examples": [
+        "s59 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 101,
+      "examples": [
+        "589824*s39 + 589824*s54 >= 2",
+        "590848*s39 + 590848*s54 >= 2",
+        "577*s39 + 577*s54 >= 2",
+        "2363392*s39 + 2363392*s54 >= 2",
+        "1024*s39 + 1024*s54 >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 54,
+      "examples": [
+        "Eq(zf20, 1.0e-5)",
+        "Eq(zf69, 1.0e-5)",
+        "Eq(zf36, 1.0e-5)",
+        "Eq(zf3, 1.0e-5)",
+        "Eq(zf28, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 37,
+      "examples": [
+        "Ne(Mod(s39 + s54, 577*s39 + 577*s54), 0)",
+        "Eq(Mod(577*s39 + 577*s54, s39 + s54), 0)",
+        "Ne(Mod(s39 + s54, 576*s39 + 576*s54), 0)",
+        "Eq(Mod(576*s39 + 576*s54, s39 + s54), 0)",
+        "Ne(PythonMod(s94, s94*(s14 + s55)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 18,
+      "examples": [
+        "Eq(Mod(590848*s39 + 590848*s54, 36928*s39 + 36928*s54), 0)",
+        "Eq(Mod(590848*s39 + 590848*s54, 577*s39 + 577*s54), 0)",
+        "Eq(Mod(590848*s39 + 590848*s54 + 590848*s92, 36928*s39 + 36928*s54 + 36928*s92), 0)",
+        "Eq(Mod(590848*s39 + 590848*s54 + 590848*s92, 577*s39 + 577*s54 + 577*s92), 0)",
+        "Eq(Mod(590848*s39 + 590848*s48 + 590848*s54 + 590848*s92, 36928*s39 + 36928*s48 + 36928*s54 + 36928*s92), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 18,
+      "examples": [
+        "1 < 590848*s39 + 590848*s54",
+        "1024 < 590848*s39 + 590848*s54",
+        "1 < 2363392*s39 + 2363392*s54",
+        "1 < 590848*s39 + 590848*s54 + 590848*s92",
+        "1024 < 590848*s39 + 590848*s54 + 590848*s92"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 16,
+      "examples": [
+        "1 < 589824*s39 + 589824*s54",
+        "1024 < 589824*s39 + 589824*s54",
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 19,
+      "examples": [
+        "Ne(589824*s54, 0)",
+        "Ne(589824*s39, 0)",
+        "Ne(32064*s94*(s14 + s55), 0)",
+        "Ne(589824*s92, 0)",
+        "Ne(589824*s48, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 3,
+      "examples": [
+        "577*s39 + 577*s54 >= 577",
+        "577*s39 + 577*s54 + 577*s92 >= 577",
+        "577*s39 + 577*s48 + 577*s54 + 577*s92 >= 577"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:get_anyres_image_grid_shape",
+      "line": 68,
+      "count": 13,
+      "examples": [
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))) > 0",
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))) <= Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))",
+        "Eq(Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))), Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))))",
+        "s0*s20 - Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s0, s10), IntTrueDiv(s20, s63)))) >= s27*s95 - Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))",
+        "Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s51, s63), IntTrueDiv(s87, s10)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s51, s63), IntTrueDiv(s87, s10)))) <= Min(s10*s63, TruncToInt(ToFloat(s10)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63)))*TruncToInt(ToFloat(s63)*Min(IntTrueDiv(s27, s10), IntTrueDiv(s95, s63))))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_anyres_image_grid_shape:68"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:unpad_image",
+      "line": 129,
+      "count": 1,
+      "examples": [
+        "(IntTrueDiv(s10, s63)) <= (IntTrueDiv(s64, s34))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 2,
+      "examples": [
+        "s64 - (((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)) >= (((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2))",
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129",
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/utils/_python_dispatch.py:alias_non_inplace_storage",
+      "line": 701,
+      "count": 1,
+      "examples": [
+        "(((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "(((s64 - TruncToInt(RoundDecimal((IntTrueDiv(s34, s63))*ToFloat(s10), 7)))//2)) <= s64"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:unpad_image:129"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:forward",
+      "line": 466,
+      "count": 3,
+      "examples": [
+        "Eq(2*s38, 2352)",
+        "Eq(3*s38, 3528)",
+        "Eq(4*s38, 4704)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:466"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:forward",
+      "line": 466,
+      "count": 3,
+      "examples": [
+        "s38 = 1176"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:466"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466",
+      "line": 478,
+      "count": 34,
+      "examples": [
+        "Eq(s28, 2352)",
+        "s29 - s54 <= 0",
+        "s54 <= s29",
+        "Eq(zf60, 0.125)",
+        "Eq(zf3, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466",
+      "line": 478,
+      "count": 6,
+      "examples": [
+        "s28 = 2352",
+        "s28 = 3528",
+        "s28 = 4704"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 8,
+      "examples": [
+        "Eq(s67, s29)",
+        "Eq(s38, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "Eq(s53, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "s53 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_aligned_realized_tensor",
+      "line": 524,
+      "count": 2,
+      "examples": [
+        "Eq(Mod(s29, 8), 0) & Eq(Mod(s29**2, 8), 0)",
+        "~(Eq(Mod(s29, 8), 0) & Eq(Mod(s29**2, 8), 0))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 4,
+      "examples": [
+        "1024*s29*s38 < 5242880",
+        "590848*s39 + 590848*s54 + 590848*s92 >= 5242880",
+        "590848*s39 + 590848*s48 + 590848*s54 + 590848*s92 >= 5242880"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:torch_dynamo_resume_in_forward_at_466:478",
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s94*(s14 + s55), -1)",
+        "Ne(s14 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s94*(s14 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 1,
+      "examples": [
+        "Ne(s94*(s14 + s55), s94)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 1,
+      "examples": [
+        "Ne(s14 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s34, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s34 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "32064*s14 + 32064*s55 > 32064"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 1,
+      "examples": [
+        "32064*s14 + 32064*s55 >= 32064"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s14 + s55 > -1",
+        "1 < 32064*s94*(s14 + s55)",
+        "32064 < 32064*s94*(s14 + s55)",
+        "32064*s14 + 32064*s55 < 32064*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s97, 1) | Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s14*s94"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 1,
+      "examples": [
+        "Ne(Mod(1024, 1024*s14 + 1024*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:forward:610"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 514,
+      "count": 2,
+      "examples": [
+        "577*s39 + 577*s54 + 577*s92 >= 4096",
+        "577*s39 + 577*s48 + 577*s54 + 577*s92 >= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/llava_next/modeling_llava_next.py:get_image_features:333"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/llava_next/modeling_llava_next.py:97",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:610 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:466 in forward",
+        "transformers/utils/output_capturing.py:303 in wrapper",
+        "transformers/models/llava_next/modeling_llava_next.py:362 in get_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:97 in image_size_to_num_patches"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/llava_next/modeling_llava_next.py:68",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:610 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:466 in forward",
+        "transformers/utils/output_capturing.py:303 in wrapper",
+        "transformers/models/llava_next/modeling_llava_next.py:397 in get_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:292 in pack_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:68 in get_anyres_image_grid_shape"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/llava_next/modeling_llava_next.py:68",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: pack_image_features (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py line 266)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/llava_next/modeling_llava_next.py\", line 286\n            for image_idx, image_feature in enumerate(image_features):\n                                            ~~~~~~~~~^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:610 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:466 in forward",
+        "transformers/utils/output_capturing.py:303 in wrapper",
+        "transformers/models/llava_next/modeling_llava_next.py:397 in get_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:292 in pack_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:68 in get_anyres_image_grid_shape"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/llava_next/modeling_llava_next.py:129",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:610 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:466 in forward",
+        "transformers/utils/output_capturing.py:303 in wrapper",
+        "transformers/models/llava_next/modeling_llava_next.py:397 in get_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:311 in pack_image_features",
+        "transformers/models/llava_next/modeling_llava_next.py:129 in unpad_image"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/utils/import_utils.py:1975",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:610 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/llava_next/modeling_llava_next.py:478 in forward",
+        "transformers/models/llava_next/modeling_llava_next.py:424 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1975 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}

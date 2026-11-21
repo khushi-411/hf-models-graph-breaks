@@ -1,0 +1,70 @@
+<!-- Draft for: pytorch/pytorch. Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# [dynamic shapes] `F.scaled_dot_product_attention(is_causal=<SymBool>)` fails under Dynamo: "argument 'is_causal' must be bool, not SymBool"
+
+### System info
+
+- torch: `2.16.0a0+git6b3a750` (source build)
+- transformers: `5.22.1`
+- Python 3.14, Linux, CPU
+
+### Description
+
+When `is_causal` is computed from a tensor shape, it is a `SymBool` under dynamic shapes. Dynamo
+passes it straight into `F.scaled_dot_product_attention`, and fake-tensor propagation then rejects
+it:
+
+```
+TypeError when making fake tensor call
+  Developer debug context: TypeError <built-in function scaled_dot_product_attention>:
+  scaled_dot_product_attention(): argument 'is_causal' must be bool, not SymBool
+```
+
+So the code that compiles fine with static shapes graph-breaks (gb0112) with `dynamic=True`, and
+fails with `fullgraph=True`.
+
+Python's `and` returns its last operand, so this is easy to hit:
+
+```python
+is_causal = self.is_causal and attention_mask is None and q_len > 1   # -> SymBool
+```
+
+Hugging Face transformers has exactly this in moonshine, moonshine_streaming and falcon (both
+SDPA paths). `sdpa_attention_forward` already has a comment and a TODO about this error (for
+seamless_m4t under `torch.export`), and it orders its own conditions to avoid it.
+
+Impact in moonshine `train_forward` with `torch.compile(dynamic=True)`: the break is inside HF's
+attention wrapper, and Dynamo can't resume there ("Failed to handle graph break gracefully"), so
+the whole attention function runs eager. The model goes from **1 graph (static) to 16 graphs
+(dynamic)**, with 4 recompiled graphs over 3 input sizes.
+
+### Reproduction
+
+```python
+import torch
+import torch.nn.functional as F
+
+def attn(q, k, v):
+    is_causal = q.shape[2] > 1  # SymBool when the sequence dim is dynamic
+    return F.scaled_dot_product_attention(q, k, v, is_causal=is_causal)
+
+q = k = v = torch.randn(2, 4, 16, 8)
+torch.compile(attn, fullgraph=True, dynamic=False)(q, k, v)  # OK
+torch.compile(attn, fullgraph=True, dynamic=True)(q, k, v)   # fails: 'is_causal' must be bool, not SymBool
+```
+
+Full script: [repros/sdpa_is_causal_symbool.py](repros/sdpa_is_causal_symbool.py).
+
+### Expected behavior
+
+The same as the static case: one graph. For an op argument whose schema type is `bool`, Dynamo
+should specialize the `SymBool` (`guard_bool` / `bool(...)`, adding a guard) before the call, as
+it already does when a `SymBool` is used in an `if`.
+
+### Possible fix
+
+When Dynamo calls a torch op whose schema has a `bool` argument and the value is a
+`SymNodeVariable` holding a `SymBool`, evaluate it to a Python bool, which adds a guard. This
+could be general for all ops with `bool` schema args, not just SDPA. Transformers could also
+reorder its conditions (`q_len > 1 and ... and self.is_causal`) as a workaround, but the same
+code compiles fine statically, so this belongs in Dynamo.

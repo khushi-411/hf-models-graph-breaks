@@ -1,0 +1,921 @@
+{
+  "model": "granite_docling",
+  "hf_id": "ibm-granite/granite-for-docling-500m",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T13:56:11+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 12,
+  "recompiled_graphs": 6,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 12,
+      "new_shape_events": 448
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 3,
+      "new_shape_events": 24
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 3,
+      "new_shape_events": 30
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 109547997015856), type=<class 'transformers.models.granite_docling.modeling_granite_docling.GraniteDoclingForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type GraniteDoclingForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_1080 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1080\n    triggered by the following guard failure(s):\n    - 6/0: len(___stack0) == 2                                      # image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1081 in torch_dynamo_resume_in_get_image_features_at_1080\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1081, in torch_dynamo_resume_in_get_image_features_at_1080\n    -     image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1142 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1142\n    triggered by the following guard failure(s):\n    - 7/0: len(___stack0.pooler_output) == 2                        # image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1146 in torch_dynamo_resume_in_forward_at_1142\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1146, in torch_dynamo_resume_in_forward_at_1142\n    -     image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1179\n    triggered by the following guard failure(s):\n    - 8/0: tensor 'image_features' size mismatch at index 0. expected 128, actual 192",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_1080 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1080\n    triggered by the following guard failure(s):\n    - 6/1: len(___stack0) == 3                                      # image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1081 in torch_dynamo_resume_in_get_image_features_at_1080\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1081, in torch_dynamo_resume_in_get_image_features_at_1080\n    -     image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)\n    - 6/0: len(___stack0) == 2                                      # image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1081 in torch_dynamo_resume_in_get_image_features_at_1080\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1081, in torch_dynamo_resume_in_get_image_features_at_1080\n    -     image_outputs.pooler_output = torch.split(image_outputs.pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1142 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1142\n    triggered by the following guard failure(s):\n    - 7/1: len(___stack0.pooler_output) == 3                        # image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1146 in torch_dynamo_resume_in_forward_at_1142\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1146, in torch_dynamo_resume_in_forward_at_1142\n    -     image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(\n    - 7/0: len(___stack0.pooler_output) == 2                        # image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(  # transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1146 in torch_dynamo_resume_in_forward_at_1142\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py\", line 1146, in torch_dynamo_resume_in_forward_at_1142\n    -     image_hidden_states = torch.cat(image_outputs.pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/granite_docling/modeling_granite_docling.py:1179\n    triggered by the following guard failure(s):\n    - 8/1: tensor 'image_features' size mismatch at index 0. expected 192, actual 256\n    - 8/0: tensor 'image_features' size mismatch at index 0. expected 128, actual 256"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 1,
+      "examples": [
+        "Eq(zf69, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 19,
+      "examples": [
+        "1024*s70*s72 <= 2147483647",
+        "s99 <= 2147483647",
+        "768*s76*((s29//16))**2 <= 2147483647",
+        "3072*s76*((s29//16))**2 <= 2147483647",
+        "3072*s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)) <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1142",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 19,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "6*s76*((s29//16))**2 <= 2147483647",
+        "s76*((s29//16))**2 <= 2147483647",
+        "s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))**2 <= 2147483647",
+        "s38*s43 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1142",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 12,
+      "examples": [
+        "Eq(s81, 3)",
+        "s29 >= 16",
+        "3*s29**2 <= 2147483647",
+        "768*((s29//16))**2 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 3,
+      "examples": [
+        "s81 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 43,
+      "examples": [
+        "Ne((s29//16), 1)",
+        "Ne(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))), 1)",
+        "Ne(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 1)",
+        "Eq(768*Max(1, ((s29//16))**2), 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))",
+        "Eq(Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))), 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_get_image_features_at_1077:1080",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 28,
+      "examples": [
+        "Ne(((s29//16))**2, (s29//16))",
+        "Ne(s76*((s29//16))**2, s76)",
+        "Ne(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), ((s29//16))**2)",
+        "Eq(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), ((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)), ((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 37,
+      "examples": [
+        "Ne(Mod((s29//16), ((s29//16))**2), 0)",
+        "Ne(Mod(s76, s76*((s29//16))**2), 0)",
+        "Eq(PythonMod(((s29//16))**2, TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))), 0)",
+        "Eq(PythonMod(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))), TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))), 0)",
+        "Ne(PythonMod(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))), 3072), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 3,
+      "examples": [
+        "Ne(((s29//16))**2, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 8,
+      "examples": [
+        "Eq(((s29//16))**2, 1024)",
+        "Eq(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, 64)",
+        "Eq(s53, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 6,
+      "examples": [
+        "Max(1, (s29//16))**2 > 1",
+        "Ne(Mod(1, Max(1, (s29//16))**2), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 24,
+      "examples": [
+        "Eq(zf2, 1.0e-6)",
+        "Eq(zf51, 1.0e-6)",
+        "Eq(zf40, 1.0e-6)",
+        "Eq(zf68, 1.0e-6)",
+        "Eq(zf49, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features",
+      "line": 1077,
+      "count": 58,
+      "examples": [
+        "Eq(zf90, 0.125)",
+        "Eq(zf97, 0.125)",
+        "Ne(768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))))), 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))",
+        "Ne(768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))))), Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))))",
+        "TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)) > -1"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 8,
+      "examples": [
+        "Ne(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), -1)",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)), -1)",
+        "Ne(s94*(s14 + s55), -1)",
+        "Ne(s14 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 7,
+      "examples": [
+        "TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)) >= 0",
+        "TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)) >= 0",
+        "s94*(s14 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 6,
+      "examples": [
+        "Eq(768*s76*((s29//16))**2, 768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2)",
+        "Eq(768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 3072*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 7,
+      "examples": [
+        "Ne(768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 0)",
+        "Ne(1024*s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, 0)",
+        "Ne(133800*s94*(s14 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 29,
+      "examples": [
+        "768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)) >= 2",
+        "768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)) >= 2",
+        "768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2 >= 2",
+        "1024*s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2 >= 2",
+        "s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2 >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_get_image_features_at_1077:1080",
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1462,
+      "count": 6,
+      "examples": [
+        "Ne(768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)), 0)",
+        "Ne(768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1489,
+      "count": 6,
+      "examples": [
+        "Ne(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))), 1)",
+        "Ne(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 6,
+      "examples": [
+        "Ne(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))), 0)",
+        "Ne(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 9,
+      "examples": [
+        "Eq(768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))), 3072)",
+        "Eq(768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))), 12288)",
+        "Eq(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, TruncToInt(IntTrueDiv(((s29//16))**2, 16)))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 7,
+      "examples": [
+        "768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))) >= 0",
+        "768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))) >= 0",
+        "Ne(768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 6,
+      "examples": [
+        "Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))) >= Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))",
+        "Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))**2 >= Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 7,
+      "examples": [
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)), 0)",
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, 0)",
+        "Ne(s14 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 7,
+      "examples": [
+        "Ne(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2, 1)",
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))",
+        "Eq(1024*s14, 1024*s14 + 1024*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "Eq(s92, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 1,
+      "examples": [
+        "s92 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 14,
+      "examples": [
+        "1 < 768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))",
+        "12288 < 768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))",
+        "12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)) < 768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))",
+        "12288*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2 < 768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))",
+        "1 < 768*s76*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 10,
+      "examples": [
+        "1 < 1024*s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2",
+        "1024 < 1024*s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2",
+        "1024*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2 < 1024*s76*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2",
+        "s14 + s55 > -1",
+        "1 < 133800*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077",
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 15,
+      "examples": [
+        "((s29//16))**2 >= ((s29//16))",
+        "TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)) < ((s29//16))**2",
+        "3072 < 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))",
+        "768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2 >= 768",
+        "768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2 >= 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 9,
+      "examples": [
+        "((s29//16))**2 > ((s29//16))",
+        "768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2 > 768",
+        "768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2 > 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))",
+        "768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2 > 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2",
+        "3072*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)) > 3072"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 15,
+      "examples": [
+        "Eq(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2, ((s29//16))**2)",
+        "Ne(3072, 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))",
+        "Ne(768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2, 768)",
+        "Ne(768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2, 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))",
+        "Ne(768*s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2, 768*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 3,
+      "examples": [
+        "Eq(s76*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))**2, 4*s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))",
+        "Eq(s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))*TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4*s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))**2)",
+        "Eq(s76*(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//4))**2, s76*(((((s29//16))**2)//16)))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 3,
+      "examples": [
+        "Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))) < Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))",
+        "(((TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))//(TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))*Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4)))))) < Max(1, 768*(((((s29//16))**2)//(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5))*TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))))))*Max(1, TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)))",
+        "1024*Max(1, TruncToInt(IntTrueDiv(TruncToInt(FloatPow(ToFloat(((s29//16))**2), 0.5)), 4))**2) > 1024"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:get_image_features:1077"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4640,
+      "count": 9,
+      "examples": [
+        "s63 >= 0",
+        "s10 >= 0",
+        "s46 >= 0",
+        "s29 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_get_image_features_at_1077:1080"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 3,
+      "examples": [
+        "Eq(s10 + s63, s45)",
+        "Eq(s10 + s46 + s63, s45)",
+        "Eq(s10 + s29 + s46 + s63, s45)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_get_image_features_at_1077:1080"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_cat_meta",
+      "line": 1881,
+      "count": 12,
+      "examples": [
+        "Eq(s43, s7)",
+        "Eq(s88, s43)",
+        "Eq(s9, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1142"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/granite_docling/modeling_granite_docling.py:forward",
+      "line": 1142,
+      "count": 3,
+      "examples": [
+        "Eq(s1 + s38, 128)",
+        "Eq(s1 + s38 + s97, 192)",
+        "Eq(s1 + s38 + s62 + s97, 256)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1142"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142",
+      "line": 1156,
+      "count": 10,
+      "examples": [
+        "Eq(s28, 128)",
+        "Eq(zf21, 0.015625)",
+        "Eq(zf50, 0.015625)",
+        "Eq(s28, 192)",
+        "Eq(s28, 256)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142",
+      "line": 1156,
+      "count": 6,
+      "examples": [
+        "s28 = 128",
+        "s28 = 192",
+        "s28 = 256"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 4,
+      "examples": [
+        "Eq(s67, s29)",
+        "Eq(s38, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "s53 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 2,
+      "examples": [
+        "Eq(s29, s54) | Eq(s54, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 2,
+      "examples": [
+        "Eq(s54, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "Max(1, s29 - (Mod(s29, 8)) + 8) < s29*Max(1, s29 - (Mod(s29, 8)) + 8)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:torch_dynamo_resume_in_forward_at_1142:1156"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s14)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s34, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s34 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/granite_docling/modeling_granite_docling.py:forward:1334"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/granite_docling/modeling_granite_docling.py:1077",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1334 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1142 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1077 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/granite_docling/modeling_granite_docling.py:1080",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1334 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1142 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1080 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/utils/import_utils.py:1975",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1334 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1156 in forward",
+        "transformers/models/granite_docling/modeling_granite_docling.py:1196 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1975 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<!-- Draft for: huggingface/transformers. Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# `torch.compile`: EnCodec / Mimi / WavTokenizer padded convs store stride / kernel_size as tensor buffers -> 20-35 graph breaks per forward
+
+### System info
+
+- transformers: `5.24.0.dev0` (main, git `b7fe69cb19`)
+- torch: `2.16.0a0+git57f02f8` (source build)
+- Python 3.15, Linux; checked on CPU and on CUDA (B200)
+
+### Description
+
+`EncodecConv1d` stores its conv hyper-parameters as buffers:
+
+```python
+# modeling_encodec.py:122 (same in modeling_mimi.py:287)
+self.stride = nn.Buffer(stride, persistent=False)
+self.kernel_size = nn.Buffer(kernel_size, persistent=False)
+self.padding_total = nn.Buffer(kernel_size - stride, persistent=False)
+```
+
+so `_get_extra_padding_for_conv1d` returns a **tensor**, and the padding code branches on it
+(`modeling_encodec.py:150`, copied in `modeling_wavtokenizer.py:148`):
+
+```python
+max_pad = max(padding_left, padding_right)
+extra_pad = 0
+if length <= max_pad:
+    extra_pad = max_pad - length + 1
+```
+
+That is data-dependent branching, and in Mimi the tensor ends up as an `F.pad` size
+(`Data dependent operator` in `torch/nn/functional.py`). It happens **once per conv layer**:
+
+| model | eval_forward (CPU) | train_forward (CPU) | eval_forward (CUDA) |
+|---|---|---|---|
+| encodec | 36 graphs / 35 breaks | 36 / 35 | 32 / 31 |
+| mimi | 25 / 24 | 25 / 24 | 21 / 20 |
+| wavtokenizer | 24 / 23 | 24 / 23 | 22 / 21 |
+
+(Part of the encodec / wavtokenizer count is the LSTM, which Dynamo skips by default.)
+
+### Reproduction
+
+`issues/repros/encodec_conv_params_buffers.py` (one padded conv layer, buffers vs Python ints):
+
+```
+[buffers (one conv layer)] graphs=3 breaks=2
+    - Data dependent operator
+    - generic_jump TensorVariable()
+[python ints]              graphs=1 breaks=0
+outputs match
+```
+
+### Possible fix
+
+Store `stride`, `kernel_size` and `padding_total` as Python ints (they are fixed by the config). The
+buffers are already `persistent=False`, so they are not in checkpoints and changing them does not affect
+loading.
+
+### Affected
+
+encodec, mimi, wavtokenizer (eval and train), and other models that copy `EncodecConv1d`.

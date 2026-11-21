@@ -1,0 +1,42 @@
+{
+  "model": "inkling2_vlm",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T14:04:27+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "InductorError: ValueError: The argument '-((0))' is not comparable.\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+  "error_inductor_site": "torch/_inductor/utils.py:sympy_subs:1738",
+  "traceback": "787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1380, in compile_wrapper\n    raise e.remove_dynamo_frames() from None\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1345, in _compile_fx_inner\n    raise InductorError(e, currentframe()).with_traceback(\n        e.__traceback__\n    ) from None\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1337, in _compile_fx_inner\n    mb_compiled_graph = fx_codegen_and_compile(\n        gm,\n    ...<3 lines>...\n        **graph_kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 2206, in fx_codegen_and_compile\n    return scheme.codegen_and_compile(gm, example_inputs, inputs_to_check, graph_kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1953, in codegen_and_compile\n    compiled_module = graph.compile_to_module()\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3158, in compile_to_module\n    return self._compile_to_module()\n           ~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3164, in _compile_to_module\n    self.codegen_with_cpp_wrapper() if self.cpp_wrapper else self.codegen()\n                                                             ~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3096, in codegen\n    self._update_scheduler()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3090, in _update_scheduler\n    self.scheduler = Scheduler(self.operations)\n                     ~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 6113, in __init__\n    self._init(nodes)\n    ~~~~~~~~~~^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 6252, in _init\n    self.merge_loops()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 7270, in merge_loops\n    snode.merge_loops()\n    ~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 4172, in merge_loops\n    self._body = self._body.merge_loops()\n                 ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/loop_body.py\", line 226, in merge_loops\n    iter_sizes, iter_reindex, _ = V.graph.sizevars._simplify_loops(\n                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        old_iter_vars,\n        ^^^^^^^^^^^^^^\n        old_iter_sizes,\n        ^^^^^^^^^^^^^^^\n        index_prevent_reordering(index_exprs, old_iter_vars, old_iter_sizes),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/sizevars.py\", line 365, in simplify_loops\n    result = self._simplify_loops_impl(index_vars, sizes, index_formulas)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/sizevars.py\", line 500, in _simplify_loops_impl\n    self.stride_vars(x, index_vars)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/sizevars.py\", line 1294, in stride_vars\n    return cache(index, tuple(vars), tuple(support_vars))\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/sizevars.py\", line 1280, in wrapper\n    return fn_cache(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/sizevars.py\", line 1314, in _stride_vars\n    index = index - sympy_subs(\n                    ~~~~~~~~~~^\n        index, {v: sympy.S.Zero for v in support_vars if v != 0}\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/utils.py\", line 1738, in sympy_subs\n    return _sympy_subs(expr, replacements)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/_size_hinting.py\", line 66, in _sympy_subs\n    return sympy.sympify(expr).xreplace(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        {k: to_symbol(k, v) for k, v in replacements.items()}\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-dev/lib/python3.15/site-packages/sympy/core/basic.py\", line 1361, in xreplace\n    value, _ = self._xreplace(rule)\n               ~~~~~~~~~~~~~~^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-dev/lib/python3.15/site-packages/sympy/core/basic.py\", line 1376, in _xreplace\n    a_xr = _xreplace(rule)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-dev/lib/python3.15/site-packages/sympy/core/basic.py\", line 1383, in _xreplace\n    return self.func(*args), True\n           ~~~~~~~~~^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/functions.py\", line 649, in __new__\n    args = frozenset(cls._new_args_filter(args))  # type: ignore[assignment]\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_sympy/functions.py\", line 943, in _new_args_filter\n    raise ValueError(f\"The argument '{arg}' is not comparable.\")\ntorch._inductor.exc.InductorError: ValueError: The argument '-((0))' is not comparable.\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n\n"
+}

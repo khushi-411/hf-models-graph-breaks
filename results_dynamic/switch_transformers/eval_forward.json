@@ -1,0 +1,591 @@
+{
+  "model": "switch_transformers",
+  "hf_id": "google/switch-base-8",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:11:21+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 23,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 23,
+      "new_shape_events": 511
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 99146102454368), type=<class 'transformers.models.switch_transformers.modeling_switch_transformers.SwitchTransformersForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type SwitchTransformersForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 7/0: args[2] is None                                          # if position_bias is None:  # Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py:425 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 555, in forward\n    -     hidden_states, self_attn_position_bias, _ = self.layer[0](\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 484, in forward\n    -     attention_output, position_bias, attn_weights = self.SelfAttention(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 425, in forward\n    -     if position_bias is None:",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py:147\n    triggered by the following guard failure(s):\n    - 16/0: 2 <= hidden_states.size()[0]  # return F.linear(input, self.weight, self.bias)  # nn/modules/linear.py:134 in forward (user code shown is first use of this value--the guard itself is not due user code but due to 0/1 specialization in the framework; to avoid specialization try torch._dynamo.decorators.mark_unbacked(tensor, dim))",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py:326\n    triggered by the following guard failure(s):\n    - 4/0: expected type of 'kwargs['attention_mask']' to be <class 'torch.Tensor'>, but found <class 'NoneType'>",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: len(args) == 7                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(kwargs) != 5\n    - 1/0: ___check_type_id(args[0], 99146102454368), type=<class 'transformers.models.switch_transformers.modeling_switch_transformers.SwitchTransformersForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type SwitchTransformersForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/3: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/2: len(args) == 7                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/4: ___check_obj_id(func.__code__, 99146099014864), type=<class 'code'>  # func_name = func.__name__  # Documents/transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/3: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/2: len(args) == 7                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 7/1: tensor 'args[1]' size mismatch at index 2. expected 1, actual 32\n    - 7/0: tensor 'args[1]' size mismatch at index 2. expected 1, actual 32",
+    "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 7/2: args[2] is None                                          # if position_bias is None:  # Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py:425 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 555, in forward\n    -     hidden_states, self_attn_position_bias, _ = self.layer[0](\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 484, in forward\n    -     attention_output, position_bias, attn_weights = self.SelfAttention(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 425, in forward\n    -     if position_bias is None:\n    - 7/1: tensor 'args[1]' size mismatch at index 2. expected 1, actual 32\n    - 7/0: args[2] is None                                          # if position_bias is None:  # Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py:425 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 555, in forward\n    -     hidden_states, self_attn_position_bias, _ = self.layer[0](\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 484, in forward\n    -     attention_output, position_bias, attn_weights = self.SelfAttention(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 425, in forward\n    -     if position_bias is None:",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/5: not args                                                 # return func(*args, **kwargs)  # Documents/transformers/src/transformers/utils/deprecation.py:173 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    - 1/4: ___check_obj_id(func.__code__, 99146099014864), type=<class 'code'>  # func_name = func.__name__  # Documents/transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/3: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/2: tensor 'args[2]' size mismatch at index 2. expected 1, actual 32\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py:543\n    triggered by the following guard failure(s):\n    - 8/0: tensor 'attention_mask' size mismatch at index 2. expected 1, actual 32"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:is_stride_ordered",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/ir.py:significant_strides_equal"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 188,
+      "examples": [
+        "zf31 >= 0.0",
+        "zf31 <= 1.0",
+        "zf21 >= 0.0",
+        "zf21 <= 1.0",
+        "zf10 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:1003",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 94,
+      "examples": [
+        "Eq(zf31, 0.1)",
+        "Eq(zf21, 0.1)",
+        "Eq(zf10, 0.1)",
+        "Eq(zf64, 0.1)",
+        "Eq(zf18, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:1003",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 115,
+      "examples": [
+        "Eq(s69, 768)",
+        "Eq(s50, s13)",
+        "Eq(s13, s40)",
+        "Eq(s95, 12)",
+        "Eq(s13, s7)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:779",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:593",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:228"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 27,
+      "examples": [
+        "s69 = 768",
+        "s95 = 12",
+        "s7 = 768",
+        "s8 = 12",
+        "s33 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:779",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:593",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:795"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "Eq(zf77, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:779"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 6,
+      "examples": [
+        "s50 <= 4096",
+        "s19 <= 4096",
+        "s46 <= 4096",
+        "s31 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:779",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 8,
+      "examples": [
+        "Eq(s33, 768)",
+        "Eq(s12, 768)",
+        "Eq(s34, 768)",
+        "Eq(s86, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:99",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_174:178",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:1003",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 8,
+      "examples": [
+        "s33 = 768",
+        "s12 = 768",
+        "s34 = 768",
+        "s86 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:99",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_174:178",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:1003",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 5,
+      "examples": [
+        "Ne(s71, -1)",
+        "Ne(s56, -1)",
+        "Ne(s52, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 5,
+      "examples": [
+        "s71 >= 0",
+        "s56 >= 0",
+        "s52 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 2,
+      "examples": [
+        "Ne(s71, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 4,
+      "examples": [
+        "Eq(Mod(s33*s47*s87, s71), 0)",
+        "Eq(Mod(s27*s40*s48, 8), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 11,
+      "examples": [
+        "Ne(((s33*s47*s87)//s71), s47)",
+        "Eq(s71, s33)",
+        "Ne(((s27*s40*s48)//8), s48)",
+        "Eq(s27, 8)",
+        "Ne(s56, s38)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 9,
+      "examples": [
+        "Ne(Mod(s47, ((s33*s47*s87)//s71)), 0)",
+        "Eq(Mod(s47*s87, ((s33*s47*s87)//s71)), 0)",
+        "Ne(Mod(s48, ((s27*s40*s48)//8)), 0)",
+        "Eq(Mod(s40*s48, ((s27*s40*s48)//8)), 0)",
+        "Eq(Mod(s38, s56), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 4,
+      "examples": [
+        "Eq(s47*s87, ((s33*s47*s87)//s71))",
+        "Eq(s40*s48, ((s27*s40*s48)//8))"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 2,
+      "examples": [
+        "s27 = 8"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:192"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/switch_transformers/modeling_switch_transformers.py:forward",
+      "line": 174,
+      "count": 1,
+      "examples": [
+        "Eq(s38, 8)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:174"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/switch_transformers/modeling_switch_transformers.py:forward",
+      "line": 174,
+      "count": 1,
+      "examples": [
+        "s38 = 8"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s67, s52*s56*s71)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 2,
+      "examples": [
+        "Ne((s38//s56), 1)",
+        "Ne(s56, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s67, s52*s56*s67)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "s67 < s67*((s38//s56))"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_stride_ordered",
+      "line": 4770,
+      "count": 1,
+      "examples": [
+        "Ne(s67, s52*s67)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4729,
+      "count": 1,
+      "examples": [
+        "Ne(s52*s67, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 1,
+      "examples": [
+        "s67 < s52*s67"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:significant_strides_equal",
+      "line": 547,
+      "count": 1,
+      "examples": [
+        "Eq(s67*((s38//s56)), s52*s67)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:torch_dynamo_resume_in_forward_at_192:196"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 10,
+      "examples": [
+        "Eq(s94, s11)",
+        "Eq(s85, s52)",
+        "Eq(s99, s33)",
+        "Eq(s93, s21)",
+        "Eq(s74, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:1003",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:forward:779",
+        "transformers/modeling_layers.py:forward_with_checkpointing:122"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "torch/nn/modules/module.py:1005",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Attempted to use `torch.nn.Parameter()` constructor with Dynamo",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/modules/module.py:1005",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 708)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 778\n            for layer_module in self.block:\n                                ^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:99 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/switch_transformers/modeling_switch_transformers.py:174",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:174 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/switch_transformers/modeling_switch_transformers.py:176",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_174 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py line 174)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  ListIteratorVariable(length=8, index=1) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/switch_transformers/modeling_switch_transformers.py\", line 175\n            for expert_idx in expert_hit:\n                              ^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:1003 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:779 in forward",
+        "transformers/modeling_layers.py:122 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:593 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:228 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:196 in forward",
+        "transformers/models/switch_transformers/modeling_switch_transformers.py:176 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

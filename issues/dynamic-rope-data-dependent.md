@@ -1,0 +1,59 @@
+<!-- Draft for: huggingface/transformers. Once filed, put the URL in known_issues.yaml and set status: open -->
+
+# `torch.compile`: dynamic RoPE (`dynamic_frequency_update`) branches on a tensor `seq_len` in every forward
+
+### System info
+
+- transformers: `5.24.0.dev0` (main, git `b7fe69cb19`)
+- torch: `2.16.0a0+git57f02f8` (source build)
+- Python 3.15, Linux; checked on CPU and on CUDA (B200)
+
+### Description
+
+For `rope_type="dynamic"`, `dynamic_frequency_update` (`modeling_rope_utils.py:101` and `:113`) compares a
+tensor sequence length against Python ints:
+
+```python
+seq_len = torch.max(position_ids) + 1
+...
+if seq_len > max_seq_len_cached:  # growth
+    ...
+if seq_len < self.original_max_seq_len and max_seq_len_cached > self.original_max_seq_len:  # reset
+    ...
+```
+
+Both `if`s are data-dependent branching -> graph breaks in every forward, in **eval and train**, for every
+model whose config uses dynamic NTK scaling.
+
+Harness (config-only, reduced layers; the break is in the rotary embedding, once per forward):
+
+| model | eval_forward | eval_with_cache | train_forward |
+|---|---|---|---|
+| internlm3 (checkpoint config: `rope_type: dynamic`, factor 6.0) | 6 graphs / 5 breaks | 6 / 5 | 6 / 5 |
+| internvl (text config uses dynamic rope) | 9 / 8 | 9 / 8 | 9 / 8 |
+
+### Reproduction
+
+`issues/repros/dynamic_rope_data_dependent.py`:
+
+```
+[original (tensor seq_len)] graphs=2 breaks=1
+    - generic_jump TensorVariable()
+[shape-derived seq_len]     graphs=1 breaks=0
+```
+
+### Possible fix
+
+This one is partly inherent: dynamic NTK scaling recomputes `inv_freq` when the context grows. Options:
+
+- When positions are contiguous (the usual case, `position_ids = arange`), take `seq_len` from the shape
+  (a Python/Sym int) instead of `torch.max(position_ids) + 1`. That is what the repro's fixed version does,
+  but it is **not** equivalent for packed or left-padded inputs, so it needs a flag or a cheap way to know the
+  positions are contiguous.
+- Compute both frequency sets and select with `torch.where` (no Python branch; costs one extra small
+  computation).
+
+### Affected
+
+internlm3, internvl, and any checkpoint with `rope_type: dynamic`. Same family:
+`phimoe-longrope-seq-len-branch` and the shared `longrope_frequency_update`.

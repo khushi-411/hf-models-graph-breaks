@@ -1,0 +1,562 @@
+{
+  "model": "mimi",
+  "hf_id": "kyutai/mimi",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T16:57:28+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 25,
+  "recompiled_graphs": 1,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 25,
+      "new_shape_events": 177
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 6
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:366\n    triggered by the following guard failure(s):\n    - 8/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:318\n    triggered by the following guard failure(s):\n    - 9/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/1: tensor '___stack0' size mismatch at index 1. expected 64, actual 32\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 32",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 10/1: self._modules['conv'].stride == (1,)                     # return F.conv1d(  # nn/modules/conv.py:380 in _conv_forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 385, in torch_dynamo_resume_in_forward_at_378\n    -     hidden_states = self.conv(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 385, in forward\n    -     return self._conv_forward(input, self.weight, self.bias)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 380, in _conv_forward\n    -     return F.conv1d(\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/3: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 128\n    - 10/1: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/4: tensor '___stack0' size mismatch at index 1. expected 128, actual 64\n    - 10/3: self._modules['conv'].stride == (4,)                     # return F.conv1d(  # nn/modules/conv.py:380 in _conv_forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 385, in torch_dynamo_resume_in_forward_at_378\n    -     hidden_states = self.conv(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 385, in forward\n    -     return self._conv_forward(input, self.weight, self.bias)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 380, in _conv_forward\n    -     return F.conv1d(\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 64\n    - 10/1: tensor 'self._modules['conv']._parameters['bias']' size mismatch at index 0. expected 32, actual 128. Guard failed on a parameter, consider using torch._dynamo.config.force_parameter_static_shapes = False to allow dynamism on parameters.\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/5: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/4: self._modules['conv'].stride == (1,)                     # return F.conv1d(  # nn/modules/conv.py:380 in _conv_forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 385, in torch_dynamo_resume_in_forward_at_378\n    -     hidden_states = self.conv(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 385, in forward\n    -     return self._conv_forward(input, self.weight, self.bias)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 380, in _conv_forward\n    -     return F.conv1d(\n    - 10/3: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 128\n    - 10/1: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/6: tensor '___stack0' size mismatch at index 1. expected 128, actual 256\n    - 10/5: tensor '___stack0' size mismatch at index 1. expected 64, actual 256\n    - 10/4: tensor '___stack0' size mismatch at index 1. expected 128, actual 256\n    - 10/3: tensor '___stack0' size mismatch at index 1. expected 64, actual 256\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 256\n    - 10/1: tensor '___stack0' size mismatch at index 1. expected 64, actual 256\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 256",
+    "Recompiling function torch_dynamo_resume_in_forward_at_378 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:378\n    triggered by the following guard failure(s):\n    - 10/7: tensor '___stack0' size mismatch at index 1. expected 256, actual 128\n    - 10/6: self._modules['conv'].stride == (5,)                     # return F.conv1d(  # nn/modules/conv.py:380 in _conv_forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 385, in torch_dynamo_resume_in_forward_at_378\n    -     hidden_states = self.conv(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 385, in forward\n    -     return self._conv_forward(input, self.weight, self.bias)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/conv.py\", line 380, in _conv_forward\n    -     return F.conv1d(\n    - 10/5: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/4: tensor 'self._modules['conv']._parameters['bias']' size mismatch at index 0. expected 64, actual 256. Guard failed on a parameter, consider using torch._dynamo.config.force_parameter_static_shapes = False to allow dynamism on parameters.\n    - 10/3: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/2: tensor '___stack0' size mismatch at index 1. expected 32, actual 128\n    - 10/1: tensor '___stack0' size mismatch at index 1. expected 64, actual 128\n    - 10/0: tensor '___stack0' size mismatch at index 1. expected 1, actual 128",
+    "Recompiling function _pad1d in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:318\n    triggered by the following guard failure(s):\n    - 9/1: mode == 'constant'                                       # if mode != \"reflect\":  # Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:326 in _pad1d\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 326, in _pad1d\n    -     if mode != \"reflect\":\n    - 9/0: tensor 'hidden_states' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: len(args) == 4                                           # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py:326\n    triggered by the following guard failure(s):\n    - 4/0: tensor 'args[0]' size mismatch at index 1. expected 1, actual 512",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: tensor 'args[1]' size mismatch at index 1. expected 1, actual 512\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:438\n    triggered by the following guard failure(s):\n    - 19/0: tensor 'hidden_states' size mismatch at index 1. expected 1024, actual 512",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:438\n    triggered by the following guard failure(s):\n    - 19/1: tensor 'hidden_states' size mismatch at index 1. expected 512, actual 256\n    - 19/0: tensor 'hidden_states' size mismatch at index 1. expected 1024, actual 256",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:438\n    triggered by the following guard failure(s):\n    - 19/2: tensor 'hidden_states' size mismatch at index 1. expected 256, actual 128\n    - 19/1: tensor 'hidden_states' size mismatch at index 1. expected 512, actual 128\n    - 19/0: tensor 'hidden_states' size mismatch at index 1. expected 1024, actual 128",
+    "Recompiling function torch_dynamo_resume_in_encode_at_1413 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:1413\n    triggered by the following guard failure(s):\n    - 14/0: self._modules['quantizer']._modules['acoustic_residual_vector_quantizer']._modules['layers']._modules['0']._modules['codebook']._embed is None  # if self._embed is None:  # Documents/transformers/src/transformers/models/mimi/modeling_mimi.py:941 in embed\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 1421, in torch_dynamo_resume_in_encode_at_1413\n    -     audio_codes = self.quantizer.encode(encoder_outputs.latents, num_quantizers).transpose(0, 1)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 1081, in encode\n    -     acoustic_codes = self.acoustic_residual_vector_quantizer.encode(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 1023, in encode\n    -     indices = layer.encode(residual)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 981, in encode\n    -     embed_in = self.codebook.encode(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 958, in encode\n    -     embed_ind = self.quantize(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 948, in quantize\n    -     dists = torch.cdist(hidden_states[None].float(), self.embed[None].float(), p=2)[0]\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 941, in embed\n    -     if self._embed is None:"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 10,
+      "examples": [
+        "Eq(zf75, 0.0)",
+        "Eq(zf94, 0.0)",
+        "Eq(zf16, 0.0)",
+        "Eq(zf93, 0.0)",
+        "Eq(zf9, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:encode:1413",
+        "transformers/models/mimi/modeling_mimi.py:forward:1265",
+        "transformers/models/mimi/modeling_mimi.py:forward:528",
+        "transformers/models/mimi/modeling_mimi.py:forward:477",
+        "transformers/models/mimi/modeling_mimi.py:decode:1446"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 7,
+      "examples": [
+        "Eq(zf16, 0.0)",
+        "Eq(zf75, 0.0)",
+        "Eq(s96 - 1, 31)",
+        "Eq(zf87, 0.125)",
+        "Eq(zf50, 0.125)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 9,
+      "examples": [
+        "Eq(zf75, 0.0)",
+        "Eq(zf94, 0.0)",
+        "Eq(zf2, 0.125)",
+        "Eq(zf43, 0.125)",
+        "Eq(zf39, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:forward",
+      "line": 1516,
+      "count": 5,
+      "examples": [
+        "Eq(zf75, 0.0)",
+        "Eq(s28 - 1, 31)",
+        "Eq(zf87, 0.125)",
+        "Eq(zf50, 0.125)",
+        "Eq(zf76, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1516"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 1,
+      "examples": [
+        "Eq(zf94, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 4,
+      "examples": [
+        "Eq(zf57, 0.0)",
+        "Eq(zf13, 0.125)",
+        "Eq(zf96, 0.125)",
+        "Eq(zf42, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:forward",
+      "line": 378,
+      "count": 3,
+      "examples": [
+        "Eq(zf74, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:_constant_pad_nd_meta",
+      "line": 9379,
+      "count": 2,
+      "examples": [
+        "s33 + s35 + s40 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 28,
+      "examples": [
+        "s89 >= 7",
+        "Eq(s67, 64)",
+        "s89 >= 3",
+        "Eq(s67, 32)",
+        "s89 >= 8"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378",
+        "transformers/models/mimi/modeling_mimi.py:encode:1413",
+        "transformers/models/mimi/modeling_mimi.py:forward:1516",
+        "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516:1520",
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 6,
+      "examples": [
+        "Ne(s89 - 6, 1)",
+        "Ne(s89 - 2, 1)",
+        "Ne(((s89//4)) - 1, 1)",
+        "Ne(((s89//5)) - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 6,
+      "examples": [
+        "Max(1, s89 - 6) > 1",
+        "Max(1, s89 - 2) > 1",
+        "Max(1, ((s89//4)) - 1) > 1",
+        "Max(1, ((s89//5)) - 1) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 22,
+      "examples": [
+        "s67 = 64",
+        "s67 = 32",
+        "s67 = 128",
+        "s67 = 256",
+        "s92 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378",
+        "transformers/models/mimi/modeling_mimi.py:encode:1413",
+        "transformers/models/mimi/modeling_mimi.py:forward:1516",
+        "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516:1520",
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 2,
+      "examples": [
+        "128*s38*(((s89//4)) - 1) >= 2",
+        "256*s38*(((s89//5)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 44,
+      "examples": [
+        "Eq(zf15, 1.0e-5)",
+        "Eq(zf86, 1.0e-5)",
+        "Eq(zf24, 1.0e-5)",
+        "Eq(zf77, 1.0e-5)",
+        "Eq(zf78, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1265",
+        "transformers/models/mimi/modeling_mimi.py:forward:1516",
+        "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516:1520",
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/mimi/modeling_mimi.py:decode:1446"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "Eq(s67, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1265"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "s67 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1265"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:forward",
+      "line": 1265,
+      "count": 7,
+      "examples": [
+        "Eq(zf73, 0.125)",
+        "Eq(zf0, 0.125)",
+        "Eq(zf26, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1265"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/functional_utils.py:has_same_metadata",
+      "line": 424,
+      "count": 6,
+      "examples": [
+        "Ne(s89, 512)",
+        "Ne(s80, 32)",
+        "Ne(2*s75, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1265",
+        "transformers/models/mimi/modeling_mimi.py:encode:1413",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:_pad1d_common",
+      "line": 2266,
+      "count": 1,
+      "examples": [
+        "s33 + s35 + s40 >= 1"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:new_empty",
+      "line": 5315,
+      "count": 1,
+      "examples": [
+        "s33 + s35 + s40 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:378"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/functional.py:cdist",
+      "line": 1535,
+      "count": 3,
+      "examples": [
+        "s69*s80 > 25",
+        "Eq(256, s66)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:encode:1413"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:forward",
+      "line": 1516,
+      "count": 1,
+      "examples": [
+        "s28 = 32"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1516"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516",
+      "line": 1520,
+      "count": 4,
+      "examples": [
+        "Eq(s50 - 1, 31)",
+        "Eq(zf87, 0.125)",
+        "Eq(zf51, 0.125)",
+        "Eq(zf76, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516:1520"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516",
+      "line": 1520,
+      "count": 1,
+      "examples": [
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:torch_dynamo_resume_in_forward_at_1516:1520"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 2,
+      "examples": [
+        "s96 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/mimi/modeling_mimi.py:forward",
+      "line": 1332,
+      "count": 1,
+      "examples": [
+        "s42 < s89"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:forward:1332"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/functional.py:cdist",
+      "line": 1535,
+      "count": 1,
+      "examples": [
+        "s66 = 256"
+      ],
+      "model_frames": [
+        "transformers/models/mimi/modeling_mimi.py:encode:1413"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "torch/nn/functional.py:5952",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:1516 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/mimi/modeling_mimi.py:1413 in encode",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:378 in forward",
+        "transformers/models/mimi/modeling_mimi.py:327 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/functional.py:5952",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py line 525)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 526\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:1516 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/mimi/modeling_mimi.py:1413 in encode",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:1265 in forward",
+        "transformers/models/mimi/modeling_mimi.py:378 in forward",
+        "transformers/models/mimi/modeling_mimi.py:327 in _pad1d"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/mimi/modeling_mimi.py:318",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nBackend compiler exception\n  Explanation: Backend compiler `<torch._dynamo.testing.CompileCounterWithBackend object at 0x7521af227620>` failed with aten._local_scalar_dense.default\n\n    While executing %pad : [num_users=1] = call_function[target=torch._C._nn.pad](args = (%l_hidden_states_, (%l_paddings_0_, %l_paddings_1_), constant, %item), kwargs = {})\n    Original traceback:\n      File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 327, in _pad1d\n        return nn.functional.pad(hidden_states, paddings, mode, value)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n      File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/functional.py\", line 5952, in pad\n        return torch._C._nn.pad(input, pad, mode, value)\n               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n\n    Use tlparse to see full graph. (https://github.com/pytorch/tlparse?tab=readme-ov-file#tlparse-parse-structured-pt2-logs). Adding a graph break.\n  Hint: Set `fullgraph=False` to allow this backend fallback to run eagerly.\n\n  Developer debug context: Backend: <torch._dynamo.testing.CompileCounterWithBackend object at 0x7521af227620>\n    Exception:aten._local_scalar_dense.default\n\n    While executing %pad : [num_users=1] = call_function[target=torch._C._nn.pad](args = (%l_hidden_states_, (%l_paddings_0_, %l_paddings_1_), constant, %item), kwargs = {})\n    Original traceback:\n      File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 327, in _pad1d\n        return nn.functional.pad(hidden_states, paddings, mode, value)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n      File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/functional.py\", line 5952, in pad\n        return torch._C._nn.pad(input, pad, mode, value)\n               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n\n    Use tlparse to see full graph. (https://github.com/pytorch/tlparse?tab=readme-ov-file#tlparse-parse-structured-pt2-logs)\n    Traceback:\n      File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mimi/modeling_mimi.py\", line 327, in _pad1d\n        return nn.functional.pad(hidden_states, paddings, mode, value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html\n\nStack variable source attribution:\n  TensorVariable() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/functional.py\", line 5952\n        return torch._C._nn.pad(input, pad, mode, value)\n               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:1516 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/mimi/modeling_mimi.py:1413 in encode",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/mimi/modeling_mimi.py:1265 in forward",
+        "transformers/models/mimi/modeling_mimi.py:528 in forward",
+        "transformers/models/mimi/modeling_mimi.py:378 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html",
+      "short_reason": "Backend compiler exception",
+      "count": 1
+    }
+  ]
+}

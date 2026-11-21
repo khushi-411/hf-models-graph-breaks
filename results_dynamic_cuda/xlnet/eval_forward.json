@@ -1,0 +1,333 @@
+{
+  "model": "xlnet",
+  "hf_id": "xlnet/xlnet-base-cased",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T13:55:57+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 136
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 20,
+      "examples": [
+        "zf45 >= 0.0",
+        "zf45 <= 1.0",
+        "zf66 >= 0.0",
+        "zf66 <= 1.0",
+        "zf13 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 10,
+      "examples": [
+        "Eq(zf45, 0.1)",
+        "Eq(zf66, 0.1)",
+        "Eq(zf13, 0.1)",
+        "Eq(zf59, 0.1)",
+        "Eq(zf2, 0.1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/functional.py:einsum",
+      "line": 372,
+      "count": 8,
+      "examples": [
+        "s72*CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) >= s72",
+        "Ne(s72*CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)), s72)",
+        "s72*CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) >= s72",
+        "Ne(s72*CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)), s72)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 18,
+      "examples": [
+        "Ne(Mod(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)), s72*CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0))), 0)",
+        "Ne(Mod(1, CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0))), 0)",
+        "Ne(Mod(s70, CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0))), 0)",
+        "Ne(Mod(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1, s70), 0)",
+        "Ne(PythonMod(s72, s72*(s55 + s70)), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 10,
+      "examples": [
+        "Ne(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)), s70)",
+        "Ne(s70, CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1)",
+        "Ne(s72*(s55 + s70), s72)",
+        "Ne(CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)), s70)",
+        "Ne(s70, CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) - 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 13,
+      "examples": [
+        "Ne(12*s70*s72*(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1), 0)",
+        "1 < s70*(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1)",
+        "CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1 < s70*(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1)",
+        "Ne(768*s72*(s55 + s70), 0)",
+        "Ne(s55 + s70, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 8,
+      "examples": [
+        "12*s70*s72*(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1) >= 2",
+        "768*s72*(s55 + s70) >= 2",
+        "32000*s72*(s55 + s70) >= 2",
+        "12*s70*s72*(CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) - 1) >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 4,
+      "examples": [
+        "Ne(s70*(CeilToInt(FloatTrueDiv(ToFloat(-s70) - ToFloat(s70), -1.0)) - 1), s70)",
+        "Ne(s70*(CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) - 1), s70)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 8,
+      "examples": [
+        "Eq(zf69, 1.0e-12)",
+        "Eq(zf95, 1.0e-12)",
+        "Eq(zf94, 1.0e-12)",
+        "Eq(zf61, 1.0e-12)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 2,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s70)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 2,
+      "examples": [
+        "s70 >= -s55"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 4,
+      "examples": [
+        "Ne(s72*(s55 + s70), -1)",
+        "Ne(s55 + s70, -1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 2,
+      "examples": [
+        "s72*(s55 + s70) >= 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 2,
+      "examples": [
+        "Ne(s55 + s70, 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 2,
+      "examples": [
+        "Ne(s72*(s55 + s70), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 14,
+      "examples": [
+        "s55 + s70 > -1",
+        "1 < 32000*s72*(s55 + s70)",
+        "32000 < 32000*s72*(s55 + s70)",
+        "32000*s55 + 32000*s70 < 32000*s72*(s55 + s70)",
+        "Ne(12*s70*s72*(CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) - 1), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 1,
+      "examples": [
+        "s72*CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) > s72"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "32000*s55 + 32000*s70 > 32000"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 4,
+      "examples": [
+        "768*s70*s72 <= 2147483647",
+        "768*s72*CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) <= 2147483647",
+        "12*s70**2*s72 <= 2147483647",
+        "3072*s70*s72 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 3,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "12*s70*s72 <= 2147483647",
+        "12*s70*s72*CeilToInt(FloatTrueDiv(ToFloat(-2*s70), -1.0)) <= 2147483647"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

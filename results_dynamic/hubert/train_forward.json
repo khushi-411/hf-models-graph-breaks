@@ -1,0 +1,657 @@
+{
+  "model": "hubert",
+  "hf_id": "facebook/hubert-large-ls960-ft",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:14:22+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 18,
+  "recompiled_graphs": 5,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 18,
+      "new_shape_events": 509
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 3,
+      "new_shape_events": 119
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 2,
+      "new_shape_events": 75
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function __init__ in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:459\n    triggered by the following guard failure(s):\n    - 20/0: dict.__len__(kwargs) == 1                                # init(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:462 in __init__\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 462, in __init__\n    -     init(self, *args, **kwargs)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_211 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py:211\n    triggered by the following guard failure(s):\n    - 8/0: tensor 'hidden_states' size mismatch at index 2. expected 16000, actual 17600",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py:86\n    triggered by the following guard failure(s):\n    - 17/0: tensor 'hidden_states' size mismatch at index 1. expected 49, actual 54",
+    "Recompiling function torch_dynamo_resume_in_forward_at_211 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py:211\n    triggered by the following guard failure(s):\n    - 8/1: tensor 'hidden_states' size mismatch at index 2. expected 17600, actual 19200\n    - 8/0: tensor 'hidden_states' size mismatch at index 2. expected 16000, actual 19200",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py:86\n    triggered by the following guard failure(s):\n    - 17/1: tensor 'hidden_states' size mismatch at index 1. expected 54, actual 59\n    - 17/0: tensor 'hidden_states' size mismatch at index 1. expected 49, actual 59"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 149,
+      "examples": [
+        "s76 >= 10",
+        "((s76//5)) - 1 >= 3",
+        "Ne(512*s6*(((s76//5)) - 1), 0)",
+        "((s76//10)) - 1 >= 3",
+        "Ne(512*s6*(((s76//10)) - 1), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 97,
+      "examples": [
+        "Eq(zf59, 1.0e-5)",
+        "Eq(zf77, 1.0e-5)",
+        "Eq(zf22, 1.0e-5)",
+        "Eq(zf81, 1.0e-5)",
+        "Eq(zf24, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 120,
+      "examples": [
+        "512*s6*(((s76//5)) - 1) >= 2",
+        "s6*(((s76//5)) - 1) >= 2",
+        "512*s6*(((s76//10)) - 1) >= 2",
+        "s6*(((s76//10)) - 1) >= 2",
+        "512*s6*(((s76//20)) - 1) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 84,
+      "examples": [
+        "Ne(Max(1, ((s76//5)) - 1), 1)",
+        "Ne(Max(1, ((s76//10)) - 1), 1)",
+        "Ne(Max(1, ((s76//20)) - 1), 1)",
+        "Ne(Max(1, ((s76//40)) - 1), 1)",
+        "Ne(Max(1, ((s76//80)) - 1), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 6,
+      "examples": [
+        "Ne(s6*(((((((((s76//80)) - 3)//2)) - 1)//2)) + 1), s6)",
+        "Ne(s33*(((((((((s50//80)) - 3)//2)) - 1)//2)) + 1), s33)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 6,
+      "examples": [
+        "Ne(Mod(s6, s6*(((((((((s76//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(s33, s33*(((((((((s50//80)) - 3)//2)) - 1)//2)) + 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 40,
+      "examples": [
+        "zf78 >= 0.0",
+        "zf78 <= 1.0",
+        "zf12 >= 0.0",
+        "zf12 <= 1.0",
+        "zf31 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 20,
+      "examples": [
+        "Eq(zf78, 0.1)",
+        "Eq(zf12, 0.1)",
+        "Eq(zf31, 0.1)",
+        "Eq(zf26, 0.1)",
+        "Eq(zf30, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/utils/generic.py:wrapper:1174",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/hubert/modeling_hubert.py:forward",
+      "line": 989,
+      "count": 2,
+      "examples": [
+        "zf65 > 0.0",
+        "((((((((s76//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:989"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 7,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10",
+        "zf55 > 0.0",
+        "Eq(zf44, 0.125)",
+        "Eq(zf29, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_877:879",
+        "transformers/models/hubert/modeling_hubert.py:forward:563"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1174,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1174"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s50//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "((((((((s76//80)) - 3)//2)) - 1)//2)) + 1 >= 10"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 40,
+      "examples": [
+        "Max(1, ((((((((s33//80)) - 3)//2)) - 1)//2)) + 1) > 1",
+        "Ne(Mod(1, Max(1, ((((((((s33//80)) - 3)//2)) - 1)//2)) + 1)), 0)",
+        "Ne(Mod(1, Max(1, (((((s33//80)) - 3)//2)) + 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//80)) - 1)), 0)",
+        "Ne(Mod(1, Max(1, ((s33//40)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:211"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 39,
+      "examples": [
+        "Ne(Mod(512, 512*Max(1, ((s33//5)) - 1)), 0)",
+        "Ne(Mod(((s33//5)) - 1, 512*((s33//5)) - 512), 0)",
+        "Ne(Mod(512, 512*Max(1, ((s33//10)) - 1)), 0)",
+        "Ne(Mod(((s33//10)) - 1, 512*((s33//10)) - 512), 0)",
+        "Ne(Mod(512, 512*Max(1, ((s33//20)) - 1)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:211"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 24,
+      "examples": [
+        "Eq(((((s33//80)) - 3)//2), 98)",
+        "Eq((s33//80), 200)",
+        "Eq((s33//40), 400)",
+        "Eq((s33//20), 800)",
+        "Eq((s33//10), 1600)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:211",
+        "transformers/models/hubert/modeling_hubert.py:forward:548"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 6,
+      "examples": [
+        "s33 = 16000",
+        "s87 = 49",
+        "s33 = 17600",
+        "s87 = 54",
+        "s33 = 19200"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:211",
+        "transformers/models/hubert/modeling_hubert.py:forward:548"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 23,
+      "examples": [
+        "49*s47 <= 4096",
+        "99*s47 <= 4096",
+        "199*s47 <= 4096",
+        "399*s47 <= 4096",
+        "799*s47 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:211",
+        "transformers/models/hubert/modeling_hubert.py:forward:869",
+        "transformers/models/hubert/modeling_hubert.py:forward:563",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992",
+        "transformers/loss/loss_ctc.py:ForCTCLoss:48"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 5,
+      "examples": [
+        "Eq(s67, 512)",
+        "Eq(s69, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:869",
+        "transformers/models/hubert/modeling_hubert.py:forward:563"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 5,
+      "examples": [
+        "s67 = 512",
+        "s69 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:869",
+        "transformers/models/hubert/modeling_hubert.py:forward:563"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/hubert/modeling_hubert.py:forward",
+      "line": 869,
+      "count": 2,
+      "examples": [
+        "zf87 > 0.0",
+        "s89 >= 10"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:forward:869"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_869",
+      "line": 877,
+      "count": 5,
+      "examples": [
+        "zf88 > 0.0",
+        "s87 >= 10",
+        "zf87 > 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_869:877"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/hubert/modeling_hubert.py:_mask_hidden_states",
+      "line": 800,
+      "count": 6,
+      "examples": [
+        "s22 >= 1",
+        "s22 <= s52",
+        "zf96 <= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:_mask_hidden_states:800"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 5,
+      "examples": [
+        "s89 = 1024",
+        "s33 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_869:877",
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_877:879",
+        "transformers/models/hubert/modeling_hubert.py:forward:548"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "Eq(s86, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 3,
+      "examples": [
+        "s86 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/hubert/modeling_hubert.py:torch_dynamo_resume_in_forward_at_989:992"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:989",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 989, in forward, code: if labels is not None and labels.max() >= self.config.vocab_size:\n        ge = ge(max_1, 32)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:989 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:675",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:877 in forward",
+        "transformers/models/hubert/modeling_hubert.py:800 in _mask_hidden_states",
+        "transformers/models/hubert/modeling_hubert.py:675 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:211",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nrequires_grad_() intermediate leaked as output\n  Explanation: An intermediate tensor with requires_grad_() called on it (or a tensor derived from it) is returned from the compiled region. Graph breaking here to preserve partial acceleration.\n  Hint: Call .detach() before returning if you only need values.\n  Hint: Consume the gradient inside the compiled function (call backward() and use .grad), or move requires_grad_() outside torch.compile.\n\n  Developer debug context: call_method TensorVariable() requires_grad_\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:211 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb8985.html",
+      "short_reason": "requires_grad_() intermediate leaked as output",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:677",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to read undefined local variable\n  Explanation: Could not find a local variable with name `mask_length`\n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n\n  Developer debug context: LOAD_FAST mask_length\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html\n\nStack variable source attribution:\n  CellVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 677\n        def compute_num_masked_span(input_length):",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:877 in forward",
+        "transformers/models/hubert/modeling_hubert.py:800 in _mask_hidden_states",
+        "transformers/models/hubert/modeling_hubert.py:677 in _compute_mask_indices"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0011.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:800",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nBackend compiler exception\n  Explanation: Backend compiler `<torch._dynamo.testing.CompileCounterWithBackend object at 0x7785b9d42490>` failed with aten.nonzero.default. Adding a graph break.\n  Hint: Set `fullgraph=False` to allow this backend fallback to run eagerly.\n\n  Developer debug context: Backend: <torch._dynamo.testing.CompileCounterWithBackend object at 0x7785b9d42490>\n    Exception:aten.nonzero.default\n    Traceback:\n      File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 822, in torch_dynamo_resume_in__mask_hidden_states_at_800\n        return hidden_states\n        ^^^^^^^^^^^^^^^^^^^^\n\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html\n\nStack variable source attribution:\n  TensorVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 807\n                mask_time_indices = torch.tensor(mask_time_indices, device=hidden_states.device, dtype=torch.bool)\n                                                 ^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:877 in forward",
+        "transformers/models/hubert/modeling_hubert.py:800 in _mask_hidden_states"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0219.html",
+      "short_reason": "Backend compiler exception",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:560",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 558, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 559, in forward, code: skip_the_layer = dropout_probability < self.config.layerdrop\n        skip_the_layer = lt(dropout_probability, item_1)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:560 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/hubert/modeling_hubert.py:560",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n\n      The branch condition involves a tensor computed as follows:\n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 558, in forward, code: dropout_probability = torch.rand([])\n        dropout_probability = rand([])\n    \n        # File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 559, in forward, code: skip_the_layer = dropout_probability < self.config.layerdrop\n        skip_the_layer = lt(dropout_probability, item_1)\n    \n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py line 531)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hubert/modeling_hubert.py\", line 554\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:992 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:879 in forward",
+        "transformers/models/hubert/modeling_hubert.py:560 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:48",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.masked_select.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.masked_select.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:1010 in forward",
+        "transformers/loss/loss_ctc.py:48 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/loss/loss_ctc.py:53",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\ntorch.* op returned non-Tensor\n  Explanation: torch.* ops that return a non-Tensor cannot be traced into the Dynamo FX graph output\n\n\n  Developer debug context: example_value type: _GeneratorContextManager; op: call_function; target: <function flags at 0x7785baa5b270>\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:1010 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0208.html",
+      "short_reason": "torch.* op returned non-Tensor",
+      "count": 1
+    },
+    {
+      "location": "python/contextlib.py:203",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\ngenerator function over a skipped function\n  Explanation: Cannot trace a generator whose underlying function is skipped by Dynamo (e.g. defined in a skip-listed module), since its body cannot be symbolically traced.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n\n  Developer debug context: SkipFunctionVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [LazyVariableTracker(realized: GenericContextWrappingVariable(_GeneratorContextManager))]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/loss/loss_ctc.py\", line 53\n        with torch.backends.cudnn.flags(enabled=False):\n             ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/hubert/modeling_hubert.py:1010 in forward",
+        "transformers/loss/loss_ctc.py:53 in ForCTCLoss"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7151.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

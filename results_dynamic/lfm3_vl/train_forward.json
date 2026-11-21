@@ -1,0 +1,1313 @@
+{
+  "model": "lfm3_vl",
+  "hf_id": "LiquidAI/LFM3-VL-2B",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-18T15:32:34+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 17,
+  "recompiled_graphs": 16,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 17,
+      "new_shape_events": 740
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 8,
+      "new_shape_events": 810
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 8,
+      "new_shape_events": 1056
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 95529378631824), type=<class 'transformers.models.lfm3_vl.modeling_lfm3_vl.Lfm3VlForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Lfm3VlForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 11/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 12/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_437 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:437\n    triggered by the following guard failure(s):\n    - 13/0: ___stack0.size()[1] == grid_thw.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_440 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:440\n    triggered by the following guard failure(s):\n    - 20/0: len(___stack0) == 2                                      # lengths = [temporal * height * width for temporal, height, width in grid_thw]  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:318 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 447, in torch_dynamo_resume_in_forward_at_440\n    -     hidden_states = layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 364, in forward\n    -     hidden_states = self.conv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 318, in forward\n    -     lengths = [temporal * height * width for temporal, height, width in grid_thw]",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_558 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:558\n    triggered by the following guard failure(s):\n    - 22/0: len(___stack0) == 2                                      # image_outputs.pooler_output = torch.split(image_features, split_sizes)  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:559 in torch_dynamo_resume_in_get_image_features_at_558\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 559, in torch_dynamo_resume_in_get_image_features_at_558\n    -     image_outputs.pooler_output = torch.split(image_features, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_634 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:634\n    triggered by the following guard failure(s):\n    - 23/0: len(___stack0.pooler_output) == 2                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:643 in torch_dynamo_resume_in_forward_at_634\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 643, in torch_dynamo_resume_in_forward_at_634\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:562\n    triggered by the following guard failure(s):\n    - 24/0: tensor 'image_features' size mismatch at index 0. expected 32, actual 48",
+    "Recompiling function torch_dynamo_resume_in_forward_at_646 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:646\n    triggered by the following guard failure(s):\n    - 27/0: tensor '___stack0[0]' size mismatch at index 1. expected 34, actual 38",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 11/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 11/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 12/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 12/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # Documents/transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_440 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:440\n    triggered by the following guard failure(s):\n    - 20/1: len(___stack0) == 3                                      # lengths = [temporal * height * width for temporal, height, width in grid_thw]  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:318 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 447, in torch_dynamo_resume_in_forward_at_440\n    -     hidden_states = layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 364, in forward\n    -     hidden_states = self.conv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 318, in forward\n    -     lengths = [temporal * height * width for temporal, height, width in grid_thw]\n    - 20/0: len(___stack0) == 2                                      # lengths = [temporal * height * width for temporal, height, width in grid_thw]  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:318 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 447, in torch_dynamo_resume_in_forward_at_440\n    -     hidden_states = layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 122, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 364, in forward\n    -     hidden_states = self.conv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 318, in forward\n    -     lengths = [temporal * height * width for temporal, height, width in grid_thw]",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_558 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:558\n    triggered by the following guard failure(s):\n    - 22/1: len(___stack0) == 3                                      # image_outputs.pooler_output = torch.split(image_features, split_sizes)  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:559 in torch_dynamo_resume_in_get_image_features_at_558\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 559, in torch_dynamo_resume_in_get_image_features_at_558\n    -     image_outputs.pooler_output = torch.split(image_features, split_sizes)\n    - 22/0: len(___stack0) == 2                                      # image_outputs.pooler_output = torch.split(image_features, split_sizes)  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:559 in torch_dynamo_resume_in_get_image_features_at_558\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 559, in torch_dynamo_resume_in_get_image_features_at_558\n    -     image_outputs.pooler_output = torch.split(image_features, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_634 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:634\n    triggered by the following guard failure(s):\n    - 23/1: len(___stack0.pooler_output) == 3                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:643 in torch_dynamo_resume_in_forward_at_634\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 643, in torch_dynamo_resume_in_forward_at_634\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(\n    - 23/0: len(___stack0.pooler_output) == 2                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:643 in torch_dynamo_resume_in_forward_at_634\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py\", line 643, in torch_dynamo_resume_in_forward_at_634\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:562\n    triggered by the following guard failure(s):\n    - 24/1: tensor 'image_features' size mismatch at index 0. expected 48, actual 64\n    - 24/0: tensor 'image_features' size mismatch at index 0. expected 32, actual 64",
+    "Recompiling function torch_dynamo_resume_in_forward_at_646 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/lfm3_vl/modeling_lfm3_vl.py:646\n    triggered by the following guard failure(s):\n    - 27/1: tensor '___stack0[0]' size mismatch at index 1. expected 38, actual 46\n    - 27/0: tensor '___stack0[0]' size mismatch at index 1. expected 34, actual 46"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+    "torch/_inductor/lowering.py:broadcast_symbolic_shapes"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 34,
+      "examples": [
+        "Eq(s52, 2)",
+        "Eq(s55, 3)",
+        "Eq(s72, 2)",
+        "Eq(s43, 3)",
+        "Eq(s21, 2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:634",
+        "transformers/utils/generic.py:wrapper:1099"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 34,
+      "examples": [
+        "s52 = 2",
+        "s55 = 3",
+        "s72 = 2",
+        "s43 = 3",
+        "s21 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:634",
+        "transformers/utils/generic.py:wrapper:1099"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 1,
+      "examples": [
+        "Eq(zf23, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 32,
+      "examples": [
+        "s87 >= 0",
+        "s80 >= 0",
+        "s5 >= 0",
+        "s18 >= 0",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) + s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 66,
+      "examples": [
+        "Ne(s87, 0)",
+        "Ne(s80, 0)",
+        "Ne(s5, 0)",
+        "Ne(s18, 0)",
+        "Ne(1024*s36*s55*s82, 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 128,
+      "examples": [
+        "s87 >= 2",
+        "s80 >= 2",
+        "s5 >= 2",
+        "s18 >= 2",
+        "2*s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1346,
+      "count": 9,
+      "examples": [
+        "Ne(s80, 1)",
+        "Ne(s18, 1)",
+        "Ne(s31, 1)",
+        "Ne(s89, 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112",
+      "line": 112,
+      "count": 144,
+      "examples": [
+        "Ne((s87//s75), -1)",
+        "((s87//s75)) > -1",
+        "Ne(s75, -1)",
+        "s75 > -1",
+        "Eq(s80*s87, s75**2*((s80//s75))*((s87//s75)))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 225,
+      "examples": [
+        "Ne((s87//s75), s87)",
+        "Eq(s75, (s87//((s87//s75))))",
+        "Ne((s80//s75), s80)",
+        "Eq(s75, (s80//((s80//s75))))",
+        "Ne((s5//s40), s5)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 284,
+      "examples": [
+        "Eq(Mod(s87, (s87//s75)), 0)",
+        "Eq(Mod(s80, (s80//s75)), 0)",
+        "Eq(Mod(s5, (s5//s40)), 0)",
+        "Eq(Mod(s18, (s18//s40)), 0)",
+        "Eq(Mod(s36*s55, (s36//2)), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 219,
+      "examples": [
+        "Ne((s80//s75), 1)",
+        "Eq(Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s87//s75), 1)",
+        "Eq(Max(1, (s80//s75))*Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//s75))*((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s18//s40), 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_repeat",
+      "line": 4876,
+      "count": 9,
+      "examples": [
+        "s88 >= 0",
+        "s78 >= 0",
+        "s38 >= 0",
+        "s70 >= 0"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 9,
+      "examples": [
+        "Ne(0, (s87//((s87//s75))))",
+        "Ne(0, (s5//((s5//s40))))",
+        "Ne(0, (s64//((s64//s26))))",
+        "Ne(0, (s84//((s84//s60))))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 721,
+      "count": 18,
+      "examples": [
+        "Ne(s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), 0)",
+        "Ne(s63, 0)",
+        "Ne(s10, 0)",
+        "Ne(s38*((s31//s26))*((s31//((s31//s26))))*((s64//s26))*((s64//((s64//s26)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 127,
+      "examples": [
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2)",
+        "Ne(((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), s75**2*((s80//s75)))",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40)",
+        "Ne(((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), s40**2)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 127,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) >= s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 90,
+      "examples": [
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75**2*((s80//s75))",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40",
+        "((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) > s40**2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward",
+      "line": 437,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:437"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_437",
+      "line": 438,
+      "count": 1,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_437:438"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:get_vision_attention_seqlens",
+      "line": 76,
+      "count": 2,
+      "examples": [
+        "s29 > 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:get_vision_attention_seqlens:76"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 7,
+      "examples": [
+        "Eq(s59, 1536)",
+        "Eq(s34, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 7,
+      "examples": [
+        "s59 = 1536",
+        "s34 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4640,
+      "count": 27,
+      "examples": [
+        "s36*s55*s82 >= 0",
+        "s47*s6*s71 >= 0",
+        "s63 >= 0",
+        "s10 >= 0",
+        "s16*s37*s75 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 15,
+      "examples": [
+        "Eq(s36*s55*s82 + s47*s6*s71, s99)",
+        "Eq(s36*s55 + s47*s6, s99)",
+        "Eq(s10 + s63, s28)",
+        "Eq(s16*s37*s75 + s36*s55*s82 + s47*s6*s71, s99)",
+        "Eq(s16*s75 + s36*s55 + s47*s6, s99)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_get_image_features_at_556:558"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 56,
+      "examples": [
+        "Ne(s82, -1)",
+        "Ne((s36//2), -1)",
+        "Ne((s55//2), -1)",
+        "Ne(s71, -1)",
+        "Ne((s47//2), -1)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 55,
+      "examples": [
+        "s82 >= 0",
+        "((s36//2)) >= 0",
+        "((s55//2)) >= 0",
+        "s71 >= 0",
+        "((s47//2)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 36,
+      "examples": [
+        "Eq(1024*s36*s55*s82, 4096*s82*((s36//2))*((s55//2)))",
+        "Eq(2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 4096*((s36//2))*((s55//2)))",
+        "Eq(1024*s47*s6*s71, 4096*s71*((s47//2))*((s6//2)))",
+        "Eq(2048*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 4096*((s47//2))*((s6//2)))",
+        "Eq(1024*s16*s37*s75, 4096*s37*((s16//2))*((s75//2)))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438",
+      "line": 440,
+      "count": 219,
+      "examples": [
+        "Ne(2048*s82*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 0)",
+        "Ne(((s36*s55)//(2*((s36//2))*((s55//2)))), 1)",
+        "Eq(2048*s82*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 1024*s36*s55*s82)",
+        "Ne((s55//2), 1)",
+        "Ne(1024*(((s36*s55)//(((s36//2))*((s55//2))))), 1024*(((s36*s55)//(2*((s36//2))*((s55//2))))))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 18,
+      "examples": [
+        "s82 = 1",
+        "s71 = 1",
+        "s37 = 1",
+        "s17 = 1"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 21,
+      "examples": [
+        "Eq(2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 1024*s36*s55)",
+        "Eq(2048*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 1024*s47*s6)",
+        "Eq(1024*s68, 4096*((s68//4)))",
+        "Eq(2048*((s16//2))*((s75//2))*(((s16*s75)//(2*((s16//2))*((s75//2))))), 1024*s16*s75)",
+        "Eq(2048*((s5//2))*((s54//2))*(((s5*s54)//(2*((s5//2))*((s54//2))))), 1024*s5*s54)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 39,
+      "examples": [
+        "Ne((s36//2), 0)",
+        "Ne((s55//2), 0)",
+        "Ne((s47//2), 0)",
+        "Ne((s6//2), 0)",
+        "Ne((s68//((s68//4))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 41,
+      "examples": [
+        "Eq(2*((s36//2)), s36)",
+        "Eq(((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), s55)",
+        "Eq(2*((s47//2)), s47)",
+        "Eq(((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), s6)",
+        "Eq(1024*((s68//((s68//4)))), 4096)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 19,
+      "examples": [
+        "Ne(((s36*s55)//(2*((s36//2))*((s55//2)))), 0)",
+        "Ne(((s47*s6)//(2*((s47//2))*((s6//2)))), 0)",
+        "Ne(s14 + s55, 0)",
+        "Ne(((s16*s75)//(2*((s16//2))*((s75//2)))), 0)",
+        "Ne(((s5*s54)//(2*((s5//2))*((s54//2)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 36,
+      "examples": [
+        "2*((s36//2)) + 2 >= 3",
+        "((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) + 2 >= 3",
+        "2*((s47//2)) + 2 >= 3",
+        "((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) + 2 >= 3",
+        "2*((s75//2)) + 2 >= 3"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2340,
+      "count": 18,
+      "examples": [
+        "Ne(((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 0)",
+        "Ne(((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 0)",
+        "Ne(((s16//2))*(((s16*s75)//(2*((s16//2))*((s75//2))))), 0)",
+        "Ne(((s5//2))*(((s5*s54)//(2*((s5//2))*((s54//2))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:calc_conv_nd_return_shape",
+      "line": 2939,
+      "count": 18,
+      "examples": [
+        "(2*((s36//2)) > 0) | (((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) > 0)",
+        "(2*((s47//2)) > 0) | (((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) > 0)",
+        "(2*((s75//2)) > 0) | (((s16//2))*(((s16*s75)//(2*((s16//2))*((s75//2))))) > 0)",
+        "(2*((s54//2)) > 0) | (((s5//2))*(((s5*s54)//(2*((s5//2))*((s54//2))))) > 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 37,
+      "examples": [
+        "2048*Max(1, ((s36*s55)//(2*((s36//2))*((s55//2))))) >= 1024",
+        "2048*Max(1, (s55//2))*Max(1, ((s36*s55)//(2*((s36//2))*((s55//2))))) >= 1024",
+        "2048*Max(1, ((s47*s6)//(2*((s47//2))*((s6//2))))) >= 1024",
+        "2048*Max(1, (s6//2))*Max(1, ((s47*s6)//(2*((s47//2))*((s6//2))))) >= 1024",
+        "128000*s14 + 128000*s55 >= 128000"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 18,
+      "examples": [
+        "Eq(s99, 2*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) + 2*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))))",
+        "Eq(s53, 512)",
+        "Eq(s48, s43)",
+        "Eq(s99, 2*((s16//2))*((s75//2))*(((s16*s75)//(2*((s16//2))*((s75//2))))) + 2*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) + 2*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))))",
+        "Eq(s99, 2*((s16//2))*((s75//2))*(((s16*s75)//(2*((s16//2))*((s75//2))))) + 2*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) + 2*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) + 2*((s5//2))*((s54//2))*(((s5*s54)//(2*((s5//2))*((s54//2))))))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 72,
+      "examples": [
+        "1 < 2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))",
+        "s55 < 2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))",
+        "s36*s55 < 2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))",
+        "1024 < 2048*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))",
+        "1 < 2048*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2)))))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 66,
+      "examples": [
+        "s99 - 2*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) >= 0",
+        "((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) >= (((s47*s6)//(2*((s47//2))*((s6//2)))))",
+        "((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) < 2048*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2)))))",
+        "2*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))) < 2048*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2)))))",
+        "((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))) >= (((s36*s55)//(2*((s36//2))*((s55//2)))))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 22,
+      "examples": [
+        "Max(1, (s55//2))*Max(1, ((s36*s55)//(2*((s36//2))*((s55//2))))) < 2*Max(1, (s36//2))*Max(1, (s55//2))*Max(1, ((s36*s55)//(2*((s36//2))*((s55//2)))))",
+        "Max(1, (s55//2))*Max(1, ((s36*s55)//(2*((s36//2))*((s55//2))))) > 1",
+        "Max(1, (s6//2))*Max(1, ((s47*s6)//(2*((s47//2))*((s6//2))))) < 2*Max(1, (s47//2))*Max(1, (s6//2))*Max(1, ((s47*s6)//(2*((s47//2))*((s6//2)))))",
+        "Max(1, (s6//2))*Max(1, ((s47*s6)//(2*((s47//2))*((s6//2))))) > 1",
+        "1024*((s68//((s68//4)))) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 19,
+      "examples": [
+        "Ne(Mod(1, ((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2)))))), 0)",
+        "Ne(Mod(((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 2*((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2)))))), 0)",
+        "Ne(Mod(1, ((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))), 0)",
+        "Ne(Mod(((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 2*((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2)))))), 0)",
+        "Ne(Mod(512, 512*s14 + 512*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 21,
+      "examples": [
+        "Eq(((s47//2))*((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 32)",
+        "Eq(((s6//2))*(((s47*s6)//(2*((s47//2))*((s6//2))))), 8)",
+        "Eq(((s36//2))*((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 32)",
+        "Eq(((s55//2))*(((s36*s55)//(2*((s36//2))*((s55//2))))), 8)",
+        "Eq(s29, 34)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 18,
+      "examples": [
+        "s99 <= 4096",
+        "s36*s55 + s47*s6 <= 4096",
+        "((s68//4)) <= 4096",
+        "s68 <= 4096",
+        "34*s43 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_438:440",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 3,
+      "examples": [
+        "Eq(zf44, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "Eq(s11, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 3,
+      "examples": [
+        "s11 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 3,
+      "examples": [
+        "Eq(Mod(1024*s68, 4096), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1489,
+      "count": 3,
+      "examples": [
+        "Ne((s68//((s68//4))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 3,
+      "examples": [
+        "Ne((s68//4), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:get_image_features:556"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_cat_meta",
+      "line": 1881,
+      "count": 12,
+      "examples": [
+        "Eq(s43, s7)",
+        "Eq(s88, s43)",
+        "Eq(s9, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:634"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward",
+      "line": 634,
+      "count": 3,
+      "examples": [
+        "Eq(s1 + s38, 32)",
+        "Eq(s1 + s38 + s97, 48)",
+        "Eq(s1 + s38 + s62 + s97, 64)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:634"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634",
+      "line": 646,
+      "count": 42,
+      "examples": [
+        "Eq(s28, 32)",
+        "Eq(s54, s29)",
+        "s29 >= 7",
+        "Eq(zf95, 0.125)",
+        "Eq(zf86, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634",
+      "line": 646,
+      "count": 9,
+      "examples": [
+        "s28 = 32",
+        "s54 = 34",
+        "s28 = 48",
+        "s54 = 38",
+        "s28 = 64"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 12,
+      "examples": [
+        "Eq(s40, s29)",
+        "Eq(s48, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 12,
+      "examples": [
+        "-s29 >= -s54",
+        "-s29 <= -15"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 6,
+      "examples": [
+        "s53 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4440,
+      "count": 3,
+      "examples": [
+        "9223372036854775807 > s29 - 15"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 3,
+      "examples": [
+        "9223372036854775807 > s29"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "s29 = 34",
+        "s29 = 38",
+        "s29 = 46"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:broadcast_symbolic_shapes",
+      "line": 622,
+      "count": 3,
+      "examples": [
+        "s40 = 34",
+        "s40 = 38",
+        "s40 = 46"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:torch_dynamo_resume_in_forward_at_634:646"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 1,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s14)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))",
+        "Eq(512*s14, 512*s14 + 512*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 1,
+      "examples": [
+        "Eq(s94, 1) | Eq(s14 + s55, 1) | Eq(s34*s94*(s14 + s55), 0) | Eq(s14*s34, s34*(s14 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s14 + s55 > -1",
+        "1 < 128000*s94*(s14 + s55)",
+        "128000 < 128000*s94*(s14 + s55)",
+        "128000*s14 + 128000*s55 < 128000*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s97, 1) | Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s14*s94"
+      ],
+      "model_frames": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:forward:771"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/vision_utils.py:112",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:771 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:634 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:556 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:437 in forward",
+        "transformers/vision_utils.py:112 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:64",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:771 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:634 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:556 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:438 in forward",
+        "transformers/vision_utils.py:76 in get_vision_attention_seqlens",
+        "transformers/vision_utils.py:64 in get_vision_cu_seqlens"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:440",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:771 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:634 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:556 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/lfm3_vl/modeling_lfm3_vl.py:558",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:771 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:634 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:558 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/utils/import_utils.py:1975",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:771 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:646 in forward",
+        "transformers/models/lfm3_vl/modeling_lfm3_vl.py:589 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1975 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    }
+  ]
+}

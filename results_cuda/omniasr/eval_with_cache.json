@@ -1,0 +1,46 @@
+{
+  "model": "omniasr",
+  "hf_id": "hf-audio/omniasr-llm-300m-v2",
+  "auto_class": "AutoModelForSeq2SeqLM",
+  "scenario": "eval_with_cache",
+  "pretrained": false,
+  "device": "cuda",
+  "config_overrides": {
+    "audio_config.num_hidden_layers": 2,
+    "text_config.num_hidden_layers": 2,
+    "text_config.hidden_size": 1024,
+    "text_config.head_dim": 128
+  },
+  "timestamp": "2026-11-18T13:58:34+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "b7fe69cb19",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 5,
+  "graph_break_count": 4,
+  "op_count": 167,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/models/omniasr/modeling_omniasr.py:493",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:597 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/omniasr/modeling_omniasr.py:522 in forward",
+        "transformers/models/omniasr/modeling_omniasr.py:493 in get_placeholder_mask"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}
