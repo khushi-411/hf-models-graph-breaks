@@ -146,6 +146,9 @@ issues:
       (wav2vec2, wavlm, bamba, zamba2, falcon_h1, lfm2, granitemoehybrid) and removes the
       ir.py:clamp specialization (a knock-on effect). Fix: ir.get_stride_order(stride, shape_env).
       Repro issues/repros/conv_backward_stride_guard.py.
+      Also inkling2 and inkling2_mini (Inkling2ShortConvolution, causal depthwise Conv1d): with the fix,
+      inkling2 train goes to 0 recompiles, and the clamp / codegen/common.py:doprint specializations
+      (knock-on effects) disappear in both.
 
   - id: cpp-acc-helper-reduction-guard
     title: "Inductor CPU codegen `need_use_acc_helper`: `guard_or_false(Gt(reduction_size, 4096))` installs a guard on a symbolic reduction size"
@@ -646,6 +649,8 @@ issues:
     file: transformers/models/inkling2/modeling_inkling2.py
   - <<: *splitfeat
     file: transformers/models/dots3_note/modeling_dots3_note.py
+  - <<: *splitfeat
+    file: transformers/models/inkling2_loop/modeling_inkling2_loop.py
 
   # Placeholder check uses boolean-mask indexing just to count elements.
   - &placeholder
@@ -664,6 +669,31 @@ issues:
     file: transformers/models/dots3_note/modeling_dots3_note.py
   - <<: *placeholder
     file: transformers/models/omniasr/modeling_omniasr.py
+  - <<: *placeholder
+    file: transformers/models/inkling2_loop/modeling_inkling2_loop.py
+
+  # Inkling 2 Mini adds cache layers for the looped passes with copy.deepcopy inside forward.
+  - &loopcache
+    id: inkling2-loop-cache-deepcopy
+    title: "Inkling2Loop: `cache.layers += [copy.deepcopy(layer) ...]` in forward; deepcopy of a tensor graph-breaks inside a list comprehension and skips the whole text-model frame"
+    file: python/copy.py
+    match: "Attempted to copy.deepcopy a tensor"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/inkling2-loop-cache-deepcopy.md
+    notes: >
+      inkling2_mini / inkling2_mini_vlm eval_with_cache and train_forward (any run that builds a cache):
+      1 graph -> 20 graphs / 19 breaks in the text model. Passing a cache that already has the loop
+      layers gives 1 graph / 0 breaks. The follow-on "Unsafe value live across comprehension graph break"
+      at modeling_inkling2_loop.py is the same root cause. Dynamic train: the frame skip turns each layer
+      call into its own frame (22 graphs on the first size), and duck sizing then ties
+      block_states._base.size(2) to the batch size in Inkling2LoopMessageAttentionResidual.forward
+      (1 recompile). With the loop cache layers passed in and conv-backward-stride-guard fixed: 1 frame, 0 recompiles.
+  - <<: *loopcache
+    file: transformers/models/inkling2_loop/modeling_inkling2_loop.py
+    function: forward
+    match: "Unsafe value live across comprehension graph break"
 
   - id: granite-docling-tile-mask-index
     title: "GraniteDocling: `pixel_values[pixel_attention_mask]` selects real tiles with a boolean mask"
