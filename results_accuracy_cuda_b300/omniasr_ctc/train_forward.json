@@ -1,0 +1,849 @@
+{
+  "model": "omniasr_ctc",
+  "hf_id": "hf-audio/omniasr-ctc-300m-v2",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:42:30+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 72,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.loss",
+      "ok": true,
+      "shape": [],
+      "max_abs_diff": 7.62939453125e-06,
+      "rmse_compiled_vs_eager": 7.62939453125e-06,
+      "rmse_eager_vs_fp64": 0.000362396240234375,
+      "rmse_compiled_vs_fp64": 0.000370025634765625
+    },
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        49,
+        10288
+      ],
+      "max_abs_diff": 0.0012697279453277588,
+      "rmse_compiled_vs_eager": 0.0002101574484981526,
+      "rmse_eager_vs_fp64": 0.0005100441261424371,
+      "rmse_compiled_vs_fp64": 0.0005107030574728397
+    },
+    {
+      "name": "grad.ctc_head.weight",
+      "ok": true,
+      "shape": [
+        10288,
+        1024
+      ],
+      "max_abs_diff": 0.0005702972412109375,
+      "rmse_compiled_vs_eager": 2.494740097080101e-06,
+      "rmse_eager_vs_fp64": 1.1282970392959436e-05,
+      "rmse_compiled_vs_fp64": 1.0667301951327833e-05
+    },
+    {
+      "name": "grad.ctc_head.bias",
+      "ok": true,
+      "shape": [
+        10288
+      ],
+      "max_abs_diff": 0.0001628398895263672,
+      "rmse_compiled_vs_eager": 2.1445444993949644e-06,
+      "rmse_eager_vs_fp64": 6.6628370449909516e-06,
+      "rmse_compiled_vs_fp64": 4.970900732791849e-06
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.0.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        1,
+        10
+      ],
+      "max_abs_diff": 0.0011257529258728027,
+      "rmse_compiled_vs_eager": 0.0002692869913380739,
+      "rmse_eager_vs_fp64": 0.0005000209432639212,
+      "rmse_compiled_vs_fp64": 0.0004960174626448779
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.0.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.0010352134704589844,
+      "rmse_compiled_vs_eager": 0.00029893133274990386,
+      "rmse_eager_vs_fp64": 0.0007076176233123197,
+      "rmse_compiled_vs_fp64": 0.0007117264126928383
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.0.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 8.109956979751587e-05,
+      "rmse_compiled_vs_eager": 1.8306141005198783e-05,
+      "rmse_eager_vs_fp64": 4.0890836575478254e-05,
+      "rmse_compiled_vs_fp64": 4.158746733095007e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.0.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 5.2951276302337646e-05,
+      "rmse_compiled_vs_eager": 1.68899721887057e-05,
+      "rmse_eager_vs_fp64": 4.008871926183982e-05,
+      "rmse_compiled_vs_fp64": 4.034752449513681e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.1.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 0.0001641586422920227,
+      "rmse_compiled_vs_eager": 1.9825581890906774e-05,
+      "rmse_eager_vs_fp64": 4.1046813485532604e-05,
+      "rmse_compiled_vs_fp64": 4.063151570309947e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.1.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.00010141730308532715,
+      "rmse_compiled_vs_eager": 3.0398721116671956e-05,
+      "rmse_eager_vs_fp64": 8.222263352758582e-05,
+      "rmse_compiled_vs_fp64": 8.12845165440908e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.1.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 7.186084985733032e-05,
+      "rmse_compiled_vs_eager": 1.750189212307459e-05,
+      "rmse_eager_vs_fp64": 4.1360191847726796e-05,
+      "rmse_compiled_vs_fp64": 4.1629103866437814e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.1.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 5.248747766017914e-05,
+      "rmse_compiled_vs_eager": 1.5402869118693778e-05,
+      "rmse_eager_vs_fp64": 4.1642480574234215e-05,
+      "rmse_compiled_vs_fp64": 4.126812187682401e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.2.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 0.00019148364663124084,
+      "rmse_compiled_vs_eager": 1.7599484715757985e-05,
+      "rmse_eager_vs_fp64": 4.353447810603442e-05,
+      "rmse_compiled_vs_fp64": 4.209436468601267e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.2.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 9.062886238098145e-05,
+      "rmse_compiled_vs_eager": 2.5783582915285875e-05,
+      "rmse_eager_vs_fp64": 8.491423792989294e-05,
+      "rmse_compiled_vs_fp64": 8.172158215228467e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.2.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 5.125999450683594e-05,
+      "rmse_compiled_vs_eager": 1.3820781366852104e-05,
+      "rmse_eager_vs_fp64": 4.4263783873302524e-05,
+      "rmse_compiled_vs_fp64": 4.250942839350192e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.2.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.6722590923309326e-05,
+      "rmse_compiled_vs_eager": 1.3035581073155516e-05,
+      "rmse_eager_vs_fp64": 4.298467805880095e-05,
+      "rmse_compiled_vs_fp64": 4.132063166457055e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.3.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 0.00027079880237579346,
+      "rmse_compiled_vs_eager": 1.587655935326312e-05,
+      "rmse_eager_vs_fp64": 4.668712340315129e-05,
+      "rmse_compiled_vs_fp64": 4.5346881682155896e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.3.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 9.194016456604004e-05,
+      "rmse_compiled_vs_eager": 2.3291684720825647e-05,
+      "rmse_eager_vs_fp64": 8.962517023542155e-05,
+      "rmse_compiled_vs_fp64": 8.642155191886192e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.3.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 6.473064422607422e-05,
+      "rmse_compiled_vs_eager": 1.2943919184386816e-05,
+      "rmse_eager_vs_fp64": 4.848211493383829e-05,
+      "rmse_compiled_vs_fp64": 4.593308879915679e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.3.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.5202672481536865e-05,
+      "rmse_compiled_vs_eager": 1.1962348804923469e-05,
+      "rmse_eager_vs_fp64": 4.61016173459728e-05,
+      "rmse_compiled_vs_fp64": 4.449886091595764e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.4.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 0.0001595020294189453,
+      "rmse_compiled_vs_eager": 1.3973088571446247e-05,
+      "rmse_eager_vs_fp64": 4.6048663969261425e-05,
+      "rmse_compiled_vs_fp64": 4.506785154548472e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.4.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 6.47418200969696e-05,
+      "rmse_compiled_vs_eager": 1.9334381118768697e-05,
+      "rmse_eager_vs_fp64": 8.120188445800988e-05,
+      "rmse_compiled_vs_fp64": 7.980169693844705e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.4.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.196539521217346e-05,
+      "rmse_compiled_vs_eager": 1.0357831548212352e-05,
+      "rmse_eager_vs_fp64": 4.44889119163497e-05,
+      "rmse_compiled_vs_fp64": 4.361228761006451e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.4.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 3.143772482872009e-05,
+      "rmse_compiled_vs_eager": 9.600714390912945e-06,
+      "rmse_eager_vs_fp64": 4.043049775348909e-05,
+      "rmse_compiled_vs_fp64": 3.9782642409831405e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.5.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        2
+      ],
+      "max_abs_diff": 0.00021916627883911133,
+      "rmse_compiled_vs_eager": 1.5785598077224862e-05,
+      "rmse_eager_vs_fp64": 5.733856600450733e-05,
+      "rmse_compiled_vs_fp64": 5.521020939423197e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.5.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 7.301568984985352e-05,
+      "rmse_compiled_vs_eager": 2.2411008445528066e-05,
+      "rmse_eager_vs_fp64": 9.647835301079585e-05,
+      "rmse_compiled_vs_fp64": 9.075759495197371e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.5.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.756450653076172e-05,
+      "rmse_compiled_vs_eager": 9.965545360880997e-06,
+      "rmse_eager_vs_fp64": 4.382716423785135e-05,
+      "rmse_compiled_vs_fp64": 4.2060119005394894e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.5.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 3.2261013984680176e-05,
+      "rmse_compiled_vs_eager": 9.682235729756558e-06,
+      "rmse_eager_vs_fp64": 4.160238478094168e-05,
+      "rmse_compiled_vs_fp64": 3.909916710535776e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.6.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        2
+      ],
+      "max_abs_diff": 0.0001804828643798828,
+      "rmse_compiled_vs_eager": 1.2757631038821662e-05,
+      "rmse_eager_vs_fp64": 5.6434165959342394e-05,
+      "rmse_compiled_vs_fp64": 5.367184312671045e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.6.conv.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 7.522106170654297e-05,
+      "rmse_compiled_vs_eager": 2.0714725112214913e-05,
+      "rmse_eager_vs_fp64": 8.219261894390691e-05,
+      "rmse_compiled_vs_fp64": 7.456118952180424e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.6.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 5.751848220825195e-05,
+      "rmse_compiled_vs_eager": 1.0217726891382384e-05,
+      "rmse_eager_vs_fp64": 3.908110471664952e-05,
+      "rmse_compiled_vs_fp64": 3.595703516156854e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.conv_layers.6.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 3.2067298889160156e-05,
+      "rmse_compiled_vs_eager": 8.667742929079411e-06,
+      "rmse_eager_vs_fp64": 3.4383018397924114e-05,
+      "rmse_compiled_vs_fp64": 3.1180815420174636e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.503130912780762e-05,
+      "rmse_compiled_vs_eager": 8.082640955846558e-06,
+      "rmse_eager_vs_fp64": 3.216085054189876e-05,
+      "rmse_compiled_vs_fp64": 3.001922324164748e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 2.1792948246002197e-05,
+      "rmse_compiled_vs_eager": 7.957617450182114e-06,
+      "rmse_eager_vs_fp64": 2.697486878492926e-05,
+      "rmse_compiled_vs_fp64": 2.299834507801635e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.projection.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        512
+      ],
+      "max_abs_diff": 0.0001639723777770996,
+      "rmse_compiled_vs_eager": 1.2044516727317151e-05,
+      "rmse_eager_vs_fp64": 5.157295032183589e-05,
+      "rmse_compiled_vs_fp64": 4.919871549772821e-05
+    },
+    {
+      "name": "grad.model.audio_tower.subsampling.projection.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 4.4973334297537804e-05,
+      "rmse_compiled_vs_eager": 1.2144639201254558e-05,
+      "rmse_eager_vs_fp64": 4.2171459883527256e-05,
+      "rmse_compiled_vs_fp64": 3.605171250063922e-05
+    },
+    {
+      "name": "grad.model.audio_tower.encode_positions.conv.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        64,
+        128
+      ],
+      "max_abs_diff": 3.209710121154785e-05,
+      "rmse_compiled_vs_eager": 1.6881673820708518e-06,
+      "rmse_eager_vs_fp64": 6.521771880847595e-06,
+      "rmse_compiled_vs_fp64": 6.24128668847899e-06
+    },
+    {
+      "name": "grad.model.audio_tower.encode_positions.conv.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 2.676248550415039e-05,
+      "rmse_compiled_vs_eager": 6.28044993056181e-06,
+      "rmse_eager_vs_fp64": 2.310085869451474e-05,
+      "rmse_compiled_vs_fp64": 2.077120296028026e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 1.4750752598047256e-05,
+      "rmse_compiled_vs_eager": 9.807249305504846e-07,
+      "rmse_eager_vs_fp64": 2.410620233559714e-06,
+      "rmse_compiled_vs_fp64": 2.422891311203694e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.k_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 2.444721758365631e-09,
+      "rmse_compiled_vs_eager": 5.545990129835722e-10,
+      "rmse_eager_vs_fp64": 2.1795114847297758e-09,
+      "rmse_compiled_vs_fp64": 2.2407156455426078e-09
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 4.509091377258301e-05,
+      "rmse_compiled_vs_eager": 4.628442949529053e-06,
+      "rmse_eager_vs_fp64": 2.1885315304075605e-05,
+      "rmse_compiled_vs_fp64": 2.0815554008668015e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.v_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.6819685697555542e-05,
+      "rmse_compiled_vs_eager": 5.152429207136092e-06,
+      "rmse_eager_vs_fp64": 1.814994129622593e-05,
+      "rmse_compiled_vs_fp64": 1.5276207768789868e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.q_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 1.1774711310863495e-05,
+      "rmse_compiled_vs_eager": 9.397406925410747e-07,
+      "rmse_eager_vs_fp64": 2.2746461569451786e-06,
+      "rmse_compiled_vs_fp64": 2.3112162227310133e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.q_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 5.258014425635338e-06,
+      "rmse_compiled_vs_eager": 1.3803534424023456e-06,
+      "rmse_eager_vs_fp64": 3.2634767927912603e-06,
+      "rmse_compiled_vs_fp64": 3.3228091249324226e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.out_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 5.136430263519287e-05,
+      "rmse_compiled_vs_eager": 4.615446229237449e-06,
+      "rmse_eager_vs_fp64": 2.1986853981627058e-05,
+      "rmse_compiled_vs_fp64": 2.0882726446585016e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.attention.out_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.4593045711517334e-05,
+      "rmse_compiled_vs_eager": 8.244292953018475e-06,
+      "rmse_eager_vs_fp64": 2.8255516729272065e-05,
+      "rmse_compiled_vs_fp64": 2.3676643108179003e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.8306076526641846e-05,
+      "rmse_compiled_vs_eager": 3.0628534640630266e-06,
+      "rmse_eager_vs_fp64": 1.3820051515139353e-05,
+      "rmse_compiled_vs_fp64": 1.296765995828743e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 9.559094905853271e-06,
+      "rmse_compiled_vs_eager": 3.415592972842173e-06,
+      "rmse_eager_vs_fp64": 1.1793098929325466e-05,
+      "rmse_compiled_vs_fp64": 9.817979336813626e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.feed_forward.intermediate_dense.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        1024
+      ],
+      "max_abs_diff": 4.223734140396118e-05,
+      "rmse_compiled_vs_eager": 2.7513797675224783e-06,
+      "rmse_eager_vs_fp64": 1.187088502496332e-05,
+      "rmse_compiled_vs_fp64": 1.133231630732354e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.feed_forward.intermediate_dense.bias",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 1.6023870557546616e-05,
+      "rmse_compiled_vs_eager": 2.5727899089272054e-06,
+      "rmse_eager_vs_fp64": 9.493763774272957e-06,
+      "rmse_compiled_vs_fp64": 8.319308089966663e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.feed_forward.output_dense.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 4.2110681533813477e-05,
+      "rmse_compiled_vs_eager": 2.631887326834564e-06,
+      "rmse_eager_vs_fp64": 1.108543212130055e-05,
+      "rmse_compiled_vs_fp64": 1.0430289377911792e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.feed_forward.output_dense.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.990795135498047e-05,
+      "rmse_compiled_vs_eager": 6.266401894941485e-06,
+      "rmse_eager_vs_fp64": 1.9746602946363322e-05,
+      "rmse_compiled_vs_fp64": 1.5441297927092095e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.final_layer_norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.6994774341583252e-05,
+      "rmse_compiled_vs_eager": 3.6095076526288374e-06,
+      "rmse_eager_vs_fp64": 1.53662482071287e-05,
+      "rmse_compiled_vs_fp64": 1.4527992966343523e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.0.final_layer_norm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.0145828127861023e-05,
+      "rmse_compiled_vs_eager": 3.2747485983976405e-06,
+      "rmse_eager_vs_fp64": 1.2493737642356993e-05,
+      "rmse_compiled_vs_fp64": 1.0899374942956284e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 7.474212907254696e-06,
+      "rmse_compiled_vs_eager": 5.794375913831686e-07,
+      "rmse_eager_vs_fp64": 1.3823315960065456e-06,
+      "rmse_compiled_vs_fp64": 1.3713021822797584e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.k_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.3969838619232178e-09,
+      "rmse_compiled_vs_eager": 3.649629087896609e-10,
+      "rmse_eager_vs_fp64": 1.6146090356797917e-09,
+      "rmse_compiled_vs_fp64": 1.6044741301575222e-09
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 3.1366944313049316e-05,
+      "rmse_compiled_vs_eager": 3.518727989069158e-06,
+      "rmse_eager_vs_fp64": 1.5800909258217636e-05,
+      "rmse_compiled_vs_fp64": 1.4861202748699149e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.v_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.2576580047607422e-05,
+      "rmse_compiled_vs_eager": 3.573755566415128e-06,
+      "rmse_eager_vs_fp64": 1.1062102373012797e-05,
+      "rmse_compiled_vs_fp64": 8.57034245526408e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.q_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 8.048489689826965e-06,
+      "rmse_compiled_vs_eager": 5.57284947195454e-07,
+      "rmse_eager_vs_fp64": 1.3592666547080819e-06,
+      "rmse_compiled_vs_fp64": 1.3423676150849034e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.q_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.1731324270367622e-06,
+      "rmse_compiled_vs_eager": 7.283028627181696e-07,
+      "rmse_eager_vs_fp64": 1.7355370261538904e-06,
+      "rmse_compiled_vs_fp64": 1.7135346207784068e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.out_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 3.275275230407715e-05,
+      "rmse_compiled_vs_eager": 3.5296052652534966e-06,
+      "rmse_eager_vs_fp64": 1.5985290945556056e-05,
+      "rmse_compiled_vs_fp64": 1.5046903890885408e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.attention.out_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.8619000911712646e-05,
+      "rmse_compiled_vs_eager": 5.4190495910275634e-06,
+      "rmse_eager_vs_fp64": 1.736856855585768e-05,
+      "rmse_compiled_vs_fp64": 1.3701566104895316e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.1068768799304962e-05,
+      "rmse_compiled_vs_eager": 2.3310068742973953e-06,
+      "rmse_eager_vs_fp64": 1.0071757139155265e-05,
+      "rmse_compiled_vs_fp64": 9.561311544364336e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 8.437782526016235e-06,
+      "rmse_compiled_vs_eager": 2.3146327400405767e-06,
+      "rmse_eager_vs_fp64": 7.155545810544462e-06,
+      "rmse_compiled_vs_fp64": 5.55320725116875e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.feed_forward.intermediate_dense.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        1024
+      ],
+      "max_abs_diff": 3.028102219104767e-05,
+      "rmse_compiled_vs_eager": 2.086677587844006e-06,
+      "rmse_eager_vs_fp64": 9.314844164840336e-06,
+      "rmse_compiled_vs_fp64": 8.872830641528444e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.feed_forward.intermediate_dense.bias",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 9.21543687582016e-06,
+      "rmse_compiled_vs_eager": 1.8658601157239028e-06,
+      "rmse_eager_vs_fp64": 6.9807274207358775e-06,
+      "rmse_compiled_vs_fp64": 6.094211378116966e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.feed_forward.output_dense.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 3.001093864440918e-05,
+      "rmse_compiled_vs_eager": 1.9618374056059937e-06,
+      "rmse_eager_vs_fp64": 8.720273595780576e-06,
+      "rmse_compiled_vs_fp64": 8.22382379340485e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.feed_forward.output_dense.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.4998018741607666e-05,
+      "rmse_compiled_vs_eager": 4.528451442449881e-06,
+      "rmse_eager_vs_fp64": 1.3825554037286835e-05,
+      "rmse_compiled_vs_fp64": 1.0291769029447895e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.final_layer_norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.0468065738677979e-05,
+      "rmse_compiled_vs_eager": 2.5217820633719855e-06,
+      "rmse_eager_vs_fp64": 1.1550364900233964e-05,
+      "rmse_compiled_vs_fp64": 1.1066914987004433e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layers.1.final_layer_norm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 8.07642936706543e-06,
+      "rmse_compiled_vs_eager": 2.419939053069666e-06,
+      "rmse_eager_vs_fp64": 8.895211727254075e-06,
+      "rmse_compiled_vs_fp64": 7.77157807404761e-06
+    },
+    {
+      "name": "grad.model.audio_tower.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 2.7924776077270508e-05,
+      "rmse_compiled_vs_eager": 5.159935341383236e-06,
+      "rmse_eager_vs_fp64": 2.3200140250410886e-05,
+      "rmse_compiled_vs_fp64": 2.15261245624686e-05
+    },
+    {
+      "name": "grad.model.audio_tower.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.4586374163627625e-05,
+      "rmse_compiled_vs_eager": 4.3998541900097215e-06,
+      "rmse_eager_vs_fp64": 1.3706988706711067e-05,
+      "rmse_compiled_vs_fp64": 1.0247053236579133e-05
+    }
+  ]
+}

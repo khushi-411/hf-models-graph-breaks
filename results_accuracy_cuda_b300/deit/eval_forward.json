@@ -1,0 +1,63 @@
+{
+  "model": "deit",
+  "hf_id": "facebook/deit-base-distilled-patch16-224",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:36:06+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 3,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        1000
+      ],
+      "max_abs_diff": 0.0005841702222824097,
+      "rmse_compiled_vs_eager": 0.00012027433286068538,
+      "rmse_eager_vs_fp64": 6.73320992703646e-07,
+      "rmse_compiled_vs_fp64": 0.00012027563264217019
+    },
+    {
+      "name": "out.cls_logits",
+      "ok": true,
+      "shape": [
+        2,
+        1000
+      ],
+      "max_abs_diff": 0.000678718090057373,
+      "rmse_compiled_vs_eager": 0.00017255139129536228,
+      "rmse_eager_vs_fp64": 9.539902188843164e-07,
+      "rmse_compiled_vs_fp64": 0.00017256354298925882
+    },
+    {
+      "name": "out.distillation_logits",
+      "ok": true,
+      "shape": [
+        2,
+        1000
+      ],
+      "max_abs_diff": 0.0007070004940032959,
+      "rmse_compiled_vs_eager": 0.00016914521697791436,
+      "rmse_eager_vs_fp64": 9.312667621441313e-07,
+      "rmse_compiled_vs_fp64": 0.00016917377386059678
+    }
+  ]
+}

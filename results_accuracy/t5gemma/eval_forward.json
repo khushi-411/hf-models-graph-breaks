@@ -1,0 +1,66 @@
+{
+  "model": "t5gemma",
+  "hf_id": "google/t5gemma-2b-2b-ul2",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:39:11+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 3,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        32000
+      ],
+      "max_abs_diff": 1.3113021850585938e-06,
+      "rmse_compiled_vs_eager": 2.3916030832581147e-07,
+      "rmse_eager_vs_fp64": 2.460624865784893e-07,
+      "rmse_compiled_vs_fp64": 2.551950331692526e-07
+    },
+    {
+      "name": "out.decoder_hidden_states[0]",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        512
+      ],
+      "max_abs_diff": 2.1457672119140625e-06,
+      "rmse_compiled_vs_eager": 4.623945778381201e-07,
+      "rmse_eager_vs_fp64": 5.006781186679773e-07,
+      "rmse_compiled_vs_fp64": 5.223329935896806e-07
+    },
+    {
+      "name": "out.encoder_last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        512
+      ],
+      "max_abs_diff": 2.3543834686279297e-06,
+      "rmse_compiled_vs_eager": 4.874923121694851e-07,
+      "rmse_eager_vs_fp64": 5.35274278503155e-07,
+      "rmse_compiled_vs_fp64": 5.422759826140805e-07
+    }
+  ]
+}

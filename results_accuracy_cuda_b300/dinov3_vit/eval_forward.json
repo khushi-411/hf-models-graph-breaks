@@ -1,0 +1,54 @@
+{
+  "model": "dinov3_vit",
+  "hf_id": "facebook/dinov3-vits16-pretrain-lvd1689m",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:36:02+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": false,
+  "tol": 0.001,
+  "checked": 2,
+  "failed": [
+    "out.last_hidden_state"
+  ],
+  "tensors": [
+    {
+      "name": "out.last_hidden_state",
+      "ok": false,
+      "shape": [
+        2,
+        197,
+        384
+      ],
+      "max_abs_diff": 0.001717984676361084,
+      "rmse_compiled_vs_eager": 0.0002958083470674602,
+      "rmse_eager_vs_fp64": 6.074974701644819e-07,
+      "rmse_compiled_vs_fp64": 0.00029580709215553416
+    },
+    {
+      "name": "out.pooler_output",
+      "ok": true,
+      "shape": [
+        2,
+        384
+      ],
+      "max_abs_diff": 0.00040519237518310547,
+      "rmse_compiled_vs_eager": 0.00012588657460090792,
+      "rmse_eager_vs_fp64": 1.0942800751426493e-06,
+      "rmse_compiled_vs_fp64": 0.0001259132089400177
+    }
+  ]
+}

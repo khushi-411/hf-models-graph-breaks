@@ -1,0 +1,77 @@
+{
+  "model": "granite_docling",
+  "hf_id": "ibm-granite/granite-for-docling-500m",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:21:23+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        80,
+        133800
+      ],
+      "max_abs_diff": 1.1622905731201172e-06,
+      "rmse_compiled_vs_eager": 1.8373314485815673e-07,
+      "rmse_eager_vs_fp64": 1.888382376078837e-07,
+      "rmse_compiled_vs_fp64": 1.7857821439800795e-07
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        1024,
+        768
+      ],
+      "max_abs_diff": 5.0067901611328125e-06,
+      "rmse_compiled_vs_eager": 7.141261845516851e-07,
+      "rmse_eager_vs_fp64": 6.62980637979376e-07,
+      "rmse_compiled_vs_fp64": 5.021143134153567e-07
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        64,
+        1024
+      ],
+      "max_abs_diff": 5.4836273193359375e-06,
+      "rmse_compiled_vs_eager": 1.2169816977436781e-06,
+      "rmse_eager_vs_fp64": 1.2738737965068101e-06,
+      "rmse_compiled_vs_fp64": 1.1993199388112454e-06
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        64,
+        1024
+      ],
+      "max_abs_diff": 5.125999450683594e-06,
+      "rmse_compiled_vs_eager": 1.210173338805672e-06,
+      "rmse_eager_vs_fp64": 1.2682755491085635e-06,
+      "rmse_compiled_vs_fp64": 1.1941076351251622e-06
+    }
+  ]
+}

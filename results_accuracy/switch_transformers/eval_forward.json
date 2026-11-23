@@ -1,0 +1,53 @@
+{
+  "model": "switch_transformers",
+  "hf_id": "google/switch-base-8",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:11:56+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.01,
+  "checked": 2,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        32128
+      ],
+      "max_abs_diff": 0.4375,
+      "rmse_compiled_vs_eager": 0.011110844778045775,
+      "rmse_eager_vs_fp64": 0.011312055435839226,
+      "rmse_compiled_vs_fp64": 0.008109725830741814
+    },
+    {
+      "name": "out.encoder_last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        768
+      ],
+      "max_abs_diff": 0.19140625,
+      "rmse_compiled_vs_eager": 0.009501454046831096,
+      "rmse_eager_vs_fp64": 0.009621702574556204,
+      "rmse_compiled_vs_fp64": 0.006790753529981938
+    }
+  ]
+}

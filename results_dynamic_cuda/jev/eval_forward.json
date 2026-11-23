@@ -1,0 +1,376 @@
+{
+  "model": "jev",
+  "hf_id": "autotrust/JEV-9B",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-22T09:47:19+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 129
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/fx_passes/reinplace.py:_overlap",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 9,
+      "examples": [
+        "512*s70 < 2147483647",
+        "s70*(Mod(((512*s70 - 1)//s70), 512)) + (Mod(512*s70 - 1, s70)) < 2147483647",
+        "512*s70 + 1536 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 6,
+      "examples": [
+        "Eq(Mod(256*s70 + 256*(Mod(64 - (Mod(s70, 64)), 64)), 16384), 0)",
+        "Eq(Mod(8*s70 + 8*(Mod(64 - (Mod(s70, 64)), 64)), 512), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 3,
+      "examples": [
+        "Eq(256*s70 + 256*(Mod(64 - (Mod(s70, 64)), 64)), 16384*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 6,
+      "examples": [
+        "Ne(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64), s70 + (Mod(64 - (Mod(s70, 64)), 64)))",
+        "Eq(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))), 64)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 6,
+      "examples": [
+        "Eq(Mod(s70 + (Mod(64 - (Mod(s70, 64)), 64)), ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)), 0)",
+        "Ne(Mod(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1345,
+      "count": 6,
+      "examples": [
+        "Eq(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64), 1)",
+        "Ne(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))), 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 3,
+      "examples": [
+        "(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2 >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 11,
+      "examples": [
+        "8*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2 >= 2",
+        "256*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) >= 2",
+        "8*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) >= 2",
+        "s70*(s70 - (Mod(s70, 8)) + 8) >= 2"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 9,
+      "examples": [
+        "Eq(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))",
+        "Ne(0, (((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2)",
+        "Ne(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), s70)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 544,
+      "count": 12,
+      "examples": [
+        "Ne(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), 1)",
+        "Ne(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), (((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))*Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))))",
+        "Eq(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))), s70 + (Mod(64 - (Mod(s70, 64)), 64)))",
+        "Ne(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 541,
+      "count": 6,
+      "examples": [
+        "Ne((((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))*Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))), 0)",
+        "Ne(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))), 0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 6,
+      "examples": [
+        "(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))*Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) >= Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))",
+        "Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2 >= Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5509,
+      "count": 3,
+      "examples": [
+        "1 < (((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:linalg_solve_triangular_meta",
+      "line": 2044,
+      "count": 3,
+      "examples": [
+        "1024*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) > 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 7,
+      "examples": [
+        "Eq(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64), 1)",
+        "Eq(zf88, 0.125)",
+        "Eq(zf79, 2.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 3,
+      "examples": [
+        "s70 <= (((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/fx_passes/reinplace.py:_overlap",
+      "line": 634,
+      "count": 1,
+      "examples": [
+        "(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) + 255*Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)))) - 1 >= 0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 2,
+      "examples": [
+        "Eq(64, s70 + (Mod(64 - (Mod(s70, 64)), 64)))",
+        "Ne(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64), 8)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 1,
+      "examples": [
+        "(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)) < 8"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1036,
+      "count": 1,
+      "examples": [
+        "Ne(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))), 2048)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_3d",
+      "line": 298,
+      "count": 1,
+      "examples": [
+        "Ne(Max(1, ((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64))))**2, 1)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 1,
+      "examples": [
+        "Max(1, s70 - (Mod(s70, 8)) + 8) < s70*Max(1, s70 - (Mod(s70, 8)) + 8)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 14,
+      "examples": [
+        "s70 <= 2147483647",
+        "s70**2 <= 2147483647",
+        "512*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)) <= 2147483647",
+        "256*s70 <= 2147483647",
+        "16384*(((s70 + (Mod(64 - (Mod(s70, 64)), 64)))//64)) <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 9,
+      "examples": [
+        "s70 <= 2147483646",
+        "8*s70*(((s70 + 7)//8)) + s70 <= 8*(((s70 + 7)//8)) + 2147483647",
+        "8*s70 <= 2147483647",
+        "128*s70 <= 2147483647",
+        "2*s70 <= 2147483647"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/jev/modeling_jev.py:64",
+      "reason": "Encountered graph break when attempting to trace BINARY_SUBSCR: a binary subscript, e.g. x[attr]:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/jev/modeling_jev.py:64 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

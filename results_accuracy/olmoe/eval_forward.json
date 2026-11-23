@@ -1,0 +1,40 @@
+{
+  "model": "olmoe",
+  "hf_id": "allenai/OLMoE-1B-7B-0924",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:04:07+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": false,
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": false,
+  "tol": 0.01,
+  "checked": 1,
+  "failed": [
+    "out.logits"
+  ],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": false,
+      "shape": [
+        2,
+        32,
+        32000
+      ],
+      "max_abs_diff": 0.328125,
+      "rmse_compiled_vs_eager": 0.011787532106397113
+    }
+  ]
+}

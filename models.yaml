@@ -1173,3 +1173,70 @@ models:
     config_overrides: {lm.n_layers: 4}
     scenarios: [eval_forward]
     notes: TTS LM step (batch size 1, forward is @torch.no_grad, so no train scenario). Remote code.
+
+  # ----------------------------------------------------------------------- #
+  # Added 2026-11-22: models added to transformers main between 2026-11-01 and 2026-11-21 that weren't
+  # tracked yet (checked against upstream main 2f1bc5e321). exaone, sarvam_mla and sarvam_moe are config-only
+  # (they reuse LlamaForCausalLM, DeepseekV3ForCausalLM and Glm4MoeForCausalLM) but their checkpoint configs
+  # differ. lara_mini and exaone checkpoints are gated: built from the config class defaults.
+  # ----------------------------------------------------------------------- #
+  - name: lfm3
+    hf_id: LiquidAI/LFM3-1.7B
+    auto_class: AutoModelForCausalLM
+    # 5 layers: conv, conv, full attention, conv, sliding attention (the checkpoint's repeating pattern).
+    config_overrides: {num_hidden_layers: 5, layer_types: [conv, conv, full_attention, conv, sliding_attention], sliding_window: 16, hidden_size: 512, intermediate_size: 1024, num_attention_heads: 8, num_key_value_heads: 2, head_dim: 64, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: LFM3-Text. Hybrid short-conv / gated attention (full + sliding), sandwich norm.
+
+  - name: lara_mini
+    hf_id: translated/Lara-4-Mini-Base   # gated; built from LaraMiniConfig defaults
+    auto_class: AutoModelForCausalLM
+    config_class: LaraMiniConfig
+    # 4 layers: gated delta net, sliding, gated delta net, full attention. MoE in every layer.
+    # CUDA only: the gated-delta-net torch path needs triangular_solve (no CPU BLAS in this build).
+    config_overrides: {num_hidden_layers: 4, layer_types: [linear_attention, sliding_attention, linear_attention, full_attention], sliding_window: 16, hidden_size: 512, num_attention_heads: 8, num_key_value_heads: 2, head_dim: 64, linear_num_key_heads: 4, linear_num_value_heads: 8, linear_key_head_dim: 32, linear_value_head_dim: 32, moe_intermediate_size: 128, shared_expert_intermediate_size: 128, num_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Lara 4 Mini. Hybrid gated-delta-net / sliding / full attention with MoE.
+
+  - name: dory
+    hf_id: nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-BF16
+    auto_class: AutoModelForCausalLM
+    # 2 input + 2 recurrent (looped twice) + 2 output layers, sliding and full attention in each block.
+    config_overrides: {num_hidden_layers: 6, n_input_layers: 2, n_recurrent_layers: 2, n_output_layers: 2, n_recurrent_loops: 2, layer_types: [sliding_attention, full_attention, sliding_attention, full_attention, sliding_attention, full_attention], sliding_window: 16, hidden_size: 512, intermediate_size: 1024, num_attention_heads: 8, num_key_value_heads: 2, head_dim: 64, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Nemotron-Labs Dory. Looped (recurrent-depth) transformer, nGPT-style normalization, per-loop KV cache.
+
+  - name: exaone
+    hf_id: LGAI-EXAONE/EXAONE-3.0-7.8B-Instruct   # gated; built from ExaoneConfig defaults
+    auto_class: AutoModelForCausalLM
+    config_class: ExaoneConfig
+    config_overrides: {num_hidden_layers: 2, hidden_size: 512, intermediate_size: 1024, num_attention_heads: 8, num_key_value_heads: 2, head_dim: 64, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: EXAONE 3.0 (config-only, runs LlamaForCausalLM).
+
+  - name: sarvam_mla
+    hf_id: sarvamai/sarvam-105b
+    auto_class: AutoModelForCausalLM
+    # Layer 0 dense, layer 1 MoE.
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, hidden_size: 512, intermediate_size: 1024, moe_intermediate_size: 128, num_attention_heads: 8, num_key_value_heads: 8, kv_lora_rank: 64, qk_rope_head_dim: 32, qk_nope_head_dim: 32, qk_head_dim: 64, head_dim: 32, v_head_dim: 32, n_routed_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Sarvam 105B (config-only, runs DeepseekV3ForCausalLM). MLA + MoE, deepseek_yarn rope scaling from the checkpoint.
+
+  - name: sarvam_moe
+    hf_id: sarvamai/sarvam-30b
+    auto_class: AutoModelForCausalLM
+    # Layer 0 dense, layer 1 MoE.
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, hidden_size: 512, intermediate_size: 1024, moe_intermediate_size: 128, moe_shared_expert_intermediate_size: 128, num_attention_heads: 8, num_key_value_heads: 2, head_dim: 64, n_routed_experts: 8, num_experts_per_tok: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: Sarvam 30B (config-only, runs Glm4MoeForCausalLM). Sigmoid-scored MoE, QK norm.
+
+  - name: jev
+    hf_id: autotrust/JEV-9B   # its config.json is the qwen3_5_text backbone; built from JevConfig defaults
+    auto_class: AutoModelForDecision
+    config_class: JevConfig
+    inputs: jev
+    # Qwen3.5 text backbone: 3 gated-delta-net layers : 1 full attention. hidden_size must match the backbone's.
+    # CUDA only: the gated-delta-net torch path needs triangular_solve (no CPU BLAS in this build).
+    config_overrides: {hidden_size: 512, text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, text_config.vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: JEV decision head (scores answer options at `<|mark|>` positions) on a Qwen3.5 text backbone. One prompt per call (batch size 1).

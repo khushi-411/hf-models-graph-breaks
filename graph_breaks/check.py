@@ -396,6 +396,13 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
         audio = torch.randint(0, lm["codebook_size"] + 2, (SEQ_LEN, lm["n_codebooks"]), device=device)
         text = torch.randint(0, lm["text_rows"], (SEQ_LEN, 1), device=device)
         inputs["input_ids"] = torch.cat([audio, text], dim=1)
+    elif kind == "jev":  # JevForDecision: one prompt (batch size 1) with two questions marked in it
+        ids = _text_ids(cfg, device)[:1].clone()  # a real batch-1 tensor: a view would keep the batch size in `_base`
+        inputs["input_ids"] = ids
+        # Positions of the `<|mark|>` tokens: a "choice" question with 4 options, then a "noul" (yes/no) one.
+        inputs["marks"] = torch.tensor([[SEQ_LEN // 2, SEQ_LEN - 1]], device=device)
+        inputs["num_options"] = torch.tensor([[4, 2]], device=device)
+        inputs["question_type_ids"] = torch.tensor([[1, 0]], device=device)  # Question.questions_types: noul, choice, score
     else:
         raise ValueError(f"Unknown inputs kind: {kind}")
 

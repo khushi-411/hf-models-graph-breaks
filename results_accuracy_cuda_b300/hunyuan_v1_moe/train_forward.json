@@ -1,0 +1,20 @@
+{
+  "model": "hunyuan_v1_moe",
+  "hf_id": "tencent/Hunyuan-A13B-Instruct",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:44:10+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "error": "RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb, &fbeta, c, std::is_same_v<C_Dtype, float> ? CUDA_R_32F : CUDA_R_16BF, ldc, compute_type, CUBLAS_GEMM_DEFAULT_TENSOR_OP)`",
+  "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/accuracy.py\", line 168, in run_scenario\n    eager = _run(model, inputs, train)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/accuracy.py\", line 102, in _run\n    out = model(**inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/hunyuan_v1_moe/modeling_hunyuan_v1_moe.py\", line 583, in forward\n    logits = self.lm_head(hidden_states)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/linear.py\", line 134, in forward\n    return F.linear(input, self.weight, self.bias)\n           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb, &fbeta, c, std::is_same_v<C_Dtype, float> ? CUDA_R_32F : CUDA_R_16BF, ldc, compute_type, CUBLAS_GEMM_DEFAULT_TENSOR_OP)`\n"
+}

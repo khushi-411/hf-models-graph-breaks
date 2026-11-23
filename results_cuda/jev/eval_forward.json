@@ -1,0 +1,56 @@
+{
+  "model": "jev",
+  "hf_id": "autotrust/JEV-9B",
+  "auto_class": "AutoModelForDecision",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cuda",
+  "config_overrides": {
+    "hidden_size": 512,
+    "text_config.num_hidden_layers": 4,
+    "text_config.layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "text_config.hidden_size": 512,
+    "text_config.intermediate_size": 1024,
+    "text_config.num_attention_heads": 4,
+    "text_config.num_key_value_heads": 2,
+    "text_config.head_dim": 64,
+    "text_config.linear_num_key_heads": 4,
+    "text_config.linear_num_value_heads": 8,
+    "text_config.linear_key_head_dim": 32,
+    "text_config.linear_value_head_dim": 32,
+    "text_config.vocab_size": 32000
+  },
+  "timestamp": "2026-11-22T09:46:57+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 1,
+  "graph_break_count": 0,
+  "op_count": 393,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/models/jev/modeling_jev.py:64",
+      "reason": "Encountered graph break when attempting to trace BINARY_SUBSCR: a binary subscript, e.g. x[attr]:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/jev/modeling_jev.py:64 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

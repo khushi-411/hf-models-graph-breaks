@@ -1,0 +1,73 @@
+{
+  "model": "dots3_note_vlm",
+  "hf_id": "dots-studio/dots3-note-prev",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T11:25:32+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": false,
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": false,
+  "tol": 0.01,
+  "checked": 4,
+  "failed": [
+    "out.logits",
+    "out.image_outputs.last_hidden_state",
+    "out.image_outputs.pooler_output[0]",
+    "out.image_outputs.pooler_output[1]"
+  ],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": false,
+      "shape": [
+        2,
+        176,
+        152064
+      ],
+      "max_abs_diff": 0.99609375,
+      "rmse_compiled_vs_eager": 0.024857676698276838
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": false,
+      "shape": [
+        128,
+        1536
+      ],
+      "max_abs_diff": 0.046875,
+      "rmse_compiled_vs_eager": 0.005837946375138741
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": false,
+      "shape": [
+        16,
+        5120
+      ],
+      "max_abs_diff": 0.0625,
+      "rmse_compiled_vs_eager": 0.011969873117153813
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": false,
+      "shape": [
+        16,
+        5120
+      ],
+      "max_abs_diff": 0.0625,
+      "rmse_compiled_vs_eager": 0.011841869759823211
+    }
+  ]
+}

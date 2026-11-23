@@ -1,0 +1,260 @@
+{
+  "model": "mixtral",
+  "hf_id": "mistralai/Mixtral-8x7B-v0.1",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T11:49:25+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": false,
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": false,
+  "tol": 0.01,
+  "checked": 23,
+  "failed": [
+    "out.logits",
+    "grad.model.embed_tokens.weight",
+    "grad.model.layers.0.mlp.gate.weight",
+    "grad.model.layers.0.mlp.experts.gate_up_proj",
+    "grad.lm_head.weight"
+  ],
+  "tensors": [
+    {
+      "name": "out.loss",
+      "ok": true,
+      "shape": [],
+      "max_abs_diff": 0.006907463073730469,
+      "rmse_compiled_vs_eager": 0.006907463073730469
+    },
+    {
+      "name": "out.logits",
+      "ok": false,
+      "shape": [
+        2,
+        32,
+        32000
+      ],
+      "max_abs_diff": 2.140625,
+      "rmse_compiled_vs_eager": 0.06317266747422341
+    },
+    {
+      "name": "grad.model.embed_tokens.weight",
+      "ok": false,
+      "shape": [
+        32000,
+        4096
+      ],
+      "max_abs_diff": 0.064208984375,
+      "rmse_compiled_vs_eager": 0.00017440518931136705
+    },
+    {
+      "name": "grad.model.layers.0.self_attn.q_proj.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        4096
+      ],
+      "max_abs_diff": 0.005462646484375,
+      "rmse_compiled_vs_eager": 0.00029428664325483963
+    },
+    {
+      "name": "grad.model.layers.0.self_attn.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.0053691864013671875,
+      "rmse_compiled_vs_eager": 0.0005875467643464151
+    },
+    {
+      "name": "grad.model.layers.0.self_attn.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.00440216064453125,
+      "rmse_compiled_vs_eager": 0.0005111332860084407
+    },
+    {
+      "name": "grad.model.layers.0.self_attn.o_proj.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        4096
+      ],
+      "max_abs_diff": 0.003932952880859375,
+      "rmse_compiled_vs_eager": 0.00025118407691337264
+    },
+    {
+      "name": "grad.model.layers.0.mlp.gate.weight",
+      "ok": false,
+      "shape": [
+        8,
+        4096
+      ],
+      "max_abs_diff": 0.010406494140625,
+      "rmse_compiled_vs_eager": 0.0013961188210939327
+    },
+    {
+      "name": "grad.model.layers.0.mlp.experts.gate_up_proj",
+      "ok": false,
+      "shape": [
+        8,
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.010508537292480469,
+      "rmse_compiled_vs_eager": 0.00013140801419359285
+    },
+    {
+      "name": "grad.model.layers.0.mlp.experts.down_proj",
+      "ok": true,
+      "shape": [
+        8,
+        4096,
+        512
+      ],
+      "max_abs_diff": 0.007892608642578125,
+      "rmse_compiled_vs_eager": 0.00012560813848248696
+    },
+    {
+      "name": "grad.model.layers.0.input_layernorm.weight",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 0.0026092529296875,
+      "rmse_compiled_vs_eager": 0.0006155745410036148
+    },
+    {
+      "name": "grad.model.layers.0.post_attention_layernorm.weight",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 0.001800537109375,
+      "rmse_compiled_vs_eager": 0.00025308807845011533
+    },
+    {
+      "name": "grad.model.layers.1.self_attn.q_proj.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        4096
+      ],
+      "max_abs_diff": 0.001922607421875,
+      "rmse_compiled_vs_eager": 0.00011423034942720537
+    },
+    {
+      "name": "grad.model.layers.1.self_attn.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.0025453567504882812,
+      "rmse_compiled_vs_eager": 0.0002298780804348259
+    },
+    {
+      "name": "grad.model.layers.1.self_attn.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.00177001953125,
+      "rmse_compiled_vs_eager": 0.00016462256865833302
+    },
+    {
+      "name": "grad.model.layers.1.self_attn.o_proj.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        4096
+      ],
+      "max_abs_diff": 0.0015420913696289062,
+      "rmse_compiled_vs_eager": 8.20600223528785e-05
+    },
+    {
+      "name": "grad.model.layers.1.mlp.gate.weight",
+      "ok": true,
+      "shape": [
+        8,
+        4096
+      ],
+      "max_abs_diff": 0.0060100555419921875,
+      "rmse_compiled_vs_eager": 0.0007619117968856473
+    },
+    {
+      "name": "grad.model.layers.1.mlp.experts.gate_up_proj",
+      "ok": true,
+      "shape": [
+        8,
+        1024,
+        4096
+      ],
+      "max_abs_diff": 0.00274658203125,
+      "rmse_compiled_vs_eager": 4.1378119063096766e-05
+    },
+    {
+      "name": "grad.model.layers.1.mlp.experts.down_proj",
+      "ok": true,
+      "shape": [
+        8,
+        4096,
+        512
+      ],
+      "max_abs_diff": 0.002655029296875,
+      "rmse_compiled_vs_eager": 3.899409438990515e-05
+    },
+    {
+      "name": "grad.model.layers.1.input_layernorm.weight",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 0.0012664794921875,
+      "rmse_compiled_vs_eager": 0.00023145516164200342
+    },
+    {
+      "name": "grad.model.layers.1.post_attention_layernorm.weight",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 0.00047969818115234375,
+      "rmse_compiled_vs_eager": 8.412053965725225e-05
+    },
+    {
+      "name": "grad.model.norm.weight",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 0.000732421875,
+      "rmse_compiled_vs_eager": 0.000123221847984178
+    },
+    {
+      "name": "grad.lm_head.weight",
+      "ok": false,
+      "shape": [
+        32000,
+        4096
+      ],
+      "max_abs_diff": 0.02203369140625,
+      "rmse_compiled_vs_eager": 3.5192941000287854e-05
+    }
+  ]
+}

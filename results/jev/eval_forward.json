@@ -1,0 +1,42 @@
+{
+  "model": "jev",
+  "hf_id": "autotrust/JEV-9B",
+  "auto_class": "AutoModelForDecision",
+  "scenario": "eval_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "hidden_size": 512,
+    "text_config.num_hidden_layers": 4,
+    "text_config.layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "text_config.hidden_size": 512,
+    "text_config.intermediate_size": 1024,
+    "text_config.num_attention_heads": 4,
+    "text_config.num_key_value_heads": 2,
+    "text_config.head_dim": 64,
+    "text_config.linear_num_key_heads": 4,
+    "text_config.linear_num_value_heads": 8,
+    "text_config.linear_key_head_dim": 32,
+    "text_config.linear_value_head_dim": 32,
+    "text_config.vocab_size": 32000
+  },
+  "timestamp": "2026-11-22T09:44:23+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "error": "RuntimeError: Calling torch.triangular_solve on a CPU tensor requires compiling PyTorch with BLAS. Please use PyTorch built with BLAS support.",
+  "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 552, in run_scenario\n    explanation = dynamo.explain(model)(**inputs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 2077, in inner\n    opt_f(*args, **kwargs)\n    ~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 661, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 1363, in compile_wrapper\n    result = fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/jev/modeling_jev.py\", line 45, in forward\n    @auto_docstring\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/_dynamo/eval_frame.py\", line 1652, in _fn\n    return fn(*args, **kwargs)\n  File \"<eval_with_key>.1\", line 222, in forward\n    new_values = torch._C._linalg.linalg_solve_triangular(ut_system, v_beta_1, upper = False, unitriangular = True);  v_beta_1 = None\nRuntimeError: Calling torch.triangular_solve on a CPU tensor requires compiling PyTorch with BLAS. Please use PyTorch built with BLAS support.\n"
+}

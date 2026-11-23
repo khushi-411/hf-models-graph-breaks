@@ -1,0 +1,77 @@
+{
+  "model": "granite_docling",
+  "hf_id": "ibm-granite/granite-for-docling-500m",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T11:34:33+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        80,
+        133800
+      ],
+      "max_abs_diff": 1.6689300537109375e-06,
+      "rmse_compiled_vs_eager": 1.9148819427809134e-07,
+      "rmse_eager_vs_fp64": 4.3243240260893956e-05,
+      "rmse_compiled_vs_fp64": 4.324348773350525e-05
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        1024,
+        768
+      ],
+      "max_abs_diff": 7.152557373046875e-06,
+      "rmse_compiled_vs_eager": 8.273330164823825e-07,
+      "rmse_eager_vs_fp64": 0.0002977692989517526,
+      "rmse_compiled_vs_fp64": 0.0002977678838557942
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        64,
+        1024
+      ],
+      "max_abs_diff": 5.424022674560547e-06,
+      "rmse_compiled_vs_eager": 1.1345124601907366e-06,
+      "rmse_eager_vs_fp64": 0.00029792192913550235,
+      "rmse_compiled_vs_fp64": 0.0002979294079811059
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        64,
+        1024
+      ],
+      "max_abs_diff": 5.140900611877441e-06,
+      "rmse_compiled_vs_eager": 1.1508343382880159e-06,
+      "rmse_eager_vs_fp64": 0.0003057440829245318,
+      "rmse_compiled_vs_fp64": 0.0003057404554836299
+    }
+  ]
+}

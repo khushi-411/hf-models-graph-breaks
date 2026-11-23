@@ -1,0 +1,769 @@
+{
+  "model": "wavlm",
+  "hf_id": "microsoft/wavlm-base-plus",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:46:37+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": false,
+  "tol": 0.001,
+  "checked": 62,
+  "failed": [
+    "out.loss",
+    "out.logits",
+    "grad.wavlm.masked_spec_embed",
+    "grad.wavlm.encoder.pos_conv_embed.conv.parametrizations.weight.original1",
+    "grad.wavlm.encoder.layers.0.attention.k_proj.weight",
+    "grad.wavlm.encoder.layers.0.attention.v_proj.weight",
+    "grad.wavlm.encoder.layers.0.attention.q_proj.weight",
+    "grad.wavlm.encoder.layers.0.attention.out_proj.weight",
+    "grad.wavlm.encoder.layers.0.attention.rel_attn_embed.weight",
+    "grad.wavlm.encoder.layers.0.feed_forward.intermediate_dense.weight",
+    "grad.wavlm.encoder.layers.0.feed_forward.intermediate_dense.bias",
+    "grad.wavlm.encoder.layers.0.feed_forward.output_dense.weight",
+    "grad.wavlm.encoder.layers.1.attention.v_proj.weight",
+    "grad.wavlm.encoder.layers.1.attention.out_proj.weight",
+    "grad.wavlm.encoder.layers.1.feed_forward.intermediate_dense.weight",
+    "grad.wavlm.encoder.layers.1.feed_forward.intermediate_dense.bias",
+    "grad.wavlm.encoder.layers.1.feed_forward.output_dense.weight",
+    "grad.lm_head.weight"
+  ],
+  "tensors": [
+    {
+      "name": "out.loss",
+      "ok": false,
+      "shape": [],
+      "max_abs_diff": 0.998260498046875,
+      "rmse_compiled_vs_eager": 0.998260498046875,
+      "rmse_eager_vs_fp64": 0.985015869140625,
+      "rmse_compiled_vs_fp64": 0.01324462890625
+    },
+    {
+      "name": "out.logits",
+      "ok": false,
+      "shape": [
+        2,
+        49,
+        32
+      ],
+      "max_abs_diff": 2.2359612584114075,
+      "rmse_compiled_vs_eager": 0.5566336569039871,
+      "rmse_eager_vs_fp64": 0.2425213036420766,
+      "rmse_compiled_vs_fp64": 0.5102944948098431
+    },
+    {
+      "name": "grad.wavlm.masked_spec_embed",
+      "ok": false,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 4.762038946151733,
+      "rmse_compiled_vs_eager": 1.4158476026574447,
+      "rmse_eager_vs_fp64": 0.37878783718914916,
+      "rmse_compiled_vs_fp64": 1.147311784360416
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.0.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        1,
+        10
+      ],
+      "max_abs_diff": 0.6773577332496643,
+      "rmse_compiled_vs_eager": 0.12623460109553566,
+      "rmse_eager_vs_fp64": 0.06665209890919405,
+      "rmse_compiled_vs_fp64": 0.12165728412727449
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.0.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.6698649227619171,
+      "rmse_compiled_vs_eager": 0.20684219607543194,
+      "rmse_eager_vs_fp64": 0.10243587527336483,
+      "rmse_compiled_vs_fp64": 0.20214201147248015
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.0.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.5794755518436432,
+      "rmse_compiled_vs_eager": 0.1831890711430033,
+      "rmse_eager_vs_fp64": 0.09863089073129462,
+      "rmse_compiled_vs_fp64": 0.17838581679030815
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.1.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 0.785387521609664,
+      "rmse_compiled_vs_eager": 0.12020111101210251,
+      "rmse_eager_vs_fp64": 0.062201458482415664,
+      "rmse_compiled_vs_fp64": 0.11549844953743278
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.2.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 1.5575411319732666,
+      "rmse_compiled_vs_eager": 0.12112876475839904,
+      "rmse_eager_vs_fp64": 0.06319990441907483,
+      "rmse_compiled_vs_fp64": 0.11840456425376579
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.3.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 1.6795808374881744,
+      "rmse_compiled_vs_eager": 0.1257042415730105,
+      "rmse_eager_vs_fp64": 0.06608309067362111,
+      "rmse_compiled_vs_fp64": 0.12153317289873393
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.4.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        3
+      ],
+      "max_abs_diff": 2.1514550149440765,
+      "rmse_compiled_vs_eager": 0.12495940125215943,
+      "rmse_eager_vs_fp64": 0.0687070018347547,
+      "rmse_compiled_vs_fp64": 0.12324325970524891
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.5.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        2
+      ],
+      "max_abs_diff": 2.2825270295143127,
+      "rmse_compiled_vs_eager": 0.12806703621490745,
+      "rmse_eager_vs_fp64": 0.06984494410757959,
+      "rmse_compiled_vs_fp64": 0.12743313188411878
+    },
+    {
+      "name": "grad.wavlm.feature_extractor.conv_layers.6.conv.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512,
+        2
+      ],
+      "max_abs_diff": 1.8020493984222412,
+      "rmse_compiled_vs_eager": 0.13094126475899664,
+      "rmse_eager_vs_fp64": 0.07763629418558002,
+      "rmse_compiled_vs_fp64": 0.13635707496708577
+    },
+    {
+      "name": "grad.wavlm.feature_projection.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.880955696105957,
+      "rmse_compiled_vs_eager": 0.16140588544776746,
+      "rmse_eager_vs_fp64": 0.09754783162701866,
+      "rmse_compiled_vs_fp64": 0.16542326044018058
+    },
+    {
+      "name": "grad.wavlm.feature_projection.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.7483062744140625,
+      "rmse_compiled_vs_eager": 0.22576450393705916,
+      "rmse_eager_vs_fp64": 0.145332483275018,
+      "rmse_compiled_vs_fp64": 0.24601660848157633
+    },
+    {
+      "name": "grad.wavlm.feature_projection.projection.weight",
+      "ok": true,
+      "shape": [
+        768,
+        512
+      ],
+      "max_abs_diff": 3.0132193565368652,
+      "rmse_compiled_vs_eager": 0.24512603562657964,
+      "rmse_eager_vs_fp64": 0.14340368259348935,
+      "rmse_compiled_vs_fp64": 0.25536465660830837
+    },
+    {
+      "name": "grad.wavlm.feature_projection.projection.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.303928941488266,
+      "rmse_compiled_vs_eager": 0.3307541504896928,
+      "rmse_eager_vs_fp64": 0.20128227912468158,
+      "rmse_compiled_vs_fp64": 0.35419567392744217
+    },
+    {
+      "name": "grad.wavlm.encoder.pos_conv_embed.conv.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 2.8549967408180237,
+      "rmse_compiled_vs_eager": 0.7243627461006577,
+      "rmse_eager_vs_fp64": 0.20971942730889498,
+      "rmse_compiled_vs_fp64": 0.5833755001898983
+    },
+    {
+      "name": "grad.wavlm.encoder.pos_conv_embed.conv.parametrizations.weight.original0",
+      "ok": true,
+      "shape": [
+        1,
+        1,
+        128
+      ],
+      "max_abs_diff": 0.5477108359336853,
+      "rmse_compiled_vs_eager": 0.18342535702633264,
+      "rmse_eager_vs_fp64": 0.06119393613413406,
+      "rmse_compiled_vs_fp64": 0.16421708721400458
+    },
+    {
+      "name": "grad.wavlm.encoder.pos_conv_embed.conv.parametrizations.weight.original1",
+      "ok": false,
+      "shape": [
+        768,
+        48,
+        128
+      ],
+      "max_abs_diff": 2.600481629371643,
+      "rmse_compiled_vs_eager": 0.19056416816658858,
+      "rmse_eager_vs_fp64": 0.06801005050717071,
+      "rmse_compiled_vs_fp64": 0.1609275669342362
+    },
+    {
+      "name": "grad.wavlm.encoder.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.8107573986053467,
+      "rmse_compiled_vs_eager": 0.4280085054444202,
+      "rmse_eager_vs_fp64": 0.13775470039139112,
+      "rmse_compiled_vs_fp64": 0.3572602447205023
+    },
+    {
+      "name": "grad.wavlm.encoder.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.6153372675180435,
+      "rmse_compiled_vs_eager": 0.45492499692506444,
+      "rmse_eager_vs_fp64": 0.15544033307086538,
+      "rmse_compiled_vs_fp64": 0.372776174789729
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.gru_rel_pos_const",
+      "ok": true,
+      "shape": [
+        1,
+        12,
+        1,
+        1
+      ],
+      "max_abs_diff": 0.0009978506714105606,
+      "rmse_compiled_vs_eager": 0.000460165211537147,
+      "rmse_eager_vs_fp64": 0.000142437847054693,
+      "rmse_compiled_vs_fp64": 0.00039914262415957934
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.k_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 0.3137374445796013,
+      "rmse_compiled_vs_eager": 0.021906295769325533,
+      "rmse_eager_vs_fp64": 0.006982411398946631,
+      "rmse_compiled_vs_fp64": 0.018962086704305423
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.k_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 9.19681042432785e-09,
+      "rmse_compiled_vs_eager": 1.9360878833545364e-09,
+      "rmse_eager_vs_fp64": 1.3094115225296338e-09,
+      "rmse_compiled_vs_fp64": 1.441987142359936e-09
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.v_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 1.2160585969686508,
+      "rmse_compiled_vs_eager": 0.12704197491349575,
+      "rmse_eager_vs_fp64": 0.05338647208654981,
+      "rmse_compiled_vs_fp64": 0.10992300551726422
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.v_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 0.6649096012115479,
+      "rmse_compiled_vs_eager": 0.2303642274882315,
+      "rmse_eager_vs_fp64": 0.0825093840944285,
+      "rmse_compiled_vs_fp64": 0.1902135539921852
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.q_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 0.2518127413932234,
+      "rmse_compiled_vs_eager": 0.02203607708525745,
+      "rmse_eager_vs_fp64": 0.007060302475027953,
+      "rmse_compiled_vs_fp64": 0.019196400524031456
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.q_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 0.12671565264463425,
+      "rmse_compiled_vs_eager": 0.023603446721002657,
+      "rmse_eager_vs_fp64": 0.007823642387761925,
+      "rmse_compiled_vs_fp64": 0.02214754516811221
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.out_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 1.3977859020233154,
+      "rmse_compiled_vs_eager": 0.13653243112030095,
+      "rmse_eager_vs_fp64": 0.05436638384323784,
+      "rmse_compiled_vs_fp64": 0.11597630162966299
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.out_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.4507168531417847,
+      "rmse_compiled_vs_eager": 0.4367982606967346,
+      "rmse_eager_vs_fp64": 0.14880291284718017,
+      "rmse_compiled_vs_fp64": 0.3576171827594117
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.gru_rel_pos_linear.weight",
+      "ok": true,
+      "shape": [
+        8,
+        64
+      ],
+      "max_abs_diff": 0.0013152611209079623,
+      "rmse_compiled_vs_eager": 0.00059374183095836,
+      "rmse_eager_vs_fp64": 0.00024674531899568163,
+      "rmse_compiled_vs_fp64": 0.0005757169986655787
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.gru_rel_pos_linear.bias",
+      "ok": true,
+      "shape": [
+        8
+      ],
+      "max_abs_diff": 8.105870801955462e-05,
+      "rmse_compiled_vs_eager": 7.94311360747809e-05,
+      "rmse_eager_vs_fp64": 3.519292982523185e-05,
+      "rmse_compiled_vs_fp64": 4.429746691876754e-05
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.attention.rel_attn_embed.weight",
+      "ok": false,
+      "shape": [
+        320,
+        12
+      ],
+      "max_abs_diff": 0.08814385533332825,
+      "rmse_compiled_vs_eager": 0.013357481455958883,
+      "rmse_eager_vs_fp64": 0.004331829374313233,
+      "rmse_compiled_vs_fp64": 0.011901235489343168
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.9378284215927124,
+      "rmse_compiled_vs_eager": 0.42951491841406675,
+      "rmse_eager_vs_fp64": 0.13621797908194766,
+      "rmse_compiled_vs_fp64": 0.3604224606619575
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.4668009281158447,
+      "rmse_compiled_vs_eager": 0.44271158650564957,
+      "rmse_eager_vs_fp64": 0.15105752573150205,
+      "rmse_compiled_vs_fp64": 0.3625152730052369
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.feed_forward.intermediate_dense.weight",
+      "ok": false,
+      "shape": [
+        3072,
+        768
+      ],
+      "max_abs_diff": 1.7982391715049744,
+      "rmse_compiled_vs_eager": 0.13590316414417944,
+      "rmse_eager_vs_fp64": 0.04317750449074434,
+      "rmse_compiled_vs_fp64": 0.1139719695885778
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.feed_forward.intermediate_dense.bias",
+      "ok": false,
+      "shape": [
+        3072
+      ],
+      "max_abs_diff": 0.8316537141799927,
+      "rmse_compiled_vs_eager": 0.13882800534731213,
+      "rmse_eager_vs_fp64": 0.04711703814682497,
+      "rmse_compiled_vs_fp64": 0.11381999914170594
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.feed_forward.output_dense.weight",
+      "ok": false,
+      "shape": [
+        768,
+        3072
+      ],
+      "max_abs_diff": 2.8236764669418335,
+      "rmse_compiled_vs_eager": 0.13582349900388235,
+      "rmse_eager_vs_fp64": 0.04310070506366301,
+      "rmse_compiled_vs_fp64": 0.11301407607384975
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.feed_forward.output_dense.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.2222277373075485,
+      "rmse_compiled_vs_eager": 0.41190871779570487,
+      "rmse_eager_vs_fp64": 0.14285025663672743,
+      "rmse_compiled_vs_fp64": 0.3344574752651564
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.final_layer_norm.weight",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 2.35239577293396,
+      "rmse_compiled_vs_eager": 0.4435943229924045,
+      "rmse_eager_vs_fp64": 0.13832982992360235,
+      "rmse_compiled_vs_fp64": 0.37056293220334613
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.0.final_layer_norm.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.2982711791992188,
+      "rmse_compiled_vs_eager": 0.43893392352851685,
+      "rmse_eager_vs_fp64": 0.15163369233732557,
+      "rmse_compiled_vs_fp64": 0.35642236379932923
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.gru_rel_pos_const",
+      "ok": true,
+      "shape": [
+        1,
+        12,
+        1,
+        1
+      ],
+      "max_abs_diff": 0.0008512931526638567,
+      "rmse_compiled_vs_eager": 0.00044788831940375547,
+      "rmse_eager_vs_fp64": 0.0001436699208697035,
+      "rmse_compiled_vs_fp64": 0.0004637509915600529
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.k_proj.weight",
+      "ok": true,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 0.1840878166258335,
+      "rmse_compiled_vs_eager": 0.01656845865512203,
+      "rmse_eager_vs_fp64": 0.00806334433029841,
+      "rmse_compiled_vs_fp64": 0.013164919836818953
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.k_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 8.381903171539307e-09,
+      "rmse_compiled_vs_eager": 1.9908095291373088e-09,
+      "rmse_eager_vs_fp64": 1.4931413958273243e-09,
+      "rmse_compiled_vs_fp64": 1.5414552555672331e-09
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.v_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 1.3918808698654175,
+      "rmse_compiled_vs_eager": 0.1426620030698461,
+      "rmse_eager_vs_fp64": 0.057251431718442616,
+      "rmse_compiled_vs_fp64": 0.11993071854280825
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.v_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 0.7544647455215454,
+      "rmse_compiled_vs_eager": 0.24094076208311188,
+      "rmse_eager_vs_fp64": 0.08135423759055602,
+      "rmse_compiled_vs_fp64": 0.1955636008862773
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.q_proj.weight",
+      "ok": true,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 0.25143545866012573,
+      "rmse_compiled_vs_eager": 0.01667690109788378,
+      "rmse_eager_vs_fp64": 0.00780850448455596,
+      "rmse_compiled_vs_fp64": 0.013442218469910136
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.q_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 0.10490640997886658,
+      "rmse_compiled_vs_eager": 0.017456933164811894,
+      "rmse_eager_vs_fp64": 0.0077001704559021104,
+      "rmse_compiled_vs_fp64": 0.01583025283481506
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.out_proj.weight",
+      "ok": false,
+      "shape": [
+        768,
+        768
+      ],
+      "max_abs_diff": 1.824382022023201,
+      "rmse_compiled_vs_eager": 0.13675541867024563,
+      "rmse_eager_vs_fp64": 0.055875772537124994,
+      "rmse_compiled_vs_fp64": 0.115583559393733
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.out_proj.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.512971043586731,
+      "rmse_compiled_vs_eager": 0.4132097621353489,
+      "rmse_eager_vs_fp64": 0.14274305688147532,
+      "rmse_compiled_vs_fp64": 0.33704691028855105
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.gru_rel_pos_linear.weight",
+      "ok": true,
+      "shape": [
+        8,
+        64
+      ],
+      "max_abs_diff": 0.0022794569958932698,
+      "rmse_compiled_vs_eager": 0.0006499098037157374,
+      "rmse_eager_vs_fp64": 0.00021503934616424688,
+      "rmse_compiled_vs_fp64": 0.0006468820458329904
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.attention.gru_rel_pos_linear.bias",
+      "ok": true,
+      "shape": [
+        8
+      ],
+      "max_abs_diff": 0.00038697464333381504,
+      "rmse_compiled_vs_eager": 0.00033021566919670903,
+      "rmse_eager_vs_fp64": 0.00011665317947973714,
+      "rmse_compiled_vs_fp64": 0.00021416177581878133
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.layer_norm.weight",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 2.2336655855178833,
+      "rmse_compiled_vs_eager": 0.4352054008809418,
+      "rmse_eager_vs_fp64": 0.13840112454613815,
+      "rmse_compiled_vs_fp64": 0.36496998076239584
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.layer_norm.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.5196129083633423,
+      "rmse_compiled_vs_eager": 0.41692894275914666,
+      "rmse_eager_vs_fp64": 0.14442624412874538,
+      "rmse_compiled_vs_fp64": 0.3402408504835244
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.feed_forward.intermediate_dense.weight",
+      "ok": false,
+      "shape": [
+        3072,
+        768
+      ],
+      "max_abs_diff": 1.5904528498649597,
+      "rmse_compiled_vs_eager": 0.1365855389233998,
+      "rmse_eager_vs_fp64": 0.04287589255156854,
+      "rmse_compiled_vs_fp64": 0.11407374680822582
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.feed_forward.intermediate_dense.bias",
+      "ok": false,
+      "shape": [
+        3072
+      ],
+      "max_abs_diff": 0.6583764478564262,
+      "rmse_compiled_vs_eager": 0.13462367308556297,
+      "rmse_eager_vs_fp64": 0.043973159770124684,
+      "rmse_compiled_vs_fp64": 0.11246809071965072
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.feed_forward.output_dense.weight",
+      "ok": false,
+      "shape": [
+        768,
+        3072
+      ],
+      "max_abs_diff": 2.475372791290283,
+      "rmse_compiled_vs_eager": 0.12819850052780374,
+      "rmse_eager_vs_fp64": 0.04167234438208604,
+      "rmse_compiled_vs_fp64": 0.10766439932698525
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.feed_forward.output_dense.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.2809899896383286,
+      "rmse_compiled_vs_eager": 0.3852452141915556,
+      "rmse_eager_vs_fp64": 0.13155165299612193,
+      "rmse_compiled_vs_fp64": 0.3196977685750675
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.final_layer_norm.weight",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 2.039094567298889,
+      "rmse_compiled_vs_eager": 0.4214657424620348,
+      "rmse_eager_vs_fp64": 0.1328372592031282,
+      "rmse_compiled_vs_fp64": 0.3621583621202628
+    },
+    {
+      "name": "grad.wavlm.encoder.layers.1.final_layer_norm.bias",
+      "ok": true,
+      "shape": [
+        768
+      ],
+      "max_abs_diff": 1.3663897812366486,
+      "rmse_compiled_vs_eager": 0.40740403480511633,
+      "rmse_eager_vs_fp64": 0.13950852799771285,
+      "rmse_compiled_vs_fp64": 0.33846706337307436
+    },
+    {
+      "name": "grad.lm_head.weight",
+      "ok": false,
+      "shape": [
+        32,
+        768
+      ],
+      "max_abs_diff": 33.675679445266724,
+      "rmse_compiled_vs_eager": 3.6050860559847213,
+      "rmse_eager_vs_fp64": 1.153596348621711,
+      "rmse_compiled_vs_fp64": 3.0561960658070886
+    },
+    {
+      "name": "grad.lm_head.bias",
+      "ok": true,
+      "shape": [
+        32
+      ],
+      "max_abs_diff": 13.072383642196655,
+      "rmse_compiled_vs_eager": 3.470813608339654,
+      "rmse_eager_vs_fp64": 1.2155017773449275,
+      "rmse_compiled_vs_fp64": 2.865288693853132
+    }
+  ]
+}

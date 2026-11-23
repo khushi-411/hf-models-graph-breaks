@@ -86,8 +86,15 @@ File **one issue per root cause**, not one per model. A break in shared code
 - [`known_issues.yaml`](known_issues.yaml) lists each root cause and its upstream
   issue. Breaks are matched by file, function and reason text. Line numbers are
   not used because they change between versions.
-- [`issues/`](issues/) holds local issue drafts. [`issues/repros/`](issues/repros/)
-  holds minimal repro scripts.
+- Local issue drafts, one per root cause, split by where the fix goes:
+  - [`issues/`](issues/): PyTorch (`pytorch/pytorch`), with repros in [`issues/repros/`](issues/repros/).
+  - [`issues/hf/`](issues/hf/): transformers model code and HF Hub remote code, with repros in
+    [`issues/hf/repros/`](issues/hf/repros/).
+  - [`issues/harness/`](issues/harness/): bugs in this repo's own harness.
+- `python -m graph_breaks.affected` writes an "Affected models in this sweep" table into
+  every draft, built from the stored results. Rerun it after new results come in.
+- `python -m graph_breaks.accuracy --model X [--device cuda]` checks that `torch.compile` gives the same numbers
+  as eager (every output and gradient, against an fp64 reference); `--summarize` writes `ACCURACY.md`.
 - `SUMMARY.md` tags every break with its issue. A break that matches no entry is
   tagged **NEW**, and `summarize` prints a YAML stub for it that you can paste in.
 
@@ -98,9 +105,9 @@ Triage loop for a NEW break:
    `huggingface/transformers`; Dynamo should support it → `pytorch/pytorch`
    (label `module: dynamo`).
 3. Check whether it's still on `main`:
-   `PYTHONPATH=../transformers/src python issues/repros/<repro>.py`
+   `PYTHONPATH=../transformers/src python issues/repros/<repro>.py` (or `issues/hf/repros/`)
 4. Search upstream for an existing issue. If there isn't one, write a draft in
-   `issues/<id>.md`.
+   `issues/<id>.md` (PyTorch) or `issues/hf/<id>.md` (transformers / Hub).
 5. Paste the stub into `known_issues.yaml` (status `draft`). After filing, set
    `issue:` to the URL and `status: open`. When it's fixed, set `fixed-upstream`
    and rerun to confirm the break is gone.

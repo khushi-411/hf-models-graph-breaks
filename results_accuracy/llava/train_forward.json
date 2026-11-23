@@ -1,0 +1,633 @@
+{
+  "model": "llava",
+  "hf_id": "llava-hf/llava-1.5-7b-hf",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:24:03+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float16",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.01,
+  "checked": 52,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.loss",
+      "ok": true,
+      "shape": [],
+      "max_abs_diff": 7.62939453125e-06,
+      "rmse_compiled_vs_eager": 7.62939453125e-06,
+      "rmse_eager_vs_fp64": 3.4332275390625e-05,
+      "rmse_compiled_vs_fp64": 2.6702880859375e-05
+    },
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        592,
+        32064
+      ],
+      "max_abs_diff": 0.00390625,
+      "rmse_compiled_vs_eager": 0.0007156682682741078,
+      "rmse_eager_vs_fp64": 0.0006161477156564802,
+      "rmse_compiled_vs_fp64": 0.0005740902790861574
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        577,
+        1024
+      ],
+      "max_abs_diff": 0.0078125,
+      "rmse_compiled_vs_eager": 0.0007341008003392501,
+      "rmse_eager_vs_fp64": 0.0007669251434972616,
+      "rmse_compiled_vs_fp64": 0.0007180529478240277
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        576,
+        1024
+      ],
+      "max_abs_diff": 0.0009765625,
+      "rmse_compiled_vs_eager": 0.0001929643176411622,
+      "rmse_eager_vs_fp64": 0.0001884379873562398,
+      "rmse_compiled_vs_fp64": 0.0001780062965241387
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        576,
+        1024
+      ],
+      "max_abs_diff": 0.0009765625,
+      "rmse_compiled_vs_eager": 0.00019371600179925551,
+      "rmse_eager_vs_fp64": 0.00018868114132473496,
+      "rmse_compiled_vs_fp64": 0.00017859331725055564
+    },
+    {
+      "name": "out.image_outputs.hidden_states[1]",
+      "ok": true,
+      "shape": [
+        2,
+        577,
+        1024
+      ],
+      "max_abs_diff": 0.0078125,
+      "rmse_compiled_vs_eager": 0.0005470774247385954,
+      "rmse_eager_vs_fp64": 0.0005976922627588864,
+      "rmse_compiled_vs_fp64": 0.0005488502957489451
+    },
+    {
+      "name": "grad.model.vision_tower.embeddings.class_embedding",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 7.271766662597656e-06,
+      "rmse_compiled_vs_eager": 1.6697800848573715e-06,
+      "rmse_eager_vs_fp64": 2.391578601845218e-06,
+      "rmse_compiled_vs_fp64": 2.241595167522281e-06
+    },
+    {
+      "name": "grad.model.vision_tower.embeddings.patch_embedding.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        3,
+        14,
+        14
+      ],
+      "max_abs_diff": 5.53131103515625e-05,
+      "rmse_compiled_vs_eager": 1.0809739233969647e-05,
+      "rmse_eager_vs_fp64": 1.4375222388983348e-05,
+      "rmse_compiled_vs_fp64": 1.3554573531760259e-05
+    },
+    {
+      "name": "grad.model.vision_tower.embeddings.position_embedding.weight",
+      "ok": true,
+      "shape": [
+        577,
+        1024
+      ],
+      "max_abs_diff": 7.271766662597656e-06,
+      "rmse_compiled_vs_eager": 4.575099237495799e-07,
+      "rmse_eager_vs_fp64": 6.321522104429421e-07,
+      "rmse_compiled_vs_fp64": 5.981941243979975e-07
+    },
+    {
+      "name": "grad.model.vision_tower.pre_layrnorm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 2.288818359375e-05,
+      "rmse_compiled_vs_eager": 5.322959815506502e-06,
+      "rmse_eager_vs_fp64": 7.651283853494168e-06,
+      "rmse_compiled_vs_fp64": 7.05427786714906e-06
+    },
+    {
+      "name": "grad.model.vision_tower.pre_layrnorm.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 1.2930311439635801e-05,
+      "rmse_eager_vs_fp64": 6.352049322097584e-05,
+      "rmse_compiled_vs_fp64": 6.280235989283138e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 5.9604644775390625e-06,
+      "rmse_compiled_vs_eager": 1.1242184155329522e-06,
+      "rmse_eager_vs_fp64": 1.987533190602213e-06,
+      "rmse_compiled_vs_fp64": 1.9852140194444354e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.k_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.7550926208496094e-06,
+      "rmse_compiled_vs_eager": 1.1102786984166555e-06,
+      "rmse_eager_vs_fp64": 1.9751391146736637e-06,
+      "rmse_compiled_vs_fp64": 1.9839225763908476e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 7.62939453125e-06,
+      "rmse_compiled_vs_eager": 1.1411487949931069e-06,
+      "rmse_eager_vs_fp64": 2.4957125543997145e-06,
+      "rmse_compiled_vs_fp64": 2.4770194416739175e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.v_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 9.16197130314924e-06,
+      "rmse_eager_vs_fp64": 5.544038529763955e-05,
+      "rmse_compiled_vs_fp64": 5.515036510175954e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.q_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 4.172325134277344e-06,
+      "rmse_compiled_vs_eager": 8.175399174227187e-07,
+      "rmse_eager_vs_fp64": 1.2092860932562064e-06,
+      "rmse_compiled_vs_fp64": 1.2074089979272245e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.q_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.337860107421875e-06,
+      "rmse_compiled_vs_eager": 8.581661238655006e-07,
+      "rmse_eager_vs_fp64": 1.4825162490760167e-06,
+      "rmse_compiled_vs_fp64": 1.505052001967898e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.out_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 3.814697265625e-06,
+      "rmse_compiled_vs_eager": 2.653191575049079e-07,
+      "rmse_eager_vs_fp64": 8.65401917602839e-07,
+      "rmse_compiled_vs_fp64": 8.510064724696121e-07
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.self_attn.out_proj.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 9.47132567180391e-06,
+      "rmse_eager_vs_fp64": 5.5348737021087694e-05,
+      "rmse_compiled_vs_fp64": 5.514372993402512e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.layer_norm1.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 7.569789886474609e-06,
+      "rmse_compiled_vs_eager": 1.7241334131156047e-06,
+      "rmse_eager_vs_fp64": 2.0572622257072783e-06,
+      "rmse_compiled_vs_fp64": 1.8953814947343565e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.layer_norm1.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.0517578125e-05,
+      "rmse_compiled_vs_eager": 5.519065038900683e-06,
+      "rmse_eager_vs_fp64": 2.8131250656564033e-05,
+      "rmse_compiled_vs_fp64": 2.7846695894540683e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.mlp.fc1.weight",
+      "ok": true,
+      "shape": [
+        4096,
+        1024
+      ],
+      "max_abs_diff": 1.0728836059570312e-05,
+      "rmse_compiled_vs_eager": 2.03721610550761e-06,
+      "rmse_eager_vs_fp64": 2.4067310298255916e-06,
+      "rmse_compiled_vs_fp64": 2.0056576419200824e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.mlp.fc1.bias",
+      "ok": true,
+      "shape": [
+        4096
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 2.944889548100828e-06,
+      "rmse_eager_vs_fp64": 1.3582180716378571e-05,
+      "rmse_compiled_vs_fp64": 1.3493137011697173e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.mlp.fc2.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        4096
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 2.221771195452337e-06,
+      "rmse_eager_vs_fp64": 9.162512856384369e-06,
+      "rmse_compiled_vs_fp64": 9.084079318367598e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.mlp.fc2.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 8.9272851193738e-06,
+      "rmse_eager_vs_fp64": 5.341883342472636e-05,
+      "rmse_compiled_vs_fp64": 5.2997366920104e-05
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.layer_norm2.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.0967254638671875e-05,
+      "rmse_compiled_vs_eager": 3.003424479761801e-06,
+      "rmse_eager_vs_fp64": 3.371798882689492e-06,
+      "rmse_compiled_vs_fp64": 2.931399504436006e-06
+    },
+    {
+      "name": "grad.model.vision_tower.encoder.layers.0.layer_norm2.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.0517578125e-05,
+      "rmse_compiled_vs_eager": 4.9913138403636924e-06,
+      "rmse_eager_vs_fp64": 1.8866451816242177e-05,
+      "rmse_compiled_vs_fp64": 1.852952945785076e-05
+    },
+    {
+      "name": "grad.model.multi_modal_projector.linear_1.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 6.827070415879584e-06,
+      "rmse_eager_vs_fp64": 1.7017467872611422e-05,
+      "rmse_compiled_vs_fp64": 1.6918228479430467e-05
+    },
+    {
+      "name": "grad.model.multi_modal_projector.linear_1.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 1.3273129871474765e-05,
+      "rmse_eager_vs_fp64": 8.311712748764353e-05,
+      "rmse_compiled_vs_fp64": 8.306794867054027e-05
+    },
+    {
+      "name": "grad.model.multi_modal_projector.linear_2.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 8.869473479960237e-06,
+      "rmse_eager_vs_fp64": 4.406043755639293e-05,
+      "rmse_compiled_vs_fp64": 4.4176230812660006e-05
+    },
+    {
+      "name": "grad.model.multi_modal_projector.linear_2.bias",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 0.000244140625,
+      "rmse_compiled_vs_eager": 3.9996543854663345e-05,
+      "rmse_eager_vs_fp64": 0.0002578984015257498,
+      "rmse_compiled_vs_fp64": 0.0002595434118837703
+    },
+    {
+      "name": "grad.model.language_model.embed_tokens.weight",
+      "ok": true,
+      "shape": [
+        32064,
+        1024
+      ],
+      "max_abs_diff": 9.715557098388672e-06,
+      "rmse_compiled_vs_eager": 7.61277466294283e-08,
+      "rmse_eager_vs_fp64": 7.536646359820359e-08,
+      "rmse_compiled_vs_fp64": 7.277544057046702e-08
+    },
+    {
+      "name": "grad.model.language_model.layers.0.self_attn.q_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 1.4709665072205762e-06,
+      "rmse_eager_vs_fp64": 1.6014080418482223e-06,
+      "rmse_compiled_vs_fp64": 1.456669745475435e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.0.self_attn.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 1.1265277862548828e-05,
+      "rmse_compiled_vs_eager": 1.6687174813138124e-06,
+      "rmse_eager_vs_fp64": 2.017890687659611e-06,
+      "rmse_compiled_vs_fp64": 1.947454733927983e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.0.self_attn.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 5.879031975481431e-06,
+      "rmse_eager_vs_fp64": 3.530426360912294e-05,
+      "rmse_compiled_vs_fp64": 3.519819115608029e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.self_attn.o_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 5.672987200311129e-06,
+      "rmse_eager_vs_fp64": 3.565484028312201e-05,
+      "rmse_compiled_vs_fp64": 3.556294704883674e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.mlp.gate_proj.weight",
+      "ok": true,
+      "shape": [
+        2048,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 2.3577075065165984e-06,
+      "rmse_eager_vs_fp64": 1.0098222948493879e-05,
+      "rmse_compiled_vs_fp64": 1.0061921683816844e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.mlp.up_proj.weight",
+      "ok": true,
+      "shape": [
+        2048,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 2.311768523424216e-06,
+      "rmse_eager_vs_fp64": 1.046655608114641e-05,
+      "rmse_compiled_vs_fp64": 1.0477447837092374e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.mlp.down_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        2048
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 2.1919471121459357e-06,
+      "rmse_eager_vs_fp64": 1.0571078584350889e-05,
+      "rmse_compiled_vs_fp64": 1.0541600673153398e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.input_layernorm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 3.994207459258899e-06,
+      "rmse_eager_vs_fp64": 2.3753228800639484e-05,
+      "rmse_compiled_vs_fp64": 2.355011749571137e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.0.post_attention_layernorm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 3.0517578125e-05,
+      "rmse_compiled_vs_eager": 3.474638092369536e-06,
+      "rmse_eager_vs_fp64": 1.293588144377942e-05,
+      "rmse_compiled_vs_fp64": 1.2860425423404599e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.1.self_attn.q_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 2.002716064453125e-05,
+      "rmse_compiled_vs_eager": 1.4192344552279195e-06,
+      "rmse_eager_vs_fp64": 1.6364764182663742e-06,
+      "rmse_compiled_vs_fp64": 1.3316882016958996e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.1.self_attn.k_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 9.775161743164062e-06,
+      "rmse_compiled_vs_eager": 1.308306675912907e-06,
+      "rmse_eager_vs_fp64": 1.870698969784241e-06,
+      "rmse_compiled_vs_fp64": 1.7931244007229687e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.1.self_attn.v_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 0.0001220703125,
+      "rmse_compiled_vs_eager": 4.299922859124725e-06,
+      "rmse_eager_vs_fp64": 2.983964184738239e-05,
+      "rmse_compiled_vs_fp64": 2.982858015509051e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.1.self_attn.o_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 4.305767543572184e-06,
+      "rmse_eager_vs_fp64": 2.878728423626549e-05,
+      "rmse_compiled_vs_fp64": 2.8748234518186863e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.1.mlp.gate_proj.weight",
+      "ok": true,
+      "shape": [
+        2048,
+        1024
+      ],
+      "max_abs_diff": 3.0517578125e-05,
+      "rmse_compiled_vs_eager": 1.4259253098951565e-06,
+      "rmse_eager_vs_fp64": 7.561951698800463e-06,
+      "rmse_compiled_vs_fp64": 7.527358811930097e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.1.mlp.up_proj.weight",
+      "ok": true,
+      "shape": [
+        2048,
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 1.4075501112862563e-06,
+      "rmse_eager_vs_fp64": 8.111702799297238e-06,
+      "rmse_compiled_vs_fp64": 8.087033444637328e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.1.mlp.down_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        2048
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 1.1495699935243033e-06,
+      "rmse_eager_vs_fp64": 7.545768746573525e-06,
+      "rmse_compiled_vs_fp64": 7.535816045747437e-06
+    },
+    {
+      "name": "grad.model.language_model.layers.1.input_layernorm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 3.362865896413797e-06,
+      "rmse_eager_vs_fp64": 2.0274723508757645e-05,
+      "rmse_compiled_vs_fp64": 1.9982056361015945e-05
+    },
+    {
+      "name": "grad.model.language_model.layers.1.post_attention_layernorm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 1.52587890625e-05,
+      "rmse_compiled_vs_eager": 2.0942038410928607e-06,
+      "rmse_eager_vs_fp64": 1.0166116124018959e-05,
+      "rmse_compiled_vs_fp64": 1.018609214589501e-05
+    },
+    {
+      "name": "grad.model.language_model.norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.103515625e-05,
+      "rmse_compiled_vs_eager": 4.043801761013873e-06,
+      "rmse_eager_vs_fp64": 0.00017288806588480968,
+      "rmse_compiled_vs_fp64": 0.00017255591971119494
+    },
+    {
+      "name": "grad.lm_head.weight",
+      "ok": true,
+      "shape": [
+        32064,
+        1024
+      ],
+      "max_abs_diff": 0.0009765625,
+      "rmse_compiled_vs_eager": 9.003923619632286e-07,
+      "rmse_eager_vs_fp64": 6.665147284061026e-06,
+      "rmse_compiled_vs_fp64": 6.6696564768730165e-06
+    }
+  ]
+}

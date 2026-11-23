@@ -1,0 +1,68 @@
+{
+  "model": "paligemma",
+  "hf_id": "google/paligemma2-3b-pt-224",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-22T10:42:45+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": false,
+  "tol": 0.001,
+  "checked": 3,
+  "failed": [
+    "out.image_outputs.last_hidden_state"
+  ],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        272,
+        257152
+      ],
+      "max_abs_diff": 0.0008326470851898193,
+      "rmse_compiled_vs_eager": 0.0001329302855878299,
+      "rmse_eager_vs_fp64": 5.178718921211366e-07,
+      "rmse_compiled_vs_fp64": 0.00013292803611113962
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": false,
+      "shape": [
+        2,
+        256,
+        1152
+      ],
+      "max_abs_diff": 0.0015227198600769043,
+      "rmse_compiled_vs_eager": 0.0002995817623329193,
+      "rmse_eager_vs_fp64": 8.913159239848939e-07,
+      "rmse_compiled_vs_fp64": 0.000299578045986308
+    },
+    {
+      "name": "out.image_outputs.pooler_output",
+      "ok": true,
+      "shape": [
+        2,
+        256,
+        512
+      ],
+      "max_abs_diff": 0.000944972038269043,
+      "rmse_compiled_vs_eager": 0.00020344316089970733,
+      "rmse_eager_vs_fp64": 7.337492654627704e-07,
+      "rmse_compiled_vs_fp64": 0.00020343986577600582
+    }
+  ]
+}

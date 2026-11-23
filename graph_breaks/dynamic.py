@@ -180,6 +180,8 @@ def input_sizes(batch: int, seq: int, audio: int):
 
 
 def _loss(out):
+    if isinstance(out, torch.Tensor):  # models that return a bare tensor (e.g. JevForDecision scores)
+        return out.float().sum()
     loss = getattr(out, "loss", None)
     if loss is None:
         first = out[0] if isinstance(out, (tuple, list)) else next(

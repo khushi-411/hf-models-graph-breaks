@@ -1,0 +1,283 @@
+{
+  "model": "nemotron_h",
+  "hf_id": "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-22T11:33:30+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": true,
+  "fp64_error": null,
+  "accurate": false,
+  "tol": 0.01,
+  "checked": 22,
+  "failed": [
+    "out.logits"
+  ],
+  "tensors": [
+    {
+      "name": "out.loss",
+      "ok": true,
+      "shape": [],
+      "max_abs_diff": 0.00029754638671875,
+      "rmse_compiled_vs_eager": 0.00029754638671875,
+      "rmse_eager_vs_fp64": 3.528594970703125e-05,
+      "rmse_compiled_vs_fp64": 0.00026226043701171875
+    },
+    {
+      "name": "out.logits",
+      "ok": false,
+      "shape": [
+        2,
+        32,
+        32000
+      ],
+      "max_abs_diff": 0.015625,
+      "rmse_compiled_vs_eager": 0.0027675015024336775,
+      "rmse_eager_vs_fp64": 0.0031720349166676786,
+      "rmse_compiled_vs_fp64": 0.0030773872006234857
+    },
+    {
+      "name": "grad.model.embeddings.weight",
+      "ok": true,
+      "shape": [
+        32000,
+        512
+      ],
+      "max_abs_diff": 0.00146484375,
+      "rmse_compiled_vs_eager": 8.107011552595886e-06,
+      "rmse_eager_vs_fp64": 8.662464113985703e-06,
+      "rmse_compiled_vs_fp64": 8.172952123167157e-06
+    },
+    {
+      "name": "grad.model.layers.0.norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 0.0001068115234375,
+      "rmse_compiled_vs_eager": 2.826440892580137e-05,
+      "rmse_eager_vs_fp64": 2.899836683114354e-05,
+      "rmse_compiled_vs_fp64": 2.885655052243017e-05
+    },
+    {
+      "name": "grad.model.layers.0.mixer.dt_bias",
+      "ok": true,
+      "shape": [
+        16
+      ],
+      "max_abs_diff": 3.725290298461914e-09,
+      "rmse_compiled_vs_eager": 1.2862660452310258e-09,
+      "rmse_eager_vs_fp64": 3.508207736268715e-09,
+      "rmse_compiled_vs_fp64": 2.69091559400664e-09
+    },
+    {
+      "name": "grad.model.layers.0.mixer.A_log",
+      "ok": true,
+      "shape": [
+        16
+      ],
+      "max_abs_diff": 1.0477378964424133e-09,
+      "rmse_compiled_vs_eager": 5.689047482969784e-10,
+      "rmse_eager_vs_fp64": 4.1360890644482584e-10,
+      "rmse_compiled_vs_fp64": 5.049285796863038e-10
+    },
+    {
+      "name": "grad.model.layers.0.mixer.D",
+      "ok": true,
+      "shape": [
+        16
+      ],
+      "max_abs_diff": 0.000244140625,
+      "rmse_compiled_vs_eager": 9.569113155068155e-05,
+      "rmse_eager_vs_fp64": 0.00010588668338111271,
+      "rmse_compiled_vs_fp64": 0.00014606288319425804
+    },
+    {
+      "name": "grad.model.layers.0.mixer.conv1d.weight",
+      "ok": true,
+      "shape": [
+        1088,
+        1,
+        4
+      ],
+      "max_abs_diff": 0.001953125,
+      "rmse_compiled_vs_eager": 0.0003122127994655336,
+      "rmse_eager_vs_fp64": 0.0003536415937999486,
+      "rmse_compiled_vs_fp64": 0.0003540401864983343
+    },
+    {
+      "name": "grad.model.layers.0.mixer.conv1d.bias",
+      "ok": true,
+      "shape": [
+        1088
+      ],
+      "max_abs_diff": 0.00390625,
+      "rmse_compiled_vs_eager": 0.0007900700440243526,
+      "rmse_eager_vs_fp64": 0.0008612415404423016,
+      "rmse_compiled_vs_fp64": 0.0008354980963357006
+    },
+    {
+      "name": "grad.model.layers.0.mixer.in_proj.weight",
+      "ok": true,
+      "shape": [
+        2128,
+        512
+      ],
+      "max_abs_diff": 0.0003662109375,
+      "rmse_compiled_vs_eager": 2.9315817117929156e-05,
+      "rmse_eager_vs_fp64": 3.278939525779303e-05,
+      "rmse_compiled_vs_fp64": 3.189664214516335e-05
+    },
+    {
+      "name": "grad.model.layers.0.mixer.norm.weight",
+      "ok": true,
+      "shape": [
+        1024
+      ],
+      "max_abs_diff": 6.341934204101562e-05,
+      "rmse_compiled_vs_eager": 1.2032044735046845e-05,
+      "rmse_eager_vs_fp64": 1.4221016772967789e-05,
+      "rmse_compiled_vs_fp64": 1.3928058185377031e-05
+    },
+    {
+      "name": "grad.model.layers.0.mixer.out_proj.weight",
+      "ok": true,
+      "shape": [
+        512,
+        1024
+      ],
+      "max_abs_diff": 0.00048828125,
+      "rmse_compiled_vs_eager": 4.992190710326463e-05,
+      "rmse_eager_vs_fp64": 6.252727469796006e-05,
+      "rmse_compiled_vs_fp64": 6.0213746853433496e-05
+    },
+    {
+      "name": "grad.model.layers.1.norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 3.814697265625e-05,
+      "rmse_compiled_vs_eager": 8.329486098268201e-06,
+      "rmse_eager_vs_fp64": 8.990356209740133e-06,
+      "rmse_compiled_vs_fp64": 8.005620758256008e-06
+    },
+    {
+      "name": "grad.model.layers.1.mixer.q_proj.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512
+      ],
+      "max_abs_diff": 2.288818359375e-05,
+      "rmse_compiled_vs_eager": 3.2757618658812206e-06,
+      "rmse_eager_vs_fp64": 4.113592735537502e-06,
+      "rmse_compiled_vs_fp64": 3.884591149104912e-06
+    },
+    {
+      "name": "grad.model.layers.1.mixer.k_proj.weight",
+      "ok": true,
+      "shape": [
+        128,
+        512
+      ],
+      "max_abs_diff": 3.4332275390625e-05,
+      "rmse_compiled_vs_eager": 6.762090210558748e-06,
+      "rmse_eager_vs_fp64": 8.282246200799386e-06,
+      "rmse_compiled_vs_fp64": 7.936852905066033e-06
+    },
+    {
+      "name": "grad.model.layers.1.mixer.v_proj.weight",
+      "ok": true,
+      "shape": [
+        128,
+        512
+      ],
+      "max_abs_diff": 0.000244140625,
+      "rmse_compiled_vs_eager": 3.352454828713219e-05,
+      "rmse_eager_vs_fp64": 3.62916992727003e-05,
+      "rmse_compiled_vs_fp64": 3.459082754526331e-05
+    },
+    {
+      "name": "grad.model.layers.1.mixer.o_proj.weight",
+      "ok": true,
+      "shape": [
+        512,
+        512
+      ],
+      "max_abs_diff": 9.1552734375e-05,
+      "rmse_compiled_vs_eager": 1.5365749410184976e-05,
+      "rmse_eager_vs_fp64": 1.7484317521396644e-05,
+      "rmse_compiled_vs_fp64": 1.6461406584115172e-05
+    },
+    {
+      "name": "grad.model.layers.2.norm.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.57763671875e-05,
+      "rmse_compiled_vs_eager": 1.3392947484582848e-05,
+      "rmse_eager_vs_fp64": 1.647407431035581e-05,
+      "rmse_compiled_vs_fp64": 1.602953459990196e-05
+    },
+    {
+      "name": "grad.model.layers.2.mixer.up_proj.weight",
+      "ok": true,
+      "shape": [
+        1024,
+        512
+      ],
+      "max_abs_diff": 0.000244140625,
+      "rmse_compiled_vs_eager": 1.9660295659398553e-05,
+      "rmse_eager_vs_fp64": 2.592867857255009e-05,
+      "rmse_compiled_vs_fp64": 2.515419550541348e-05
+    },
+    {
+      "name": "grad.model.layers.2.mixer.down_proj.weight",
+      "ok": true,
+      "shape": [
+        512,
+        1024
+      ],
+      "max_abs_diff": 0.00018310546875,
+      "rmse_compiled_vs_eager": 1.7208986506045475e-05,
+      "rmse_eager_vs_fp64": 2.0197644394354296e-05,
+      "rmse_compiled_vs_fp64": 1.9728556112237303e-05
+    },
+    {
+      "name": "grad.model.norm_f.weight",
+      "ok": true,
+      "shape": [
+        512
+      ],
+      "max_abs_diff": 4.57763671875e-05,
+      "rmse_compiled_vs_eager": 1.4786123549250673e-05,
+      "rmse_eager_vs_fp64": 1.7699381825077985e-05,
+      "rmse_compiled_vs_fp64": 1.7075175725869818e-05
+    },
+    {
+      "name": "grad.lm_head.weight",
+      "ok": true,
+      "shape": [
+        32000,
+        512
+      ],
+      "max_abs_diff": 0.000732421875,
+      "rmse_compiled_vs_eager": 4.102154073462463e-06,
+      "rmse_eager_vs_fp64": 5.0419301261864076e-06,
+      "rmse_compiled_vs_fp64": 4.8984621434385955e-06
+    }
+  ]
+}

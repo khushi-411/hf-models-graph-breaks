@@ -110,6 +110,8 @@ issues:
   # dynamic=True, 3 input sizes) -> results_dynamic/. Except sdpa-is-causal-symbool
   # (a graph break), these are recompiles or compile errors, so nothing in
   # SUMMARY.md (static results/) matches them.
+  # Recompile-only entries set `function` / `match` narrowly so they never steal
+  # a graph break from another entry (matching is first-match).
   # ----------------------------------------------------------------------- #
   - id: sdpa-is-causal-symbool
     title: "Dynamo passes a SymBool to `F.scaled_dot_product_attention(is_causal=...)` -> 'must be bool, not SymBool' graph break under dynamic shapes"
@@ -258,6 +260,60 @@ issues:
       Hard compile error. pythia (GPT-NeoX parallel residual, fp16 config) train_forward on CPU: the two
       output-projection bias grads are one fused column sum with two stores. fp16 and bf16 fail with static
       and dynamic shapes; fp32 is fine. Repro issues/repros/inductor_cpp_half_reduction_redeclare.py.
+      Also phi (phi-2, fp16) train on CPU with default torch.compile (accuracy check).
+
+  # --- Dynamic-shape recompiles outside Inductor (found in the Nov 2026 triage of results_dynamic*/) ---
+  - id: sdpa-efficient-backward-bias-align-guard
+    title: "Meta for `_scaled_dot_product_efficient_attention_backward` branches on `attn_bias.size(-1) % 16` -> CUDA train recompiles when seq_len crosses a multiple of 16"
+    file: torch/_meta_registrations.py
+    function: meta__scaled_dot_product_efficient_backward
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/sdpa-efficient-backward-bias-align-guard.md
+    notes: >
+      `lastDimAligned = lastDim if lastDim % 16 == 0 else ...` (:6981, also :7336 in
+      meta__efficient_attention_backward). Fix: ((lastDim + 15) // 16) * 16. CUDA train only (T5-style
+      position bias passed as attn_mask): t5, mt5 2/2/0, inkling 2/1/0 graphs per size. beit, swin
+      install the guard but do not recompile.
+
+  - id: one-hot-num-classes-symint
+    title: "`F.one_hot` schema takes `int num_classes` -> a symbolic class count is specialized"
+    file: transformers/models/longt5/modeling_longt5.py
+    function: _create_global_aggregates
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/one-hot-num-classes-symint.md
+    notes: >
+      long_t5 `one_hot(block_ids, global_seq_len + 1)` with global_seq_len = seq // 16: guard
+      (1 + seq // 16) == 3, graphs per size 2/0/2 (eval+train, CPU+CUDA). Fix: SymInt in the schema
+      (the py decomposition already handles it). HF workaround in the draft.
+
+  - id: native-eager-router-traced-by-dynamo
+    title: "Dynamo compiles `torch/_native/registry.py:eager_router` as a user frame (guards on `_router_active` + duck sizing -> recompile)"
+    file: torch/_native/registry.py
+    function: eager_router
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/native-eager-router-traced-by-dynamo.md
+    notes: >
+      CUDA only (the _native overrides are CUDA). deberta dynamic eval 22/1/0, train 21/1/0 (CPU 20/0/0),
+      reached from the eager region after the deberta-att-span-item break. Fix: skip torch/_native in trace_rules.
+
+  - id: dynamo-unknown-stride-guard-source
+    title: "Dynamo recompile reason prints `unknown source hidden_states.stride()[0], please file a bug`"
+    file: transformers/models/encodec/modeling_encodec.py
+    function: _pad1d
+    match: "unknown source"
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/dynamo-unknown-stride-guard-source.md
+    notes: >
+      Diagnostics only (the guard itself is right). encodec eval, CPU+CUDA. The recompiles there are a
+      knock-on of encodec-conv-params-buffers. No standalone repro yet.
 
   # ======================================================================= #
   # transformers-side root causes
@@ -270,7 +326,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/problem-type-config-mutation.md
+    draft: issues/hf/problem-type-config-mutation.md
     notes: >
       Not a dynamic-shape issue: the 2nd call always recompiles, whatever the input size (also with
       static shapes). Every *ForSequenceClassification / *ForImageClassification train run with
@@ -296,11 +352,80 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/nemotron-h-pad-size-guard.md
+    draft: issues/hf/nemotron-h-pad-size-guard.md
     notes: >
       Guard ((16 - seq_len % 16) % 16) <= 0. Padding to a multiple of 16 is branch-free if the pad
       is always applied (F.pad with 0 is a no-op). eval 1 recompile; train 1 left once
       conv-backward-stride-guard is fixed.
+
+  - id: placeholder-check-fstring-symint
+    title: "Placeholder checks build `f\"... features: {n_image_features}\"` eagerly -> SymInt formatted to str -> feature count specialized"
+    file: transformers/models/llava/modeling_llava.py
+    function: get_placeholder_mask
+    match: "features: {n_"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/placeholder-check-fstring-symint.md
+    notes: >
+      Guard on image_features.size(0)*size(1) (llava, gemma3_vlm, paligemma) or n_audio_features
+      (omniasr). Fix: pass `lambda: f"..."` (torch_compilable_check already accepts a callable).
+      41 call sites in models/*/modeling_*.py.
+
+  - id: detr-mask-interpolate-batch-as-channels
+    title: "DETR-family backbones `interpolate(pixel_mask[None])` treat batch as channels -> CUDA `_upsample_nearest` guards batch <= 3"
+    file: transformers/models/rt_detr/modeling_rt_detr.py
+    function: forward
+    match: "_upsample_nearest"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/detr-mask-interpolate-batch-as-channels.md
+    notes: >
+      rt_detr CUDA eval 2/0/1 graphs for batch 2/3/4. Fix: pixel_mask[:, None] ... [:, 0]. Same line in
+      15 DETR-family models.
+
+  - id: funnel-pos-list-range-seq-len
+    title: "Funnel `get_position_embeds`: `pos = list(range(seq_len))` specializes seq_len"
+    file: transformers/models/funnel/modeling_funnel.py
+    function: get_position_embeds
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/funnel-pos-list-range-seq-len.md
+    notes: >
+      Deliberate (comment: static for export). Every seq length recompiles: 2/2/1 graphs per size,
+      CPU and CUDA.
+
+  - &seqloop
+    id: python-loop-over-seq-len
+    title: "Python `for` loop over a seq-len-derived range (MiniMax lightning-attention blocks, RWKV CPU WKV) -> recompile per length"
+    file: transformers/models/minimax/modeling_minimax.py
+    function: forward
+    match: "range(num_blocks)"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/python-loop-over-seq-len.md
+    notes: >
+      minimax `for i in range(num_blocks)` (guard (seq + 15) // 16 == 2), rwkv `for current_index in
+      range(seq_length)`. 2/1/1 graphs per size, eval+train, CPU+CUDA. Fix needs scan.
+  - <<: *seqloop
+    file: transformers/models/rwkv/modeling_rwkv.py
+    function: rwkv_linear_attention_cpu
+    match: null
+
+  - id: levit-attention-bias-cache
+    title: "LeViT fills `attention_bias_cache` (dict) on the first eval call -> second call always recompiles"
+    file: transformers/models/levit/modeling_levit.py
+    function: get_attention_biases
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/levit-attention-bias-cache.md
+    notes: >
+      Guard `not ___dict_contains('cpu', ...attention_bias_cache)`. eval 2/2/0, CPU+CUDA; static compile too.
+      Fix: skip the cache when torch.compiler.is_compiling().
 
   - id: loss-fn-warning-once
     title: "`loss_function` calls `logger.warning_once` inside forward when `loss_type` is None"
@@ -310,7 +435,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/loss-fn-warning-once.md
+    draft: issues/hf/loss-fn-warning-once.md
     notes: >
       Affects models whose class name matches no LOSS_MAPPING key (e.g.
       GPT2LMHeadModel), so loss_type stays None. Only in train mode with labels.
@@ -331,11 +456,11 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/layerdrop-rand-branch.md
+    draft: issues/hf/layerdrop-rand-branch.md
     notes: >
       Same pattern in 43 model families (bart, whisper, wav2vec2, mbart, ...).
       Fix: `if self.training and self.layerdrop > 0:` (verified on OPT with
-      issues/repros/layerdrop_rand_branch.py: 4 graphs -> 1, fullgraph OK).
+      issues/hf/repros/layerdrop_rand_branch.py: 4 graphs -> 1, fullgraph OK).
       Update 2026-11-18 (transformers main b7fe69cb19): no longer breaks for bart, mbart, marian, m2m_100,
       blenderbot, pegasus, pegasus_x, opt, whisper, xglm, biogpt, fsmt, led train; still breaks in hubert.
   - <<: *layerdrop
@@ -380,7 +505,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
-    draft: issues/output-capturing-reconstruction.md
+    draft: issues/hf/output-capturing-reconstruction.md
     notes: >
       Follow-on break, seen only after another break inside forward (opt, bart
       with LayerDrop). Disappears when the earlier break is fixed. File only if it
@@ -395,7 +520,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/longformer-global-attn-item.md
+    draft: issues/hf/longformer-global-attn-item.md
     notes: >
       Checks if any token uses global attention, then branches on it in Python.
       Breaks in eval too (once per layer). Not a simple guard fix: the two
@@ -412,13 +537,13 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/xlm-lengths-assert-item.md
+    draft: issues/hf/xlm-lengths-assert-item.md
     notes: >
       An input-validation assert forces a .item() sync and a graph break, in
       eval too. Fix: torch._check(lengths.max() <= slen) or skip under
       is_torchdynamo_compiling().
 
-  - id: ctrl-buffer-reassign
+  - id: nn-buffer-reassign
     title: "Dynamo: reassigning an `nn.Buffer` attribute in forward -> Unsupported python_type() on `persistent` (CTRL)"
     file: torch/nn/modules/module.py
     match: "Unsupported python_type() call"
@@ -439,7 +564,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/bigbird-attn-type-switch.md
+    draft: issues/hf/bigbird-attn-type-switch.md
     notes: >
       Triggered because SEQ_LEN=32 is shorter than block-sparse needs, so it is
       partly a harness artifact, but real users with short inputs hit it too.
@@ -454,7 +579,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft   # was not-filing; draft written 2026-11-19, earlier reasoning kept in it
-    draft: issues/reformer-lsh.md
+    draft: issues/hf/reformer-lsh.md
     notes: >
       Several breaks (_hash_vectors .item(), forward branching, the skipped
       _init_*_seed helpers used by reversible layers). Legacy model with
@@ -469,7 +594,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/specaugment-numpy-mask.md
+    draft: issues/hf/specaugment-numpy-mask.md
     notes: >
       `np.random.rand(1).item()` and numpy index building, then torch.tensor(...) of the
       mask. Needs a torch implementation of the masking. Copied into hubert, wavlm,
@@ -503,7 +628,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/ctc-labels-max-check.md
+    draft: issues/hf/ctc-labels-max-check.md
     notes: Fix with torch_compilable_check (once check-tensor-all-item is fixed) or skip while compiling.
   - <<: *ctclabels
     file: transformers/models/hubert/modeling_hubert.py
@@ -517,7 +642,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/fsmt-padding-mask-any.md
+    draft: issues/hf/fsmt-padding-mask-any.md
     notes: Breaks in eval too. Always returning the mask is equivalent.
 
   - id: deberta-att-span-item
@@ -527,7 +652,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/deberta-att-span-item.md
+    draft: issues/hf/deberta-att-span-item.md
     notes: >
       Once per layer, in eval too (10 graphs). capture_scalar_outputs=True gives 1
       graph. att_span depends only on shapes, so computing it as a Python int fixes it.
@@ -541,7 +666,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/switch-router-module-to.md
+    draft: issues/hf/switch-router-module-to.md
     notes: >
       Module.to() in forward builds new nn.Parameters, which Dynamo breaks on by design
       (graph_break_on_nn_param_ctor, pytorch#157452). Cast once at init instead. The
@@ -557,7 +682,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/dynamic-rope-data-dependent.md
+    draft: issues/hf/dynamic-rope-data-dependent.md
     notes: >
       Seen in internvl (its text config uses dynamic rope) and internlm3 (real checkpoint config:
       rope_type dynamic, factor 6.0; 5 breaks per forward). Inherent to dynamic NTK scaling.
@@ -570,7 +695,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/qwen-vl-grid-thw-data-dependent.md
+    draft: issues/hf/qwen-vl-grid-thw-data-dependent.md
     notes: >
       20-35 breaks per forward. capture_scalar_outputs + capture_dynamic_output_shape_ops
       don't help: they turn the breaks into a hard GuardOnDataDependentSymNode error
@@ -588,7 +713,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/idefics3-image-nonzero.md
+    draft: issues/hf/idefics3-image-nonzero.md
     notes: capture_scalar_outputs + capture_dynamic_output_shape_ops -> 1 graph (13 today).
 
   - &mistral3
@@ -598,7 +723,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/mistral3-image-sizes-tolist.md
+    draft: issues/hf/mistral3-image-sizes-tolist.md
     notes: With capture flags 14 -> 9 graphs; remaining are data-dependent guards in the patch merger.
   - <<: *mistral3
     file: transformers/models/pixtral/modeling_pixtral.py
@@ -620,7 +745,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/vision-attn-split-lengths-tolist.md
+    draft: issues/hf/vision-attn-split-lengths-tolist.md
     notes: Same code in hy_v4_vl, inkling2 and dots3_note vision towers. Also triggers graph-break-in-loop (generator expression).
   - <<: *visionsplit
     file: transformers/models/inkling2/modeling_inkling2.py
@@ -637,7 +762,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/vlm-split-image-features-tolist.md
+    draft: issues/hf/vlm-split-image-features-tolist.md
     notes: >
       Same pattern in hy_v4_vl, granite_docling, lfm3_vl, inkling2 and dots3_note. The split sizes are
       only needed to return per-image tuples; the LM path concatenates them again right after.
@@ -661,7 +786,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/placeholder-mask-bool-index-numel.md
+    draft: issues/hf/placeholder-mask-bool-index-numel.md
     notes: >
       Seen in inkling2, dots3_note and omniasr. Counting with `special_mask.sum() * hidden_size`
       (or comparing n_tokens to features.shape[0]) gives the same check without a dynamic shape.
@@ -672,16 +797,16 @@ issues:
   - <<: *placeholder
     file: transformers/models/inkling2_loop/modeling_inkling2_loop.py
 
-  # Inkling 2 Mini adds cache layers for the looped passes with copy.deepcopy inside forward.
+  # Looped models (Inkling 2 Mini, Dory) add cache layers for the extra passes with copy.deepcopy inside forward.
   - &loopcache
-    id: inkling2-loop-cache-deepcopy
-    title: "Inkling2Loop: `cache.layers += [copy.deepcopy(layer) ...]` in forward; deepcopy of a tensor graph-breaks inside a list comprehension and skips the whole text-model frame"
+    id: looped-model-cache-deepcopy
+    title: "Looped models (Inkling2Loop, Dory): `cache.layers += [copy.deepcopy(layer) ...]` in forward; deepcopy of a tensor graph-breaks inside a list comprehension and skips the whole text-model frame"
     file: python/copy.py
     match: "Attempted to copy.deepcopy a tensor"
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/inkling2-loop-cache-deepcopy.md
+    draft: issues/hf/looped-model-cache-deepcopy.md
     notes: >
       inkling2_mini / inkling2_mini_vlm eval_with_cache and train_forward (any run that builds a cache):
       1 graph -> 20 graphs / 19 breaks in the text model. Passing a cache that already has the loop
@@ -690,10 +815,30 @@ issues:
       call into its own frame (22 graphs on the first size), and duck sizing then ties
       block_states._base.size(2) to the batch size in Inkling2LoopMessageAttentionResidual.forward
       (1 recompile). With the loop cache layers passed in and conv-backward-stride-guard fixed: 1 frame, 0 recompiles.
+      Dory (recurrent_kv_cache_mode per_loop, modeling_dory.py:491): eval_with_cache / train 15 graphs, 14 breaks.
   - <<: *loopcache
     file: transformers/models/inkling2_loop/modeling_inkling2_loop.py
     function: forward
     match: "Unsafe value live across comprehension graph break"
+  - <<: *loopcache
+    file: transformers/models/dory/modeling_dory.py
+    function: forward
+    match: "Unsafe value live across comprehension graph break"
+
+  # Models added to transformers main 2026-11-01..21, second batch (checked at 046bdb8cc2).
+  - id: jev-decision-bool-mask-select
+    title: "JevForDecision returns `logits[bool_mask]` (nonzero, data-dependent shape) -> graph break at the end of every forward"
+    file: transformers/models/jev/modeling_jev.py
+    function: forward
+    match: "Dynamic shape operator"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/jev-decision-bool-mask-select.md
+    notes: >
+      jev eval/train, CUDA (CPU needs BLAS for the Qwen3.5 gated-delta-net backbone). Backbone + head are one
+      graph; only the final selection is eager. DecisionMixin.decide already splits by num_options in Python,
+      so the selection can move there.
 
   - id: granite-docling-tile-mask-index
     title: "GraniteDocling: `pixel_values[pixel_attention_mask]` selects real tiles with a boolean mask"
@@ -703,7 +848,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/granite-docling-tile-mask-index.md
+    draft: issues/hf/granite-docling-tile-mask-index.md
     notes: Similar to idefics3-image-nonzero. With all tiles real (as in our inputs) the mask is a no-op.
 
   - id: apertus1p5-image-sizes-tolist
@@ -712,7 +857,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/apertus1p5-image-sizes-tolist.md
+    draft: issues/hf/apertus1p5-image-sizes-tolist.md
     notes: get_image_tokens / get_image_features. Similar to mistral3-image-sizes-tolist.
 
   - &convbuf
@@ -723,7 +868,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/encodec-conv-params-buffers.md
+    draft: issues/hf/encodec-conv-params-buffers.md
     notes: >
       `self.stride = nn.Buffer(stride)` etc. (EnCodec, copied into Mimi and WavTokenizer) make
       `_get_extra_padding_for_conv1d` return a tensor, so `if length <= max_pad` in `_pad1d` is
@@ -750,7 +895,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/rope-standardize-in-forward-typeddict-isinstance.md
+    draft: issues/hf/rope-standardize-in-forward-typeddict-isinstance.md
     notes: >
       phimoe eval/train with dynamic=True (CPU and CUDA). longrope_frequency_update -> rope init fn ->
       config.standardize_rope_params() -> `self.rope_parameters = ...` -> strict-dataclass validation ->
@@ -763,7 +908,7 @@ issues:
     repo: Zyphra/ZONOS3-Mini-hf
     issue: null
     status: draft
-    draft: issues/zonos3-moe-unique-expert-loop.md
+    draft: issues/hf/zonos3-moe-unique-expert-loop.md
     notes: >
       trust_remote_code model (reviewed revision e39d30d). 17 breaks per LM step with 4 layers, CPU and CUDA,
       static and dynamic. Follow-on "Failed to handle graph break gracefully" breaks match graph-break-in-loop.
@@ -776,7 +921,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/sam3-spatial-shape-tensor-arange.md
+    draft: issues/hf/sam3-spatial-shape-tensor-arange.md
     notes: >
       9-12 breaks per forward with 1 decoder layer (+2 per extra layer). Fix: pass a spatial_shapes_list of ints.
   - <<: *sam3coords
@@ -796,7 +941,7 @@ issues:
     repo: hf-models-graph-breaks (this repo)
     issue: null
     status: draft
-    draft: issues/harness-dynamic-loss-selection.md
+    draft: issues/harness/harness-dynamic-loss-selection.md
     notes: dac, encodec, mimi dynamic train results are harness errors, not model findings.
 
   - id: dynamo-rnn-unsupported
@@ -817,7 +962,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/phimoe-longrope-seq-len-branch.md
+    draft: issues/hf/phimoe-longrope-seq-len-branch.md
     notes: >
       seq_len comes from torch.max(position_ids) + 1. Same family as dynamic-rope-data-dependent;
       the shared `longrope_frequency_update` in modeling_rope_utils has the same shape of check.
@@ -828,7 +973,7 @@ issues:
     repo: huggingface/transformers
     issue: null
     status: draft
-    draft: issues/llava-next-anyres-image-size-tolist.md
+    draft: issues/hf/llava-next-anyres-image-size-tolist.md
     notes: Tile layout is chosen from image_sizes values in Python. Similar to mistral3-image-sizes-tolist.
 
   - <<: *visionsplit
