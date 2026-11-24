@@ -1,0 +1,77 @@
+{
+  "model": "qwen2_5_vl_7b",
+  "hf_id": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "scenario": "eval_with_cache",
+  "device": "cpu",
+  "timestamp": "2026-11-23T20:26:20+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": true,
+  "reference": "fp64",
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.01,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        34,
+        152064
+      ],
+      "max_abs_diff": 0.0234375,
+      "rmse_compiled_vs_eager": 0.003888056636973774,
+      "rmse_eager_vs_fp64": 0.003360528734880584,
+      "rmse_compiled_vs_fp64": 0.0027496982698869024
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        128,
+        1280
+      ],
+      "max_abs_diff": 0.03125,
+      "rmse_compiled_vs_eager": 0.004897375206191238,
+      "rmse_eager_vs_fp64": 0.004633043608730652,
+      "rmse_compiled_vs_fp64": 0.0038727594178097936
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        16,
+        512
+      ],
+      "max_abs_diff": 0.046875,
+      "rmse_compiled_vs_eager": 0.010042218998593266,
+      "rmse_eager_vs_fp64": 0.009144735173039209,
+      "rmse_compiled_vs_fp64": 0.008041008602281236
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        16,
+        512
+      ],
+      "max_abs_diff": 0.0390625,
+      "rmse_compiled_vs_eager": 0.010011764666925263,
+      "rmse_eager_vs_fp64": 0.009099157870911624,
+      "rmse_compiled_vs_fp64": 0.00802970920368873
+    }
+  ]
+}

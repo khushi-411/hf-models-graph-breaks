@@ -53,8 +53,8 @@ xlm (eval_forward, train_forward).
 
 1 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| xlm | `FacebookAI/xlm-mlm-en-2048` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| xlm | `FacebookAI/xlm-mlm-en-2048` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
 
 <!-- affected-models:end -->

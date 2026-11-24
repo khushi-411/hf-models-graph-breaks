@@ -1,0 +1,495 @@
+{
+  "model": "ctrl",
+  "hf_id": "Salesforce/ctrl",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T09:54:33+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 3,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 3,
+      "new_shape_events": 190
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:is_aligned_realized_tensor",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 50,
+      "examples": [
+        "zf45 >= 0.0",
+        "zf45 <= 1.0",
+        "zf39 >= 0.0",
+        "zf39 <= 1.0",
+        "zf55 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 25,
+      "examples": [
+        "Eq(zf45, 0.1)",
+        "Eq(zf39, 0.1)",
+        "Eq(zf55, 0.1)",
+        "Eq(zf38, 0.1)",
+        "Eq(zf4, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 25,
+      "examples": [
+        "Eq(zf25, 1.0e-6)",
+        "Eq(zf86, 1.0e-6)",
+        "Eq(zf42, 1.0e-6)",
+        "Eq(zf63, 1.0e-6)",
+        "Eq(zf6, 1.0e-6)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "Eq(zf68, 0.111803398874989)",
+        "Eq(zf7, 0.111803398874989)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 2,
+      "examples": [
+        "Eq(zf6, 0.111803398874989)",
+        "Eq(zf97, 0.111803398874989)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 16,
+      "examples": [
+        "Eq(zf68, 0.111803398874989)",
+        "Eq(zf7, 0.111803398874989)",
+        "Ne(1280*s72*(s56 + s70), 0)",
+        "Ne(s56 + s70, 1)",
+        "Eq(1280*s70, 1280*s56 + 1280*s70)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 3,
+      "examples": [
+        "(-s56 >= 0) & (-s56 <= s70)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 3,
+      "examples": [
+        "s70 >= -s56"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 7,
+      "examples": [
+        "Ne(s72*(s56 + s70), -1)",
+        "Ne(s56 + s70, -1)",
+        "Ne(s8, -1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 4,
+      "examples": [
+        "s72*(s56 + s70) >= 0",
+        "s8 >= 0"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 8,
+      "examples": [
+        "1280*s72*(s56 + s70) >= 2",
+        "32000*s72*(s56 + s70) >= 2",
+        "s70*s72*(s70 - (Mod(s70, 8)) + 8) >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 5,
+      "examples": [
+        "Ne(s72*(s56 + s70), s72)",
+        "Ne(((s3*s85*s88)//s8), s88)",
+        "Eq(s8, s85)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 5,
+      "examples": [
+        "Ne(PythonMod(s72, s72*(s56 + s70)), 0)",
+        "Ne(Mod(s88, ((s3*s85*s88)//s8)), 0)",
+        "Eq(Mod(s3*s88, ((s3*s85*s88)//s8)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 3,
+      "examples": [
+        "Ne(s56 + s70, 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 3,
+      "examples": [
+        "Ne(s72*(s56 + s70), 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 8,
+      "examples": [
+        "s56 + s70 > -1",
+        "1 < 32000*s72*(s56 + s70)",
+        "32000 < 32000*s72*(s56 + s70)",
+        "32000*s56 + 32000*s70 < 32000*s72*(s56 + s70)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 2,
+      "examples": [
+        "32000*s56 + 32000*s70 >= 32000"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 1,
+      "examples": [
+        "Max(1, s70 - (Mod(s70, 8)) + 8) < s70*Max(1, s70 - (Mod(s70, 8)) + 8)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_aligned_realized_tensor",
+      "line": 524,
+      "count": 1,
+      "examples": [
+        "Eq(Mod(Max(1, s70 - (Mod(s70, 8)) + 8), 8), 0) & Eq(Mod(s70*Max(1, s70 - (Mod(s70, 8)) + 8), 8), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 6,
+      "examples": [
+        "1280*s70*s72 <= 2147483647",
+        "s70**2*s72 + 8*s70*s72 <= s70*s72*(Mod(s70, 8)) + 2147483647",
+        "8192*s70*s72 <= 2147483647",
+        "32000*s56*s72 + 32000*s70*s72 <= 2147483647",
+        "s3*s8*s88 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 4,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "1280*s56*s72 + 1280*s70*s72 <= 2147483647",
+        "s3*s88 <= 2147483647",
+        "s38*s97 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 1,
+      "examples": [
+        "1280*s70*s72 < 5242880"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:forward",
+      "line": 423,
+      "count": 1,
+      "examples": [
+        "Eq(s42, -100)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/ctrl/modeling_ctrl.py:forward",
+      "line": 423,
+      "count": 1,
+      "examples": [
+        "s42 = -100"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 1,
+      "examples": [
+        "Ne(s8, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 1,
+      "examples": [
+        "Eq(Mod(s3*s85*s88, s8), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 1,
+      "examples": [
+        "Eq(s3*s88, ((s3*s85*s88)//s8))"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s3*s88, s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/ctrl/modeling_ctrl.py:forward:423"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/modeling_utils.py:4778",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning_once(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning_once)`. If `warning_once` is defined on the logger class, add the class method `logging.Logger.warning_once` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning_once`) is checked against the ignore set. Ignoring a method that `warning_once` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning_once)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.modeling_utils (WARNING)>.warning_once, args: [ConstantVariable(str: '`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.')], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/ctrl/modeling_ctrl.py:423 in forward",
+        "transformers/modeling_utils.py:4778 in loss_function"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "short_reason": "logging.Logger method not supported for non-export cases",
+      "count": 1
+    }
+  ]
+}

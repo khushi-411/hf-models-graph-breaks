@@ -1,0 +1,42 @@
+{
+  "model": "unlimited_ocr",
+  "hf_id": "baidu/Unlimited-OCR",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-23T21:42:40+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "InductorError: CantSplit: ((((s100//16))**2)//((s100//16))) not divisible by (s100//16)",
+  "error_inductor_site": "torch/_inductor/codegen/simd.py:add_range:868",
+  "traceback": "ome/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1652, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_utils_internal.py\", line 169, in wrapper_function\n    return function(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 3466, in bw_compiler\n    return compile_fx_backward(\n        gm,\n    ...<2 lines>...\n        inner_compile=inner_compile,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 3081, in compile_fx_backward\n    return inner_compile(\n        gm,\n    ...<5 lines>...\n        boxed_forward_device_index=compiler_config_extra.forward_device_index,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1110, in compile_fx_inner\n    compiled_graph = wrap_compiler_debug(\n        _compile_fx_inner, compiler_name=\"inductor\"\n    )(\n        gm,\n    ...<2 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/repro/after_aot.py\", line 329, in debug_wrapper\n    inner_compiled_fn = compiler_fn(gm, example_inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1345, in _compile_fx_inner\n    raise InductorError(e, currentframe()).with_traceback(\n        e.__traceback__\n    ) from None\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1337, in _compile_fx_inner\n    mb_compiled_graph = fx_codegen_and_compile(\n        gm,\n    ...<3 lines>...\n        **graph_kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 2206, in fx_codegen_and_compile\n    return scheme.codegen_and_compile(gm, example_inputs, inputs_to_check, graph_kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 1953, in codegen_and_compile\n    compiled_module = graph.compile_to_module()\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3158, in compile_to_module\n    return self._compile_to_module()\n           ~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3164, in _compile_to_module\n    self.codegen_with_cpp_wrapper() if self.cpp_wrapper else self.codegen()\n                                                             ~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/graph.py\", line 3100, in codegen\n    self.scheduler.codegen()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 12837, in codegen\n    self._codegen_partitions()\n    ~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 12996, in _codegen_partitions\n    self._codegen(partition)\n    ~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/scheduler.py\", line 13195, in _codegen\n    self.get_backend(device).codegen_mix_order_reduction(node)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/cuda_combined_scheduling.py\", line 257, in codegen_mix_order_reduction\n    return self._triton_scheduling.codegen_mix_order_reduction(node)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 3559, in codegen_mix_order_reduction\n    self._codegen_mix_order_reduction(node1, node2)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 3739, in _codegen_mix_order_reduction\n    ws_name, src_code = self._generate_kernel_code_for_mix_order_reduction(\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        kernel,\n        ^^^^^^^\n        for_benchmark=False,\n        ^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 3625, in _generate_kernel_code_for_mix_order_reduction\n    self.codegen_node_schedule_with_kernel(node_schedule, kernel)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 4817, in codegen_node_schedule_with_kernel\n    self._codegen_node_schedule_body(node_schedule, kernel)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 4841, in _codegen_node_schedule_body\n    index_vars = kernel.split_and_set_ranges(node.get_ranges())\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 1072, in split_and_set_ranges\n    return self.map_kernel_groups_to_node_sizes(groups, lengths, self.set_ranges)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 1099, in map_kernel_groups_to_node_sizes\n    new_ranges, return_getters_groups = cls._split_iteration_ranges(groups, lengths)\n                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 983, in _split_iteration_ranges\n    operator.itemgetter(add_range(current_group, size))\n                        ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/codegen/simd.py\", line 868, in add_range\n    raise CantSplit(remaining[i], expr)\ntorch._inductor.exc.InductorError: CantSplit: ((((s100//16))**2)//((s100//16))) not divisible by (s100//16)\n"
+}

@@ -75,8 +75,8 @@ for floats), and the model should compile. Using the real InternVL model, `eval_
 
 1 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| internvl | `OpenGVLab/InternVL3-1B-hf` | – | – | eval: **crash** · train: **crash** | eval: **crash** · train: **crash** |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| internvl | `OpenGVLab/InternVL3-1B-hf` | – | – | eval: **crash** · train: **crash** | eval: **crash** · train: **crash** | – | – |
 
 <!-- affected-models:end -->

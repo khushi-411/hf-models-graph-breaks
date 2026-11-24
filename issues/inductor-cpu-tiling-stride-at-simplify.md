@@ -98,13 +98,14 @@ tiling probe for indices whose free symbols include dynamic sizes.
 
 ### Affected models in this sweep
 
-3 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+4 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| funnel | `funnel-transformer/small` | – | – | train: not finished (compile cancelled) | – |
-| swin | `microsoft/swin-tiny-patch4-window7-224` | – | – | eval: not finished (compile cancelled) · train: not finished (compile cancelled) | – |
-| swinv2 | `microsoft/swinv2-tiny-patch4-window8-256` | – | – | eval: not finished (compile cancelled) · train: not finished (compile cancelled) | – |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| funnel | `funnel-transformer/small` | – | – | train: not finished (compile cancelled) | – | – | – |
+| swin | `microsoft/swin-tiny-patch4-window7-224` | – | – | eval: not finished (compile cancelled) · train: not finished (compile cancelled) | – | – | – |
+| swinv2 | `microsoft/swinv2-tiny-patch4-window8-256` | – | – | eval: not finished (compile cancelled) · train: not finished (compile cancelled) | – | – | – |
+| unlimited_ocr | `baidu/Unlimited-OCR` | – | – | train: not finished (compile cancelled) | – | – | – |
 
 The table only has the CPU runs that were cancelled. Also slow on CPU in the hand measurements above, but with a stored result: gemma3_vlm (1 h 02 min) and mobilevit (> 2 h 50 min in one attempt; the stored run finished).
 

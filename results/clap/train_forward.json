@@ -1,0 +1,48 @@
+{
+  "model": "clap",
+  "hf_id": "laion/clap-htsat-fused",
+  "auto_class": "AutoModel",
+  "scenario": "train_forward",
+  "pretrained": false,
+  "device": "cpu",
+  "config_overrides": {
+    "text_config.num_hidden_layers": 2,
+    "audio_config.depths": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "timestamp": "2026-11-23T20:09:29+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 3,
+  "graph_break_count": 2,
+  "op_count": 226,
+  "unique_breaks": 1,
+  "breaks": [
+    {
+      "location": "transformers/models/clap/modeling_clap.py:819",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/clap/modeling_clap.py:1322 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/clap/modeling_clap.py:819 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

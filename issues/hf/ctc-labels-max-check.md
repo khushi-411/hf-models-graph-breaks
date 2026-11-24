@@ -52,12 +52,13 @@ wav2vec2, hubert, wavlm `*ForCTC` (train), and the other copies of this forward
 
 ### Affected models in this sweep
 
-3 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+4 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| hubert | `facebook/hubert-large-ls960-ft` | train 1 | train 1 | train 1 | train 1 |
-| wav2vec2 | `facebook/wav2vec2-base-960h` | train 1 | train 1 | train 1 | train 1 |
-| wavlm | `microsoft/wavlm-base-plus` | train 1 | train 1 | train 1 | train 1 |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| hubert | `facebook/hubert-large-ls960-ft` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wav2vec2 | `facebook/wav2vec2-base-960h` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wav2vec2_xlsr_ja | `jonatasgrosman/wav2vec2-large-xlsr-53-japanese` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wavlm | `microsoft/wavlm-base-plus` | train 1 | train 1 | train 1 | train 1 | – | – |
 
 <!-- affected-models:end -->

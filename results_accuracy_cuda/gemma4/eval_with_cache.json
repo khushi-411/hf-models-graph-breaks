@@ -1,0 +1,77 @@
+{
+  "model": "gemma4",
+  "hf_id": "google/gemma-4-31B-it",
+  "scenario": "eval_with_cache",
+  "device": "cuda",
+  "timestamp": "2026-11-23T20:25:14+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": true,
+  "reference": "fp64",
+  "fp64_error": null,
+  "accurate": true,
+  "tol": 0.01,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        22,
+        262144
+      ],
+      "max_abs_diff": 0.171875,
+      "rmse_compiled_vs_eager": 0.014255424349072024,
+      "rmse_eager_vs_fp64": 0.016188330763438893,
+      "rmse_compiled_vs_fp64": 0.011574039068517764
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        8,
+        1152
+      ],
+      "max_abs_diff": 2.0,
+      "rmse_compiled_vs_eager": 0.41968653332854,
+      "rmse_eager_vs_fp64": 0.39140447244520593,
+      "rmse_compiled_vs_fp64": 0.300325322534632
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        4,
+        512
+      ],
+      "max_abs_diff": 0.015625,
+      "rmse_compiled_vs_eager": 0.0037504328232710353,
+      "rmse_eager_vs_fp64": 0.0032779709865615285,
+      "rmse_compiled_vs_fp64": 0.0027494648714248564
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        4,
+        512
+      ],
+      "max_abs_diff": 0.015625,
+      "rmse_compiled_vs_eager": 0.003551024490325854,
+      "rmse_eager_vs_fp64": 0.003234313049726264,
+      "rmse_compiled_vs_fp64": 0.00260941340051322
+    }
+  ]
+}

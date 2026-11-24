@@ -62,15 +62,21 @@ def _zero_randomness(config) -> None:
 def _build(spec: dict, device: str):
     config = check.build_config(spec)
     _zero_randomness(config)
+    qconfig = check.pop_quantization_config(config) if spec.get("quantize") else None
     import transformers
     auto_cls = getattr(transformers, spec["auto_class"])
     remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
     torch.manual_seed(0)
-    model = auto_cls.from_config(config, **remote)
+    if spec.get("pretrained"):  # real (quantized) checkpoint, see check.build_model
+        model = auto_cls.from_pretrained(spec["hf_id"], config=config, device_map=device, **remote)
+    else:
+        model = auto_cls.from_config(config, **remote)
     if spec.get("init_weights") == "normal":
         with torch.no_grad():
             for p in model.parameters():
                 p.normal_(0.0, 0.02)
+    if qconfig is not None:  # quantized checkpoints: no fp64 reference (quantized weights), compiled vs eager only
+        model = check.quantize_model(spec, model, qconfig, device)
     for m in model.modules():  # modules that hard-code their dropout instead of reading the config
         if isinstance(m, torch.nn.Dropout):
             m.p = 0.0

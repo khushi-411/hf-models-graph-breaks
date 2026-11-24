@@ -1,0 +1,42 @@
+{
+  "model": "dac",
+  "hf_id": "descript/dac_44khz",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T09:54:50+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "RuntimeError: grad can be implicitly created only for scalar outputs",
+  "error_inductor_site": null,
+  "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/dynamic.py\", line 247, in run_scenario\n    _loss(out).backward()\n    ~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_tensor.py\", line 646, in backward\n    torch.autograd.backward(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<4 lines>...\n        disallow_implicit_grad_accumulation=disallow_implicit_grad_accumulation,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/autograd/__init__.py\", line 399, in backward\n    grad_tensors_ = _make_grads(tensors, grad_tensors_, is_grads_batched=False)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/autograd/__init__.py\", line 209, in _make_grads\n    raise RuntimeError(\n        \"grad can be implicitly created only for scalar outputs\"\n    )\nRuntimeError: grad can be implicitly created only for scalar outputs\n"
+}

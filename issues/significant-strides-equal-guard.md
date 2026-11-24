@@ -56,13 +56,20 @@ Equal-stride detection without specializing the size, or documentation that this
 
 ### Affected models in this sweep
 
-4 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+11 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | – | – | train: recompiles (29 / 6 / 6) | train: recompiles (29 / 6 / 6) |
-| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | – | – | train: recompiles (31 / 6 / 6) | train: recompiles (31 / 6 / 6) |
-| qwen3_8 | `Qwen/Qwen3.8-27B` | – | – | – | train: recompiles (40 / 7 / 6) |
-| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | – | – | train: recompiles (50 / 8 / 7) | train: recompiles (50 / 8 / 7) |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| glm5_next | `zai-org/GLM-5.3-Flash` | – | – | train: recompiles (37 / 8 / 8) | train: recompiles (37 / 8 / 7) | – | – |
+| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | – | – | train: recompiles (29 / 6 / 6) | train: recompiles (29 / 6 / 6) | – | – |
+| qwen2_5_vl_7b | `Qwen/Qwen2.5-VL-7B-Instruct` | – | – | train: recompiles (29 / 9 / 9) | train: recompiles (29 / 9 / 9) | – | – |
+| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | – | – | train: recompiles (31 / 6 / 6) | train: recompiles (31 / 6 / 6) | – | – |
+| qwen3_5_2b | `Qwen/Qwen3.5-2B` | – | – | – | train: recompiles (40 / 10 / 9) | – | – |
+| qwen3_5_4b | `Qwen/Qwen3.5-4B` | – | – | – | train: recompiles (40 / 10 / 9) | – | – |
+| qwen3_5_9b | `Qwen/Qwen3.5-9B` | – | – | – | train: recompiles (40 / 10 / 9) | – | – |
+| qwen3_6_moe | `Qwen/Qwen3.6-35B-A3B` | – | – | – | train: recompiles (40 / 10 / 9) | – | – |
+| qwen3_8 | `Qwen/Qwen3.8-27B` | – | – | – | train: recompiles (40 / 7 / 6) | – | – |
+| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | – | – | train: recompiles (50 / 8 / 7) | train: recompiles (50 / 8 / 7) | – | – |
+| qwen3_vl_8b | `Qwen/Qwen3-VL-8B-Instruct` | – | – | train: recompiles (50 / 9 / 8) | train: recompiles (50 / 9 / 8) | – | – |
 
 <!-- affected-models:end -->

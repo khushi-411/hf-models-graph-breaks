@@ -1,0 +1,132 @@
+{
+  "model": "laion_clip_b32",
+  "hf_id": "laion/CLIP-ViT-B-32-laion2B-s34B-b79K",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-23T20:13:24+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 43
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 15,
+      "examples": [
+        "Eq(s58, 224)",
+        "Eq(zf90, 0.125)",
+        "Eq(zf97, 0.125)",
+        "s27 <= 77",
+        "Eq(zf48, 0.125)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "s58 = 224"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 2,
+      "examples": [
+        "Eq(s46, 3)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 2,
+      "examples": [
+        "s46 = 3"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 22,
+      "examples": [
+        "Eq(zf0, 1.0e-5)",
+        "Eq(zf2, 1.0e-5)",
+        "Eq(zf51, 1.0e-5)",
+        "Eq(zf41, 1.0e-5)",
+        "Eq(zf68, 1.0e-5)"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

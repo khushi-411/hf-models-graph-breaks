@@ -1,4 +1,4 @@
-# Graph-break sweep: results (2026-11-18/19)
+# Graph-break sweep: results (2026-11-18/19, top-100 batch 2026-11-23)
 
 Every model in `models.yaml` was run through both checks on **CPU and CUDA**, and every graph break
 found was matched to a root cause with an issue draft: PyTorch drafts in [`issues/`](issues/), transformers and
@@ -8,8 +8,10 @@ Dynamic-shape recompiles were triaged too (see [Dynamic-shape recompiles](#dynam
 [`SUMMARY.md`](SUMMARY.md) / [`SUMMARY_CUDA.md`](SUMMARY_CUDA.md) /
 [`DYNAMIC_SUMMARY.md`](DYNAMIC_SUMMARY.md) / [`DYNAMIC_CUDA_SUMMARY.md`](DYNAMIC_CUDA_SUMMARY.md).
 
-**Status:** 157 models · 0 unmatched graph breaks · 0 unexplained errors · 60 root causes, 60 issue drafts
-(23 PyTorch, 36 transformers/HF Hub, 1 harness). Nothing is filed upstream yet.
+**Status:** 209 models · 0 unmatched graph breaks · 0 unexplained errors · 71 issue drafts
+(30 PyTorch, 40 transformers/HF Hub, 1 harness). Nothing is filed upstream yet. The Nov 23 batch (the 100
+most-downloaded Hub models, [below](#nov-23-the-100-most-downloaded-hub-models)) added 52 models and 9 drafts.
+A partial `dynamic.py --unbacked` sweep (Nov 24, [below](#unbacked-dynamic-shapes-partial-stopped)) added 2 drafts.
 
 ## Setup
 
@@ -17,7 +19,7 @@ Dynamic-shape recompiles were triaged too (see [Dynamic-shape recompiles](#dynam
 |---|---|
 | torch | `2.16.0a0+git57f02f8` (source build). CUDA: rebuilt in `torch-dev` with sm_90 + sm_100, cuDNN 9.28, Triton 3.9.0. CPU: frozen copy of the same commit (`torch-snap-57f02f8`), conda g++ 13.4 |
 | transformers | `5.24.0.dev0`, checkout `b7fe69cb19`. inkling2_mini(_vlm) and the Nov 22 batch (below): `046bdb8cc2` (Nov 21), needed for those models |
-| Hardware | CUDA: NVIDIA B200 (`hopper-b200`). The Nov 22 runs (Nov 22 batch + inkling2_mini CUDA) are on B300 (`hopper-b300`, sm_103): the B200 partition is gone. Caveat: the `torch-dev` build ships CUDA 12.8, which doesn't support sm_103. Those runs completed, but other workloads on B300 hit NVRTC (`invalid --gpu-architecture`) and MoE kernel crashes, so treat B300 results with care; H100 (`hopper-dev`, sm_90) is fully supported. CPU: Xeon 8488C / 8124M (`hopper-cpu`) |
+| Hardware | CUDA: NVIDIA B200 (`hopper-b200`). The Nov 22 runs (Nov 22 batch + inkling2_mini CUDA) are on B300 (`hopper-b300`, sm_103): the B200 partition is gone. Caveat: the `torch-dev` build ships CUDA 12.8, which doesn't support sm_103. Those runs completed, but other workloads on B300 hit NVRTC (`invalid --gpu-architecture`) and MoE kernel crashes, so treat B300 results with care; H100 (`hopper-dev`, sm_90) is fully supported. Nov 23 batch: B300 first, then every CUDA run that failed on B300 rerun on H100 (and quantized models + CUDA accuracy on H100 only). Quantized runs use `torch-dev-quant` (clone of `torch-dev` + accelerate, kernels 0.18.2, gguf). CPU: Xeon 8488C / 8124M (`hopper-cpu`) |
 | Static check | `python -m graph_breaks.check --model X --device cpu\|cuda`: `torch._dynamo.explain`, config-only model with reduced layers, random weights, batch 2 / seq 32 |
 | Dynamic check | `python -m graph_breaks.dynamic --model X --device cpu\|cuda`: `torch.compile(backend="inductor", dynamic=True)` over (batch, seq) = (2, 32), (3, 40), (4, 56) |
 
@@ -25,10 +27,13 @@ Dynamic-shape recompiles were triaged too (see [Dynamic-shape recompiles](#dynam
 
 | check | device | model/scenario runs | errors | unique breaks* | total breaks |
 |---|---|---|---|---|---|
-| static | CPU | 414 | 8 | 460 | 1,239 |
-| static | CUDA | 414 | 0 | 514 | 1,301 |
-| dynamic | CPU | 308 | 25 | 326 | – |
-| dynamic | CUDA | 308 | 15 | 333 | – |
+| static | CPU | 535 | 20 | 624 | 1,619 |
+| static | CUDA | 544 | 6 | 898 | 2,088 |
+| dynamic | CPU | 405 | 33 | 440 | – |
+| dynamic | CUDA | 412 | 28 | 549 | – |
+
+(Nov 18–22 runs alone: static 414 / 414, dynamic 308 / 308 runs. New CPU errors from Nov 23 are the Qwen3.5 /
+Qwen3.6 models, which need CPU BLAS; new CUDA errors are the four crash bugs in the Nov 23 section.)
 
 \* distinct break locations per model/scenario, summed over runs. The same root cause counts once per
 model and scenario it appears in, so these collapse to ~110 code locations and 60 root causes.
@@ -138,6 +143,55 @@ wavtokenizer, hy_v4_vl, inkling2_loop → inkling2_mini). The other 7 were added
 | SenseNova-Loop-9B | **not tested**: gated, no HF token |
 | MiniMax-H3-Image, LongCat-Video-Avatar-1.6, FastFrames-L | **not tested**: diffusion image/video generators, not transformers models |
 
+### Nov 23: the 100 most-downloaded Hub models
+
+Source: `huggingface.co/api/models?sort=downloads&limit=100` on 2026-11-23 (downloads over the last 30 days).
+
+| | count | |
+|---|---|---|
+| already tracked | 12 | gpt2, bert, t5, clip, qwen3, vit, xlm_roberta, qwen3_8, roberta, gpt_oss, distilbert, opt |
+| added | 48 | one entry per checkpoint (same architecture included: different configs, Auto classes and heads) |
+| quantized, added | 3 | `qwen3_8_fp8`, `deepseek_v32_fp8` (fine-grained FP8), `gpt_oss_mxfp4` (real MXFP4 checkpoint, 2 layers) |
+| GGUF base model added | 1 | `qwen3_6_moe` (Qwen/Qwen3.6-35B-A3B, base of #79) |
+| not transformers models | 28 | diffusion / ComfyUI checkpoints, CoreML, CTranslate2, chronos, pyannote, coqui, ultralytics, ... |
+| not run | 9 | timm (needs torchvision); GGUF/ONNX/FP8 copies of covered models; Qwen3.8-Flash-Next (`qwen4_exp`) and DeepSeek-V4.1-Flash (`deepseek_v41`) need a newer transformers; Ornith-1.5 has no config |
+
+GGUF repos are not run: transformers dequantizes GGUF on load, so the compiled graph is the base model's.
+
+**Clean:** 30 of the 48 have 1 graph everywhere and no recompiles: every embedding / reranker model (BGE, E5,
+MiniLM, MPNet, nomic, gte, snowflake, granite-embedding, Qwen3-Embedding, contriever), the dense LLMs (Qwen2.5,
+Qwen3-8B/14B, Llama-3.1, Yi, DeepSeek-V3.2), CLIP ×2, mdeberta, roberta-large. 5 more have no breaks but recompile
+under dynamic shapes: whisper ×3 (2 each), qwen3_4b_instruct and dinov2_base (1 each, train). The other 13 have
+graph breaks or crashes.
+
+**New root causes (9 drafts):**
+
+| id | repo | kind | models |
+|---|---|---|---|
+| `inductor-cuda-int-sqrt-pow` | PyTorch | **wrong value** → device-side assert | gemma4, gemma4_moe, gemma4_e4b (dynamic, CUDA). `int(s ** 0.5)` is off by one for some perfect squares on CUDA (9, 7056, ...). Tested repro |
+| `inductor-user-triton-constexpr-global` | PyTorch | crash | gpt_oss_mxfp4 (any compile). Runtime-defined Triton kernel loses its `constexpr_function` helpers. Tested repro |
+| `aot-synthetic-base-symbolic-nbytes` | PyTorch | crash | gpt_oss_mxfp4 (dynamic). AOTAutograd builds a synthetic base for aliased, mutated inputs with `set_(storage)`, which reads a symbolic `nbytes`. Tested repro (CPU, `aot_eager`) |
+| `inductor-cantsplit-square-floordiv` | PyTorch | crash | unlimited_ocr (dynamic CUDA train). `(a**2)//a` not simplified in the LayerNorm-backward mix-order reduction. Tested repro (conv → LayerNorm → Linear); workaround `triton.mix_order_reduction=False` |
+| `dynamo-triton-kernels-wrapper-args` | PyTorch | 19 breaks | gpt_oss_mxfp4: Triton kernels taking triton_kernels `Tensor` wrappers |
+| `fp8-deepgemm-fallback-compile` | transformers | crash | qwen3_8_fp8, deepseek_v32_fp8: DeepGEMM → Triton fallback works in eager only. Tested repro (CPU, no HF) |
+| `glm5-dsa-pooled-keep-mask` | transformers | break | glm5_next: boolean mask in the LM's sparse-attention indexer |
+| `gemma4-vision-pooler-mask-index` | transformers | break | gemma4 ×3 |
+| `clap-is-longer-where` | transformers | break | clap |
+
+Existing issues extended to new files: `vlm-split-image-features-tolist` and `placeholder-mask-bool-index-numel`
+(gemma4), `vlm-split-image-features-tolist` and `vision-attn-split-lengths-tolist` (glm5_next), and the Qwen-VL
+entries (qwen3_5_moe).
+
+**Accuracy:** no mismatches except `gemma4_moe` train on CUDA (logits RMSE vs fp32 0.070 compiled vs 0.016 eager;
+eval is accurate, dense gemma4 train is accurate). **Not a compiler bug:** a bf16 MoE routing flip. In fp32, compiled
+matches eager to 5.5e-7 with identical router choices; in bf16, compiled picks a different expert for 2.3% of
+tokens in layer 1 (1 of 44), which is enough for the logits gap. CPU eager bf16 is itself 0.059 RMSE from the fp32
+reference for this model, so its tolerance check is sensitive to any rounding change.
+
+**Harness fix found on the way:** `deepseek_v32` ran with both shrunk layers dense, because its config sets
+`mlp_layer_types` and `first_k_dense_replace` alone didn't change it. Fixed and rerun; no other entry is affected
+(checked every config with `mlp_layer_types`).
+
 ## Caveats
 
 - **Counts are lower bounds.** Models run with 2–4 layers (per-layer breaks scale with depth), one input
@@ -174,6 +228,35 @@ inkling2_mini train specializes in `codegen/common.py:doprint` and `ir.py:clamp`
 where the conv-backward bug doesn't apply, has neither and still recompiles once, from the duck-sizing guard
 in `looped-model-cache-deepcopy`. So those two CPU sites are conv-backward knock-ons.
 
+## Unbacked dynamic shapes (partial, stopped)
+
+`python -m graph_breaks.dynamic --unbacked`: the same `dynamic=True` + Inductor run as above, with
+`capture_scalar_outputs` and `capture_dynamic_output_shape_ops` on, so `.item()` / `.tolist()` / `nonzero()`
+values are traced as unbacked SymInts instead of breaking the graph. Started Nov 24 over every model, CUDA on
+B300 and CPU, and **stopped on request** partway (alphabetical order):
+
+| | models with results | runs | ok | errors |
+|---|---|---|---|---|
+| CUDA (B300) | 78 of 209 (`albert` … `granitemoe`) | 150 | 114 | 36 |
+| CPU | 21 of 206 (`albert` … `clip`) | 38 | 36 | 2 |
+
+Five models only have their `eval_forward` run (CPU: beit, bloom, clap, clip; CUDA: deberta_v2, fsmt,
+funnel, granite_docling, granitemoe). Results: `results_dynamic_unbacked[_cuda]/`, summaries
+[`DYNAMIC_UNBACKED_SUMMARY.md`](DYNAMIC_UNBACKED_SUMMARY.md) / [`DYNAMIC_UNBACKED_CUDA_SUMMARY.md`](DYNAMIC_UNBACKED_CUDA_SUMMARY.md),
+and `unbacked` rows in [`COVERAGE.md`](COVERAGE.md).
+
+- **Graph breaks:** the same count as the backed dynamic run in every model that ran.
+- **Recompiles:** fewer in 4 models, where the guard came from a value now traced as unbacked. clap 1 → 0
+  (eval) and 2 → 0 (train), gemma3_vlm train 4 → 3, granite_docling eval 6 → 3. None went up.
+- **Errors in models whose backed run passes** (the other 11 errors are the same as in the backed run):
+
+| cause | models | status |
+|---|---|---|
+| [dynamo-pending-unbacked-symbol-not-found](issues/dynamo-pending-unbacked-symbol-not-found.md) (PyTorch) | deberta, encodec (CUDA) | new draft, internal Dynamo error. Both keep sizes in tensors and use them as ints. Not reduced |
+| [inductor-conv-unbacked-spatial-hint](issues/inductor-conv-unbacked-spatial-hint.md) (PyTorch) | apertus1p5_vlm (CPU + CUDA) | new draft: convolution lowering guards on `256*u4*u5` (per-image crop size read from a tensor). Not reduced |
+| `CUDA error: unspecified launch failure` | deepseek_v2, deepseek_v3, deepseek_v32, dots3_note, ernie4_5_moe, glm4_moe, granitemoe | all MoE, B300 only, unbacked only (backed passes on B300). **Not triaged:** not rerun on H100, so unknown whether B300-specific |
+| NVRTC: no sm_103 in this CUDA 12.8 build | dots3_note_vlm, gemma3n, glm5_next | environment, same as the main sweep; not rerun on H100 |
+
 ## Accuracy check (stopped, incomplete)
 
 `graph_breaks/accuracy.py` compares eager, compiled (Inductor) and an fp64 reference for every output and
@@ -203,6 +286,13 @@ rerun finished.
    jev, and the Dory part of `looped-model-cache-deepcopy`), and save them to `issues/repros/` / `issues/hf/repros/`.
 3. Finish the accuracy check (see above), or drop it.
 4. Review the drafts, file them, and set `issue:` / `status: open` in `known_issues.yaml`.
+5. Nov 23 batch: `unlimited_ocr` CPU dynamic train hit the 2 h CPU compile cap (same CPU-only slowdown as
+   above; its CPU accuracy runs all pass, without an fp64 reference because of an fp64 grouped-mm limit). The 5 new
+   crash / wrong-value drafts all have tested repros now; the 4 graph-break drafts point at the model code. File
+   them with item 4.
+6. Unbacked sweep (stopped): resume with `sbatch ~/gb-jobs/unbacked/cuda.sbatch` / `cpu.sbatch` (skip models that
+   already have both scenarios), rerun the MoE launch failures and NVRTC models on H100
+   (`--partition=hopper-dev --gres=gpu:h100:1 --export=LIST=...`), and reduce the two new drafts.
 
 ## Repo changes (uncommitted)
 
@@ -217,5 +307,11 @@ rerun finished.
   sarvam_moe, jev. `known_issues.yaml`: 60 root causes.
 - `graph_breaks/check.py`: `jev` inputs. `graph_breaks/dynamic.py`: `_loss()` handles a bare tensor output.
 - `graph_breaks/accuracy.py` (new): eager vs compiled vs fp64 accuracy check (results in `results_accuracy*/`).
+- Nov 23: `check.py` adds `clap` and `gemma4` inputs, no `labels` for headless (`AutoModel`) encoders,
+  per-sequence labels for `*ForSequenceClassification`, `decoder_input_ids` for encoder-decoder VLMs, and per-model
+  `quantize: true` / `pretrained: true` (also used by `accuracy.py`). `summarize.py` normalizes `kernels` hub
+  paths. `coverage.py` maps the new crash errors. `models.yaml`: + 52 models.
+- Nov 24: `coverage.py` / `affected.py` also read `results_dynamic_unbacked[_cuda]/` (`unbacked` rows in
+  `COVERAGE.md`, two more columns in the drafts' affected-models tables). Job scripts in `~/gb-jobs/unbacked/`.
 - Drafts split by repo: `issues/` (PyTorch) + `issues/repros/`, `issues/hf/` (transformers, HF Hub) +
   `issues/hf/repros/`, `issues/harness/`. Results: `results*/`, summaries.

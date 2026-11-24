@@ -73,34 +73,44 @@ On `9933f27` that has been replaced by this loop fallback.
 
 ### Affected models in this sweep
 
-25 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+35 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| big_bird | `google/bigbird-roberta-base` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| deberta | `microsoft/deberta-base` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| dots3_note_vlm | `dots-studio/dots3-note-prev` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| encodec | `facebook/encodec_24khz` | eval 1 · train 1 | eval 1 · train 1 | eval 1 | eval 1 |
-| hubert | `facebook/hubert-large-ls960-ft` | train 1 | train 1 | train 1 | train 1 |
-| hy_v4_vl | `tencent/Hy4` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 |
-| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | train 1 |
-| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | train 1 |
-| llava_next | `llava-hf/llava-v1.6-mistral-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| mimi | `kyutai/mimi` | eval 1 · train 1 | eval 1 · train 1 | eval 1 | eval 1 |
-| mistral3 | `unsloth/Mistral-Small-3.1-24B-Instruct-2503` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 |
-| moonshine | `UsefulSensors/moonshine-tiny` | – | – | train 1 | train 1 |
-| omniasr | `hf-audio/omniasr-llm-300m-v2` | train 1 | train 1 | train 1 | train 1 |
-| omniasr_ctc | `hf-audio/omniasr-ctc-300m-v2` | train 1 | train 1 | train 1 | train 1 |
-| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 |
-| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 |
-| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 |
-| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 |
-| reformer | `google/reformer-crime-and-punishment` | eval 1 · train 1 | eval 1 · train 1 | – | – |
-| sam3 | `facebook/sam3` | eval 1 | eval 1 | eval 1 | eval 1 |
-| switch_transformers | `google/switch-base-8` | eval 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 |
-| wav2vec2 | `facebook/wav2vec2-base-960h` | train 1 | train 1 | train 1 | train 1 |
-| wavlm | `microsoft/wavlm-base-plus` | train 1 | train 1 | train 1 | train 1 |
-| wavtokenizer | `swiss-ai/wavtokenizer-large-unify-40token` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| zonos3_mini | `Zyphra/ZONOS3-Mini-hf` | eval 2 | eval 2 | eval 2 | eval 2 |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| big_bird | `google/bigbird-roberta-base` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
+| deberta | `microsoft/deberta-base` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| dots3_note_vlm | `dots-studio/dots3-note-prev` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| encodec | `facebook/encodec_24khz` | eval 1 · train 1 | eval 1 · train 1 | eval 1 | eval 1 | – | – |
+| florence2 | `florence-community/Florence-2-base` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| glm5_next | `zai-org/GLM-5.3-Flash` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| gpt_oss_mxfp4 | `openai/gpt-oss-20b` | – | eval 2 · cache 2 · train 2 | – | – | – | – |
+| hubert | `facebook/hubert-large-ls960-ft` | train 1 | train 1 | train 1 | train 1 | – | – |
+| hy_v4_vl | `tencent/Hy4` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 | – | – |
+| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | train 1 | – | – |
+| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | train 1 | – | – |
+| llava_next | `llava-hf/llava-v1.6-mistral-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| mimi | `kyutai/mimi` | eval 1 · train 1 | eval 1 · train 1 | eval 1 | eval 1 | – | – |
+| mistral3 | `unsloth/Mistral-Small-3.1-24B-Instruct-2503` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| moonshine | `UsefulSensors/moonshine-tiny` | – | – | train 1 | train 1 | – | – |
+| omniasr | `hf-audio/omniasr-llm-300m-v2` | train 1 | train 1 | train 1 | train 1 | – | – |
+| omniasr_ctc | `hf-audio/omniasr-ctc-300m-v2` | train 1 | train 1 | train 1 | train 1 | – | – |
+| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| qwen2_5_vl_7b | `Qwen/Qwen2.5-VL-7B-Instruct` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| qwen3_5_2b | `Qwen/Qwen3.5-2B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 | – | – |
+| qwen3_5_4b | `Qwen/Qwen3.5-4B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 | – | – |
+| qwen3_5_9b | `Qwen/Qwen3.5-9B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 | – | – |
+| qwen3_6_moe | `Qwen/Qwen3.6-35B-A3B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 | – | – |
+| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 2 · cache 2 · train 2 | – | eval 2 · train 2 | – | – |
+| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 | – | – |
+| qwen3_vl_8b | `Qwen/Qwen3-VL-8B-Instruct` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 | – | – |
+| reformer | `google/reformer-crime-and-punishment` | eval 1 · train 1 | eval 1 · train 1 | – | – | – | – |
+| sam3 | `facebook/sam3` | eval 1 | eval 1 | eval 1 | eval 1 | – | – |
+| switch_transformers | `google/switch-base-8` | eval 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| wav2vec2 | `facebook/wav2vec2-base-960h` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wav2vec2_xlsr_ja | `jonatasgrosman/wav2vec2-large-xlsr-53-japanese` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wavlm | `microsoft/wavlm-base-plus` | train 1 | train 1 | train 1 | train 1 | – | – |
+| wavtokenizer | `swiss-ai/wavtokenizer-large-unify-40token` | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| zonos3_mini | `Zyphra/ZONOS3-Mini-hf` | eval 2 | eval 2 | eval 2 | eval 2 | – | – |
 
 <!-- affected-models:end -->

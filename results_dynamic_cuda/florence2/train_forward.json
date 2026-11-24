@@ -1,0 +1,1419 @@
+{
+  "model": "florence2",
+  "hf_id": "florence-community/Florence-2-base",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-23T20:17:27+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 13,
+  "recompiled_graphs": 2,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 13,
+      "new_shape_events": 4792
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 3
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 1,
+      "new_shape_events": 3
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 4",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 107432280520512), type=<class 'transformers.models.florence2.modeling_florence2.Florence2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Florence2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/florence2/modeling_florence2.py:690\n    triggered by the following guard failure(s):\n    - 4/0: (image_features.size()[1]*image_features.size()[0]) == 100  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # transformers/src/transformers/models/florence2/modeling_florence2.py:710 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)",
+    "Recompiling function get_placeholder_mask in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/florence2/modeling_florence2.py:690\n    triggered by the following guard failure(s):\n    - 4/1: (image_features.size()[1]*image_features.size()[0]) == 150  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # transformers/src/transformers/models/florence2/modeling_florence2.py:710 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)\n    - 4/0: (image_features.size()[1]*image_features.size()[0]) == 100  # f\"Image features and image tokens do not match, tokens: {n_image_tokens}, features: {n_image_features}\",  # transformers/src/transformers/models/florence2/modeling_florence2.py:710 in get_placeholder_mask (_dynamo/variables/tensor.py:3158 in evaluate_expr)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:is_aligned_realized_tensor",
+    "torch/_inductor/ir.py:is_stride_ordered",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/ir.py:significant_strides_equal",
+    "torch/_inductor/scheduler.py:can_fuse",
+    "torch/_inductor/utils.py:evaluate"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 571,
+      "examples": [
+        "Ne(s96 - 1, 1)",
+        "Ne(((((s58 - 1)//4)) + 1)**2, 1)",
+        "Eq(128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))), 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12), 1)",
+        "Eq(128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_copy_",
+      "line": 831,
+      "count": 28,
+      "examples": [
+        "s96 - 1 >= 2",
+        "s38 - 1 >= 2",
+        "Ne(1024*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))), 1024*(((s99 - 1)//32)) + 1024)",
+        "Ne(1024*Max(1, ((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))), 1024*((((s99 - 1)//32)) + 1)*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))",
+        "Ne(1024*Max(1, ((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))), 1024*((((s99 - 1)//32)) + 1)*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 112,
+      "examples": [
+        "Eq(s46, 3)",
+        "3*s58**2 <= 2147483647",
+        "((((s58 - 1)//4)) + 1)*(128*(((s58 - 1)//4)) + 128) <= 2147483647",
+        "128*s18*((((s58 - 1)//4)) + 1)**2 < 2147483647",
+        "((((s58 - 1)//4)) + 1)*(128*(((s58 - 1)//4)) + 128)*(Mod(((128*s18*((((s58 - 1)//4)) + 1)**2 - 1)//(128*((((s58 - 1)//4)) + 1)**2)), s18)) + (128*(((s58 - 1)//4)) + 128)*(Mod(((128*s18*((((s58 - 1)//4)) + 1)**2 - 1)//((((s58 - 1)//4)) + 1)), (((s58 - 1)//4)) + 1)) + 128*(Mod(128*s18*((((s58 - 1)//4)) + 1)**2 - 1, (((s58 - 1)//4)) + 1)) + (Mod(((128*s18*((((s58 - 1)//4)) + 1)**2 - 1)//(((((s58 - 1)//4)) + 1)**2)), 128)) < 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 8,
+      "examples": [
+        "s46 = 3",
+        "s59 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 203,
+      "examples": [
+        "Eq(zf49, 1.0e-5)",
+        "Eq(zf33, 1.0e-5)",
+        "Eq(zf37, 1.0e-5)",
+        "Eq(zf50, 1.0e-5)",
+        "Eq(zf36, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880",
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 106,
+      "examples": [
+        "128*(((s58 - 1)//4)) + 128 < ((((s58 - 1)//4)) + 1)*(128*(((s58 - 1)//4)) + 128)",
+        "128*(((s58 - 1)//4)) + 128 > 128",
+        "(((s58 - 1)//8)) + 1 < ((((s58 - 1)//8)) + 1)**2",
+        "(((s58 - 1)//8)) + 1 > 1",
+        "(((s58 - 1)//16)) + 1 < ((((s58 - 1)//16)) + 1)**2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 591,
+      "examples": [
+        "Ne(Mod((((s58 - 1)//4)) + 1, ((((s58 - 1)//4)) + 1)**2), 0)",
+        "Eq(Mod((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)), 0)",
+        "Ne(Mod(s18, ((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144)), 0)",
+        "Ne(Mod(s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)), ((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144)), 0)",
+        "Eq(Mod(s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, ((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 82,
+      "examples": [
+        "Eq(128*s18*((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)**2, 18432*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)",
+        "Eq(128*((((s58 - 1)//4)) + 1)**2*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)), 128*s18*((((s58 - 1)//4)) + 1)**2)",
+        "Eq(256*s18*((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)**2, 36864*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)",
+        "Eq(256*((((s58 - 1)//8)) + 1)**2*(((s18*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)), 256*s18*((((s58 - 1)//8)) + 1)**2)",
+        "Eq(512*s18*((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)**2, 73728*s18*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 487,
+      "examples": [
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12), (((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)",
+        "Eq((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 12)",
+        "Ne(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144), s18)",
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 144)",
+        "Ne(s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 198,
+      "examples": [
+        "Ne(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0)",
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 1)",
+        "Ne(128*(((s58 - 1)//4)) + 128*(Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 128, 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(128*(((s58 - 1)//4)) + 128*(Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 128, 128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/models/bart/modeling_bart.py:forward:520",
+        "transformers/models/bart/modeling_bart.py:forward:541"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 96,
+      "examples": [
+        "Eq(Mod(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 18432), 0)",
+        "Eq(Mod(1536*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 18432*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2), 0)",
+        "Eq(Mod(1536*(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 128*((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)**2), 0)",
+        "Eq(Mod(256*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 36864), 0)",
+        "Eq(Mod(3072*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 36864*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 222,
+      "examples": [
+        "128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 2",
+        "384*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 2",
+        "1536*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)) >= 2",
+        "1536*(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)) >= 2",
+        "128*((((s58 - 1)//4)) + 1)**2*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) >= 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 96,
+      "examples": [
+        "Eq(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 18432*(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144)))",
+        "Eq(1536*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 18432*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)",
+        "Eq(1536*(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 128*((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)**2*(((12*(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//(((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)**2))))",
+        "Eq(256*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 36864*(((s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//144)))",
+        "Eq(3072*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 36864*(((s18*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 71,
+      "examples": [
+        "Eq(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0) | ((Eq((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12), 1) | Eq(128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)) & (Eq(s18, 1) | Eq((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12), 1) | Eq(128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)))",
+        "Eq((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 1) | Eq(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0) | Eq(128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))), 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Eq(256*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 0) | ((Eq((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12), 1) | Eq(256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 256*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)) & (Eq(s18, 1) | Eq((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12), 1) | Eq(256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 256*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)))",
+        "Eq((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))), 1) | Eq(256*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 0) | Eq(256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12)))), 256*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))",
+        "Eq(512*s18*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2, 0) | ((Eq((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12), 1) | Eq(512*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2, 512*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)) & (Eq(s18, 1) | Eq((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12), 1) | Eq(512*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2, 512*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)))"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 67,
+      "examples": [
+        "128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2 >= 256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2",
+        "256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2 >= 256*Max(1, (((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2",
+        "512*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2 >= 512*Max(1, (((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 147,
+      "examples": [
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12), 0)",
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 0)",
+        "Ne(((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0)",
+        "Ne(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12), 0)",
+        "Ne((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 144,
+      "examples": [
+        "Eq(s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, ((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))",
+        "Eq(((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 144)",
+        "Eq(12*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)), (((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)",
+        "Eq((((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), (((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)",
+        "Eq(s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2, ((s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//144))"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 74,
+      "examples": [
+        "Ne(s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))), 0)",
+        "Ne(s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(((s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12)))), 0)",
+        "Ne(s18*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2, 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 32,
+      "examples": [
+        "384*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 384",
+        "768*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2 >= 768",
+        "1536*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2 >= 1536",
+        "3072*((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2 >= 3072",
+        "384*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 384"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 32,
+      "examples": [
+        "Ne(18432*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(36864*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(73728*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(147456*((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(18432*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 33,
+      "examples": [
+        "Ne(1536*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(3072*s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(6144*s18*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(12288*s18*(((((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//32)) + (Mod(12 - (Mod((((s58 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(1536*s97*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 65,
+      "examples": [
+        "(((s58 - 1)//4)) + 1 <= 12*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))",
+        "(((s58 - 1)//4)) + 1 <= (((s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12))",
+        "(((s58 - 1)//8)) + 1 <= 12*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))",
+        "(((s58 - 1)//8)) + 1 <= (((s18*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((s18*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12))",
+        "(((s58 - 1)//16)) + 1 <= 12*((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 39,
+      "examples": [
+        "Ne(((s18*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12), 0)",
+        "Ne(((s18*(((((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//16)) + (Mod(12 - (Mod((((s58 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12), 0)",
+        "Ne(((s97*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12), 0)",
+        "Ne(((s97*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12), 0)",
+        "Ne(((s52*(((((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//8)) + (Mod(12 - (Mod((((s58 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 188,
+      "examples": [
+        "Ne(128*s18*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0)",
+        "Ne((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 1)",
+        "Ne(128*(((s58 - 1)//4)) + 128*(Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 128, 128*((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(128*(((s58 - 1)//4)) + 128*(Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 128, 128*Max(1, (((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s58 - 1)//4)) + (Mod(12 - (Mod((((s58 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 377,
+      "examples": [
+        "Ne(128*s97*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 0)",
+        "Ne((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))), 1)",
+        "Ne(128*(((s99 - 1)//4)) + 128*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 128, 128*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(128*(((s99 - 1)//4)) + 128*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 128, 128*Max(1, (((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))",
+        "Ne(((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "9223372036854775807 > s38"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 71,
+      "examples": [
+        "s38*s97 <= 2147483647",
+        "(((s99 - 1)//32)) <= 2147483646",
+        "(((s72*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) <= 2147483647",
+        "(((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) <= 2147483647",
+        "768*s70*s72 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/bart/modeling_bart.py:forward:520",
+        "transformers/models/bart/modeling_bart.py:forward:527",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 48,
+      "examples": [
+        "1 < 384*s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "384 < 384*s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "384*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 < 384*s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "1 < 128*s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2",
+        "Eq(FloatPow(ToFloat(((((s99 - 1)//4)) + 1)**2), -0.5), 0.0178571428571429)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 405,
+      "count": 12,
+      "examples": [
+        "Ne(Mod(1024, 1024*(((s99 - 1)//32)) + 1024), 0)",
+        "Ne(Mod(1, ((((s99 - 1)//32)) + 1)**2), 0)",
+        "Ne(Mod(1, ((((s99 - 1)//4)) + 1)**2), 0)",
+        "Eq(Mod(((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)*(1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024), (1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024)*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))), 0)",
+        "Eq(Mod((1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024)*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))), ((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)*(1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:compute_required_storage_length",
+      "line": 1955,
+      "count": 8,
+      "examples": [
+        "Ne(1024*s72*((((s99 - 1)//32)) + 1)*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 0)",
+        "Ne(512*((((s99 - 1)//16)) + 1)*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(256*((((s99 - 1)//8)) + 1)*(((s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)",
+        "Ne(128*((((s99 - 1)//4)) + 1)*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_clone_meta",
+      "line": 719,
+      "count": 28,
+      "examples": [
+        "1024*(s72 - 1)*Max(1, ((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))) + 1024*(((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) - 1)*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))) + 1024*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) >= 0",
+        "Ne(1024*(s72 - 1)*Max(1, ((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))) + 1024*(((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) - 1)*Max(1, (((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))) + 1024*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 0)",
+        "512*((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) - 1)*((((s99 - 1)//16)) + 1)*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12))) + 512*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)) + 512*(((s99 - 1)//16))*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12))) >= 0",
+        "Ne(512*((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) - 1)*((((s99 - 1)//16)) + 1)*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12))) + 512*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)) + 512*(((s99 - 1)//16))*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12))), 0)",
+        "512*((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12)) - 1)*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))*Max(1, 12*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))) + 512*(12*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)) - 1)*Max(1, (((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12))) + 512*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 150,
+      "examples": [
+        "((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 1",
+        "Ne(1024*s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))))), 0)",
+        "Ne(1024*s72*(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))) - (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)))*(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))))) - (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))), 0)",
+        "Eq(6144*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)), 6144*s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))",
+        "512*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)) > 1"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:_constant_pad_nd_meta",
+      "line": 9379,
+      "count": 10,
+      "examples": [
+        "((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))))) - (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) >= 0",
+        "((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))) - (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) >= 0",
+        "(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))) - (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) >= 0",
+        "(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))) - (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) >= 0",
+        "(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))) - (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:are_strides_like_channels_last_or_false",
+      "line": 2033,
+      "count": 8,
+      "examples": [
+        "1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))))) > 1",
+        "512*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))) > 1",
+        "256*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))) > 1",
+        "128*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))*Max(1, ((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))) > 1"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:are_strides_like_channels_last_or_false",
+      "line": 2031,
+      "count": 2,
+      "examples": [
+        "Ne(((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 22,
+      "examples": [
+        "Ne(Mod(128, 128*(((s99 - 1)//4)) + 128), 0)",
+        "Ne(Mod(128*(((s99 - 1)//4)) + 128, 128*(((s99 - 1)//4))**2 + 256*(((s99 - 1)//4)) + 128), 0)",
+        "Ne(Mod(384, 384*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2), 0)",
+        "Ne(Mod(256, 256*(((s99 - 1)//8)) + 256), 0)",
+        "Ne(Mod(256*(((s99 - 1)//8)) + 256, ((((s99 - 1)//8)) + 1)*(256*(((s99 - 1)//8)) + 256)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 32,
+      "examples": [
+        "Ne(12, (((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)",
+        "Ne(s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, (((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))",
+        "Ne(s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, ((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)",
+        "Ne(s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 144)",
+        "Eq(((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//(((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)**2)), ((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 32,
+      "examples": [
+        "12 < (((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1",
+        "s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2 >= ((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))",
+        "s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 >= 144",
+        "12 < (((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1",
+        "s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2 >= ((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 20,
+      "examples": [
+        "s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2 > ((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))",
+        "s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2 > ((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2",
+        "s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2 > 144",
+        "s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2 > ((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))",
+        "s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2 > ((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 24,
+      "examples": [
+        "Eq(144*s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)",
+        "Eq(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144), (((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)",
+        "Eq(144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2, (((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(((s99 - 1)//4))**2 + 2*(((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(((s99 - 1)//4)) + (((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + (((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1))))",
+        "Eq((((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(((s99 - 1)//4))**2 + 2*(((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)))*(((s99 - 1)//4)) + (((144*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s99 - 1)//4))**2 + 2*(((s99 - 1)//4))*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 2*(((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12))**2 + 2*(Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1))), s72*(((s99 - 1)//4))**2 + 2*s72*(((s99 - 1)//4)) + s72)",
+        "Eq(144*s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2, s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1036,
+      "count": 6,
+      "examples": [
+        "Ne(384*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2, 128)",
+        "Ne(768*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2, 256)",
+        "Ne(1536*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2, 512)",
+        "Eq(1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 12288)",
+        "Eq(1024*(((s99 - 1)//32))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))**2 + 2048*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 147456*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 404,
+      "count": 1,
+      "examples": [
+        "Ne((1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024)*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 407,
+      "count": 1,
+      "examples": [
+        "Eq((1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024)*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))), ((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)*(1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_stride_ordered",
+      "line": 4770,
+      "count": 2,
+      "examples": [
+        "Ne(1024, 1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))",
+        "Ne(1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 1024*(((s99 - 1)//32))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))**2 + 2048*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4729,
+      "count": 2,
+      "examples": [
+        "Ne(1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 0)",
+        "Ne(1024*(((s99 - 1)//32))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))**2 + 2048*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)), 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 2,
+      "examples": [
+        "1024 < 1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))",
+        "1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) < 1024*(((s99 - 1)//32))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))**2 + 2048*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1010,
+      "count": 2,
+      "examples": [
+        "Ne(147456*s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2, 0)",
+        "Ne(147456*(((s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2, 0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1041,
+      "count": 10,
+      "examples": [
+        "147456*s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 1",
+        "147456*s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 1024",
+        "147456*s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 147456",
+        "147456*(((s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 1",
+        "147456*(((s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//144))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 1024"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_stride",
+      "line": 1035,
+      "count": 1,
+      "examples": [
+        "Ne(((s72*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//144), 1)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:significant_strides_equal",
+      "line": 547,
+      "count": 2,
+      "examples": [
+        "Eq(((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)*(1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024), 1024*(((s99 - 1)//32))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 2048*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12))**2 + 2048*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))",
+        "Eq(1024*(((s99 - 1)//32)) + 1024*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024, 1024*(((s99 - 1)//32))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))*(Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1024*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12)))"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 26,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "s72*(((s99 - 1)//4))**2 + 2*s72*(((s99 - 1)//4)) + s72 <= 2147483647",
+        "384*s72*(((s99 - 1)//4))**2 + 768*s72*(((s99 - 1)//4)) + 384*s72 <= 2147483647",
+        "s72*(((s99 - 1)//8))**2 + 2*s72*(((s99 - 1)//8)) + s72 <= 2147483647",
+        "768*s72*(((s99 - 1)//8))**2 + 1536*s72*(((s99 - 1)//8)) + 768*s72 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/bart/modeling_bart.py:forward:527",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:evaluate",
+      "line": 1973,
+      "count": 4,
+      "examples": [
+        "1024*((12//(((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2)))*(((((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))))**2)//12))*((((((s99 - 1)//32)) + (Mod(12 - (Mod((((s99 - 1)//32)) + 1, 12)), 12)) + 1)//12))**2 > 32",
+        "512*(((12*(((s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//(s72*((((((s99 - 1)//16)) + (Mod(12 - (Mod((((s99 - 1)//16)) + 1, 12)), 12)) + 1)//12))**2))) > 32",
+        "256*(((12*(((s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//(s72*((((((s99 - 1)//8)) + (Mod(12 - (Mod((((s99 - 1)//8)) + 1, 12)), 12)) + 1)//12))**2))) > 32",
+        "128*(((12*(((s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2)//((((s72*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12)))))*(((s72*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//12))*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))*(((((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))))**2)//12)))//(s72*((((((s99 - 1)//4)) + (Mod(12 - (Mod((((s99 - 1)//4)) + 1, 12)), 12)) + 1)//12))**2))) > 32"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 7,
+      "examples": [
+        "768*s72*(((s99 - 1)//32))**2 + 1536*s72*(((s99 - 1)//32)) + 1536*s72 < 5242880",
+        "1024*s72*(((s99 - 1)//32))**2 + 2048*s72*(((s99 - 1)//32)) + 1024*s72 < 5242880",
+        "512*s72*(((s99 - 1)//16))**2 + 1024*s72*(((s99 - 1)//16)) + 512*s72 < 5242880",
+        "256*s72*(((s99 - 1)//8))**2 + 512*s72*(((s99 - 1)//8)) + 256*s72 < 5242880",
+        "128*s72*(((s99 - 1)//4))**2 + 256*s72*(((s99 - 1)//4)) + 128*s72 < 5242880"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/florence2/modeling_florence2.py:forward",
+      "line": 741,
+      "count": 10,
+      "examples": [
+        "Eq(s11*s28, 100)",
+        "zf16 <= 0.0",
+        "Eq(zf32, 0.125)",
+        "Eq(zf94, 0.1)",
+        "Eq(s55, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 4,
+      "examples": [
+        "Eq(s67, s29)",
+        "Eq(s38, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 5,
+      "examples": [
+        "Eq(s53, 768)",
+        "Eq(s62, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 5,
+      "examples": [
+        "s53 = 768",
+        "s62 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 62,
+      "examples": [
+        "zf30 >= 0.0",
+        "zf30 <= 1.0",
+        "zf83 >= 0.0",
+        "zf83 <= 1.0",
+        "zf89 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 31,
+      "examples": [
+        "Eq(zf30, 0.1)",
+        "Eq(zf83, 0.1)",
+        "Eq(zf89, 0.1)",
+        "Eq(zf35, 0.1)",
+        "Eq(zf63, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:741",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1182,
+      "count": 4,
+      "examples": [
+        "zf59 <= 0.0",
+        "Eq(zf23, 0.125)",
+        "Eq(zf8, 0.1)",
+        "Eq(s16, s77)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 4,
+      "examples": [
+        "zf59 <= 0.0",
+        "Eq(zf23, 0.125)",
+        "Eq(zf8, 0.1)",
+        "Eq(s16, s77)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 4,
+      "examples": [
+        "zf60 <= 0.0",
+        "Eq(zf23, 0.125)",
+        "Eq(zf8, 0.1)",
+        "Eq(s54, s29)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "Eq(s69, 768)",
+        "Eq(s33, 768)",
+        "Eq(s34, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/bart/modeling_bart.py:forward:541",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "s69 = 768",
+        "s33 = 768",
+        "s34 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/bart/modeling_bart.py:forward:541",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746",
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/modeling_layers.py:forward_with_checkpointing",
+      "line": 124,
+      "count": 10,
+      "examples": [
+        "Eq(zf0, 0.125)",
+        "Eq(zf94, 0.1)",
+        "Eq(s69, s87)",
+        "Eq(s54, s69)",
+        "Eq(s43, s47)"
+      ],
+      "model_frames": [
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_aligned_realized_tensor",
+      "line": 524,
+      "count": 3,
+      "examples": [
+        "Eq(Mod(Max(1, s54 - (Mod(s54, 8)) + 8), 8), 0) & Eq(Mod(s54*Max(1, s54 - (Mod(s54, 8)) + 8), 8), 0)",
+        "Eq(Mod(Max(1, s14 - (Mod(s14, 8)) + 8), 8), 0) & Eq(Mod(s28*Max(1, s14 - (Mod(s14, 8)) + 8), 8), 0)",
+        "~(Eq(Mod(s28, 8), 0) & Eq(Mod(12*s28, 8), 0))"
+      ],
+      "model_frames": [
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741",
+      "line": 746,
+      "count": 26,
+      "examples": [
+        "zf68 <= 0.0",
+        "Eq(zf73, 0.125)",
+        "Eq(zf61, 0.1)",
+        "s11 <= 65535",
+        "Eq(zf81, 0.125)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:torch_dynamo_resume_in_forward_at_741:746"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 1,
+      "examples": [
+        "s14 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 4,
+      "examples": [
+        "Ne(s34*s94*(s14 + s55), 0)",
+        "Ne(s14 + s55, 1)",
+        "Eq(s14*s34, s34*(s14 + s55))",
+        "Eq(768*s14, 768*s14 + 768*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne(s94*(s14 + s55), -1)",
+        "Ne(s14 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 1,
+      "examples": [
+        "s94*(s14 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 4,
+      "examples": [
+        "s14 + s55 > -1",
+        "1 < 51328*s94*(s14 + s55)",
+        "51328 < 51328*s94*(s14 + s55)",
+        "51328*s14 + 51328*s55 < 51328*s94*(s14 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 1,
+      "examples": [
+        "Eq(s38*s97, 1) | Eq(s94*(s14 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 1,
+      "examples": [
+        "s38*s97 <= s14*s94"
+      ],
+      "model_frames": [
+        "transformers/models/florence2/modeling_florence2.py:forward:880"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/utils/import_utils.py:1993",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:880 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:741 in forward",
+        "transformers/models/florence2/modeling_florence2.py:708 in get_placeholder_mask",
+        "transformers/utils/import_utils.py:1993 in torch_compilable_check"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0124.html",
+      "short_reason": "Unsupported Tensor.item() call with capture_scalar_outputs=False",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/bart/modeling_bart.py:304",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: Note: Python `or`/`and` between tensor expressions (e.g. `tensor.any() or other_tensor.any()`) triggers implicit bool conversion. Use `torch.logical_or`/`torch.logical_and` or the `|`/`&` operators instead.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:880 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:746 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/bart/modeling_bart.py:541 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/models/bart/modeling_bart.py:304 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Data-dependent branching",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/bart/modeling_bart.py:304",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData-dependent branching\n  Explanation: Detected data-dependent branching (e.g. `if my_tensor.sum() > 0:`). Dynamo does not support tracing dynamic control flow.\n  Hint: For the common pattern `if tensor_cond: x = transform(x)` (e.g. clamping inf/nan values), consider making the code branchless by always applying the transform. Operations like torch.clamp, torch.nan_to_num, and torch.where are typically no-ops on well-behaved inputs and compile without graph breaks.\n  Hint: Note: Python `or`/`and` between tensor expressions (e.g. `tensor.any() or other_tensor.any()`) triggers implicit bool conversion. Use `torch.logical_or`/`torch.logical_and` or the `|`/`&` operators instead.\n  Hint: This graph break is fundamental - it is unlikely that Dynamo will ever be able to trace through your code. Consider finding a workaround.\n  Hint: Use `torch.cond` to express dynamic control flow.\n\n  Developer debug context: attempted to jump with TensorVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/bart/modeling_bart.py line 504)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/bart/modeling_bart.py\", line 532\n            for idx, encoder_layer in enumerate(self.layers):\n                                      ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:880 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/florence2/modeling_florence2.py:746 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/bart/modeling_bart.py:541 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/models/bart/modeling_bart.py:304 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0170.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

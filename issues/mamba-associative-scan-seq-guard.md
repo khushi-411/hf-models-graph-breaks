@@ -67,10 +67,10 @@ dims.
 
 3 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| falcon_mamba | `tiiuae/falcon-mamba-7b` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) |
-| jamba | `ai21labs/Jamba-tiny-dev` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) |
-| mamba | `state-spaces/mamba-130m-hf` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| falcon_mamba | `tiiuae/falcon-mamba-7b` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) | – | train: recompiles (2 / 1 / 1) |
+| jamba | `ai21labs/Jamba-tiny-dev` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) | – | – |
+| mamba | `state-spaces/mamba-130m-hf` | – | – | eval: recompiles (2 / 1 / 1) | train: recompiles (2 / 1 / 1) | – | – |
 
 <!-- affected-models:end -->

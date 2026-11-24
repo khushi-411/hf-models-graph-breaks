@@ -1,0 +1,881 @@
+{
+  "model": "clap",
+  "hf_id": "laion/clap-htsat-fused",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T09:53:34+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 8,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 8,
+      "new_shape_events": 520
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: ___check_obj_id(func.__code__, 99319391898704), type=<class 'code'>  # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+    "torch/_inductor/ir.py:clamp",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:is_stride_ordered",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/ir.py:significant_strides_equal",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2944,
+      "count": 15,
+      "examples": [
+        "zf16 > 0.0",
+        "zf92 > 0.0",
+        "zf40 > 0.0",
+        "zf91 > 0.0",
+        "zf27 > 0.0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/clap/modeling_clap.py:forward:1573",
+        "transformers/models/clap/modeling_clap.py:forward:1322",
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2948,
+      "count": 15,
+      "examples": [
+        "zf16 >= 0.0",
+        "zf92 >= 0.0",
+        "zf40 >= 0.0",
+        "zf91 >= 0.0",
+        "zf27 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/clap/modeling_clap.py:forward:1573",
+        "transformers/models/clap/modeling_clap.py:forward:1322",
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2951,
+      "count": 57,
+      "examples": [
+        "Eq(zf16, 1.0e-5)",
+        "Eq(zf59, 0.1)",
+        "Eq(64, s60)",
+        "s25 <= 880801",
+        "64*s25*s6*s70 < 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/clap/modeling_clap.py:forward:1573",
+        "transformers/models/clap/modeling_clap.py:forward:1322",
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:batch_norm",
+      "line": 2951,
+      "count": 7,
+      "examples": [
+        "s60 = 64",
+        "s50 = 64"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/clap/modeling_clap.py:forward:1573",
+        "transformers/models/clap/modeling_clap.py:forward:1322"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 8,
+      "examples": [
+        "s6 <= 1024",
+        "s6 < 1024",
+        "s75 <= 1024",
+        "s75 < 1024",
+        "Eq(s33, 256)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:1573",
+        "transformers/models/clap/modeling_clap.py:forward:1322",
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 8,
+      "examples": [
+        "s75 <= 1024",
+        "s75 < 1024"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 25,
+      "examples": [
+        "65536*s37*s6 <= 2147483647",
+        "4032*(((s37*s6*s75 + 62)//63)) <= 2147483647",
+        "65536*s28*s87 <= 65536*s28 + 2147483647",
+        "65536*s47*s87 <= 65536*s47 + 2147483647",
+        "393216*s38 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "s33 = 256"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 28,
+      "examples": [
+        "Ne(s87 - 1, 1)",
+        "Eq(Max(1, (64//((s15//32)))), (64//((s15//32))))",
+        "Ne((s15//(32*((s15//(32*((s15//128))))))), 1)",
+        "Eq(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128))))), ((64//((s15//32))))*((s15//(32*((s15//128))))))",
+        "Eq(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))), ((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 18,
+      "examples": [
+        "Ne(s28*(s87 - 1), s28)",
+        "Ne((s15//32), 64)",
+        "Eq((s15//32), (64//((s15//32))))",
+        "Ne((s15//(32*((s15//128)))), (s15//32))",
+        "Eq((s15//128), (s15//(32*((s15//(32*((s15//128))))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 20,
+      "examples": [
+        "Ne(Mod(s28, s28*(s87 - 1)), 0)",
+        "Eq(Mod(64, (s15//32)), 0)",
+        "Eq(Mod((s15//32), (s15//(32*((s15//128))))), 0)",
+        "Ne(Mod((s15//(32*((s15//128)))), ((((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))//((s15//128)))), 0)",
+        "Eq(Mod(((64//((s15//32))))*((s15//(32*((s15//128))))), ((((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))//((s15//128)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 36,
+      "examples": [
+        "Eq(zf0, 1.0e-5)",
+        "Eq(zf57, 1.0e-5)",
+        "Eq(zf59, 1.0e-5)",
+        "Eq(zf1, 1.0e-5)",
+        "Eq(zf47, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/autograd/graph.py:_engine_run_backward",
+      "line": 1113,
+      "count": 26,
+      "examples": [
+        "s87 - 1 > 1",
+        "((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))) > 1",
+        "((64//((s15//32))))*((s15//(32*((s15//128))))) < ((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128))))))))",
+        "Eq(768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 768*s38*((64//((s15//32))))*((s15//32)))",
+        "((64//((s15//32)))) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 21,
+      "examples": [
+        "65536*s47*s87 <= 2147483647",
+        "129024*s28*s87 <= 129024*s28 + 2147483647",
+        "393216*s47 <= 2147483647",
+        "4096*s47 <= 2147483647",
+        "65536*s47 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "9223372036854775807 > s87"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 509,
+      "count": 6,
+      "examples": [
+        "393216*s47 < 5242880",
+        "49152*s38 < 5242880",
+        "98304*s38 < 5242880",
+        "196608*s38 < 5242880",
+        "393216*s38 < 5242880"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "Eq(s89, 96)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 2,
+      "examples": [
+        "s89 = 96"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 6,
+      "examples": [
+        "Eq(96*s38*s67, 393216*s38)",
+        "Eq(49152*s38, 768*s38*((s15//32))**2)",
+        "Eq(768*s38*((64//((s15//32))))*((s15//32)), 768*s38*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 2,
+      "examples": [
+        "s67 = 4096"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 76,
+      "examples": [
+        "zf85 >= 0.0",
+        "zf85 <= 1.0",
+        "zf0 >= 0.0",
+        "zf0 <= 1.0",
+        "zf86 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 38,
+      "examples": [
+        "Eq(zf85, 0.0)",
+        "Eq(zf0, 0.0)",
+        "Eq(zf86, 0.1)",
+        "Eq(zf2, 0.0)",
+        "Eq(zf32, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825",
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 2,
+      "examples": [
+        "Ne((s15//32), -1)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 2,
+      "examples": [
+        "((s15//32)) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/clap/modeling_clap.py:forward",
+      "line": 825,
+      "count": 16,
+      "examples": [
+        "Ne((64//((s15//32))), 1)",
+        "Ne((s15//32), 1)",
+        "Ne(768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 0)",
+        "Ne((s15//(32*((s15//128)))), 1)",
+        "Ne(((64//((s15//32))))*((s15//(32*((s15//(32*((s15//128)))))))), (64//((s15//32))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 2,
+      "examples": [
+        "Ne(768*s38*((s15//128)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 2,
+      "examples": [
+        "Eq(Mod(768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 768*s38*((s15//128))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 4,
+      "examples": [
+        "768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))) >= 2",
+        "s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 2,
+      "examples": [
+        "Eq(768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 768*s38*((s15//128))*(((((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))//((s15//128)))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 4,
+      "examples": [
+        "Ne((64//((s15//32))), 0)",
+        "Ne(((64//((s15//32))))*((s15//(32*((s15//128))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1499,
+      "count": 6,
+      "examples": [
+        "Ne((s15//(32*((s15//128)))), 0)",
+        "Ne((s15//(32*((s15//(32*((s15//128))))))), 0)",
+        "Ne(((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 4,
+      "examples": [
+        "Eq(((64//((s15//32))))*((s15//(32*((s15//128))))), ((((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))//((s15//128))))",
+        "Eq(((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), (s15//32))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1345,
+      "count": 2,
+      "examples": [
+        "Ne(((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 2,
+      "examples": [
+        "Ne(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:should_swap",
+      "line": 544,
+      "count": 4,
+      "examples": [
+        "Ne(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128))))), 1)",
+        "Ne(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128))))), Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 10,
+      "examples": [
+        "Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))) >= Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))",
+        "Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))) > 1",
+        "Ne(Mod(1, Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128))))))))), 0)",
+        "Max(1, ((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128))))))))) > 1",
+        "Ne(Mod(1, Max(1, ((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_3d",
+      "line": 298,
+      "count": 2,
+      "examples": [
+        "Ne(Max(1, ((64//((s15//32))))*((s15//(32*((s15//128))))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 2,
+      "examples": [
+        "Eq((s15//(32*((s15//128)))), 1) | Eq((s15//(32*((s15//(32*((s15//128))))))), 1) | Eq(768*s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))), 0) | Eq(Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))), ((s15//(32*((s15//(32*((s15//128))))))))*Max(1, (64//((s15//32)))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1493,
+      "count": 2,
+      "examples": [
+        "Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))) >= Max(1, (64//((s15//32))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4119,
+      "count": 4,
+      "examples": [
+        "((s15//32)) < 64",
+        "((s15//128)) < ((s15//32))",
+        "((64//((s15//32))))*((s15//(32*((s15//128))))) >= ((64//((s15//32))))",
+        "64 >= ((64//((s15//32))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4117,
+      "count": 5,
+      "examples": [
+        "Eq(((s15//32))**2, 64)",
+        "Ne((s15//128), (s15//32))",
+        "Eq(((s15//128))*((s15//(32*((s15//128))))), (s15//32))",
+        "Ne(((64//((s15//32))))*((s15//(32*((s15//128))))), (64//((s15//32))))",
+        "Ne(64, (64//((s15//32))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4079,
+      "count": 2,
+      "examples": [
+        "Eq(s38*((s15//32))**2, s38*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))))",
+        "Eq(s38*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))), s38*((64//((s15//32))))*((s15//(32*((s15//128)))))*((s15//(32*((s15//(32*((s15//128)))))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4121,
+      "count": 3,
+      "examples": [
+        "((64//((s15//32))))*((s15//(32*((s15//128))))) > ((64//((s15//32))))",
+        "((s15//32)) > ((s15//(32*((s15//(32*((s15//128))))))))",
+        "64 > ((64//((s15//32))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 2,
+      "examples": [
+        "Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128))))) < Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128))))))))",
+        "Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128))))) > 1"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 3,
+      "examples": [
+        "1 < ((64//((s15//32))))*((s15//(32*((s15//128)))))",
+        "((64//((s15//32))))*((s15//(32*((s15//128))))) < ((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128)))))",
+        "((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))) < 768*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128)))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 3,
+      "examples": [
+        "Ne(Mod(1, ((64//((s15//32))))*((s15//(32*((s15//128)))))), 0)",
+        "Ne(Mod(((64//((s15//32))))*((s15//(32*((s15//128))))), ((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128)))))), 0)",
+        "Ne(Mod(((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))), 768*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128)))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_stride_ordered",
+      "line": 4770,
+      "count": 1,
+      "examples": [
+        "Ne(((64//((s15//32))))*((s15//(32*((s15//128))))), ((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4729,
+      "count": 1,
+      "examples": [
+        "Ne(((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:significant_strides_equal",
+      "line": 547,
+      "count": 1,
+      "examples": [
+        "Eq(768*Max(1, (64//((s15//32))))*Max(1, (s15//(32*((s15//128)))))*Max(1, (s15//(32*((s15//(32*((s15//128)))))))), 768*((64//((s15//32))))*((s15//128))*((s15//(32*((s15//128))))))"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:825"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "Eq(s83, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 2,
+      "examples": [
+        "s83 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/clap/modeling_clap.py:forward",
+      "line": 1573,
+      "count": 4,
+      "examples": [
+        "Eq(zf27, 2.0)",
+        "Eq(zf17, 2.0)",
+        "Eq(zf31, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/clap/modeling_clap.py:forward:1573"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/clap/modeling_clap.py:287",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nConsider annotating your code using torch._check*(). Could not guard on data-dependent expression u0 > 0 (unhinted: u0 > 0).  (Size-like symbols: u0)\n\nconsider using data-dependent friendly APIs such as guard_or_false, guard_or_true and statically_known_true. If this was caused by Python `not` on a symbolic boolean, use torch.sym_not() or an equivalent comparison instead; Python `not` cannot be overloaded outside Dynamo bytecode tracing.\nCaused by: if len(is_longer_idx) > 0:  # transformers/src/transformers/models/clap/modeling_clap.py:287 in forward (_dynamo/variables/tensor.py:3158 in evaluate_expr)\nFor more information, run with TORCH_LOGS=\"dynamic\"\nFor extended logs when we create symbols, also add TORCHDYNAMO_EXTENDED_DEBUG_CREATE_SYMBOL=\"u0\"\nIf you suspect the guard was triggered from C++, add TORCHDYNAMO_EXTENDED_DEBUG_CPP=1\nFor more debugging help, see https://docs.google.com/document/d/1HSuTTVvYH1pTew89Rtpeu84Ht3nQEFTYhAX3Ypa_xJs/edit?usp=sharing\n\nUser Stack (most recent call last):\n  (snipped, see stack below for prefix)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/clap/modeling_clap.py\", line 1573, in forward\n    audio_outputs = self.audio_model(\n        input_features=input_features,\n        is_longer=is_longer,\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/clap/modeling_clap.py\", line 1322, in forward\n    return self.audio_encoder(\n           ~~~~~~~~~~~~~~~~~~^\n        input_features=input_features,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        is_longer=is_longer,\n        ^^^^^^^^^^^^^^^^^^^^\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/clap/modeling_clap.py\", line 825, in forward\n    hidden_states = self.patch_embed(hidden_states, is_longer_list_idx)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/clap/modeling_clap.py\", line 287, in forward\n    if len(is_longer_idx) > 0:\n       ^^^^^^^^^^^^^^^^^^^^^^\n\nFor C++ stack trace, run with TORCHDYNAMO_EXTENDED_DEBUG_CPP=1\nFor more information about this error, see: https://pytorch.org/docs/main/generated/exportdb/index.html#constrain-as-size-example",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/clap/modeling_clap.py:1322 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/clap/modeling_clap.py:287 in forward"
+      ],
+      "doc_url": null,
+      "short_reason": "Consider annotating your code using torch._check*(). Could not guard on data-dependent expression u0 > 0 (unhinted: u0 > 0).  (Size-like symbols: u0)",
+      "count": 1
+    }
+  ]
+}

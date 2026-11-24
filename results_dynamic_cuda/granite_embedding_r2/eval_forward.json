@@ -1,0 +1,152 @@
+{
+  "model": "granite_embedding_r2",
+  "hf_id": "ibm-granite/granite-embedding-small-english-r2",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-23T20:13:32+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 37
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf58, 1.0e-5)",
+        "Eq(zf81, 1.0e-5)",
+        "Eq(zf28, 1.0e-5)",
+        "Eq(zf91, 1.0e-5)",
+        "Eq(zf42, 1.0e-5)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 12,
+      "examples": [
+        "zf53 >= 0.0",
+        "zf53 <= 1.0",
+        "zf1 >= 0.0",
+        "zf1 <= 1.0",
+        "zf64 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 6,
+      "examples": [
+        "Eq(zf53, 0.0)",
+        "Eq(zf1, 0.0)",
+        "Eq(zf64, 0.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 3,
+      "examples": [
+        "s52 <= 65535",
+        "Eq(zf35, 2.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4658,
+      "count": 3,
+      "examples": [
+        "384*s27*s52 <= 2147483647",
+        "s27**2*s52 <= 2147483647",
+        "1536*s27*s52 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4660,
+      "count": 3,
+      "examples": [
+        "s27*s52 <= 2147483647",
+        "1152*s27*s52 <= 2147483647",
+        "3072*s27*s52 <= 2147483647"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

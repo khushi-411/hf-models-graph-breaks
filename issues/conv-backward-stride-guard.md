@@ -105,33 +105,35 @@ strides is needed, so specializing isn't necessary.
 
 ### Affected models in this sweep
 
-24 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+26 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| bamba | `ibm-ai-platform/Bamba-9B` | – | – | train: recompiles (2 / 1 / 1) | – |
-| falcon_h1 | `tiiuae/Falcon-H1-0.5B-Base` | – | – | train: recompiles (2 / 1 / 1) | – |
-| falcon_mamba | `tiiuae/falcon-mamba-7b` | – | – | train: recompiles (2 / 1 / 1) | – |
-| granitemoehybrid | `ibm-granite/granite-4.0-h-tiny` | – | – | train: recompiles (2 / 1 / 1) | – |
-| hubert | `facebook/hubert-large-ls960-ft` | – | – | train: recompiles (18 / 3 / 2) | – |
-| hy_v4_vl | `tencent/Hy4` | – | – | train: recompiles (34 / 6 / 5) | – |
-| inkling | `thinkingmachines/Inkling` | – | – | train: recompiles (2 / 1 / 1) | – |
-| inkling2 | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (2 / 2 / 1) | – |
-| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (22 / 1 / 0) | – |
-| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (50 / 9 / 4) | – |
-| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (33 / 10 / 7) | – |
-| jamba | `ai21labs/Jamba-tiny-dev` | – | – | train: recompiles (2 / 1 / 1) | – |
-| lfm2 | `LiquidAI/LFM2-350M` | – | – | train: recompiles (2 / 1 / 1) | – |
-| lfm3 | `LiquidAI/LFM3-1.7B` | – | – | train: recompiles (2 / 1 / 1) | – |
-| lfm3_vl | `LiquidAI/LFM3-VL-2B` | – | – | train: recompiles (17 / 8 / 8) | – |
-| mamba | `state-spaces/mamba-130m-hf` | – | – | train: recompiles (2 / 1 / 1) | – |
-| moonshine | `UsefulSensors/moonshine-tiny` | – | – | train: recompiles (16 / 2 / 2) | – |
-| nemotron_h | `nvidia/NVIDIA-Nemotron-Nano-9B-v2` | – | – | train: recompiles (2 / 1 / 1) | – |
-| omniasr | `hf-audio/omniasr-llm-300m-v2` | – | – | train: recompiles (13 / 4 / 3) | – |
-| omniasr_ctc | `hf-audio/omniasr-ctc-300m-v2` | – | – | train: recompiles (10 / 3 / 2) | – |
-| wav2vec2 | `facebook/wav2vec2-base-960h` | – | – | train: recompiles (18 / 3 / 2) | – |
-| wavlm | `microsoft/wavlm-base-plus` | – | – | train: recompiles (19 / 3 / 2) | – |
-| wavtokenizer | `swiss-ai/wavtokenizer-large-unify-40token` | – | – | train: guard only (22 / 0 / 0) | – |
-| zamba2 | `Zyphra/Zamba2-1.2B` | – | – | train: recompiles (2 / 1 / 1) | – |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| bamba | `ibm-ai-platform/Bamba-9B` | – | – | train: recompiles (2 / 1 / 1) | – | train: recompiles (2 / 1 / 1) | – |
+| falcon_h1 | `tiiuae/Falcon-H1-0.5B-Base` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| falcon_mamba | `tiiuae/falcon-mamba-7b` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| glm5_next | `zai-org/GLM-5.3-Flash` | – | – | train: recompiles (37 / 8 / 8) | – | – | – |
+| granitemoehybrid | `ibm-granite/granite-4.0-h-tiny` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| hubert | `facebook/hubert-large-ls960-ft` | – | – | train: recompiles (18 / 3 / 2) | – | – | – |
+| hy_v4_vl | `tencent/Hy4` | – | – | train: recompiles (34 / 6 / 5) | – | – | – |
+| inkling | `thinkingmachines/Inkling` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| inkling2 | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (2 / 2 / 1) | – | – | – |
+| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (22 / 1 / 0) | – | – | – |
+| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (50 / 9 / 4) | – | – | – |
+| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (33 / 10 / 7) | – | – | – |
+| jamba | `ai21labs/Jamba-tiny-dev` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| lfm2 | `LiquidAI/LFM2-350M` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| lfm3 | `LiquidAI/LFM3-1.7B` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| lfm3_vl | `LiquidAI/LFM3-VL-2B` | – | – | train: recompiles (17 / 8 / 8) | – | – | – |
+| mamba | `state-spaces/mamba-130m-hf` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| moonshine | `UsefulSensors/moonshine-tiny` | – | – | train: recompiles (16 / 2 / 2) | – | – | – |
+| nemotron_h | `nvidia/NVIDIA-Nemotron-Nano-9B-v2` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| omniasr | `hf-audio/omniasr-llm-300m-v2` | – | – | train: recompiles (13 / 4 / 3) | – | – | – |
+| omniasr_ctc | `hf-audio/omniasr-ctc-300m-v2` | – | – | train: recompiles (10 / 3 / 2) | – | – | – |
+| wav2vec2 | `facebook/wav2vec2-base-960h` | – | – | train: recompiles (18 / 3 / 2) | – | – | – |
+| wav2vec2_xlsr_ja | `jonatasgrosman/wav2vec2-large-xlsr-53-japanese` | – | – | train: recompiles (18 / 3 / 2) | – | – | – |
+| wavlm | `microsoft/wavlm-base-plus` | – | – | train: recompiles (19 / 3 / 2) | – | – | – |
+| wavtokenizer | `swiss-ai/wavtokenizer-large-unify-40token` | – | – | train: guard only (22 / 0 / 0) | – | – | – |
+| zamba2 | `Zyphra/Zamba2-1.2B` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
 
 <!-- affected-models:end -->

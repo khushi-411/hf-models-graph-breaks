@@ -1,0 +1,77 @@
+{
+  "model": "gemma4_moe",
+  "hf_id": "google/gemma-4-26B-A4B-it",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-23T20:33:09+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "bfloat16",
+  "fp64_reference": true,
+  "reference": "fp32",
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": true,
+  "tol": 0.01,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        22,
+        262144
+      ],
+      "max_abs_diff": 0.76904296875,
+      "rmse_compiled_vs_eager": 0.03466422333087626,
+      "rmse_eager_vs_fp64": 0.016112525163635445,
+      "rmse_compiled_vs_fp64": 0.03387412219880125
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        8,
+        1152
+      ],
+      "max_abs_diff": 2.0,
+      "rmse_compiled_vs_eager": 0.4198670619600812,
+      "rmse_eager_vs_fp64": 0.39140422289807486,
+      "rmse_compiled_vs_fp64": 0.30021841079952244
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        4,
+        512
+      ],
+      "max_abs_diff": 0.01171875,
+      "rmse_compiled_vs_eager": 0.003708823727971965,
+      "rmse_eager_vs_fp64": 0.003326789251170077,
+      "rmse_compiled_vs_fp64": 0.0026356107844045748
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        4,
+        512
+      ],
+      "max_abs_diff": 0.01171875,
+      "rmse_compiled_vs_eager": 0.0035674229430916206,
+      "rmse_eager_vs_fp64": 0.0032279824198799606,
+      "rmse_compiled_vs_fp64": 0.0026342701696058742
+    }
+  ]
+}

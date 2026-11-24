@@ -1,0 +1,69 @@
+{
+  "model": "glm5_next",
+  "hf_id": "zai-org/GLM-5.3-Flash",
+  "scenario": "eval_forward",
+  "device": "cpu",
+  "timestamp": "2026-11-23T20:28:29+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": false,
+  "reference": null,
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        32,
+        154880
+      ],
+      "max_abs_diff": 4.9173831939697266e-06,
+      "rmse_compiled_vs_eager": 7.354417686669973e-07
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        32,
+        512
+      ],
+      "max_abs_diff": 3.337860107421875e-06,
+      "rmse_compiled_vs_eager": 7.618612654626033e-07
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        16,
+        512
+      ],
+      "max_abs_diff": 4.470348358154297e-07,
+      "rmse_compiled_vs_eager": 1.1990736604807086e-07
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        16,
+        512
+      ],
+      "max_abs_diff": 4.917383193969727e-07,
+      "rmse_compiled_vs_eager": 1.2594390193473015e-07
+    }
+  ]
+}

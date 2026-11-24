@@ -122,14 +122,49 @@ def build_config(spec: dict):
     return config
 
 
+def pop_quantization_config(config) -> dict | None:
+    """Remove the checkpoint's `quantization_config` from the config and return it as a dict."""
+    q = getattr(config, "quantization_config", None)
+    if q is None:
+        return None
+    q = q if isinstance(q, dict) else q.to_dict()
+    try:
+        delattr(config, "quantization_config")
+    except AttributeError:
+        config.quantization_config = None
+    return q
+
+
+def quantize_model(spec: dict, model, qconfig: dict, device: str):
+    """Quantize the small random-weight model the way the checkpoint is quantized (`quantize: true` specs).
+
+    The model is saved in bf16 and reloaded with `from_pretrained(..., quantization_config=<checkpoint's config>)`,
+    so transformers swaps in its quantized layers (FP8Linear, Mxfp4 experts, ...) and quantizes the weights on the
+    fly: the same modules and forward code as loading the real quantized checkpoint, without downloading it.
+    """
+    import tempfile
+    from transformers.quantizers.auto import AutoQuantizationConfig
+
+    auto_cls = getattr(transformers, spec["auto_class"])
+    remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
+    with tempfile.TemporaryDirectory() as tmp:
+        model.to(torch.bfloat16).save_pretrained(tmp)
+        return auto_cls.from_pretrained(tmp, quantization_config=AutoQuantizationConfig.from_dict(qconfig),
+                                        dtype=torch.bfloat16, device_map=device, **remote)
+
+
 def build_model(spec: dict, pretrained: bool, device: str):
     auto_cls = getattr(transformers, spec["auto_class"])
     # Only config.json is downloaded unless --pretrained; weights are random.
     # Graph breaks depend on code paths, not weight values, so this is enough.
     config = build_config(spec)
+    qconfig = pop_quantization_config(config) if spec.get("quantize") else None
     remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
-    if pretrained:
-        model = auto_cls.from_pretrained(spec["hf_id"], config=config, **remote)
+    if pretrained or spec.get("pretrained"):
+        # `pretrained: true` specs load the real checkpoint (truncated to the overridden layer count), for formats that
+        # can't be reproduced from random weights (e.g. MXFP4 checkpoints: on-the-fly MXFP4 quantization fails in eager).
+        kw = {"device_map": device} if spec.get("pretrained") else {}
+        model = auto_cls.from_pretrained(spec["hf_id"], config=config, **kw, **remote)
     else:
         model = auto_cls.from_config(config, **remote)
         if spec.get("init_weights") == "normal":
@@ -138,6 +173,8 @@ def build_model(spec: dict, pretrained: bool, device: str):
             with torch.no_grad():
                 for p in model.parameters():
                     p.normal_(0.0, 0.02)
+        if qconfig is not None:
+            return quantize_model(spec, model, qconfig, device)
     return model.to(device)
 
 
@@ -310,8 +347,47 @@ def _qwen_vl_inputs(model, device: str) -> dict:
     return out
 
 
+def _accepts_labels(model) -> bool:
+    """Bare encoders (AutoModel: BertModel, XLMRobertaModel, ...) have no `labels`; their train_forward runs without a loss."""
+    return "labels" in inspect.signature(model.forward).parameters
+
+
+def _sequence_labels(cfg, device: str) -> torch.Tensor:
+    """(batch,) labels for *ForSequenceClassification: float scores for 1-label rerankers, class ids otherwise."""
+    if getattr(cfg, "num_labels", 2) == 1:
+        return torch.rand(BATCH, device=device)
+    return torch.randint(0, cfg.num_labels, (BATCH,), device=device)
+
+
+def _gemma4_inputs(spec: dict, model, device: str) -> dict:
+    """Gemma 4: pre-patchified images (num_images, num_patches, patch * patch * C) + their (x, y) patch positions.
+
+    Each image gives num_patches / pooling_kernel_size**2 soft tokens (as in the transformers Gemma4 tests).
+    """
+    cfg = model.config
+    vcfg = cfg.vision_config
+    grid = spec.get("grid", 6)  # grid x grid patches per image; must divide by pooling_kernel_size
+    k = vcfg.pooling_kernel_size
+    num_patches = grid * grid
+    pixel_values = torch.randn(BATCH, num_patches, vcfg.patch_size**2 * 3, device=device)
+    xs = torch.arange(grid, device=device).repeat(grid)
+    ys = torch.arange(grid, device=device).repeat_interleave(grid)
+    image_position_ids = torch.stack([xs, ys], dim=-1)[None].repeat(BATCH, 1, 1)
+    n_tokens = num_patches // (k * k)
+    text = _text_ids(cfg, device, SEQ_LEN // 2)
+    prefix = [cfg.boi_token_id] + [cfg.image_token_id] * n_tokens + [cfg.eoi_token_id]
+    ids = torch.cat([torch.tensor([prefix] * BATCH, device=device), text], dim=1)
+    return {
+        "input_ids": ids,
+        "attention_mask": torch.ones_like(ids),
+        "pixel_values": pixel_values,
+        "image_position_ids": image_position_ids,
+        "mm_token_type_ids": (ids == cfg.image_token_id).long(),
+    }
+
+
 # Input kinds whose models take `use_cache`.
-_GENERATIVE_KINDS = {"text", "audio_features", "audio_waveform", "vlm", "qwen_vl", "grid_vlm", "audio_llm"}
+_GENERATIVE_KINDS = {"text", "audio_features", "audio_waveform", "vlm", "qwen_vl", "grid_vlm", "audio_llm", "gemma4"}
 
 
 def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
@@ -325,8 +401,11 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
         ids = _text_ids(cfg, device)
         inputs["input_ids"] = ids
         inputs["attention_mask"] = torch.ones_like(ids)
-        if train:
-            inputs["labels"] = ids.clone()
+        if train and _accepts_labels(model):
+            if type(model).__name__.endswith("ForSequenceClassification"):
+                inputs["labels"] = _sequence_labels(cfg, device)
+            else:
+                inputs["labels"] = ids.clone()
         elif is_seq2seq:
             # Seq2seq models need decoder inputs when no labels are given
             # (with labels, they are derived by shifting the labels).
@@ -336,7 +415,7 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
         h, w = _hw(size)
         channels = getattr(cfg, "num_channels", 3)
         inputs["pixel_values"] = torch.randn(BATCH, channels, h, w, device=device)
-        if train and getattr(cfg, "num_labels", None):
+        if train and getattr(cfg, "num_labels", None) and _accepts_labels(model):
             inputs["labels"] = torch.randint(0, cfg.num_labels, (BATCH,), device=device)
     elif kind in ("audio_features", "audio_waveform"):
         if kind == "audio_features":  # log-mel spectrogram (whisper)
@@ -361,8 +440,25 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
             inputs["attention_mask"] = torch.ones_like(ids)
         if train:
             inputs["return_loss"] = True
+    elif kind == "clap":  # CLAP: text + fused log-mel features (batch, 4, frames, mel), as ClapFeatureExtractor returns
+        acfg = cfg.audio_config
+        ids = _text_ids(cfg, device, SEQ_LEN // 2)
+        channels = 4 if getattr(acfg, "enable_fusion", False) else 1
+        inputs.update(input_ids=ids, attention_mask=torch.ones_like(ids),
+                      input_features=torch.randn(BATCH, channels, 1001, acfg.num_mel_bins, device=device))
+        if channels == 4:
+            # eval: one clip longer than max_length (fusion branch), the rest not. train: all longer, since the
+            # fusion block's BatchNorm needs more than one sample per batch in train mode (as in eager).
+            longer = torch.ones(BATCH, dtype=torch.bool, device=device) if train else torch.arange(BATCH, device=device) == 0
+            inputs["is_longer"] = longer[:, None]
+        if train:
+            inputs["return_loss"] = True
+    elif kind == "gemma4":
+        inputs = _gemma4_inputs(spec, model, device)
     elif kind == "vlm":
         inputs = _vlm_inputs(spec, model, device)
+        if is_seq2seq and not train:  # encoder-decoder VLMs (florence2)
+            inputs["decoder_input_ids"] = _text_ids(cfg, device, SEQ_LEN // 2)
     elif kind == "qwen_vl":
         inputs = _qwen_vl_inputs(model, device)
     elif kind == "grid_vlm":
@@ -406,7 +502,7 @@ def make_inputs(spec: dict, model, scenario: str, device: str) -> dict:
     else:
         raise ValueError(f"Unknown inputs kind: {kind}")
 
-    if train and kind in ("vlm", "qwen_vl", "grid_vlm"):
+    if train and kind in ("vlm", "qwen_vl", "grid_vlm", "gemma4"):
         inputs["labels"] = inputs["input_ids"].clone()
     if scenario == "eval_forward" and kind in _GENERATIVE_KINDS and (kind != "audio_waveform" or is_seq2seq):
         inputs["use_cache"] = False

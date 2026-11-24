@@ -43,10 +43,15 @@ def load_known_issues() -> list[dict]:
 def _normalize(path: str) -> str:
     """Older results kept absolute stdlib paths; show them as python/<module>.py.
     trust_remote_code modules live in the HF modules cache under a revision hash; show them as
-    hub/<org>/<repo>/<file>.py so known_issues.yaml can match them across users and revisions."""
+    hub/<org>/<repo>/<file>.py so known_issues.yaml can match them across users and revisions.
+    `kernels` hub kernels likewise become kernels/<org>/<repo>/<file>.py."""
     m = re.match(r"^.*/transformers_modules/([^/]+)/([^/]+)/(?:[0-9a-f]{7,40}/)?(.+)$", path)
     if m:
         return f"hub/{m.group(1)}/{m.group(2).replace('_hyphen_', '-').replace('_dot_', '.')}/{m.group(3)}"
+    # `kernels` hub kernels: .../hub/kernels--<org>--<repo>/snapshots/<rev>/build/<variant>/<file> -> kernels/<org>/<repo>/<file>
+    m = re.match(r"^.*/kernels--([^/]+?)--([^/]+)/snapshots/[0-9a-f]+/build/[^/]+/(.+)$", path)
+    if m:
+        return f"kernels/{m.group(1)}/{m.group(2)}/{m.group(3)}"
     return re.sub(r"^.*/lib/python3\.\d+/", "python/", path)
 
 

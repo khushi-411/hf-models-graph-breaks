@@ -1,0 +1,259 @@
+{
+  "model": "gpt_oss_mxfp4",
+  "hf_id": "openai/gpt-oss-20b",
+  "auto_class": "AutoModelForCausalLM",
+  "scenario": "eval_with_cache",
+  "pretrained": false,
+  "device": "cuda",
+  "config_overrides": {
+    "num_hidden_layers": 2,
+    "layer_types": [
+      "sliding_attention",
+      "full_attention"
+    ]
+  },
+  "timestamp": "2026-11-23T21:55:38+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graph_count": 21,
+  "graph_break_count": 20,
+  "op_count": 189,
+  "unique_breaks": 12,
+  "breaks": [
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py:41",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\ntriton kernel unsupported feature\n  Explanation: Encountered triton kernel unsupported feature: Unexpected argument type for a Triton kernel: UserDefinedObjectVariable(Tensor).\n\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [GenericContextWrappingVariable(_GeneratorContextManager)]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "short_reason": "triton kernel unsupported feature",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py:41",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\ntriton kernel unsupported feature\n  Explanation: Encountered triton kernel unsupported feature: Unexpected argument type for a Triton kernel: UserDefinedObjectVariable(Tensor).\n\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [GenericContextWrappingVariable(_GeneratorContextManager)]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gpt_oss/modeling_gpt_oss.py line 431)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gpt_oss/modeling_gpt_oss.py\", line 475\n            for i, decoder_layer in enumerate(self.layers):\n                                    ~~~~~~~~~^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py:41",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\ntriton kernel unsupported feature\n  Explanation: Encountered triton kernel unsupported feature: Unexpected argument type for a Triton kernel: UserDefinedObjectVariable(Tensor).\n\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "short_reason": "triton kernel unsupported feature",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py:41",
+      "reason": "Encountered graph break that we cannot resume from. Compiling up to the previous resumable state, then skipping the rest of the function. Graph break encountered:\n\nReconstruction failure\n  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable TritonKernelVariable().\n  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.\n\n  Developer debug context: TritonKernelVariable()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html\n\nStack variable source attribution:\n  TritonKernelVariable() originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 41\n        _topk_forward[(pids, )](\n        ~~~~~~~~~~~~~^^^^^^^^^^\n  UserDefinedObjectVariable(Tensor) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/polyfills/__init__.py\", line 471\n        obj = cls.__new__(cls, *args, **kwargs)\n              ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  ConstantVariable(int: 32) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/tensor.py\", line 136\n            return self.storage.data.stride() if i is None else self.storage.data.stride(i)\n                                                                ~~~~~~~~~~~~~~~~~~~~~~~~^^^\n  TensorVariable() originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 26\n        y_vals = torch.empty((n_rows_max, k), dtype=x.dtype, device=dev)\n                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  TensorVariable() originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 30\n            y_indx = torch.empty((n_rows_max, k), dtype=torch.int16, device=dev)\n                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  ConstantVariable(int: 4) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 43\n            y_vals, y_indx, y_vals.stride(0), use_provided_indx,  # output [topk]\n                            ~~~~~~~~~~~~~^^^\n  ConstantVariable(bool: False) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 31\n            use_provided_indx = False\n                                ^^^^^\n  TensorVariable() originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 36\n        bitmatrix = torch.transpose(bitmatrix, 0, 1)[:n_rows_max]\n                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  ConstantVariable(int: 1) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 44\n            bitmatrix, bitmatrix.stride(0), bitmatrix.stride(1),  # output [bitmatrix]\n                       ~~~~~~~~~~~~~~~~^^^\n  ConstantVariable(int: 64) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 44\n            bitmatrix, bitmatrix.stride(0), bitmatrix.stride(1),  # output [bitmatrix]\n                                            ~~~~~~~~~~~~~~~~^^^\n  ConstantVariable(int: 64) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 10\n            x_shape = [x.shape[0] if n_rows is None else n_rows, x.shape[1]]\n                       ~~~~~~~^^^\n  ConstantVariable(int: 32) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 10\n            x_shape = [x.shape[0] if n_rows is None else n_rows, x.shape[1]]\n                                                                 ~~~~~~~^^^\n  TensorVariable() originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 39\n        scratchpad = torch.empty((s_cols, ), dtype=torch.int32, device=dev)\n                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  ConstantVariable(int: 128) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 16\n        BLOCK_S = 128\n                  ^^^\n  ConstantVariable(int: 1) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 13\n        cdiv = lambda a, b: (a + b - 1) // b\n                            ~~~~~~~~~~~~^^~~\n  ConstantVariable(int: 32) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 14\n        BLOCK_M = 32\n                  ^^\n  ConstantVariable(int: 32) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 15\n        BLOCK_N = 32\n                  ^^\n  LazyVariableTracker(unrealized: <class 'bool'>) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 48\n            APPLY_SOFTMAX=apply_softmax, N_EXPTS_PAD=n_cols_pad, N_EXPTS_ACT=k,  # constants\n                          ^^^^^^^^^^^^^\n  ConstantVariable(int: 32) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 33\n        n_cols_pad = cdiv(n_cols, BLOCK_N) * BLOCK_N\n                     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~\n  ConstantVariable(int: 4) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 26\n        y_vals = torch.empty((n_rows_max, k), dtype=x.dtype, device=dev)\n                              ^^^^^^^^^^\n  TupleVariable(length=5) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/topk.py\", line 41\n        _topk_forward[(pids, )](\n        ~~~~~~~~~~~~~~~~~~~~~~~^\n            x, x.stride(0),  # inputs\n            ^^^^^^^^^^^^^^^^^^^^^^^^^\n        ...<5 lines>...\n            APPLY_SOFTMAX=apply_softmax, N_EXPTS_PAD=n_cols_pad, N_EXPTS_ACT=k,  # constants\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        )\n        ^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html",
+      "short_reason": "Reconstruction failure",
+      "count": 1
+    },
+    {
+      "location": "python/site-packages/triton/runtime/jit.py:375",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\ntriton kernel unsupported feature\n  Explanation: Encountered triton kernel unsupported feature: Unexpected argument type for a Triton kernel: UserDefinedObjectVariable(Tensor).\n\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0361.html",
+      "short_reason": "triton kernel unsupported feature",
+      "count": 1
+    },
+    {
+      "location": "python/site-packages/triton/runtime/jit.py:734",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nUnsupported python_type() call\n  Explanation: This VariableTracker does not implement python_type(), which is required for object protocol operations.\n  Hint: This is likely to be a Dynamo bug. Please report an issue to PyTorch.\n\n  Developer debug context: GetAttrVariable(TritonKernelVariable(), debug) does not implement python_type()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html\n\nStack variable source attribution:\n  GetAttrVariable(TritonKernelVariable(), debug) originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/runtime/jit.py\", line 734\n            kwargs[\"debug\"] = kwargs.get(\"debug\", self.debug) or knobs.runtime.debug\n                                                  ^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "<string>:4",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo does not know how to trace the builtin `triton._C.libtriton.native_specialize_impl.` This function is either a Python builtin (e.g. _warnings.warn) or a third-party C/C++ Python extension (perhaps created with pybind).\n  Hint: If it is a Python builtin, please file an issue on GitHub so the PyTorch team can add support for it and see the next case for a workaround.\n  Hint: If it is a third-party C/C++ Python extension, please either wrap it into a PyTorch-understood custom operator (see https://pytorch.org/tutorials/advanced/custom_ops_landing_page.html for more details) or, if it is traceable, use `torch.compiler.allow_in_graph`.\n\n  Developer debug context: module: triton._C.libtriton, qualname: native_specialize_impl, skip reason: cannot determine source file for triton._C.libtriton (likely a C extension or builtin)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+      "short_reason": "Attempted to call function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "python/site-packages/triton/compiler/compiler.py:505",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nUnsupported python_type() call\n  Explanation: This VariableTracker does not implement python_type(), which is required for object protocol operations.\n  Hint: This is likely to be a Dynamo bug. Please report an issue to PyTorch.\n\n  Developer debug context: GetAttrVariable(TritonKernelVariable(), arg_names) does not implement python_type()\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4841.html",
+      "short_reason": "Unsupported python_type() call",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/target_info.py:13",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to inline function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `CudaDriver.get_current_target` should not be traced.\n  Hint: Avoid calling the function `CudaDriver.get_current_target`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `CudaDriver.get_current_target` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: qualname: CudaDriver.get_current_target, name: get_current_target, filename: `/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py`, skip reason: file is under skip directory (/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:440 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html",
+      "short_reason": "Attempted to inline function marked as skipped",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/target_info.py:13",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to inline function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `CudaDriver.get_current_target` should not be traced.\n  Hint: Avoid calling the function `CudaDriver.get_current_target`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `CudaDriver.get_current_target` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: qualname: CudaDriver.get_current_target, name: get_current_target, filename: `/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py`, skip reason: file is under skip directory (/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html\n\n*** While handling this graph break, another graph break occurred: ***\n\nGraph break under GenericContextWrappingVariable\n  Explanation: Attempted to graph break in an active context manager(s) that doesn't support graph breaking.\n  Hint: Move the offending context manager(s) to outside the compiled region.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: Active generic context managers: [GenericContextWrappingVariable(_GeneratorContextManager)]\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0066.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/mxfp4.py\", line 363\n            with on_device(hidden_states.device):\n                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:443 in forward",
+        "transformers/integrations/mxfp4.py:366 in forward_routed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/matmul_ogs.py:438",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nReconstruction failure\n  Explanation: Dynamo has no bytecode reconstruction implemented for sourceless variable UserMethodVariable(<function Storage.is_tma_compliant at 0x77fcd6d5ddd0>, UserDefinedObjectVariable(Storage)).\n  Hint: If Dynamo is attempting to trace a return statement and your code is attempting to return a variable that Dynamo cannot reconstruct, then remove it from the return statement.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n  Hint: Report an issue to PyTorch if you need reconstrtuction support. Note that objects that don't have reconstruction rules may be fundamentally unreconstructable.\n\n  Developer debug context: UserMethodVariable(<function Storage.is_tma_compliant at 0x77fcd6d5ddd0>, UserDefinedObjectVariable(Storage))\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html\n\nStack variable source attribution:\n  UserMethodVariable(<function Storage.is_tma_compliant at 0x77fcd6d5ddd0>, UserDefinedObjectVariable(Storage)) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/matmul_ogs.py\", line 438\n        can_use_tma = x.storage.is_tma_compliant() and \\\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:443 in forward",
+        "transformers/integrations/mxfp4.py:366 in forward_routed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0092.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/target_info.py:13",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to inline function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `CudaDriver.get_current_target` should not be traced.\n  Hint: Avoid calling the function `CudaDriver.get_current_target`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `CudaDriver.get_current_target` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: qualname: CudaDriver.get_current_target, name: get_current_target, filename: `/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py`, skip reason: file is under skip directory (/admin/home/khushi_agrawal/miniforge3/envs/torch-dev-quant/lib/python3.15/site-packages/triton/backends/nvidia/driver.py)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_make_default_opt_flags_nvidia_at_259 (/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/matmul_ogs_details/opt_flags.py line 259)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  ListIteratorVariable(length=3, index=1) originated from:\n  File \"/fsx/khushi_agrawal/.cache/huggingface/hub/kernels--kernels-community--gpt-oss-triton-kernels/snapshots/9d361800edf5e0ceac59b613bac2cf9c50795f03/build/torch-cuda/matmul_ogs_details/opt_flags.py\", line 287\n        for ep in subtiles_to_check:\n                  ^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:622 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:476 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gpt_oss/modeling_gpt_oss.py:368 in forward",
+        "transformers/integrations/mxfp4.py:443 in forward",
+        "transformers/integrations/mxfp4.py:366 in forward_routed"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0008.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    }
+  ]
+}

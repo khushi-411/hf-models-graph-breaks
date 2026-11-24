@@ -57,18 +57,25 @@ qwen2_vl, qwen2_5_vl, qwen3_vl, hy_v4_vl, lfm3_vl, inkling2, dots3_note (and oth
 
 ### Affected models in this sweep
 
-9 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+16 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| dots3_note_vlm | `dots-studio/dots3-note-prev` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 |
-| hy_v4_vl | `tencent/Hy4` | eval 7 · cache 7 · train 7 | eval 7 · cache 7 · train 7 | eval 7 · train 7 | eval 7 · train 7 |
-| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | train 6 |
-| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | train 6 |
-| lfm3_vl | `LiquidAI/LFM3-VL-2B` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 |
-| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 9 · cache 9 · train 9 | eval 9 · cache 9 · train 9 | eval 9 · train 9 | eval 9 · train 9 |
-| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | eval 6 · train 6 |
-| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 |
-| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 13 · cache 13 · train 13 | eval 13 · cache 13 · train 13 | eval 13 · train 14 | eval 13 · train 14 |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| dots3_note_vlm | `dots-studio/dots3-note-prev` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| glm5_next | `zai-org/GLM-5.3-Flash` | eval 2 · cache 2 · train 2 | eval 2 · cache 2 · train 2 | eval 2 · train 2 | eval 2 · train 2 | – | – |
+| hy_v4_vl | `tencent/Hy4` | eval 7 · cache 7 · train 7 | eval 7 · cache 7 · train 7 | eval 7 · train 7 | eval 7 · train 7 | – | – |
+| inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | train 6 | – | – |
+| inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | train 6 | – | – |
+| lfm3_vl | `LiquidAI/LFM3-VL-2B` | eval 3 · cache 3 · train 3 | eval 3 · cache 3 · train 3 | eval 3 · train 3 | eval 3 · train 3 | – | – |
+| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 9 · cache 9 · train 9 | eval 9 · cache 9 · train 9 | eval 9 · train 9 | eval 9 · train 9 | – | – |
+| qwen2_5_vl_7b | `Qwen/Qwen2.5-VL-7B-Instruct` | eval 9 · cache 9 · train 9 | eval 9 · cache 9 · train 9 | eval 9 · train 9 | eval 9 · train 9 | – | – |
+| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 6 · cache 6 · train 6 | eval 6 · cache 6 · train 6 | eval 6 · train 6 | eval 6 · train 6 | – | – |
+| qwen3_5_2b | `Qwen/Qwen3.5-2B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 | – | – |
+| qwen3_5_4b | `Qwen/Qwen3.5-4B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 | – | – |
+| qwen3_5_9b | `Qwen/Qwen3.5-9B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 | – | – |
+| qwen3_6_moe | `Qwen/Qwen3.6-35B-A3B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 | – | – |
+| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 10 · cache 10 · train 10 | – | eval 10 · train 10 | – | – |
+| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 13 · cache 13 · train 13 | eval 13 · cache 13 · train 13 | eval 13 · train 14 | eval 13 · train 14 | – | – |
+| qwen3_vl_8b | `Qwen/Qwen3-VL-8B-Instruct` | eval 13 · cache 13 · train 13 | eval 13 · cache 13 · train 13 | eval 13 · train 14 | eval 13 · train 14 | – | – |
 
 <!-- affected-models:end -->

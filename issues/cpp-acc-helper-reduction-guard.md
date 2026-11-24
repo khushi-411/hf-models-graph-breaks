@@ -69,17 +69,24 @@ reductions, but there are no recompiles.
 
 ### Affected models in this sweep
 
-8 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+15 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| apertus1p5_vlm | `swiss-ai/Apertus-v1.5-8B` | – | – | train: recompiles (10 / 8 / 4) | – |
-| dinov2 | `facebook/dinov2-small` | – | – | train: recompiles (2 / 1 / 0) | – |
-| dots3_note_vlm | `dots-studio/dots3-note-prev` | – | – | train: recompiles (23 / 6 / 5) | – |
-| exaone4 | `LGAI-EXAONE/EXAONE-4.0-1.2B` | – | – | train: recompiles (2 / 0 / 1) | – |
-| gemma3_vlm | `unsloth/gemma-3-4b-it` | – | – | train: recompiles (6 / 1 / 3) | – |
-| nemotron_h | `nvidia/NVIDIA-Nemotron-Nano-9B-v2` | – | – | train: recompiles (2 / 1 / 1) | – |
-| qwen3_moe | `Qwen/Qwen3-30B-A3B` | – | – | train: recompiles (2 / 0 / 1) | – |
-| whisper | `openai/whisper-tiny` | – | – | train: recompiles (2 / 2 / 0) | – |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| apertus1p5_vlm | `swiss-ai/Apertus-v1.5-8B` | – | – | train: recompiles (10 / 8 / 4) | – | – | – |
+| dinov2 | `facebook/dinov2-small` | – | – | train: recompiles (2 / 1 / 0) | – | – | – |
+| dinov2_base | `facebook/dinov2-base` | – | – | train: recompiles (2 / 1 / 0) | – | – | – |
+| dots3_note_vlm | `dots-studio/dots3-note-prev` | – | – | train: recompiles (23 / 6 / 5) | – | – | – |
+| exaone4 | `LGAI-EXAONE/EXAONE-4.0-1.2B` | – | – | train: recompiles (2 / 0 / 1) | – | – | – |
+| florence2 | `florence-community/Florence-2-base` | – | – | train: recompiles (13 / 1 / 3) | – | – | – |
+| gemma3_vlm | `unsloth/gemma-3-4b-it` | – | – | train: recompiles (6 / 1 / 3) | – | – | – |
+| glm5_next | `zai-org/GLM-5.3-Flash` | – | – | train: recompiles (37 / 8 / 8) | – | – | – |
+| nemotron_h | `nvidia/NVIDIA-Nemotron-Nano-9B-v2` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
+| qwen3_4b_instruct | `Qwen/Qwen3-4B-Instruct-2507` | – | – | train: recompiles (2 / 0 / 1) | – | – | – |
+| qwen3_moe | `Qwen/Qwen3-30B-A3B` | – | – | train: recompiles (2 / 0 / 1) | – | – | – |
+| whisper | `openai/whisper-tiny` | – | – | train: recompiles (2 / 2 / 0) | – | – | – |
+| whisper_base | `openai/whisper-base` | – | – | train: recompiles (2 / 2 / 0) | – | – | – |
+| whisper_large_v3_turbo | `openai/whisper-large-v3-turbo` | – | – | train: recompiles (2 / 2 / 0) | – | – | – |
+| whisper_small | `openai/whisper-small` | – | – | train: recompiles (2 / 2 / 0) | – | – | – |
 
 <!-- affected-models:end -->

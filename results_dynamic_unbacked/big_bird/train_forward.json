@@ -1,0 +1,482 @@
+{
+  "model": "big_bird",
+  "hf_id": "google/bigbird-roberta-base",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T10:14:49+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 4,
+  "recompiled_graphs": 2,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 4,
+      "new_shape_events": 102
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 2,
+      "new_shape_events": 66
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py:1530\n    triggered by the following guard failure(s):\n    - 6/0: tensor 'input_ids' size mismatch at index 1. expected 32, actual 40"
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/ir.py:clamp"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 14,
+      "examples": [
+        "s27 <= 4096",
+        "s70 <= 4096",
+        "s50 <= 4096",
+        "s81 <= 4096",
+        "(s96 >= 0) & (s96 <= 4096)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/utils/output_capturing.py:wrapper:326",
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 4,
+      "examples": [
+        "s27 <= 704",
+        "Eq(s27, 32)",
+        "s50 <= 704",
+        "Eq(s50, 32)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 2,
+      "examples": [
+        "s27 = 32",
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 2,
+      "examples": [
+        "s70 <= 704",
+        "Eq(s70, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 1,
+      "examples": [
+        "s70 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1182,
+      "count": 2,
+      "examples": [
+        "s50 <= 704",
+        "Eq(s50, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1182,
+      "count": 1,
+      "examples": [
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 2,
+      "examples": [
+        "s50 <= 704",
+        "Eq(s50, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 1,
+      "examples": [
+        "s50 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 2,
+      "examples": [
+        "s81 <= 704",
+        "Eq(s81, 32)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 1,
+      "examples": [
+        "s81 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 12,
+      "examples": [
+        "s70 <= 704",
+        "Eq(s70, 32)",
+        "Eq(zf74, 2.0)",
+        "Eq(zf68, 2.0)",
+        "Eq(zf80, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 2,
+      "examples": [
+        "s70 = 32"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 4,
+      "examples": [
+        "Eq(s72, s18)",
+        "Eq(s70, s53)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 56,
+      "examples": [
+        "zf4 >= 0.0",
+        "zf4 <= 1.0",
+        "zf5 >= 0.0",
+        "zf5 <= 1.0",
+        "zf51 >= 0.0"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 28,
+      "examples": [
+        "Eq(zf4, 0.1)",
+        "Eq(zf5, 0.1)",
+        "Eq(zf51, 0.1)",
+        "Eq(zf35, 0.1)",
+        "Eq(zf52, 0.1)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 21,
+      "examples": [
+        "Eq(zf21, 1.0e-12)",
+        "Eq(zf34, 1.0e-12)",
+        "Eq(zf73, 1.0e-12)",
+        "Eq(zf77, 1.0e-12)",
+        "Eq(zf48, 1.0e-12)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583",
+      "line": 1594,
+      "count": 3,
+      "examples": [
+        "Eq(zf74, 2.0)",
+        "Eq(zf68, 2.0)",
+        "Eq(zf80, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:clamp",
+      "line": 4445,
+      "count": 1,
+      "examples": [
+        "s70 + s96 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 6,
+      "examples": [
+        "s18 <= 4096",
+        "s18*s70 <= 4096",
+        "s38*s97 <= 4096",
+        "s11*s68 <= 4096",
+        "s72 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:torch_dynamo_resume_in_forward_at_1583:1594",
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950",
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "Eq(s86, 768)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 1,
+      "examples": [
+        "s86 = 768"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 1,
+      "examples": [
+        "Eq(s11*s68, s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/big_bird/modeling_big_bird.py:forward:1950"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/big_bird/modeling_big_bird.py:1583",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning)`. If `warning` is defined on the logger class, add the class method `logging.Logger.warning` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning`) is checked against the ignore set. Ignoring a method that `warning` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.models.big_bird.modeling_big_bird (WARNING)>.warning, args: [ConstantVariable(str: \"Attention type 'block_sparse' is not possible if sequence_length: 32 <= num global tokens: 2 * config.block_size + min. num sliding tokens: 3 * config.block_size + config.num_random_blocks * config.block_size + additional buffer: config.num_random_blocks * config.block_size = 704 with config.block_size = 64, config.num_random_blocks = 3. Changing attention type to 'original_full'...\")], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/big_bird/modeling_big_bird.py:1950 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/big_bird/modeling_big_bird.py:1583 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+      "short_reason": "logging.Logger method not supported for non-export cases",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/modules/linear.py:108",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/big_bird/modeling_big_bird.py:1950 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/big_bird/modeling_big_bird.py:1594 in forward",
+        "transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type",
+        "transformers/models/big_bird/modeling_big_bird.py:144 in __init__"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Attempted to use `torch.nn.Parameter()` constructor with Dynamo",
+      "count": 1
+    },
+    {
+      "location": "torch/nn/modules/linear.py:108",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nAttempted to use `torch.nn.Parameter()` constructor with Dynamo\n  Explanation: Dynamo does not support this\n  Hint: Try to construct `torch.nn.Parameter()` outside the compiled region.\n  Hint: If this is not possible, turn `graph_break_on_nn_param_ctor` off\n  Hint: It may be possible to write Dynamo tracing rules for this code. Please report an issue to PyTorch if you encounter this graph break often and it is causing performance issues.\n\n  Developer debug context: \n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: set_attention_type (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py line 1277)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  LocalGeneratorObjectVariable(enumerate) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/big_bird/modeling_big_bird.py\", line 1286\n            for i, layer in enumerate(self.layer):\n                            ~~~~~~~~~^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/big_bird/modeling_big_bird.py:1950 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/big_bird/modeling_big_bird.py:1594 in forward",
+        "transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type",
+        "transformers/models/big_bird/modeling_big_bird.py:144 in __init__"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0264.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/big_bird/modeling_big_bird.py:133",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION: a call to a regular function, e.g. f(x, y):\n\nUninitialized nn.Module\n  Explanation: Attempted to trace an uninitialized nn.Module of type BigBirdSelfAttention.\n  Hint: Your code may result in an error when running in eager. Please double check that your code doesn't contain a similar error when actually running eager/uncompiled. You can do this by removing the `torch.compile` call, or by using `torch.compiler.set_stance(\"force_eager\")`. \n  Hint: Ensure your nn.Module instance has called `super().__init__()`.\n\n  Developer debug context: BigBirdSelfAttention\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0119.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/big_bird/modeling_big_bird.py:1950 in forward",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/big_bird/modeling_big_bird.py:1594 in forward",
+        "transformers/models/big_bird/modeling_big_bird.py:1093 in set_attention_type",
+        "transformers/models/big_bird/modeling_big_bird.py:133 in __init__"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0119.html",
+      "short_reason": "Uninitialized nn.Module",
+      "count": 1
+    }
+  ]
+}

@@ -62,6 +62,11 @@ python -m graph_breaks.summarize                       # regenerate SUMMARY.md
 
 For gated models (Llama, Gemma, …): `export HF_TOKEN=hf_...`.
 
+Quantized checkpoints (`quantize: true` / `pretrained: true` entries such as `qwen3_8_fp8`, `gpt_oss_mxfp4`) run
+on CUDA only and need `accelerate` and `kernels` (`kernels>=0.18.2,<0.19` for this transformers). Use a separate
+env for them (here `torch-dev-quant`), since installing those packages changes transformers' code paths for every
+other model.
+
 ## Adding a model
 
 Add an entry to `models.yaml`:

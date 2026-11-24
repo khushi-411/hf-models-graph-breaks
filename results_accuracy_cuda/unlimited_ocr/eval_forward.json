@@ -1,0 +1,70 @@
+{
+  "model": "unlimited_ocr",
+  "hf_id": "baidu/Unlimited-OCR",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "timestamp": "2026-11-23T20:25:43+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "dtype": "float32",
+  "fp64_reference": false,
+  "reference": null,
+  "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
+  "accurate": true,
+  "tol": 0.001,
+  "checked": 4,
+  "failed": [],
+  "tensors": [
+    {
+      "name": "out.logits",
+      "ok": true,
+      "shape": [
+        2,
+        289,
+        129280
+      ],
+      "max_abs_diff": 7.62939453125e-06,
+      "rmse_compiled_vs_eager": 1.0277350986186262e-06
+    },
+    {
+      "name": "out.image_outputs.last_hidden_state",
+      "ok": true,
+      "shape": [
+        2,
+        256,
+        2048
+      ],
+      "max_abs_diff": 3.3974647521972656e-06,
+      "rmse_compiled_vs_eager": 5.181720655041353e-07
+    },
+    {
+      "name": "out.image_outputs.pooler_output[0]",
+      "ok": true,
+      "shape": [
+        273,
+        1280
+      ],
+      "max_abs_diff": 4.5299530029296875e-06,
+      "rmse_compiled_vs_eager": 6.276125821754712e-07
+    },
+    {
+      "name": "out.image_outputs.pooler_output[1]",
+      "ok": true,
+      "shape": [
+        273,
+        1280
+      ],
+      "max_abs_diff": 4.5299530029296875e-06,
+      "rmse_compiled_vs_eager": 6.276125821754712e-07
+    }
+  ]
+}

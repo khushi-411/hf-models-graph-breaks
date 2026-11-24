@@ -27,6 +27,10 @@
 #   pixel_attention_mask: true to pass a (batch, num_tiles) tile mask (vlm, tiled models)
 #   waveform_3d:   true to pass audio_waveform input_values as (batch, 1, samples)
 #   padding_mask:  true to also pass an all-ones (batch, samples) padding_mask (audio_waveform)
+#   pretrained:    true: load the real checkpoint (truncated to the overridden layer count) instead of random weights
+#   quantize:      true: keep the checkpoint's quantization_config and quantize the small random model with it
+#                  (saved in bf16, reloaded with from_pretrained(quantization_config=...)), so the quantized
+#                  layers (FP8Linear, MXFP4 experts, ...) run. CUDA only; needs accelerate + kernels (torch-dev-quant env).
 #   config_class:  build the config from this transformers config class's defaults instead of
 #                  downloading hf_id (for unreleased or gated checkpoints). hf_id is then informational.
 #   config_overrides: dict applied to the config before building the model.
@@ -1240,3 +1244,419 @@ models:
     config_overrides: {hidden_size: 512, text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, text_config.vocab_size: 32000}
     scenarios: [eval_forward, train_forward]
     notes: JEV decision head (scores answer options at `<|mark|>` positions) on a Qwen3.5 text backbone. One prompt per call (batch size 1).
+
+  # ----------------------------------------------------------------------- #
+  # Top 100 most-downloaded Hub models (huggingface.co/api/models?sort=downloads, 2026-11-23).
+  # Every entry that transformers can build is added as its own model, even when the architecture is
+  # already tracked: checkpoints differ in config (sizes, positional variants, heads) and in which
+  # Auto class people load them with (sentence-transformers / rerankers use AutoModel /
+  # AutoModelForSequenceClassification). Already tracked by hf_id: gpt2, bert, t5, clip, qwen3, vit,
+  # xlm_roberta, qwen3_8, roberta, gpt_oss, distilbert, opt.
+  # Not added (transformers can't build them):
+  #   - other libraries: whisperkit-coreml (CoreML), chronos-2 / chronos-bolt-small (chronos-forecasting),
+  #     Kokoro-82M, faster-whisper-small (CTranslate2), pyannote/* (pyannote-audio), XTTS-v2 (coqui),
+  #     Bingsu/adetailer (ultralytics), OmniVoice, Qwen3-TTS (no transformers model type), Kronos-Tokenizer,
+  #     quail-voice-focus, audio.cpp-gguf, stable-diffusion-xl-base-1.0 / Comfy-Org/* / MiniMax-H3 (diffusion)
+  #   - timm/mobilenetv3_small_100.lamb_in1k: TimmWrapper needs timm + torchvision (not in these source-built envs)
+  #   - weight-format copies of a tracked or added model (from_config builds the same graph): *-GGUF repos,
+  #     Qwen/Qwen3.8-27B-FP8 (= qwen3_8), Xenova/all-MiniLM-L6-v2 (ONNX of all_minilm_l6)
+  # Bare encoders (AutoModel) have no labels, so their train_forward runs without a loss (like dinov3_vit).
+  # ----------------------------------------------------------------------- #
+  - name: all_minilm_l6
+    hf_id: sentence-transformers/all-MiniLM-L6-v2
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #1. sentence-transformers embedding model (BertModel, no head)."
+
+  - name: ms_marco_minilm
+    hf_id: cross-encoder/ms-marco-MiniLM-L6-v2
+    auto_class: AutoModelForSequenceClassification
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #3. Cross-encoder reranker (BertForSequenceClassification, num_labels=1: regression loss on float scores)."
+
+  - name: bge_small_en
+    hf_id: BAAI/bge-small-en-v1.5
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #5. Embedding model (BertModel)."
+
+  - name: bge_m3
+    hf_id: BAAI/bge-m3
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #6. Embedding model (XLMRobertaModel, 8192 positions)."
+
+  - name: paraphrase_multilingual_minilm
+    hf_id: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #10. Embedding model (BertModel)."
+
+  - name: florence2
+    hf_id: florence-community/Florence-2-base   # transformers-format conversion of microsoft/Florence-2-base (remote-code repo, image token outside its vocab)
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    config_overrides: {text_config.encoder_layers: 2, text_config.decoder_layers: 2, vision_config.depths: [1, 1, 1, 1]}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #11. DaViT vision tower + BART encoder-decoder (Florence2ForConditionalGeneration)."
+
+  - name: all_mpnet_base
+    hf_id: sentence-transformers/all-mpnet-base-v2
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #12. Embedding model (MPNetModel, no head)."
+
+  - name: wav2vec2_xlsr_ja
+    hf_id: jonatasgrosman/wav2vec2-large-xlsr-53-japanese
+    auto_class: AutoModelForCTC
+    inputs: audio_waveform
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #15. XLSR-53 large: stable layer norm + layer-norm feature extractor (wav2vec2 base uses group norm)."
+
+  - name: bge_reranker_v2_m3
+    hf_id: BAAI/bge-reranker-v2-m3
+    auto_class: AutoModelForSequenceClassification
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #18. Reranker (XLMRobertaForSequenceClassification, num_labels=1)."
+
+  - name: qwen3_14b
+    hf_id: Qwen/Qwen3-14B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 8, num_key_value_heads: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #19."
+
+  - name: nomic_embed
+    hf_id: nomic-ai/nomic-embed-text-v1.5
+    auto_class: AutoModel
+    config_overrides: {n_layer: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #21. NomicBertModel (rotary BERT, SwiGLU), native in transformers."
+
+  - name: deepseek_v32
+    hf_id: deepseek-ai/DeepSeek-V3.2
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, layer_types: [indexed_attention, indexed_attention], mlp_layer_types: [dense, sparse], n_routed_experts: 8, num_experts_per_tok: 2, n_group: 4, topk_group: 2, hidden_size: 1024, num_attention_heads: 16, num_key_value_heads: 16, intermediate_size: 1024, moe_intermediate_size: 256, index_n_heads: 4, vocab_size: 32000, quantization_config: null}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #22. MLA + DeepSeek sparse attention (lightning indexer, top-k). Layer 0 dense, layer 1 MoE (mlp_layer_types, not first_k_dense_replace, decides)."
+
+  - name: qwen3_4b_instruct
+    hf_id: Qwen/Qwen3-4B-Instruct-2507
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #26."
+
+  - name: multilingual_e5_small
+    hf_id: intfloat/multilingual-e5-small
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #28. Embedding model (BertModel)."
+
+  - name: paraphrase_multilingual_mpnet
+    hf_id: sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #29. Embedding model (XLMRobertaModel)."
+
+  - name: clip_large
+    hf_id: openai/clip-vit-large-patch14
+    auto_class: AutoModel
+    inputs: image_text
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #31."
+
+  - name: bge_base_en
+    hf_id: BAAI/bge-base-en-v1.5
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #32. Embedding model (BertModel)."
+
+  - name: contriever
+    hf_id: facebook/contriever
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #33. Retriever (BertModel; the repo's custom `Contriever` class only adds mean pooling)."
+
+  - name: clap
+    hf_id: laion/clap-htsat-fused
+    auto_class: AutoModel
+    inputs: clap
+    config_overrides: {text_config.num_hidden_layers: 2, audio_config.depths: [1, 1, 1, 1]}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #35. Audio-text dual encoder (HTS-AT Swin audio tower with feature fusion + RoBERTa text). eval: one clip marked is_longer; train: all (fusion BatchNorm needs >1 sample in train mode)."
+
+  - name: bge_large_en
+    hf_id: BAAI/bge-large-en-v1.5
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #39. Embedding model (BertModel)."
+
+  - name: multilingual_e5_large
+    hf_id: intfloat/multilingual-e5-large
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #40. Embedding model (XLMRobertaModel)."
+
+  - name: qwen3_embedding
+    hf_id: Qwen/Qwen3-Embedding-0.6B
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #41. Embedding model (Qwen3Model, causal, last-token pooling outside the model)."
+
+  - name: granite_embedding_r2
+    hf_id: ibm-granite/granite-embedding-small-english-r2
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #43. Embedding model (ModernBertModel)."
+
+  - name: qwen2_5_7b_instruct
+    hf_id: Qwen/Qwen2.5-7B-Instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 8, num_key_value_heads: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #45."
+
+  - name: glm5_next
+    hf_id: zai-org/GLM-5.3-Flash
+    auto_class: AutoModelForImageTextToText
+    inputs: grid_vlm
+    # Layer 0: KDA linear attention + dense MLP; layer 1: DSA indexed attention + MoE.
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.layer_types: [linear_attention, indexed_attention], text_config.mlp_layer_types: [dense, sparse], text_config.indexer_types: [full, full], text_config.first_k_dense_replace: 1, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.moe_intermediate_size: 128, text_config.n_routed_experts: 8, text_config.num_experts_per_tok: 2, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 4, text_config.linear_num_heads: 4, text_config.linear_head_dim: 64, text_config.q_lora_rank: 128, text_config.kv_lora_rank: 64, text_config.qk_nope_head_dim: 64, text_config.qk_head_dim: 64, text_config.v_head_dim: 64, text_config.index_n_heads: 4, text_config.index_head_dim: 64, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #46. Hybrid KDA linear attention / DeepSeek sparse attention LM with mHC residual streams + MoE, Qwen-VL-style vision."
+
+  - name: whisper_base
+    hf_id: openai/whisper-base
+    auto_class: AutoModelForSpeechSeq2Seq
+    inputs: audio_features
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #47."
+
+  - name: qwen3_5_9b
+    hf_id: Qwen/Qwen3.5-9B
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #48. Qwen3.5 (model_type qwen3_5, same code as qwen3_8). CUDA only: gated delta net needs triangular_solve (no CPU BLAS in this build)."
+
+  - name: qwen3_8b
+    hf_id: Qwen/Qwen3-8B
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 8, num_key_value_heads: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #50."
+
+  - name: gemma4
+    hf_id: google/gemma-4-31B-it
+    auto_class: AutoModelForImageTextToText
+    inputs: gemma4
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.layer_types: [sliding_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.num_global_key_value_heads: 1, text_config.head_dim: 64, text_config.global_head_dim: 128, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #55. Gemma 4 dense: sliding/global layers (global K=V, partial RoPE), vision tower with 2D patch positions + pooling."
+
+  - name: mdeberta
+    hf_id: microsoft/mdeberta-v3-base
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #58. Multilingual DeBERTa-v3 (DebertaV2)."
+
+  - name: unlimited_ocr
+    hf_id: baidu/Unlimited-OCR
+    auto_class: AutoModelForImageTextToText
+    inputs: vlm
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.layer_types: [reference_sliding_attention, reference_sliding_attention], text_config.mlp_layer_types: [dense, sparse], text_config.n_routed_experts: 8, text_config.num_experts_per_tok: 2, vision_config.sam_config.num_hidden_layers: 2, vision_config.sam_config.global_attn_indexes: [1], vision_config.encoder_config.num_hidden_layers: 2, dtype: float32, text_config.dtype: float32, vision_config.dtype: float32}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #59. Config dtype is bfloat16 (from_config keeps it), so float32 is forced. DeepSeek-OCR style: SAM + CLIP vision, DeepseekV2-MoE LM with reference sliding-window attention. Global view only (no local tiles)."
+
+  - name: qwen3_vl_8b
+    hf_id: Qwen/Qwen3-VL-8B-Instruct
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, vision_config.depth: 2, vision_config.deepstack_visual_indexes: [0], vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #61."
+
+  - name: laion_clip_b32
+    hf_id: laion/CLIP-ViT-B-32-laion2B-s34B-b79K
+    auto_class: AutoModel
+    inputs: image_text
+    config_overrides: {text_config.num_hidden_layers: 2, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #63. OpenCLIP checkpoint, transformers CLIPModel config."
+
+  - name: qwen3_5_2b
+    hf_id: Qwen/Qwen3.5-2B
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #67. Qwen3.5 (same code as qwen3_8). CUDA only (gated delta net needs triangular_solve)."
+
+  - name: snowflake_arctic_embed
+    hf_id: Snowflake/snowflake-arctic-embed-l-v2.0
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #69. Embedding model (XLMRobertaModel)."
+
+  - name: qwen2_5_vl_7b
+    hf_id: Qwen/Qwen2.5-VL-7B-Instruct
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, vision_config.depth: 2, vision_config.fullatt_block_indexes: [1], vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #70."
+
+  - name: gte_small
+    hf_id: thenlper/gte-small
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #71. Embedding model (BertModel)."
+
+  - name: dolphin_yi
+    hf_id: dphn/dolphin-2.9.1-yi-1.5-34b
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 8, num_key_value_heads: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #72. Yi-1.5-34B fine-tune (LlamaForCausalLM)."
+
+  - name: qwen2_5_1_5b_instruct
+    hf_id: Qwen/Qwen2.5-1.5B-Instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #75."
+
+  - name: multilingual_e5_base
+    hf_id: intfloat/multilingual-e5-base
+    auto_class: AutoModel
+    config_overrides: {num_hidden_layers: 2, vocab_size: 32000}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #76. Embedding model (XLMRobertaModel)."
+
+  - name: gemma4_moe
+    hf_id: google/gemma-4-26B-A4B-it
+    auto_class: AutoModelForImageTextToText
+    inputs: gemma4
+    config_overrides: {text_config.num_hidden_layers: 2, text_config.layer_types: [sliding_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.moe_intermediate_size: 128, text_config.num_experts: 8, text_config.top_k_experts: 2, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.num_global_key_value_heads: 1, text_config.head_dim: 64, text_config.global_head_dim: 128, vision_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #78. Gemma 4 MoE (dense MLP + MoE block per layer)."
+
+  - name: roberta_large
+    hf_id: FacebookAI/roberta-large
+    auto_class: AutoModelForMaskedLM
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #82."
+
+  - name: whisper_large_v3_turbo
+    hf_id: openai/whisper-large-v3-turbo
+    auto_class: AutoModelForSpeechSeq2Seq
+    inputs: audio_features
+    config_overrides: {encoder_layers: 2, decoder_layers: 2, d_model: 512, encoder_attention_heads: 8, decoder_attention_heads: 8, encoder_ffn_dim: 1024, decoder_ffn_dim: 1024, dtype: float32}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #84. 128 mel bins, 4-layer decoder. Config dtype is float16 (from_config keeps it), so float32 is forced."
+
+  - name: whisper_small
+    hf_id: openai/whisper-small
+    auto_class: AutoModelForSpeechSeq2Seq
+    inputs: audio_features
+    config_overrides: {encoder_layers: 2, decoder_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #89."
+
+  - name: gemma4_e4b
+    hf_id: google/gemma-4-E4B-it
+    auto_class: AutoModelForImageTextToText
+    inputs: gemma4
+    # 4 layers: the last 2 reuse earlier layers' KV (num_kv_shared_layers), as in the full model.
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [sliding_attention, full_attention, sliding_attention, full_attention], text_config.num_kv_shared_layers: 2, text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.global_head_dim: 128, vision_config.num_hidden_layers: 2, audio_config.num_hidden_layers: 2}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #91. Gemma 4 on-device (per-layer embeddings, KV sharing). Image + text inputs only (audio tower not exercised)."
+
+  - name: llama3_1_8b_instruct
+    hf_id: unsloth/Llama-3.1-8B-Instruct     # ungated mirror of meta-llama/Llama-3.1-8B-Instruct
+    auto_class: AutoModelForCausalLM
+    config_overrides: {num_hidden_layers: 2, hidden_size: 1024, intermediate_size: 2048, num_attention_heads: 8, num_key_value_heads: 2, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #97. Llama 3.1 rope scaling (rope_type llama3)."
+
+  - name: qwen3_5_4b
+    hf_id: Qwen/Qwen3.5-4B
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #98. Qwen3.5 (same code as qwen3_8). CUDA only (gated delta net needs triangular_solve)."
+
+  - name: dinov2_base
+    hf_id: facebook/dinov2-base
+    auto_class: AutoModel
+    inputs: image
+    config_overrides: {num_hidden_layers: 2}
+    scenarios: [eval_forward, train_forward]
+    notes: "Top-100 #99. Dinov2Model backbone (no head, so train_forward has no loss)."
+
+  # --- Quantized checkpoints from the top 100 (2026-11-23) --------------------------------------------
+  # Same architecture as an entry above, but run through transformers' quantized layers. CUDA only, in the
+  # torch-dev-quant env (torch-dev + accelerate, kernels, gguf) so the main envs keep their package set.
+  # GGUF repos are not run: transformers dequantizes GGUF to bf16/fp32 on load, so the compiled graph is the base
+  # model's. Their base models are covered by qwen3_8, gemma4_moe and qwen3_6_moe; Qwen3.8-Flash-Next (qwen4_exp)
+  # and DeepSeek-V4.1-Flash (deepseek_v41) need a newer transformers than this checkout; Ornith-1.5 has no config.
+  - name: qwen3_8_fp8
+    hf_id: Qwen/Qwen3.8-27B-FP8
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    quantize: true
+    # Same shapes as qwen3_8 (all multiples of the 128x128 FP8 block).
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.intermediate_size: 1024, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #42. Fine-grained FP8 (e4m3, 128x128 blocks, dynamic activation scales) of qwen3_8."
+
+  - name: deepseek_v32_fp8
+    hf_id: deepseek-ai/DeepSeek-V3.2
+    auto_class: AutoModelForCausalLM
+    quantize: true
+    config_overrides: {num_hidden_layers: 2, first_k_dense_replace: 1, layer_types: [indexed_attention, indexed_attention], mlp_layer_types: [dense, sparse], n_routed_experts: 8, num_experts_per_tok: 2, n_group: 4, topk_group: 2, hidden_size: 1024, num_attention_heads: 16, num_key_value_heads: 16, intermediate_size: 1024, moe_intermediate_size: 256, index_n_heads: 4, vocab_size: 32000}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #22 as shipped: fine-grained FP8 with UE8M0 scales (deepseek_v32 runs it unquantized)."
+
+  - name: gpt_oss_mxfp4
+    hf_id: openai/gpt-oss-20b
+    auto_class: AutoModelForCausalLM
+    # Real MXFP4 checkpoint, first 2 layers (13 GB download). Quantizing random bf16 weights to MXFP4 on the fly
+    # fails in eager (matmul_ogs `assert K == x.shape[-1]`), so `quantize: true` can't be used here.
+    pretrained: true
+    config_overrides: {num_hidden_layers: 2, layer_types: [sliding_attention, full_attention]}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Top-100 #60 as shipped: MXFP4 experts via the kernels-community gpt-oss Triton kernels (gpt_oss runs it unquantized)."
+
+  - name: qwen3_6_moe
+    hf_id: Qwen/Qwen3.6-35B-A3B
+    auto_class: AutoModelForImageTextToText
+    inputs: qwen_vl
+    config_overrides: {text_config.num_hidden_layers: 4, text_config.layer_types: [linear_attention, linear_attention, linear_attention, full_attention], text_config.hidden_size: 512, text_config.moe_intermediate_size: 128, text_config.shared_expert_intermediate_size: 128, text_config.num_experts: 8, text_config.num_experts_per_tok: 2, text_config.num_attention_heads: 4, text_config.num_key_value_heads: 2, text_config.head_dim: 64, text_config.linear_num_key_heads: 4, text_config.linear_num_value_heads: 8, text_config.linear_key_head_dim: 32, text_config.linear_value_head_dim: 32, vision_config.depth: 2, vision_config.out_hidden_size: 512}
+    scenarios: [eval_forward, eval_with_cache, train_forward]
+    notes: "Base model of Top-100 #79 (Huihui-Qwen3.6-35B-A3B GGUF). Qwen3.5-MoE: gated delta net + MoE. CUDA only (triangular_solve needs CPU BLAS)."

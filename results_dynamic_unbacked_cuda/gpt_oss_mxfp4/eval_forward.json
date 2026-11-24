@@ -1,0 +1,42 @@
+{
+  "model": "gpt_oss_mxfp4",
+  "hf_id": "openai/gpt-oss-20b",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T10:16:10+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "BackendCompilerFailed: backend='<torch._dynamo.testing.CompileCounterWithBackend object at 0x78adc291c440>' raised:\nRuntimeError: Expected !size_bytes_is_heap_allocated_ to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+  "error_inductor_site": "torch/_inductor/compile_fx.py:_compile_fx_main:3571",
+  "traceback": "torch/_dynamo/output_graph.py\", line 3632, in _call_user_compiler\n    raise BackendCompilerFailed(\n        self.compiler_fn, e, inspect.currentframe()\n    ).with_traceback(e.__traceback__) from None\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/output_graph.py\", line 3600, in _call_user_compiler\n    compiled_fn = compiler_fn(gm, example_inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/repro/after_dynamo.py\", line 163, in __call__\n    compiled_gm = compiler_fn(gm, example_inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/__init__.py\", line 3045, in __call__\n    return self.compiler_fn(model_, inputs_, **self.kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/testing.py\", line 274, in __call__\n    return lookup_backend(self.backend)(gm, example_inputs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/backends/inductor.py\", line 31, in inductor\n    return compile_fx(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 3278, in compile_fx\n    return _maybe_wrap_and_compile_fx_main(\n        model_,\n    ...<4 lines>...\n        compile_region_name=compile_region_name,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 3362, in _maybe_wrap_and_compile_fx_main\n    return _compile_fx_main(\n        model_,\n    ...<4 lines>...\n        compile_region_name=compile_region_name,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_inductor/compile_fx.py\", line 3571, in _compile_fx_main\n    return dynamo_common.aot_autograd(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    ...<9 lines>...\n        compile_region_name=compile_region_name,\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    )(model_, example_inputs_)\n    ~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/backends/common.py\", line 156, in __call__\n    cg = aot_module_simplified(\n        gm,\n        example_inputs,\n        **self.kwargs,  # pyrefly: ignore [bad-argument-type]\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/aot_autograd.py\", line 1254, in aot_module_simplified\n    aot_graph_capture = aot_stage1_graph_capture(aot_state, functional_call)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/graph_compile.py\", line 227, in aot_stage1_graph_capture\n    pre_compile(\n    ~~~~~~~~~~~^\n        wrappers,\n        ^^^^^^^^^\n    ...<4 lines>...\n        fw_metadata=aot_state.fw_metadata,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/runtime_wrappers.py\", line 4005, in pre_compile\n    flat_fn, flat_args, flat_args_descs, fw_metadata = wrapper.pre_compile(\n                                                       ~~~~~~~~~~~~~~~~~~~^\n        flat_fn, flat_args, flat_args_descs, aot_config, fw_metadata=fw_metadata\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/runtime_wrappers.py\", line 1908, in pre_compile\n    ) = merge_view_inputs(\n        ~~~~~~~~~~~~~~~~~^\n        aot_config,\n        ^^^^^^^^^^^\n    ...<3 lines>...\n        is_inference=is_inference,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_functorch/_aot_autograd/runtime_wrappers.py\", line 2387, in merge_view_inputs\n    synthetic_base.set_(example_alias.untyped_storage())\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_compile.py\", line 54, in inner\n    return disable_fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1652, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_stats.py\", line 29, in wrapper\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_subclasses/fake_tensor.py\", line 2818, in __torch_dispatch__\n    return self.dispatch(func, types, args, kwargs)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_subclasses/fake_tensor.py\", line 3676, in dispatch\n    return self._cached_dispatch_impl(func, types, args, kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_subclasses/fake_tensor.py\", line 2956, in _cached_dispatch_impl\n    output = self._dispatch_impl(func, types, args, kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_subclasses/fake_tensor.py\", line 3895, in _dispatch_impl\n    return self._dispatch_impl_after_validation(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        func,\n        ^^^^^\n    ...<5 lines>...\n        has_symbolic_sizes,\n        ^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_subclasses/fake_tensor.py\", line 4078, in _dispatch_impl_after_validation\n    r = func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_ops.py\", line 999, in __call__\n    return self._op(*args, **kwargs)\n           ~~~~~~~~^^^^^^^^^^^^^^^^^\ntorch._dynamo.exc.BackendCompilerFailed: backend='<torch._dynamo.testing.CompileCounterWithBackend object at 0x78adc291c440>' raised:\nRuntimeError: Expected !size_bytes_is_heap_allocated_ to be true, but got false.  (Could this error message be improved?  If so, please report an enhancement request to PyTorch.)\n\nSet TORCHDYNAMO_VERBOSE=1 for the full Dynamo stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n\n"
+}

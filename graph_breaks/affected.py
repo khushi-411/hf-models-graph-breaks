@@ -2,8 +2,8 @@
 
     python -m graph_breaks.affected          # rewrites the generated section in issues/**/*.md
 
-For each root cause in known_issues.yaml, collects every run in results/, results_cuda/, results_dynamic/ and
-results_dynamic_cuda/ where it shows up:
+For each root cause in known_issues.yaml, collects every run in the result directories listed in coverage.SOURCES (static,
+dynamic and dynamic --unbacked; CPU and CUDA) where it shows up:
   - graph breaks matched to the issue (same matcher as summarize.py / coverage.py),
   - crashes attributed to it (coverage.ERROR_CAUSES),
   - dynamic-shape recompiles whose guards or Inductor specializations carry its signature (RECOMPILE_SIGNS).
@@ -106,7 +106,7 @@ def collect() -> tuple[dict, dict]:
                     counts[i["id"]] += b.get("count", 1)
             for iid, n in counts.items():
                 hits[iid][model][(check, device)].append(f"{sc} {n}")
-            if check == "dynamic":
+            if check != "static":
                 blob = "\n".join(r.get("recompile_reasons") or []) + json.dumps(
                     [e for e in r.get("events", []) if e.get("kind") == "specialize"])
                 for iid, signs in RECOMPILE_SIGNS.items():
@@ -130,7 +130,8 @@ def section(iid: str, models: dict, hf: dict) -> str:
           "Recompile counts are for the whole run, so a model with several root causes counts all of them. "
           "Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from "
           "the checkpoint's config with reduced layers and random weights.", "",
-          "| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |", "|---|---|---|---|---|---|"]
+          "| model | config from | " + " | ".join(f"{c} {d.upper()}" for c, d in SOURCES) + " |",
+          "|---|---|" + "---|" * len(SOURCES)]
     for model in sorted(models):
         cells = [" · ".join(models[model].get(k, [])) or "–" for k in SOURCES]
         L.append(f"| {model} | `{hf.get(model, '') or '?'}` | " + " | ".join(cells) + " |")

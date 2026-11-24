@@ -65,24 +65,33 @@ emits `torch._assert_async(cond.all(), msg)` into the graph rather than tracing 
 
 ### Affected models in this sweep
 
-15 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
+24 model(s). Each cell lists the scenarios where this root cause shows up: a number is the graph breaks matched to it in that run; `recompiles (a / b / c)` is graphs compiled on the 1st / 2nd / 3rd input size with `dynamic=True`; `guard only` means the guard was installed but didn't fail on these sizes. Recompile counts are for the whole run, so a model with several root causes counts all of them. Scenarios: `eval` = eval_forward, `cache` = eval_with_cache, `train` = train_forward. Models are built from the checkpoint's config with reduced layers and random weights.
 
-| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA |
-|---|---|---|---|---|---|
-| apertus1p5_vlm | `swiss-ai/Apertus-v1.5-8B` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| gemma3_vlm | `unsloth/gemma-3-4b-it` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| granite_docling | `ibm-granite/granite-for-docling-500m` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| hy_v4_vl | `tencent/Hy4` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| internvl | `OpenGVLab/InternVL3-1B-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | – | – |
-| lfm3_vl | `LiquidAI/LFM3-VL-2B` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| llava | `llava-hf/llava-1.5-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| llava_next | `llava-hf/llava-v1.6-mistral-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| mistral3 | `unsloth/Mistral-Small-3.1-24B-Instruct-2503` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| paligemma | `google/paligemma2-3b-pt-224` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 |
-| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
-| smolvlm | `HuggingFaceTB/SmolVLM-256M-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 |
+| model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
+|---|---|---|---|---|---|---|---|
+| apertus1p5_vlm | `swiss-ai/Apertus-v1.5-8B` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| florence2 | `florence-community/Florence-2-base` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| gemma3_vlm | `unsloth/gemma-3-4b-it` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| glm5_next | `zai-org/GLM-5.3-Flash` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| granite_docling | `ibm-granite/granite-for-docling-500m` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| hy_v4_vl | `tencent/Hy4` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| internvl | `OpenGVLab/InternVL3-1B-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | – | – | – | – |
+| lfm3_vl | `LiquidAI/LFM3-VL-2B` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| llava | `llava-hf/llava-1.5-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| llava_next | `llava-hf/llava-v1.6-mistral-7b-hf` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| mistral3 | `unsloth/Mistral-Small-3.1-24B-Instruct-2503` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| paligemma | `google/paligemma2-3b-pt-224` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| qwen2_5_vl | `Qwen/Qwen2.5-VL-3B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| qwen2_5_vl_7b | `Qwen/Qwen2.5-VL-7B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| qwen2_vl | `Qwen/Qwen2-VL-2B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| qwen3_5_2b | `Qwen/Qwen3.5-2B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| qwen3_5_4b | `Qwen/Qwen3.5-4B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| qwen3_5_9b | `Qwen/Qwen3.5-9B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| qwen3_6_moe | `Qwen/Qwen3.6-35B-A3B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| qwen3_8 | `Qwen/Qwen3.8-27B` | – | eval 1 · cache 1 · train 1 | – | eval 1 · train 1 | – | – |
+| qwen3_vl | `Qwen/Qwen3-VL-2B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| qwen3_vl_8b | `Qwen/Qwen3-VL-8B-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| smolvlm | `HuggingFaceTB/SmolVLM-256M-Instruct` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 · train 1 | eval 1 · train 1 | – | – |
+| unlimited_ocr | `baidu/Unlimited-OCR` | eval 1 · cache 1 · train 1 | eval 1 · cache 1 · train 1 | eval 1 | eval 1 | – | – |
 
 <!-- affected-models:end -->

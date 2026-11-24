@@ -1,0 +1,932 @@
+{
+  "model": "gemma4",
+  "hf_id": "google/gemma-4-31B-it",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-23T20:15:19+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 11,
+  "recompiled_graphs": 15,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 11,
+      "new_shape_events": 285
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 10,
+      "new_shape_events": 278
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 5,
+      "new_shape_events": 108
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 6",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 97189405852928), type=<class 'transformers.models.gemma4.modeling_gemma4.Gemma4ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Gemma4ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 6",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/1: len(kwargs) != 19\n    - 0/0: kwargs['image_position_ids'].size()[2] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: ___check_type_id(args[0], 97189405863584), type=<class 'transformers.models.gemma4.modeling_gemma4.Gemma4Model'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Gemma4Model)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: kwargs['image_position_ids'].size()[2] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2615\n    triggered by the following guard failure(s):\n    - 2/0: image_position_ids.size()[2] == input_ids.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/3: len(kwargs) != 6\n    - 0/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/1: kwargs['image_position_ids'].size()[2] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 0/0: len(kwargs) != 6",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: ___check_type_id(args[0], 97189405852928), type=<class 'transformers.models.gemma4.modeling_gemma4.Gemma4ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Gemma4ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: kwargs['image_position_ids'].size()[2] == kwargs['input_ids'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 1/0: ___check_type_id(args[0], 97189405852928), type=<class 'transformers.models.gemma4.modeling_gemma4.Gemma4ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Gemma4ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2320\n    triggered by the following guard failure(s):\n    - 4/0: image_position_ids.size()[2] == input_ids.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/4: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/3: len(kwargs) != 6\n    - 0/2: args[1].size()[2] == args[0].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 6",
+    "Recompiling function get_image_features in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2248\n    triggered by the following guard failure(s):\n    - 5/0: image_position_ids.size()[2] == pixel_values.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py:326\n    triggered by the following guard failure(s):\n    - 6/0: kwargs['pixel_position_ids'].size()[2] == kwargs['pixel_values'].size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2069\n    triggered by the following guard failure(s):\n    - 8/0: tensor 'pixel_values' size mismatch at index 0. expected 2, actual 3",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_2260 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2260\n    triggered by the following guard failure(s):\n    - 10/0: image_position_ids.size()[2] == pixel_values.size()[0]  # duck sizing added this equality because these variables had the same size 2 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_2271 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2271\n    triggered by the following guard failure(s):\n    - 11/0: len(___stack0) == 2                                      # vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2272 in torch_dynamo_resume_in_get_image_features_at_2271\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2272, in torch_dynamo_resume_in_get_image_features_at_2271\n    -     vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_2393 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2393\n    triggered by the following guard failure(s):\n    - 12/0: len(___stack0.pooler_output) == 2                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2396 in torch_dynamo_resume_in_forward_at_2393\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2396, in torch_dynamo_resume_in_forward_at_2393\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(",
+    "Recompiling function torch_dynamo_resume_in_forward_at_2404 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2404\n    triggered by the following guard failure(s):\n    - 13/0: tensor 'image_features' size mismatch at index 0. expected 8, actual 12",
+    "Recompiling function torch_dynamo_resume_in_forward_at_2659 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2659\n    triggered by the following guard failure(s):\n    - 14/0: len(dict.__getitem__(___stack0.image_outputs, list(dict.keys(___stack0.image_outputs))[1])) == 2  # return Gemma4CausalLMOutputWithPast(  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2696 in torch_dynamo_resume_in_forward_at_2659\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2696, in torch_dynamo_resume_in_forward_at_2659\n    -     return Gemma4CausalLMOutputWithPast(",
+    "Recompiling function torch_dynamo_resume_in_get_image_features_at_2271 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2271\n    triggered by the following guard failure(s):\n    - 11/1: len(___stack0) == 3                                      # vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2272 in torch_dynamo_resume_in_get_image_features_at_2271\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2272, in torch_dynamo_resume_in_get_image_features_at_2271\n    -     vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)\n    - 11/0: len(___stack0) == 2                                      # vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2272 in torch_dynamo_resume_in_get_image_features_at_2271\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2272, in torch_dynamo_resume_in_get_image_features_at_2271\n    -     vision_outputs.pooler_output = torch.split(pooler_output, split_sizes)",
+    "Recompiling function torch_dynamo_resume_in_forward_at_2393 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2393\n    triggered by the following guard failure(s):\n    - 12/1: len(___stack0.pooler_output) == 3                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2396 in torch_dynamo_resume_in_forward_at_2393\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2396, in torch_dynamo_resume_in_forward_at_2393\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(\n    - 12/0: len(___stack0.pooler_output) == 2                        # image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to(  # Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py:2396 in torch_dynamo_resume_in_forward_at_2393\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2396, in torch_dynamo_resume_in_forward_at_2393\n    -     image_features = torch.cat(mm_encoder_outputs[\"image\"].pooler_output, dim=0).to("
+  ],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/ir.py:_stride_expr_ge_or_false"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 33,
+      "examples": [
+        "Eq(s58, 768)",
+        "Eq(s99, 768)",
+        "Eq(s69, 768)",
+        "Eq(s100, 768)",
+        "Eq(s11, 1152)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 33,
+      "examples": [
+        "s58 = 768",
+        "s99 = 768",
+        "s69 = 768",
+        "s100 = 768",
+        "s11 = 1152"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659",
+        "transformers/utils/generic.py:wrapper:1182",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 30,
+      "examples": [
+        "2*((36//s52)) > 0",
+        "Eq(s52, 2)",
+        "Eq(zf74, 1.0)",
+        "Eq(zf11, 0.0)",
+        "Eq(zf2, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 3,
+      "examples": [
+        "s52 = 2",
+        "s17 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 60,
+      "examples": [
+        "2*((36//s52)) > 0",
+        "Eq(s52, 2)",
+        "Eq(zf82, 1.0)",
+        "Eq(zf38, 0.0)",
+        "Eq(zf57, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1036,
+      "count": 6,
+      "examples": [
+        "s52 = 2",
+        "s99 = 2",
+        "s17 = 2",
+        "s62 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 42,
+      "examples": [
+        "2*((36//s72)) > 0",
+        "Eq(s72, 2)",
+        "Eq(zf74, 1.0)",
+        "Eq(zf11, 0.0)",
+        "Eq(zf2, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 4,
+      "examples": [
+        "s72 = 2",
+        "s62 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1182,
+      "count": 40,
+      "examples": [
+        "2*((36//s52)) > 0",
+        "Eq(s52, 2)",
+        "Eq(zf7, 1.0)",
+        "Eq(zf91, 0.0)",
+        "Eq(zf51, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/generic.py:wrapper",
+      "line": 1182,
+      "count": 4,
+      "examples": [
+        "s52 = 2",
+        "s40 = 2",
+        "s17 = 2",
+        "s12 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/gemma4/modeling_gemma4.py:forward",
+      "line": 2393,
+      "count": 20,
+      "examples": [
+        "2*((36//s33)) > 0",
+        "Eq(s33, 2)",
+        "Eq(zf7, 1.0)",
+        "Eq(zf91, 0.0)",
+        "Eq(zf51, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/gemma4/modeling_gemma4.py:forward",
+      "line": 2393,
+      "count": 2,
+      "examples": [
+        "s33 = 2",
+        "s7 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 10,
+      "examples": [
+        "2*((36//s40)) > 0",
+        "Eq(s40, 2)",
+        "Eq(zf42, 1.0)",
+        "Eq(zf93, 0.0)",
+        "Eq(zf1, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:wrapper",
+      "line": 326,
+      "count": 1,
+      "examples": [
+        "s40 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:wrapper:326"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 60,
+      "examples": [
+        "2*((36//s99)) > 0",
+        "Eq(s99, 2)",
+        "Eq(zf42, 1.0)",
+        "Eq(zf93, 0.0)",
+        "Eq(zf1, 1.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347",
+      "line": 361,
+      "count": 6,
+      "examples": [
+        "s99 = 2",
+        "s16 = 2"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 16,
+      "examples": [
+        "2*s59 <= 4096",
+        "32*s59 <= 4096",
+        "s29*s59 <= 4096",
+        "4*s29*s59 <= 4096",
+        "2*s29*s59 <= 4096"
+      ],
+      "model_frames": [
+        "transformers/utils/output_capturing.py:torch_dynamo_resume_in_wrapper_at_347:361",
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 19,
+      "examples": [
+        "Eq(s67, 1152)",
+        "Eq(s53, 512)",
+        "Eq(s40, s23)",
+        "Eq(s99, s15)",
+        "Eq(s40, s24)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2105",
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404",
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/utils/generic.py:wrapper:1182"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 7,
+      "examples": [
+        "s67 = 1152",
+        "s53 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2105",
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 2,
+      "examples": [
+        "Eq(s99, 2)",
+        "Eq(s15, 3)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:get_image_features:2260"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 2,
+      "examples": [
+        "s99 = 2",
+        "s15 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:get_image_features:2260"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4640,
+      "count": 9,
+      "examples": [
+        "s63 >= 0",
+        "s10 >= 0",
+        "s45 >= 0",
+        "s29 >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:split_with_sizes",
+      "line": 4644,
+      "count": 3,
+      "examples": [
+        "Eq(s10 + s63, s96)",
+        "Eq(s10 + s45 + s63, s96)",
+        "Eq(s10 + s29 + s45 + s63, s96)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 12,
+      "examples": [
+        "Ne(s63*s66, 0)",
+        "Ne(s10*s66, 0)",
+        "Ne(262144*s68*(s11 + s55), 0)",
+        "Ne(s45*s66, 0)",
+        "Ne(s29*s66, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 24,
+      "examples": [
+        "s63*s66 >= 2",
+        "s10*s66 >= 2",
+        "s66*(s10 + s63) >= 2",
+        "s68*s86*(s11 + s55) >= 2",
+        "262144*s68*(s11 + s55) >= 2"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 18,
+      "examples": [
+        "Ne(s63, 1)",
+        "Ne(s10, 1)",
+        "Ne(s10 + s63, 1)",
+        "Ne(s68*(s11 + s55), 1)",
+        "Eq(262144*Max(1, s11 + s55), 262144*s11 + 262144*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 721,
+      "count": 9,
+      "examples": [
+        "Ne(s63, 0)",
+        "Ne(s10, 0)",
+        "Ne(s45, 0)",
+        "Ne(s29, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 3,
+      "examples": [
+        "Ne(s10 + s63, 0)",
+        "Ne(s10 + s45 + s63, 0)",
+        "Ne(s10 + s29 + s45 + s63, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_get_image_features_at_2260:2271"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_cat_meta",
+      "line": 1881,
+      "count": 12,
+      "examples": [
+        "Eq(s43, s7)",
+        "Eq(s88, s43)",
+        "Eq(s9, s43)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 15,
+      "examples": [
+        "Eq(s59, s68) | Eq(s68, 1)",
+        "Eq(s29, s66) | Eq(s66, 1)",
+        "Eq(s11*s72, 1) | Eq(s68*(s11 + s55), s11*s72)",
+        "Eq(s38*s97, 1) | Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393",
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 12,
+      "examples": [
+        "Eq(s68, s59)",
+        "Eq(s66, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2393"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393",
+      "line": 2404,
+      "count": 46,
+      "examples": [
+        "Eq(s28, 8)",
+        "Eq(s98, 8*s11)",
+        "Eq(zf60, 1.0)",
+        "Eq(zf3, 0.0)",
+        "Eq(s54, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393",
+      "line": 2404,
+      "count": 12,
+      "examples": [
+        "s28 = 8",
+        "s62 = 512",
+        "s28 = 12",
+        "s28 = 16"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 18,
+      "examples": [
+        "Eq(s62, s53)",
+        "Eq(s66, s29)",
+        "Eq(s69, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 6,
+      "examples": [
+        "-s29 > -1023"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:torch_dynamo_resume_in_forward_at_2393:2404"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/gemma4/modeling_gemma4.py:forward",
+      "line": 2659,
+      "count": 3,
+      "examples": [
+        "Eq(s11, s70)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 3,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 3,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5450,
+      "count": 12,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(512*s11, 512*s11 + 512*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 6,
+      "examples": [
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 3,
+      "examples": [
+        "s68*(s11 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 3,
+      "examples": [
+        "Ne(s68*(s11 + s55), s68)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 3,
+      "examples": [
+        "Ne(PythonMod(s68, s68*(s11 + s55)), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 3,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 3,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:__lt__",
+      "line": 399,
+      "count": 6,
+      "examples": [
+        "262144*Max(1, s11 + s55) > 262144",
+        "262144*s11 + 262144*s55 > 262144"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 3,
+      "examples": [
+        "Eq(s68*(s11 + s55), s11*s72)",
+        "Eq(s68*(s11 + s55), s38*s97)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 12,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 262144*s68*(s11 + s55)",
+        "262144 < 262144*s68*(s11 + s55)",
+        "262144*s11 + 262144*s55 < 262144*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:gather_shape_check",
+      "line": 6350,
+      "count": 3,
+      "examples": [
+        "s11*s72 <= s11*s68",
+        "s38*s97 <= s11*s68"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4738,
+      "count": 3,
+      "examples": [
+        "Ne(Mod(512, 512*s11 + 512*s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:_stride_expr_ge_or_false",
+      "line": 4736,
+      "count": 3,
+      "examples": [
+        "512*s11 + 512*s55 >= 512"
+      ],
+      "model_frames": [
+        "transformers/models/gemma4/modeling_gemma4.py:forward:2659"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/gemma4/modeling_gemma4.py:2105",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2659 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2393 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/gemma4/modeling_gemma4.py:2260 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/gemma4/modeling_gemma4.py:2105 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/gemma4/modeling_gemma4.py:2271",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2659 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2393 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/gemma4/modeling_gemma4.py:2271 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/gemma4/modeling_gemma4.py:2404",
+      "reason": "Encountered graph break when attempting to trace BINARY_SUBSCR: a binary subscript, e.g. x[attr]:\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html\n\nStack variable source attribution:\n  LazyVariableTracker(unrealized: <class 'function'>) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/gemma4/modeling_gemma4.py\", line 2403\n                torch_compilable_check(\n                ^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2659 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/gemma4/modeling_gemma4.py:2404 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "model": "encodec",
+  "hf_id": "facebook/encodec_24khz",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T10:04:30+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "error",
+  "runs": [],
+  "error": "InternalTorchDynamoError: PendingUnbackedSymbolNotFound: Pending unbacked symbols {u1, u0} not in returned outputs FakeTensor(..., device='cuda:0', size=(s47, 1, s33 + u0 + u1)) ((Max(1, s33 + u0 + u1), Max(1, s33 + u0 + u1), 1), 0).\nDid you accidentally call new_dynamic_size() or item() more times than you needed to in your fake implementation?\nFor more help, see https://docs.google.com/document/d/1RWrH-3wLEpzR9kCS6gGBNen_-Fs-8PVbWWFE5AcgeWE/edit\n\nfrom user code:\n   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 153, in torch_dynamo_resume_in__pad1d_at_150\n    padded = nn.functional.pad(hidden_states, paddings, mode, value)\n             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/functional.py\", line 5952, in pad\n    return torch._C._nn.pad(input, pad, mode, value)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+  "error_inductor_site": null,
+  "traceback": "^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/lazy.py\", line 741, in realize_and_forward\n    return getattr(self.realize(), name)(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/functions.py\", line 1122, in call_function\n    return super().call_function(tx, args, kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/functions.py\", line 605, in call_function\n    return tx.inline_user_function_return(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<2 lines>...\n        allow_nested_graph_breaks=True,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 1850, in inline_user_function_return\n    return InliningInstructionTranslator.inline_call(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<3 lines>...\n        allow_nested_graph_breaks=allow_nested_graph_breaks,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 6192, in inline_call\n    return tracer.inline_call_()\n           ~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 6434, in inline_call_\n    self.run()\n    ~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 2272, in run\n    while self.step():\n          ~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 1933, in step\n    self.dispatch_table[inst.opcode](self, inst)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 1182, in wrapper\n    return inner_fn(self, inst)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 4943, in CALL\n    self._call(inst)\n    ~~~~~~~~~~^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 4934, in _call\n    self.call_function(fn, args, kwargs)\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/symbolic_convert.py\", line 1822, in call_function\n    self.push(fn.call_function(self, args, kwargs))  # type: ignore[arg-type]\n              ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/lazy.py\", line 741, in realize_and_forward\n    return getattr(self.realize(), name)(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/torch.py\", line 4261, in call_function\n    tensor_variable = wrap_fx_proxy(\n        tx=tx,\n    ...<4 lines>...\n        ),\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/builder.py\", line 4312, in wrap_fx_proxy\n    return wrap_fx_proxy_cls(target_cls=TensorVariable, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/builder.py\", line 4387, in wrap_fx_proxy_cls\n    out: VTTypeAlias = _wrap_fx_proxy(\n                       ~~~~~~~~~~~~~~^\n        target_cls, tx, proxy, example_value, subclass_type, **options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/builder.py\", line 4521, in _wrap_fx_proxy\n    return handle_traced_output(\n        # type: ignore[arg-type]\n    ...<5 lines>...\n        target_cls,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/builder.py\", line 4560, in handle_traced_output\n    var = construct_tensor_variable(\n        target_cls, tx, proxy, example_value, subclass_type, options\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/variables/builder.py\", line 4913, in construct_tensor_variable\n    set_example_value(proxy.node, example_value)\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/utils.py\", line 3455, in set_example_value\n    := torch.fx.experimental.symbolic_shapes.compute_unbacked_bindings(\n       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        shape_env, example_value\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/fx/experimental/symbolic_shapes.py\", line 1512, in compute_unbacked_bindings\n    raise PendingUnbackedSymbolNotFound(msg)\ntorch._dynamo.exc.InternalTorchDynamoError: PendingUnbackedSymbolNotFound: Pending unbacked symbols {u1, u0} not in returned outputs FakeTensor(..., device='cuda:0', size=(s47, 1, s33 + u0 + u1)) ((Max(1, s33 + u0 + u1), Max(1, s33 + u0 + u1), 1), 0).\nDid you accidentally call new_dynamic_size() or item() more times than you needed to in your fake implementation?\nFor more help, see https://docs.google.com/document/d/1RWrH-3wLEpzR9kCS6gGBNen_-Fs-8PVbWWFE5AcgeWE/edit\n\nfrom user code:\n   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/encodec/modeling_encodec.py\", line 153, in torch_dynamo_resume_in__pad1d_at_150\n    padded = nn.functional.pad(hidden_states, paddings, mode, value)\n             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/functional.py\", line 5952, in pad\n    return torch._C._nn.pad(input, pad, mode, value)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n\n"
+}

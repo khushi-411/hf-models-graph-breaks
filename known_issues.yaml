@@ -315,6 +315,88 @@ issues:
       Diagnostics only (the guard itself is right). encodec eval, CPU+CUDA. The recompiles there are a
       knock-on of encodec-conv-params-buffers. No standalone repro yet.
 
+  # --- Found by the top-100 sweep (2026-11-23) --------------------------------------------------
+  - id: inductor-cuda-int-sqrt-pow
+    title: "Inductor CUDA: `int(s ** 0.5)` on a dynamic size is computed as trunc(libdevice.pow(s, 0.5)) and is off by one for some perfect squares"
+    file: torch/_inductor/codegen/triton.py
+    function: pow
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-cuda-int-sqrt-pow.md
+    notes: >
+      Wrong integer, not a compile error: pow(9.0, 0.5) on CUDA comes out just under 3, so int() gives 2.
+      Wrong for n*n in {9, 7056, 7396, 9025, ...}; CPU is exact. In Gemma 4's vision pooler
+      (`k = int((seq_len // length) ** 0.5)`) the wrong k pushes pooling indices past num_classes and
+      `F.one_hot` fires a device-side assert (gemma4, gemma4_moe, gemma4_e4b, dynamic=True on CUDA);
+      without that assert it would be a silently wrong pooling. Repro: issues/repros/inductor_cuda_int_sqrt_pow.py.
+
+  - id: inductor-user-triton-constexpr-global
+    title: "Inductor user-defined Triton kernels: a module-level helper used in a `tl.constexpr` expression is missing in the compiled kernel (`NameError: cuda_capability_geq`)"
+    file: torch/_inductor/runtime/triton_heuristics.py
+    function: null
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-user-triton-constexpr-global.md
+    notes: >
+      gpt_oss_mxfp4 (real MXFP4 checkpoint) eager works; torch.compile fails compiling the kernels-community
+      gpt-oss-triton-kernels `_finalize_matmul`, whose constexpr `USE_FUSED_MIXED_PREC_ACC` calls
+      `cuda_capability_geq(10, 0)` from its own module. Every MXFP4 MoE model goes through this kernel.
+
+  - id: aot-synthetic-base-symbolic-nbytes
+    title: "AOTAutograd synthetic base with symbolic storage size: `Expected !size_bytes_is_heap_allocated_ to be true`"
+    file: torch/_functorch/_aot_autograd/runtime_wrappers.py
+    function: merge_view_inputs
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/aot-synthetic-base-symbolic-nbytes.md
+    notes: >
+      dynamic=True, graph inputs that share a storage without ._base, may overlap, and one is mutated:
+      merge_view_inputs calls set_(untyped_storage()), and aten::set_(Storage) reads nbytes(), which throws on a
+      symbolic size. gpt_oss_mxfp4 dynamic CUDA (int32 routing buffers from the gpt-oss Triton kernels, passed in
+      after a graph break). Repro: issues/repros/aot_synthetic_base_symbolic_nbytes.py (CPU, aot_eager).
+
+  - id: inductor-cantsplit-square-floordiv
+    title: "Inductor `CantSplit: ((s//16)**2)//(s//16) not divisible by (s//16)`: x**2 // x is not simplified to x when splitting a range"
+    file: torch/_inductor/codegen/simd.py
+    function: add_range
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-cantsplit-square-floordiv.md
+    notes: >
+      unlimited_ocr train_forward, dynamic=True on CUDA. Conv patch embed -> permute -> LayerNorm -> Linear; the
+      width is carried as (a**2)//a (a = s//16) and the LayerNorm-backward mix-order reduction can't split it.
+      Repro: issues/repros/inductor_cantsplit_square_floordiv.py. Workaround: triton.mix_order_reduction=False.
+
+  - id: inductor-conv-unbacked-spatial-hint
+    title: "Inductor convolution lowering guards on an unbacked spatial size: `Could not extract specialized integer from data-dependent expression 256*Max(1, u4)*Max(1, u5)`"
+    file: torch/_inductor/lowering.py
+    function: convolution
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/inductor-conv-unbacked-spatial-hint.md
+    notes: >
+      apertus1p5_vlm, dynamic.py --unbacked (CPU and CUDA, eval and train). The vision tokenizer crops each image to
+      sizes read from a tensor (unbacked u4, u5) and runs conv_in on [1, 3, u4, u5]; lowering aten.convolution
+      needs a hint for 256*u4*u5. Not reduced yet.
+
+  - id: dynamo-pending-unbacked-symbol-not-found
+    title: "Dynamo `PendingUnbackedSymbolNotFound` when sizes kept in tensors are used as Python ints (capture_scalar_outputs)"
+    file: torch/fx/experimental/symbolic_shapes.py
+    function: compute_unbacked_bindings
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/dynamo-pending-unbacked-symbol-not-found.md
+    notes: >
+      dynamic.py --unbacked on CUDA: deberta (att_span = torch.tensor(...) used in a slice / clamp in
+      disentangled_att_bias) and encodec (padding computed from int64 buffers, used in F.pad after a graph break in
+      _pad1d). Internal error; the backed dynamic runs are fine. Not reduced yet.
+
   # ======================================================================= #
   # transformers-side root causes
   # ======================================================================= #
@@ -1005,3 +1087,110 @@ issues:
   - <<: *qwenvl
     file: transformers/models/qwen3_5/modeling_qwen3_5.py
     function: null
+
+  # ======================================================================= #
+  # Top-100 sweep (2026-11-23): new transformers-side root causes and new files for existing ones.
+  # ======================================================================= #
+  - id: fp8-deepgemm-fallback-compile
+    title: "FP8 linear: the DeepGEMM -> Triton fallback catches ImportError, but under torch.compile the failed kernel load surfaces as TorchRuntimeError, so compile crashes"
+    file: transformers/integrations/deepgemm.py
+    function: load_deepgemm_kernel
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/fp8-deepgemm-fallback-compile.md
+    notes: >
+      qwen3_8_fp8 and deepseek_v32_fp8 (fine-grained FP8): eager logs "DeepGEMM declined this call, falling back to
+      Triton" and works; compiled raises from fake-tensor propagation of the allow_in_graph `_load_deepgemm_kernel`.
+      Happens wherever `is_deepgemm_loadable()` is True but the hub build doesn't match the installed torch.
+
+  - id: glm5-dsa-pooled-keep-mask
+    title: "GLM-5.3 DSA indexer: `pool_keys[:, keep]` boolean-mask indexing in `get_pooled_states` (language model, every indexed-attention layer)"
+    file: transformers/models/glm5_next/modeling_glm5_next.py
+    function: get_pooled_states
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/glm5-dsa-pooled-keep-mask.md
+    notes: In the text model, not just the vision path. Followed by "Failed to handle graph break gracefully" at the same line.
+
+  - id: gemma4-vision-pooler-mask-index
+    title: "Gemma 4 vision pooler: `hidden_states[pooler_mask]` strips padding with boolean indexing"
+    file: transformers/models/gemma4/modeling_gemma4.py
+    function: forward
+    match: "trace CALL_FUNCTION_EX"   # the placeholder check in the same forward breaks at BINARY_SUBSCR
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/gemma4-vision-pooler-mask-index.md
+    notes: >
+      gemma4, gemma4_moe, gemma4_e4b. The other Gemma 4 vision breaks are existing patterns:
+      `split_sizes(...).tolist()` (vlm-split-image-features-tolist) and `inputs_embeds[image_mask].numel()`
+      (placeholder-mask-bool-index-numel).
+
+  - id: clap-is-longer-where
+    title: "CLAP audio encoder: `torch.where(is_longer == 1)[0]` picks the clips for feature fusion (data-dependent shape)"
+    file: transformers/models/clap/modeling_clap.py
+    function: forward
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/clap-is-longer-where.md
+    notes: clap (laion/clap-htsat-fused), eval and train.
+
+  - <<: *splitfeat
+    file: transformers/models/gemma4/modeling_gemma4.py
+    function: get_image_features
+    match: "Data dependent operator"
+  - <<: *placeholder
+    file: transformers/models/gemma4/modeling_gemma4.py
+    function: forward
+    match: "trace BINARY_SUBSCR"
+  - <<: *splitfeat
+    file: transformers/models/glm5_next/modeling_glm5_next.py
+    function: get_image_features
+    match: "Data dependent operator"
+  - <<: *visionsplit
+    file: transformers/models/glm5_next/modeling_glm5_next.py
+    function: forward
+    match: null
+  - <<: *visionsplit
+    file: transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py
+    function: forward
+    match: "Data dependent operator"
+  - <<: *splitfeat
+    file: transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py
+    function: get_image_features
+    match: "Data dependent operator"
+  - <<: *qwenvl
+    file: transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py
+    function: null
+
+  # gpt-oss MXFP4 experts launch kernels-community/gpt-oss-triton-kernels; Dynamo can't trace the launches.
+  - &tkwrap
+    id: dynamo-triton-kernels-wrapper-args
+    title: "Dynamo: Triton kernels launched with triton_kernels' `Tensor`/`Storage` wrapper objects as arguments are unsupported; Dynamo then traces triton's JIT launcher and breaks ~10x per MoE layer"
+    file: kernels/kernels-community/gpt-oss-triton-kernels/topk.py
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/dynamo-triton-kernels-wrapper-args.md
+    notes: >
+      gpt_oss_mxfp4 (real MXFP4 checkpoint, 2 layers): 20 graphs / 19 breaks in eval. First break:
+      "Unexpected argument type for a Triton kernel: UserDefinedObjectVariable(Tensor)" at topk.py:41; the rest
+      follow from inlining triton.runtime.jit (parse_options, native_specialize_impl, CudaLauncher,
+      CudaDriver.get_current_target, Storage.is_tma_compliant).
+  - <<: *tkwrap
+    file: kernels/kernels-community/gpt-oss-triton-kernels/matmul_ogs.py
+  - <<: *tkwrap
+    file: kernels/kernels-community/gpt-oss-triton-kernels/target_info.py
+  - <<: *tkwrap
+    file: python/site-packages/triton/runtime/jit.py
+  - <<: *tkwrap
+    file: python/site-packages/triton/compiler/compiler.py
+  - <<: *tkwrap
+    file: torch/_dynamo/polyfills/__init__.py
+    match: CudaLauncher
+  - <<: *tkwrap
+    file: <string>
+    match: native_specialize_impl
