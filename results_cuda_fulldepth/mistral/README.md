@@ -1,0 +1,25 @@
+# mistral — graph breaks
+
+- **HF id:** `mistralai/Mistral-7B-v0.1`
+- **Class:** `AutoModelForCausalLM`
+- **Config overrides:** `{'num_hidden_layers': 2, 'intermediate_size': 1024}`
+- **torch:** `2.16.0a0+gitf29b6d5`  |  **transformers:** `5.24.0.dev0` (git `046bdb8cc2`)
+- **Notes:** Sliding-window attention.
+
+| Scenario | Status | Graphs | Graph breaks | Unique breaks |
+|---|---|---|---|---|
+| eval_forward | ok | 1 | 0 | 0 |
+| eval_with_cache | ok | 1 | 0 | 0 |
+| train_forward | ok | 1 | 0 | 0 |
+
+## eval_forward
+
+No graph breaks. ✅
+
+## eval_with_cache
+
+No graph breaks. ✅
+
+## train_forward
+
+No graph breaks. ✅

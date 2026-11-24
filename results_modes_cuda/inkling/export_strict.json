@@ -1,0 +1,46 @@
+{
+  "model": "inkling",
+  "hf_id": "thinkingmachines/Inkling",
+  "mode": "export_strict",
+  "device": "cuda",
+  "status": "error",
+  "experts_implementation": null,
+  "seconds": 7.3,
+  "timestamp": "2026-11-24T14:46:55+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "export",
+      "strict": true,
+      "status": "ok",
+      "specialized_dims": [],
+      "range_constraints": {
+        "s27": "VR[2, 65535]",
+        "s11": "VR[2, int_oo]"
+      }
+    },
+    {
+      "name": "run batch=2 seq=32",
+      "status": "error",
+      "error": "AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\n",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 339, in mode_export\n    ref = _flat_out(model(**inp))\n                    ~~~~~^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 787, in forward\n    outputs = self.model(\n        input_ids=input_ids,\n    ...<5 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    outputs = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 722, in forward\n    hidden_states = decoder_layer(\n        hidden_states,\n    ...<3 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    return forward(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 584, in forward\n    hidden_states = self.mlp(hidden_states)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 417, in forward\n    hidden_states = hidden_states + self.shared_experts(residuals, gammas=shared_gammas)\n                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 397, in forward\n    out = down.float().sum(dim=0).to(hidden_states.dtype)\n          ~~~~~~~~~~~~~~~~^^^^^^^\ntorch.AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\n\n"
+    },
+    {
+      "name": "run batch=3 seq=40",
+      "status": "error",
+      "error": "AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nThe CUDA driver logged these messages, which may provide useful details:\nSticky error detected\nReturning 719 (CUDA_ERROR_LAUNCH_FAILED) from cuStreamGetCaptureInfo_v3\n\n",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 337, in mode_export\n    inp = _inputs(spec, model, \"eval_forward\", device, b, s, a)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 137, in _inputs\n    return check.make_inputs(spec, model, scenario, device)\n           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 404, in make_inputs\n    ids = _text_ids(cfg, device)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/check.py\", line 196, in _text_ids\n    return torch.randint(0, min(vocab, 1000), (BATCH, seq_len), device=device)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntorch.AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nThe CUDA driver logged these messages, which may provide useful details:\nSticky error detected\nReturning 719 (CUDA_ERROR_LAUNCH_FAILED) from cuStreamGetCaptureInfo_v3\n\n\n"
+    }
+  ]
+}

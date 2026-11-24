@@ -1,0 +1,43 @@
+{
+  "model": "inkling",
+  "hf_id": "thinkingmachines/Inkling",
+  "mode": "fsdp2",
+  "device": "cuda",
+  "world_size": 2,
+  "status": "error",
+  "timestamp": "2026-11-24T17:56:37+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "ranks": [
+    {
+      "rank": 0,
+      "status": "error",
+      "error": "AssertionError: FSDP expects uniform original parameter dtype but got {torch.float32, torch.bfloat16}"
+    },
+    {
+      "rank": 1,
+      "status": "error",
+      "error": "AssertionError: FSDP expects uniform original parameter dtype but got {torch.bfloat16, torch.float32}"
+    }
+  ],
+  "checks": [
+    {
+      "name": "fsdp2 x2 GPUs, 3 AdamW steps",
+      "fsdp_extra_dtype_units": 9,
+      "fsdp_units": 2,
+      "optimizer": "AdamW",
+      "status": "error",
+      "error": "AssertionError: FSDP expects uniform original parameter dtype but got {torch.float32, torch.bfloat16}",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/distributed.py\", line 98, in run\n    le = dynamic._loss(w_e(**inputs)); le.backward(); opt_e.step(); opt_e.zero_grad(set_to_none=True)\n                       ~~~^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1894, in _call_impl\n    return inner()\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1821, in inner\n    args_kwargs_result = hook(self, args, kwargs)  # type: ignore[misc]\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_common.py\", line 30, in wrapper\n    return torch._dynamo.disable(\n           ~~~~~~~~~~~~~~~~~~~~~~\n        func, recursive=True, reason=\"skipping FSDP hooks\"\n        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    )(*args, **kwargs)\n    ~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1653, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_state.py\", line 340, in _pre_forward\n    args, kwargs = self._root_pre_forward(module, args, kwargs)\n                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_state.py\", line 148, in _root_pre_forward\n    self._lazy_init()\n    ~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_state.py\", line 234, in _lazy_init\n    fsdp_param_group.lazy_init()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py\", line 402, in lazy_init\n    self._init_mp_dtypes()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/distributed/fsdp/_fully_shard/_fsdp_param_group.py\", line 360, in _init_mp_dtypes\n    raise AssertionError(\n        f\"FSDP expects uniform original parameter dtype but got {orig_dtypes}\"\n    )\nAssertionError: FSDP expects uniform original parameter dtype but got {torch.float32, torch.bfloat16}\n"
+    }
+  ]
+}

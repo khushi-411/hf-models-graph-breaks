@@ -1,0 +1,42 @@
+{
+  "model": "inkling2_mini",
+  "hf_id": "thinkingmachines/Inkling-2-Mini",
+  "mode": "generate_static",
+  "device": "cuda",
+  "status": "error",
+  "experts_implementation": null,
+  "seconds": 5.2,
+  "timestamp": "2026-11-24T16:36:22+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "error",
+      "error": "RuntimeError: The size of tensor a (32) must match the size of tensor b (39) at non-singleton dimension 3",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 243, in mode_generate\n    seq_e, logit_e = _generate(model, inputs, **kw)\n                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 220, in _generate\n    out = model.generate(**inputs, max_new_tokens=NEW_TOKENS, min_new_tokens=NEW_TOKENS, do_sample=False,\n                         pad_token_id=pad, output_logits=True, return_dict_in_generate=True, **kw)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/utils/_contextlib.py\", line 157, in no_grad\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/generation/utils.py\", line 3008, in generate\n    result = decoding_method(\n        self,\n    ...<5 lines>...\n        **model_kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/generation/utils.py\", line 3208, in _sample\n    outputs = self._prefill(\n        input_ids,\n    ...<2 lines>...\n        is_first_iteration=not generation_config.is_assistant,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/generation/utils.py\", line 4333, in _prefill\n    return self(**model_inputs, return_dict=True)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1523, in forward\n    outputs = self.model(\n        input_ids=input_ids,\n    ...<5 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    outputs = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1364, in forward\n    new_hidden_states = decoder_layer(\n        hidden_states,\n    ...<6 lines>...\n        **kwargs,\n    )\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    return forward(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 891, in forward\n    hidden_states, _ = self.self_attn(\n                       ~~~~~~~~~~~~~~^\n        hidden_states=self.input_layernorm(hidden_states).to(dtype),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 620, in forward\n    attn_output, attn_weights = attention_interface(\n                                ~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<9 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 130, in eager_attention_forward\n    attn_weights = attn_weights + attention_mask\n                   ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~\nRuntimeError: The size of tensor a (32) must match the size of tensor b (39) at non-singleton dimension 3\n"
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": null,
+      "recompiled_graphs": 0,
+      "inductor_specialization_sites": [],
+      "specializations": [],
+      "graph_breaks": [],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

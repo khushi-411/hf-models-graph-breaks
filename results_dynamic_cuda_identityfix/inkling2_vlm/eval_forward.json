@@ -1,0 +1,1350 @@
+{
+  "model": "inkling2_vlm",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "scenario": "eval_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": false,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T15:57:39+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "status": "ok",
+  "graphs_first_run": 33,
+  "recompiled_graphs": 19,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 33,
+      "new_shape_events": 486
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 11,
+      "new_shape_events": 294
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 8,
+      "new_shape_events": 327
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 103403750112848), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/1: len(kwargs) != 9\n    - 0/0: kwargs['pixel_values'].size()[0] == kwargs['input_ids'].size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: ___check_type_id(args[0], 103403740082544), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2Model'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2Model)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: kwargs['pixel_values'].size()[0] == kwargs['input_ids'].size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1783\n    triggered by the following guard failure(s):\n    - 2/0: pixel_values.size()[0] == input_ids.size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/3: len(kwargs) != 5\n    - 0/2: len(args) == 2                                           # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/1: kwargs['pixel_values'].size()[0] == kwargs['input_ids'].size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 0/0: len(kwargs) != 5",
+    "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: ___check_type_id(args[0], 103403750112848), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: kwargs['pixel_values'].size()[0] == kwargs['input_ids'].size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)\n    - 1/0: ___check_type_id(args[0], 103403750112848), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+    "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1659\n    triggered by the following guard failure(s):\n    - 3/0: pixel_values.size()[0] == input_ids.size()[1]  # duck sizing added this equality because these variables had the same size 32 (to avoid this specialization, set torch.fx.experimental._config.use_duck_shape = False)",
+    "Recompiling function torch_dynamo_resume_in_get_vision_interpolation_indices_and_weights_at_277 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:277\n    triggered by the following guard failure(s):\n    - 12/0: tensor 'counts' size mismatch at index 0. expected 2, actual 3",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 18/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 19/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1138 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1138\n    triggered by the following guard failure(s):\n    - 25/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits):  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1143 in torch_dynamo_resume_in_forward_at_1138\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1143, in torch_dynamo_resume_in_forward_at_1138\n    -     for q, k, v in zip(*splits):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1726 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1726\n    triggered by the following guard failure(s):\n    - 30/0: len(___stack0.pooler_output) == 2                        # image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output)  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1730 in torch_dynamo_resume_in_forward_at_1726\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1730, in torch_dynamo_resume_in_forward_at_1726\n    -     image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output)",
+    "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_1654 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1654\n    triggered by the following guard failure(s):\n    - 32/0: tensor 'features' size mismatch at index 0. expected 32, actual 48",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1732 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1732\n    triggered by the following guard failure(s):\n    - 33/0: len(dict.__getitem__(mm_encoder_outputs['image'], list(dict.keys(mm_encoder_outputs['image']))[1])) == 2  # return Inkling2ModelOutputWithPast(  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1745 in torch_dynamo_resume_in_forward_at_1732\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1745, in torch_dynamo_resume_in_forward_at_1732\n    -     return Inkling2ModelOutputWithPast(",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1842 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1842\n    triggered by the following guard failure(s):\n    - 34/0: len(dict.__getitem__(___stack0.image_outputs, list(dict.keys(___stack0.image_outputs))[1])) == 2  # return Inkling2CausalLMOutputWithPast(  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1863 in torch_dynamo_resume_in_forward_at_1842\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1863, in torch_dynamo_resume_in_forward_at_1842\n    -     return Inkling2CausalLMOutputWithPast(",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 18/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 18/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_get_vision_position_ids_at_112 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py:112\n    triggered by the following guard failure(s):\n    - 19/1: len(___stack1) == 3                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):\n    - 19/0: len(___stack1) == 2                                      # for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):  # transformers/src/transformers/vision_utils.py:112 in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/vision_utils.py\", line 112, in torch_dynamo_resume_in_get_vision_position_ids_at_112\n    -     for (t, h, w), merge_size in zip(grid_thw.tolist(), spatial_merge_size.tolist()):",
+    "Recompiling function torch_dynamo_resume_in_forward_at_1138 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1138\n    triggered by the following guard failure(s):\n    - 25/1: len(splits[0]) == 3                                      # for q, k, v in zip(*splits):  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1143 in torch_dynamo_resume_in_forward_at_1138\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1143, in torch_dynamo_resume_in_forward_at_1138\n    -     for q, k, v in zip(*splits):\n    - 25/0: len(splits[0]) == 2                                      # for q, k, v in zip(*splits):  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1143 in torch_dynamo_resume_in_forward_at_1138\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1143, in torch_dynamo_resume_in_forward_at_1138\n    -     for q, k, v in zip(*splits):"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/ir.py:compare_sizes"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/decomposition.py:non_empty_tensor",
+    "torch/_inductor/ir.py:compare_sizes",
+    "torch/_inductor/ir.py:is_aligned_realized_tensor",
+    "torch/_inductor/ir.py:resolve_negative_size",
+    "torch/_inductor/lowering.py:sort_stable"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 54,
+      "examples": [
+        "Eq(s68, 3)",
+        "Eq(s4, 3)",
+        "Eq(s81, 3)",
+        "Eq(s43, 3)",
+        "Eq(s55, 3)"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1726",
+        "transformers/models/inkling2/modeling_inkling2.py:get_image_features:1628"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 32,
+      "examples": [
+        "s68 = 3",
+        "s4 = 3",
+        "s81 = 3",
+        "s43 = 3",
+        "s55 = 3"
+      ],
+      "model_frames": [
+        "transformers/utils/generic.py:wrapper:1036",
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1726",
+        "transformers/models/inkling2/modeling_inkling2.py:get_image_features:1628"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/utils/deprecation.py:wrapped_func",
+      "line": 173,
+      "count": 2,
+      "examples": [
+        "Eq(zf23, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4683,
+      "count": 36,
+      "examples": [
+        "512*s70*s72 <= 2147483647",
+        "4800*(((s100*s59*s99)//1600)) <= 2147483647",
+        "1200*(((s99*((s100//2))*((s59//2)))//100)) <= 2147483647",
+        "1024*s40*s46 <= 2147483647",
+        "1024*s46 + 1024*s62 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1233",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1593",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4685,
+      "count": 62,
+      "examples": [
+        "s70*s72 <= 2147483647",
+        "3*s100*s59*s99 <= 2147483647",
+        "1024*s46 <= 2147483647",
+        "s40*s46 <= 2147483647",
+        "s90 <= 2147483647"
+      ],
+      "model_frames": [
+        "transformers/utils/deprecation.py:wrapped_func:173",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1233",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1593",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1033,
+      "count": 9,
+      "examples": [
+        "Eq(Mod(s4*s59**2*s99, 1600*s4), 0)",
+        "Eq(Mod(s100*s4*s59*s99, 1600*s4), 0)",
+        "Eq(Mod(2*s25*s60*s67, s35), 0)",
+        "Eq(Mod(3*s25*s60*s67, s35), 0)",
+        "Eq(Mod(4*s25*s60*s67, s35), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4268,
+      "count": 3,
+      "examples": [
+        "Eq(s4*s59**2*s99, 1600*s4*(((s59**2*s99)//1600)))",
+        "Eq(s100*s4*s59*s99, 1600*s4*(((s100*s59*s99)//1600)))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4170,
+      "count": 64,
+      "examples": [
+        "Eq(((s59**2*s99)//1600), s99)",
+        "Ne(s59, 2)",
+        "Eq((s59//2), 20)",
+        "Ne(((s4*s99*((s59//2))**2)//300), s99)",
+        "Ne((s59//2), 1200)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4176,
+      "count": 56,
+      "examples": [
+        "Eq(Mod(s59, 2), 0)",
+        "Ne(Mod(s99, ((s4*s99*((s59//2))**2)//300)), 0)",
+        "Ne(Mod(2*s99, ((s4*s99*((s59//2))**2)//300)), 0)",
+        "Eq(Mod(4*s99, ((s4*s99*((s59//2))**2)//300)), 0)",
+        "Ne(Mod((s59//2), 1200), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:forward",
+      "line": 1583,
+      "count": 7,
+      "examples": [
+        "Ne((s59//2), 1)",
+        "Ne(s4*s59, s4*((s59//2)))",
+        "Eq(4*s4*s99*((s59//2))**2, 1200) | Eq(Mod(4*s4*s99*((s59//2))**2, 1200), 0)",
+        "1200 >= s4*((s59//2))",
+        "Ne(((s4*s99*((s59//2))**2)//300), 1)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1019,
+      "count": 3,
+      "examples": [
+        "Eq(4*s4*s99*((s59//2))**2, 1200*(((s4*s99*((s59//2))**2)//300)))",
+        "Eq(4*s4*s99*((s100//2))*((s59//2)), 1200*(((s4*s99*((s100//2))*((s59//2)))//300)))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper_core_alg",
+      "line": 4199,
+      "count": 12,
+      "examples": [
+        "Eq(4*s99, ((s4*s99*((s59//2))**2)//300))",
+        "Eq(s4*((s59//2))**2, 1200)",
+        "Eq(4*s99, ((s4*s99*((s100//2))*((s59//2)))//300))",
+        "Eq(s4*((s100//2))*((s59//2)), 1200)",
+        "Eq(2*s25, s35)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1583",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1799,
+      "count": 15,
+      "examples": [
+        "Ne((s100//2), 1)",
+        "Ne((s59//2), 1)",
+        "Ne(s100*s4, s4*((s100//2)))",
+        "Eq(4*s4*s99*((s100//2))*((s59//2)), 1200) | Eq(Mod(4*s4*s99*((s100//2))*((s59//2)), 1200), 0)",
+        "1200 >= s4*((s100//2))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_functorch/_aot_autograd/graph_capture_wrappers.py:functional_call",
+      "line": 1541,
+      "count": 1,
+      "examples": [
+        "1200 < 4*s4*s99*((s100//2))*((s59//2))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 55,
+      "examples": [
+        "Eq(s100*s4*s59, 4*s4*((s100//2))*((s59//2)))",
+        "Ne((s80//s75), 1)",
+        "Eq(Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//((s80//s75))))*((s87//((s87//s75)))))",
+        "Ne((s87//s75), 1)",
+        "Eq(Max(1, (s80//s75))*Max(1, (s80//((s80//s75))))*Max(1, (s87//((s87//s75)))), ((s80//s75))*((s80//((s80//s75))))*((s87//((s87//s75)))))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:resolve_negative_size",
+      "line": 4356,
+      "count": 1,
+      "examples": [
+        "Eq(4*s4*(((s100*s59*s99)//1600)), 3*(((s4*s99*((s100//2))*((s59//2)))//300)))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4400,
+      "count": 33,
+      "examples": [
+        "Ne(1200, s4)",
+        "Ne(1200, 20*s4)",
+        "Eq(1200, 400*s4)",
+        "Ne(((s4*s99*((s100//2))*((s59//2)))//300), 2)",
+        "Ne(((s4*s99*((s100//2))*((s59//2)))//300), 4)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4402,
+      "count": 31,
+      "examples": [
+        "1200 >= s4",
+        "1200 >= 20*s4",
+        "(((s4*s99*((s100//2))*((s59//2)))//300)) >= 2",
+        "(((s4*s99*((s100//2))*((s59//2)))//300)) >= 4",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) >= s75"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4404,
+      "count": 31,
+      "examples": [
+        "1200 > s4",
+        "1200 > 20*s4",
+        "(((s4*s99*((s100//2))*((s59//2)))//300)) > 2",
+        "(((s4*s99*((s100//2))*((s59//2)))//300)) > 4",
+        "((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))) > s75"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:compare_sizes",
+      "line": 4400,
+      "count": 1,
+      "examples": [
+        "s4 = 3"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:forward",
+      "line": 1233,
+      "count": 3,
+      "examples": [
+        "s29 > 2",
+        "Eq(zf14, 2.0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1233"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:get_vision_interpolation_indices_and_weights",
+      "line": 276,
+      "count": 3,
+      "examples": [
+        "s29 > 2",
+        "Eq(s28, s47)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:get_vision_interpolation_indices_and_weights:276"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 46,
+      "examples": [
+        "s28 - 1 < 2",
+        "s87 >= 2",
+        "s80 >= 2",
+        "s5 >= 2",
+        "s18 >= 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_interpolation_indices_and_weights_at_276:277",
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_contiguous",
+      "line": 283,
+      "count": 1,
+      "examples": [
+        "s28 = 2"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_interpolation_indices_and_weights_at_276:277"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:layer_norm",
+      "line": 3040,
+      "count": 10,
+      "examples": [
+        "Eq(zf86, 1.0e-5)",
+        "Eq(zf81, 1.0e-5)",
+        "Eq(zf79, 1.0e-5)",
+        "Eq(zf74, 1.0e-5)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1201"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "Eq(s67, 1024)",
+        "Eq(s87, 1024)",
+        "Eq(s50, 1024)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:native_layer_norm",
+      "line": 3646,
+      "count": 8,
+      "examples": [
+        "s67 = 1024",
+        "s87 = 1024",
+        "s50 = 1024"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 12,
+      "examples": [
+        "Eq(s62, 2)",
+        "Eq(s47, 3)",
+        "Eq(s47, 2)",
+        "Eq(s29, 3)",
+        "Eq(s94, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/vision_utils.py:get_vision_position_ids:112",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:decompose",
+      "line": 1047,
+      "count": 12,
+      "examples": [
+        "s62 = 2",
+        "s47 = 3",
+        "s47 = 2",
+        "s29 = 3",
+        "s94 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1583:1587",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/vision_utils.py:get_vision_position_ids:112",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 999,
+      "count": 21,
+      "examples": [
+        "s87 >= 0",
+        "s80 >= 0",
+        "s5 >= 0",
+        "s18 >= 0",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))) + s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_reshape_view_helper",
+      "line": 4226,
+      "count": 21,
+      "examples": [
+        "Ne(s87, 0)",
+        "Ne(s80, 0)",
+        "Ne(s5, 0)",
+        "Ne(s18, 0)",
+        "Ne(200058*s68*(s11 + s55), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1346,
+      "count": 9,
+      "examples": [
+        "Ne(s80, 1)",
+        "Ne(s18, 1)",
+        "Ne(s31, 1)",
+        "Ne(s89, 1)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112",
+      "line": 112,
+      "count": 144,
+      "examples": [
+        "Ne((s87//s75), -1)",
+        "((s87//s75)) > -1",
+        "Ne(s75, -1)",
+        "s75 > -1",
+        "Eq(s80*s87, s75**2*((s80//s75))*((s87//s75)))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_repeat",
+      "line": 4881,
+      "count": 9,
+      "examples": [
+        "s88 >= 0",
+        "s78 >= 0",
+        "s38 >= 0",
+        "s70 >= 0"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:is_channels_last_contiguous_2d",
+      "line": 292,
+      "count": 9,
+      "examples": [
+        "Ne(0, (s87//((s87//s75))))",
+        "Ne(0, (s5//((s5//s40))))",
+        "Ne(0, (s64//((s64//s26))))",
+        "Ne(0, (s84//((s84//s60))))"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/decomposition.py:non_empty_tensor",
+      "line": 755,
+      "count": 9,
+      "examples": [
+        "Ne(s88*((s80//s75))*((s80//((s80//s75))))*((s87//s75))*((s87//((s87//s75)))), 0)",
+        "Ne(s78*((s18//s40))*((s18//((s18//s40))))*((s5//s40))*((s5//((s5//s40)))), 0)",
+        "Ne(s38*((s31//s26))*((s31//((s31//s26))))*((s64//s26))*((s64//((s64//s26)))), 0)",
+        "Ne(s70*((s84//s60))*((s84//((s84//s60))))*((s89//s60))*((s89//((s89//s60)))), 0)"
+      ],
+      "model_frames": [
+        "transformers/vision_utils.py:torch_dynamo_resume_in_get_vision_position_ids_at_112:112"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:_index_copy",
+      "line": 3595,
+      "count": 1,
+      "examples": [
+        "Eq(s67, 2)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:_index_copy",
+      "line": 3595,
+      "count": 1,
+      "examples": [
+        "s67 = 2"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:_index_copy",
+      "line": 3604,
+      "count": 1,
+      "examples": [
+        "Eq(s90, s38)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2514,
+      "count": 5,
+      "examples": [
+        "Ne(s40 - 1, 1)",
+        "Ne(s32 - 1, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1587:1591",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1596",
+        "transformers/modeling_layers.py:forward_with_checkpointing:124",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1201"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 12,
+      "examples": [
+        "Eq(s87, 1024)",
+        "Eq(s60*s67, 1024)",
+        "Eq(s11, 4096)",
+        "Eq(s86, 512)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1201",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1602",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "aot/decomp",
+      "site": "torch/_meta_registrations.py:meta_mm",
+      "line": 2722,
+      "count": 6,
+      "examples": [
+        "s87 = 1024",
+        "s11 = 4096",
+        "s86 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1201",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1591:1602",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:forward",
+      "line": 1084,
+      "count": 42,
+      "examples": [
+        "Eq(zf77, 0.125)",
+        "s60 <= 256",
+        "Eq(Mod(s60, 4), 0)",
+        "Eq(Mod(4*s60, 16), 0)",
+        "Eq(Mod(4*s60*s67, 16), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1006,
+      "count": 12,
+      "examples": [
+        "Ne(s35, -1)",
+        "Ne(s68*(s11 + s55), -1)",
+        "Ne(s11 + s55, -1)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1010,
+      "count": 9,
+      "examples": [
+        "s35 >= 0",
+        "s68*(s11 + s55) >= 0"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084",
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:infer_size",
+      "line": 1024,
+      "count": 6,
+      "examples": [
+        "Ne(s35, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/ir.py:is_aligned_realized_tensor",
+      "line": 528,
+      "count": 3,
+      "examples": [
+        "Eq(Mod(s60, 8), 0) & Eq(Mod(s60*s67, 8), 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1084"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:expand",
+      "line": 3261,
+      "count": 10,
+      "examples": [
+        "Eq(s59, s72) | Eq(s72, 1)",
+        "Eq(s29, s70) | Eq(s70, 1)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1726",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_broadcast_in_dim_meta",
+      "line": 1351,
+      "count": 10,
+      "examples": [
+        "Eq(s72, s59)",
+        "Eq(s70, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1726",
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask",
+      "line": 1654,
+      "count": 6,
+      "examples": [
+        "Eq(s97, 32)",
+        "Eq(s98, 32*s65)",
+        "Eq(s97, 48)",
+        "Eq(s98, 48*s65)",
+        "Eq(s97, 64)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask:1654"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask",
+      "line": 1654,
+      "count": 3,
+      "examples": [
+        "s97 = 32",
+        "s97 = 48",
+        "s97 = 64"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask:1654"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_refs/__init__.py:_broadcast_shapes",
+      "line": 453,
+      "count": 18,
+      "examples": [
+        "Eq(s89, s53)",
+        "Eq(s67, s29)",
+        "Eq(s38, s59)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 6,
+      "examples": [
+        "-s29 >= -s54"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726",
+      "line": 1732,
+      "count": 6,
+      "examples": [
+        "Eq(s54, s29)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 48,
+      "examples": [
+        "128*s29*s38 < 2147483647",
+        "s29*(Mod(((128*s29*s38 - 1)//s29), 128)) + 128*s29*(Mod(((128*s29*s38 - 1)//(128*s29)), s38)) + (Mod(128*s29*s38 - 1, s29)) < 2147483647",
+        "128*s29 <= 2147483647",
+        "128*s29 + 384 <= 2147483647",
+        "512*s29*s38 < 2147483647"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 12,
+      "examples": [
+        "zf93 >= 0.0",
+        "zf93 <= 1.0"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 6,
+      "examples": [
+        "Eq(zf93, 0.0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:ge",
+      "line": 535,
+      "count": 6,
+      "examples": [
+        "s29 >= 4"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "specialize",
+      "phase": "model",
+      "site": "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726",
+      "line": 1732,
+      "count": 6,
+      "examples": [
+        "s89 = 512"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:sort_stable",
+      "line": 8670,
+      "count": 3,
+      "examples": [
+        "2*s29*s38 < 32767"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:torch_dynamo_resume_in_forward_at_1726:1732"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1557,
+      "count": 3,
+      "examples": [
+        "(-s55 >= 0) & (-s55 <= s11)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:slice_forward",
+      "line": 1610,
+      "count": 3,
+      "examples": [
+        "s11 >= -s55"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_decomp/decompositions.py:matmul",
+      "line": 5460,
+      "count": 12,
+      "examples": [
+        "Ne(s68*s86*(s11 + s55), 0)",
+        "Ne(s11 + s55, 1)",
+        "Eq(s11*s86, s86*(s11 + s55))",
+        "Eq(512*s11, 512*s11 + 512*s55)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1483,
+      "count": 3,
+      "examples": [
+        "Eq(s68, 1) | Eq(s11 + s55, 1) | Eq(s68*s86*(s11 + s55), 0) | Eq(s11*s86, s86*(s11 + s55))"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims/__init__.py:_collapse_view_helper",
+      "line": 1497,
+      "count": 3,
+      "examples": [
+        "Ne(s11 + s55, 0)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_ops.py:__call__",
+      "line": 1496,
+      "count": 12,
+      "examples": [
+        "s11 + s55 > -1",
+        "1 < 200058*s68*(s11 + s55)",
+        "200058 < 200058*s68*(s11 + s55)",
+        "200058*s11 + 200058*s55 < 200058*s68*(s11 + s55)"
+      ],
+      "model_frames": [
+        "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+      ]
+    }
+  ],
+  "graph_breaks": [
+    {
+      "location": "transformers/models/inkling2/modeling_inkling2.py:1583",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1583 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:276",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+        "transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:277",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+        "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+        "transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:278",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+        "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+        "transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:280",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+        "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+        "transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/vision_utils.py:112",
+      "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1591 in forward",
+        "transformers/vision_utils.py:112 in get_vision_position_ids"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+      "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1591 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1591)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1595\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+      "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "user_stack": [
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+        "transformers/utils/output_capturing.py:361 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+        "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+        "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/inkling2/modeling_inkling2.py:1629",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\nStack variable source attribution:\n  GetAttrVariable(TensorVariable(), split) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1629\n            image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/models/inkling2/modeling_inkling2.py:1629 in get_image_features"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+      "short_reason": "Data dependent operator",
+      "count": 1
+    },
+    {
+      "location": "transformers/models/inkling2/modeling_inkling2.py:1654",
+      "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "user_stack": [
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+        "transformers/utils/generic.py:1036 in wrapper",
+        "transformers/utils/deprecation.py:173 in wrapped_func",
+        "transformers/models/inkling2/modeling_inkling2.py:1732 in forward",
+        "transformers/models/inkling2/modeling_inkling2.py:1654 in get_placeholder_mask"
+      ],
+      "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+      "short_reason": "Dynamic shape operator",
+      "count": 1
+    }
+  ]
+}

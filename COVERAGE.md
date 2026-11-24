@@ -12,8 +12,8 @@ Every graph break found by `check.py` (static, Dynamo `explain`) and `dynamic.py
 | static | cuda | 544 | 6 | 898 | 2088 | 2.16.0a0+git57f02f8 |
 | dynamic | cpu | 406 | 34 | 440 | - | 2.16.0a0+git57f02f8 |
 | dynamic | cuda | 412 | 28 | 549 | - | 2.16.0a0+git57f02f8 |
-| unbacked | cpu | 38 | 2 | 10 | - | 2.16.0a0+git57f02f8 |
-| unbacked | cuda | 150 | 36 | 16 | - | 2.16.0a0+git57f02f8 |
+| unbacked | cpu | 48 | 6 | 12 | - | 2.16.0a0+git57f02f8 |
+| unbacked | cuda | 160 | 44 | 18 | - | 2.16.0a0+git57f02f8, 2.16.0a0+gitf29b6d5 |
 
 **Unmatched breaks: 0** (0 groups)
 
@@ -40,7 +40,7 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | [📝 ctc-labels-max-check](issues/hf/ctc-labels-max-check.md) | hubert (dynamic cpu), hubert (dynamic cuda), hubert (static cpu), hubert (static cuda), wav2vec2 (dynamic cpu), wav2vec2 (dynamic cuda), wav2vec2 (static cpu), wav2vec2 (static cuda), wav2vec2_xlsr_ja (dynamic cpu), wav2vec2_xlsr_ja (dynamic cuda), wav2vec2_xlsr_ja (static cpu), wav2vec2_xlsr_ja (static cuda), wavlm (dynamic cpu), wavlm (dynamic cuda), wavlm (static cpu), wavlm (static cuda) |
 | [📝 specaugment-numpy-mask](issues/hf/specaugment-numpy-mask.md) | hubert (dynamic cpu), hubert (dynamic cuda), hubert (static cpu), hubert (static cuda), wav2vec2 (dynamic cpu), wav2vec2 (dynamic cuda), wav2vec2 (static cpu), wav2vec2 (static cuda), wav2vec2_xlsr_ja (dynamic cpu), wav2vec2_xlsr_ja (dynamic cuda), wav2vec2_xlsr_ja (static cpu), wav2vec2_xlsr_ja (static cuda), wavlm (dynamic cpu), wavlm (dynamic cuda), wavlm (static cpu), wavlm (static cuda) |
 | [📝 requires-grad-intermediate](issues/requires-grad-intermediate.md) | hubert (dynamic cpu), hubert (dynamic cuda), hubert (static cpu), hubert (static cuda), wav2vec2 (dynamic cpu), wav2vec2 (dynamic cuda), wav2vec2 (static cpu), wav2vec2 (static cuda), wav2vec2_xlsr_ja (dynamic cpu), wav2vec2_xlsr_ja (dynamic cuda), wav2vec2_xlsr_ja (static cpu), wav2vec2_xlsr_ja (static cuda), wavlm (dynamic cpu), wavlm (dynamic cuda), wavlm (static cpu), wavlm (static cuda) |
-| [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) | dory (dynamic cpu), dory (dynamic cuda), dory (static cpu), dory (static cuda), dory (unbacked cuda), inkling2_mini (dynamic cpu), inkling2_mini (dynamic cuda), inkling2_mini (static cpu), inkling2_mini (static cuda), inkling2_mini_vlm (dynamic cpu), inkling2_mini_vlm (dynamic cuda), inkling2_mini_vlm (static cpu), inkling2_mini_vlm (static cuda) |
+| [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) | dory (dynamic cpu), dory (dynamic cuda), dory (static cpu), dory (static cuda), dory (unbacked cuda), inkling2_mini (dynamic cpu), inkling2_mini (dynamic cuda), inkling2_mini (static cpu), inkling2_mini (static cuda), inkling2_mini (unbacked cpu), inkling2_mini (unbacked cuda), inkling2_mini_vlm (dynamic cpu), inkling2_mini_vlm (dynamic cuda), inkling2_mini_vlm (static cpu), inkling2_mini_vlm (static cuda) |
 | [📝 encodec-conv-params-buffers](issues/hf/encodec-conv-params-buffers.md) | encodec (dynamic cpu), encodec (dynamic cuda), encodec (static cpu), encodec (static cuda), mimi (dynamic cpu), mimi (dynamic cuda), mimi (static cpu), mimi (static cuda), wavtokenizer (dynamic cpu), wavtokenizer (dynamic cuda), wavtokenizer (static cpu), wavtokenizer (static cuda) |
 | [📝 gemma4-vision-pooler-mask-index](issues/hf/gemma4-vision-pooler-mask-index.md) | gemma4 (dynamic cpu), gemma4 (static cpu), gemma4 (static cuda), gemma4_e4b (dynamic cpu), gemma4_e4b (static cpu), gemma4_e4b (static cuda), gemma4_moe (dynamic cpu), gemma4_moe (static cpu), gemma4_moe (static cuda) |
 | [📝 dynamo-rnn-unsupported](issues/dynamo-rnn-unsupported.md) | encodec (dynamic cpu), encodec (dynamic cuda), encodec (static cpu), encodec (static cuda), wavtokenizer (dynamic cpu), wavtokenizer (dynamic cuda), wavtokenizer (static cpu), wavtokenizer (static cuda) |
@@ -609,8 +609,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### deepseek_v3
 
@@ -626,8 +626,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### deepseek_v32
 
@@ -643,8 +643,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### deepseek_v32_fp8
 
@@ -791,8 +791,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### dots3_note_vlm
 
@@ -887,8 +887,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### exaone
 
@@ -1187,8 +1187,8 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
-| unbacked | cuda | train_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### glm5_next
 
@@ -1366,7 +1366,7 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
-| unbacked | cuda | eval_forward | - | - | ERROR unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown: AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### granitemoehybrid
 
@@ -1466,6 +1466,10 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 · 2 recompile(s) | ✅ none |
 | dynamic | cuda | eval_forward | 2 | 0 | ✅ none |
 | dynamic | cuda | train_forward | 2 | 0 · 1 recompile(s) | ✅ none |
+| unbacked | cpu | eval_forward | 2 | 0 | ✅ none |
+| unbacked | cpu | train_forward | 2 | 0 · 2 recompile(s) | ✅ none |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md): AcceleratorError: CUDA error: unspecified launch failure |
 
 ### inkling2
 
@@ -1481,6 +1485,10 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 2 | 0 · 3 recompile(s) | ✅ none |
 | dynamic | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
 | dynamic | cuda | train_forward | 2 | 0 | ✅ none |
+| unbacked | cpu | eval_forward | 2 | 0 | ✅ none |
+| unbacked | cpu | train_forward | 2 | 0 · 2 recompile(s) | ✅ none |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
+| unbacked | cuda | train_forward | 2 (older torch `2.16.0a0+gitf29b6d5`) | 0 | ✅ none |
 
 ### inkling2_mini
 
@@ -1496,6 +1504,10 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 22 | 2 · 1 recompile(s) | [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
 | dynamic | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
 | dynamic | cuda | train_forward | 22 | 2 · 1 recompile(s) | [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
+| unbacked | cpu | eval_forward | 2 | 0 | ✅ none |
+| unbacked | cpu | train_forward | 22 | 2 · 1 recompile(s) | [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
+| unbacked | cuda | train_forward | 22 (older torch `2.16.0a0+gitf29b6d5`) | 2 · 1 recompile(s) | [📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
 
 ### inkling2_mini_vlm
 
@@ -1511,6 +1523,10 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 50 | 12 · 13 recompile(s) | [📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1583`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:276`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:277`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:278`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:280`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:112`)<br>[📝 graph-break-in-loop](issues/graph-break-in-loop.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1139`)<br>[📝 vision-attn-split-lengths-tolist](issues/hf/vision-attn-split-lengths-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1139`)<br>[📝 vlm-split-image-features-tolist](issues/hf/vlm-split-image-features-tolist.md) x1 Data dependent operator (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1588`)<br>[📝 placeholder-mask-bool-index-numel](issues/hf/placeholder-mask-bool-index-numel.md) x1 Dynamic shape operator (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1613`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
 | dynamic | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
 | dynamic | cuda | train_forward | 50 | 12 · 13 recompile(s) | [📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1583`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:276`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:277`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:278`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:280`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:112`)<br>[📝 graph-break-in-loop](issues/graph-break-in-loop.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1139`)<br>[📝 vision-attn-split-lengths-tolist](issues/hf/vision-attn-split-lengths-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1139`)<br>[📝 vlm-split-image-features-tolist](issues/hf/vlm-split-image-features-tolist.md) x1 Data dependent operator (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1588`)<br>[📝 placeholder-mask-bool-index-numel](issues/hf/placeholder-mask-bool-index-numel.md) x1 Dynamic shape operator (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1613`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Attempted to copy.deepcopy a tensor (`python/copy.py:137`)<br>[📝 looped-model-cache-deepcopy](issues/hf/looped-model-cache-deepcopy.md) x1 Unsafe value live across comprehension graph break (`transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357`) |
+| unbacked | cpu | eval_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cpu | train_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
 
 ### inkling2_vlm
 
@@ -1526,6 +1542,10 @@ rest of that frame eagerly, so breaks further inside it are not seen. Counts are
 | dynamic | cpu | train_forward | 33 | 10 · 17 recompile(s) | [📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1444`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:276`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:277`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:278`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:280`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:112`)<br>[📝 graph-break-in-loop](issues/graph-break-in-loop.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1027`)<br>[📝 vision-attn-split-lengths-tolist](issues/hf/vision-attn-split-lengths-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1027`)<br>[📝 vlm-split-image-features-tolist](issues/hf/vlm-split-image-features-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1490`)<br>[📝 placeholder-mask-bool-index-numel](issues/hf/placeholder-mask-bool-index-numel.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1515`) |
 | dynamic | cuda | eval_forward | - | - | ERROR [📝 inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md): InductorError: ValueError: The argument '-((0))' is not comparable. |
 | dynamic | cuda | train_forward | 33 | 10 · 13 recompile(s) | [📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1444`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:276`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:277`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Dynamic shape operator (`transformers/vision_utils.py:278`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:280`)<br>[📝 qwen-vl-grid-thw-data-dependent](issues/hf/qwen-vl-grid-thw-data-dependent.md) x1 Data dependent operator (`transformers/vision_utils.py:112`)<br>[📝 graph-break-in-loop](issues/graph-break-in-loop.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1027`)<br>[📝 vision-attn-split-lengths-tolist](issues/hf/vision-attn-split-lengths-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1027`)<br>[📝 vlm-split-image-features-tolist](issues/hf/vlm-split-image-features-tolist.md) x1 Data dependent operator (`transformers/models/inkling2/modeling_inkling2.py:1490`)<br>[📝 placeholder-mask-bool-index-numel](issues/hf/placeholder-mask-bool-index-numel.md) x1 Dynamic shape operator (`transformers/models/inkling2/modeling_inkling2.py:1515`) |
+| unbacked | cpu | eval_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cpu | train_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cuda | eval_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
+| unbacked | cuda | train_forward | - | - | ERROR [📝 symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md): TorchRuntimeError: RuntimeError when making fake tensor call |
 
 ### internlm3
 

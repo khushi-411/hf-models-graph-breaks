@@ -146,6 +146,8 @@ def main() -> int:
     hf = _hf_ids()
     written = skipped = 0
     for iid, issue in by_id.items():
+        if not issue.get("draft"):  # e.g. not-filing entries without a draft file
+            continue
         path = ROOT / issue["draft"]
         text = path.read_text()
         new = section(iid, hits.get(iid, {}), hf)

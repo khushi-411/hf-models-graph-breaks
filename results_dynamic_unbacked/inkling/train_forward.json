@@ -1,0 +1,192 @@
+{
+  "model": "inkling",
+  "hf_id": "thinkingmachines/Inkling",
+  "scenario": "train_forward",
+  "device": "cpu",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T14:30:10+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 2,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 18
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 1,
+      "new_shape_events": 19
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 1,
+      "new_shape_events": 19
+    }
+  ],
+  "recompile_reasons": [
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 40",
+    "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 40, actual 56\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 1. expected 32, actual 56"
+  ],
+  "inductor_specialization_sites": [
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+    "torch/_inductor/utils.py:get_kernel_metadata"
+  ],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+    "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+    "torch/_inductor/lowering.py:sort_stable"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1798,
+      "count": 21,
+      "examples": [
+        "Eq(zf85, 0.015625)",
+        "Eq(zf33, 0.0)",
+        "Eq(zf53, 0.015625)",
+        "Eq(zf49, 0.0)",
+        "Eq(zf79, 2.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:sort_stable",
+      "line": 8618,
+      "count": 3,
+      "examples": [
+        "2*s27*s52 < 32767",
+        "2*s16*s52 < 32767"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/cpp.py:need_use_acc_helper",
+      "line": 2405,
+      "count": 18,
+      "examples": [
+        "s27 <= 4096",
+        "s27*s52 <= 4096",
+        "32*s52 <= 4096",
+        "96*s52 <= 4096",
+        "64*s52 <= 4096"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "Eq(s27, 32)",
+        "Eq(s16, 40)",
+        "Eq(s16, 56)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/kernel/conv.py:convolution_backward_lowering",
+      "line": 1190,
+      "count": 3,
+      "examples": [
+        "s27 = 32",
+        "s16 = 40",
+        "s16 = 56"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 2,
+      "examples": [
+        "-s27 >= -s16"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:infer_size",
+      "line": 2513,
+      "count": 2,
+      "examples": [
+        "Eq(s52, s92)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:cross_entropy",
+      "line": 3608,
+      "count": 2,
+      "examples": [
+        "Eq(s16*s52, s18*s96)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "specialize",
+      "phase": "inductor",
+      "site": "torch/_inductor/utils.py:get_kernel_metadata",
+      "line": 1575,
+      "count": 2,
+      "examples": [
+        "s27 = 40",
+        "s27 = 56"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

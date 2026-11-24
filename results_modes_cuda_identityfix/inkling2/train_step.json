@@ -1,0 +1,55 @@
+{
+  "model": "inkling2",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "mode": "train_step",
+  "device": "cuda",
+  "status": "issues",
+  "experts_implementation": null,
+  "seconds": 82.7,
+  "timestamp": "2026-11-24T15:55:48+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "3 AdamW steps",
+      "status": "ok",
+      "losses_eager_compiled": [
+        [
+          10.43787956237793,
+          10.437880516052246
+        ],
+        [
+          7.9124755859375,
+          7.912480354309082
+        ],
+        [
+          5.194927215576172,
+          5.194942474365234
+        ]
+      ],
+      "accurate": true,
+      "failed": [],
+      "graphs": 2,
+      "graph_breaks": [
+        {
+          "location": "torch/optim/optimizer.py:79",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nCall to `torch._dynamo.graph_break()`\n  Explanation: User-inserted graph break. Message: None\n  Hint: Remove the `torch._dynamo.graph_break()` call.\n\n  Developer debug context: Called `torch._dynamo.graph_break()` with args `[]`, kwargs `{}`\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/optim/optimizer.py\", line 552\n                with torch.autograd.profiler.record_function(profile_name):\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html",
+          "short_reason": "Call to `torch._dynamo.graph_break()`",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

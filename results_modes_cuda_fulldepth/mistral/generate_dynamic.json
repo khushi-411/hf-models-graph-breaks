@@ -1,0 +1,110 @@
+{
+  "model": "mistral",
+  "hf_id": "mistralai/Mistral-7B-v0.1",
+  "mode": "generate_dynamic",
+  "device": "cuda",
+  "status": "mismatch",
+  "experts_implementation": null,
+  "seconds": 153.3,
+  "timestamp": "2026-11-24T17:34:29+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "ok",
+      "new_graphs": 3,
+      "tokens_equal": true,
+      "accurate": false,
+      "worst_rmse": 0.02146410857141938
+    },
+    {
+      "name": "batch=3 prompt=40",
+      "batch": 3,
+      "prompt": 40,
+      "status": "ok",
+      "new_graphs": 0,
+      "tokens_equal": false,
+      "accurate": false,
+      "worst_rmse": 0.1436400026991532
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": 3,
+      "recompiled_graphs": 0,
+      "inductor_specialization_sites": [],
+      "specializations": [
+        {
+          "kind": "specialize",
+          "phase": "model",
+          "site": "torch/nn/modules/module.py:_call_impl",
+          "line": 1799,
+          "count": 2,
+          "examples": [
+            "s63 = 0"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_prefill:4333"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_decomp/decompositions.py:matmul",
+          "line": 5460,
+          "count": 2,
+          "examples": [
+            "s197 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_prefill:4333"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims/__init__.py:_cat_meta",
+          "line": 1881,
+          "count": 6,
+          "examples": [
+            "s25 = 8",
+            "s79 = 128"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+          "line": 1559,
+          "count": 3,
+          "examples": [
+            "s294 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        }
+      ],
+      "graph_breaks": [],
+      "recompile_reasons": [
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized:  # transformers/src/transformers/cache_utils.py:236 in update\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 432, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 368, in forward\n    -     hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 226, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 159, in forward\n    -     key_states, value_states = cache.update(key_states, value_states, self.layer_idx, kwargs=kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1620, in update\n    -     keys, values = self.layers[layer_idx].update(key_states, value_states, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 236, in update\n    -     if not self.is_initialized:",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 1. expected 128, actual 4224\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized:  # transformers/src/transformers/cache_utils.py:236 in update\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 432, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 368, in forward\n    -     hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 226, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/mistral/modeling_mistral.py\", line 159, in forward\n    -     key_states, value_states = cache.update(key_states, value_states, self.layer_idx, kwargs=kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1620, in update\n    -     keys, values = self.layers[layer_idx].update(key_states, value_states, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 236, in update\n    -     if not self.is_initialized:"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

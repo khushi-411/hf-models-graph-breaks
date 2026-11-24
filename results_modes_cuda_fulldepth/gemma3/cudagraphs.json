@@ -1,0 +1,73 @@
+{
+  "model": "gemma3",
+  "hf_id": "unsloth/gemma-3-1b-pt",
+  "mode": "cudagraphs",
+  "device": "cuda",
+  "status": "mismatch",
+  "experts_implementation": null,
+  "seconds": 115.9,
+  "timestamp": "2026-11-24T17:38:53+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "eval_forward",
+      "scenario": "eval_forward",
+      "reference": "fp64",
+      "status": "ok",
+      "graphs": 1,
+      "accurate": true,
+      "failed": [],
+      "worst_rmse": 0.0178346835208855,
+      "checked": 1,
+      "tol": 0.01,
+      "graph_breaks": [],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    },
+    {
+      "name": "train_forward",
+      "scenario": "train_forward",
+      "reference": "fp64",
+      "status": "ok",
+      "graphs": 1,
+      "accurate": false,
+      "failed": [
+        "grad.model.embed_tokens.weight",
+        "grad.model.layers.0.self_attn.q_proj.weight",
+        "grad.model.layers.0.self_attn.k_proj.weight",
+        "grad.model.layers.0.self_attn.v_proj.weight",
+        "grad.model.layers.0.self_attn.o_proj.weight",
+        "grad.model.layers.0.self_attn.q_norm.weight",
+        "grad.model.layers.0.self_attn.k_norm.weight",
+        "grad.model.layers.0.mlp.gate_proj.weight",
+        "grad.model.layers.0.mlp.up_proj.weight",
+        "grad.model.layers.0.mlp.down_proj.weight",
+        "grad.model.layers.0.input_layernorm.weight",
+        "grad.model.layers.0.post_attention_layernorm.weight",
+        "grad.model.layers.0.pre_feedforward_layernorm.weight",
+        "grad.model.layers.0.post_feedforward_layernorm.weight",
+        "grad.model.layers.1.self_attn.q_proj.weight",
+        "grad.model.layers.1.self_attn.k_proj.weight",
+        "grad.model.layers.1.self_attn.v_proj.weight",
+        "grad.model.layers.1.self_attn.o_proj.weight",
+        "grad.model.layers.1.self_attn.q_norm.weight",
+        "grad.model.layers.1.self_attn.k_norm.weight"
+      ],
+      "worst_rmse": 0.018699995879782473,
+      "checked": 342,
+      "tol": 0.01,
+      "graph_breaks": [],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

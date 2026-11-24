@@ -21,6 +21,7 @@ import contextlib
 import copy
 import datetime as dt
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -67,7 +68,7 @@ def _build(spec: dict, device: str):
     auto_cls = getattr(transformers, spec["auto_class"])
     remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
     torch.manual_seed(0)
-    if spec.get("pretrained"):  # real (quantized) checkpoint, see check.build_model
+    if spec.get("pretrained") or os.environ.get("GB_PRETRAINED"):  # real (quantized) checkpoint, see check.build_model
         model = auto_cls.from_pretrained(spec["hf_id"], config=config, device_map=device, **remote)
     else:
         model = auto_cls.from_config(config, **remote)
@@ -80,6 +81,8 @@ def _build(spec: dict, device: str):
     for m in model.modules():  # modules that hard-code their dropout instead of reading the config
         if isinstance(m, torch.nn.Dropout):
             m.p = 0.0
+    if os.environ.get("GB_EXPERTS_IMPL") and hasattr(model, "set_experts_implementation"):
+        model.set_experts_implementation(os.environ["GB_EXPERTS_IMPL"])  # e.g. "eager": MoE without torch._grouped_mm
     return model.to(device)
 
 
@@ -211,17 +214,26 @@ def summarize() -> Path:
          "result is clearly further from fp64 than eager is (`torch._dynamo.utils.same` with `fp64_ref`, as in PyTorch's "
          "benchmarks). Outputs are every floating-point tensor the model returns; train_forward also checks every "
          "parameter gradient. Dropout is off so train mode is deterministic.", ""]
-    for device in ("cpu", "cuda"):
-        d = results_dir(device)
+    labels = {
+        "results_accuracy": "CPU",
+        "results_accuracy_cuda": "CUDA (H100 / B200, first pass)",
+        "results_accuracy_cuda_b300": "CUDA (B300, torch-dev)",
+        "results_accuracy_cuda_b300_experts_eager": "CUDA (B300), MoE experts_implementation=eager (no torch._grouped_mm)",
+        "results_accuracy_cuda_b300_identityfix": "CUDA (B300), with the Identity fix (GB_PATCH=identity)",
+        "results_accuracy_cuda_fulldepth": "CUDA (B300), full depth (GB_FULL_DEPTH=1)",
+        "results_accuracy_cuda_pretrained": "CUDA (B300), real weights (GB_PRETRAINED=1)",
+    }
+    for d in sorted(ROOT.glob("results_accuracy*"), key=lambda d: (len(d.name), d.name)):
+        device = labels.get(d.name, d.name)
         runs = [json.loads(f.read_text()) for f in sorted(d.glob("*/*.json"))] if d.exists() else []
         if not runs:
             continue
         ok = [r for r in runs if r["status"] == "ok"]
         bad = [r for r in ok if not r["accurate"]]
         err = [r for r in runs if r["status"] != "ok"]
-        L += [f"## {device.upper()}", "",
+        L += [f"## {device}", "", f"`{d.name}/`", "",
               f"- Runs: {len(runs)} · accurate: {len(ok) - len(bad)} · **mismatch: {len(bad)}** · errors: {len(err)}",
-              f"- Without an fp64 reference (compared eager vs compiled only): {sum(1 for r in ok if not r['fp64_reference'])}", ""]
+              f"- Without an fp64 reference (compared eager vs compiled only): {sum(1 for r in ok if not r.get('fp64_reference'))}", ""]
         if bad:
             L += ["| model | scenario | dtype | failed tensors | worst (compiled vs fp64 / eager vs fp64) |", "|---|---|---|---|---|"]
             for r in bad:
@@ -248,6 +260,7 @@ def main(argv=None) -> int:
     g.add_argument("--summarize", action="store_true")
     p.add_argument("--scenario", action="append", choices=SCENARIOS)
     p.add_argument("--device", default="cpu")
+    p.add_argument("--results-dir", default=None, help="where to write results (default: results_accuracy[_<device>]/)")
     args = p.parse_args(argv)
     if args.summarize:
         summarize()
@@ -261,7 +274,7 @@ def main(argv=None) -> int:
             if args.scenario and sc not in args.scenario:
                 continue
             r = run_scenario(spec, sc, args.device)
-            out = results_dir(args.device) / spec["name"] / f"{sc}.json"
+            out = (Path(args.results_dir).resolve() if args.results_dir else results_dir(args.device)) / spec["name"] / f"{sc}.json"
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(json.dumps(r, indent=2) + "\n")
             tag = r["status"] if r["status"] != "ok" else ("ok" if r["accurate"] else f"MISMATCH {len(r['failed'])}/{r['checked']}")

@@ -1,0 +1,67 @@
+{
+  "model": "gpt2",
+  "hf_id": "openai-community/gpt2",
+  "mode": "train_step",
+  "device": "cpu",
+  "status": "issues",
+  "seconds": 56.7,
+  "timestamp": "2026-11-24T14:37:35+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "checks": [
+    {
+      "name": "3 AdamW steps",
+      "status": "ok",
+      "losses_eager_compiled": [
+        [
+          10.99390983581543,
+          10.993910789489746
+        ],
+        [
+          7.555237770080566,
+          7.55523681640625
+        ],
+        [
+          6.369450569152832,
+          6.3694376945495605
+        ]
+      ],
+      "accurate": true,
+      "failed": [],
+      "graphs": 3,
+      "graph_breaks": [
+        {
+          "location": "transformers/modeling_utils.py:4778",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nlogging.Logger method not supported for non-export cases\n  Explanation: For non-export cases, logging.Logger methods are only supported if the logger has a source and the method is registered as reorderable.\n  Hint: If you do not need this logging side effect, add the exact method being called to `torch._dynamo.config.ignore_logging_functions`. Dynamo will skip the call and return `None`.\n  Hint: For example, for `logger.warning_once(...)`, use `torch._dynamo.config.ignore_logging_functions.add(logger.warning_once)`. If `warning_once` is defined on the logger class, add the class method `logging.Logger.warning_once` to ignore this method for all instances of that class.\n  Hint: Dynamo does not trace into logging.Logger method bodies, so only the method you call directly (`warning_once`) is checked against the ignore set. Ignoring a method that `warning_once` calls internally has no effect.\n  Hint: If you need the log side effect to run, then you can try one of (1) create the logger outside the compiled region and add the method to `torch._dynamo.config.reorderable_logging_functions` (e.g. `torch._dynamo.config.reorderable_logging_functions.add(logger.warning_once)`) so that it runs after the compiled region, as long as it is called without kwargs and its arguments are tensors, constants, or string formatters, (2) `torch._higher_order_ops.print(...)`, (3) wrap the logging call in a custom op (marked as mutable), or (4) preserve the logging contents and move the logging call outside the compiled region.\n\n  Developer debug context: method: <Logger transformers.modeling_utils (WARNING)>.warning_once, args: [ConstantVariable(str: '`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.')], kwargs: {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/gpt2/modeling_gpt2.py:703 in forward",
+            "transformers/modeling_utils.py:4778 in loss_function"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0291.html",
+          "short_reason": "logging.Logger method not supported for non-export cases",
+          "count": 1
+        },
+        {
+          "location": "torch/optim/optimizer.py:79",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nCall to `torch._dynamo.graph_break()`\n  Explanation: User-inserted graph break. Message: None\n  Hint: Remove the `torch._dynamo.graph_break()` call.\n\n  Developer debug context: Called `torch._dynamo.graph_break()` with args `[]`, kwargs `{}`\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/optim/optimizer.py\", line 552\n                with torch.autograd.profiler.record_function(profile_name):\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html",
+          "short_reason": "Call to `torch._dynamo.graph_break()`",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

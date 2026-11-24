@@ -53,7 +53,10 @@ ERROR_CAUSES = [
     ("invalid value for --gpu-architecture", "env: B300 (sm_103) not supported by NVRTC in this CUDA 12.8 build; the --unbacked sweep stopped before the H100 rerun"),
     # MoE models only, B300 only, --unbacked only (their backed dynamic runs pass on B300). Not rerun on H100, so
     # whether it is B300-specific is open.
-    ("unspecified launch failure", "unbacked sweep: MoE CUDA launch failure on B300, not rerun on H100 (sweep stopped); cause unknown"),
+    ("not a subset of src_bound", "symbolic-shapes-replacement-float-inverse-bound"),
+    # bf16 MoE on B300 with a TORCH_CUDA_ARCH_LIST=10.3 build: reproduced for inkling; the older unbacked-sweep MoE
+    # failures are likely the same but were not re-verified.
+    ("unspecified launch failure", "grouped-mm-sm100-kernel-without-arch-specific-build"),
     ("does not require grad and does not have a grad_fn", "harness-dynamic-loss-selection"),
     ("axial_pos_shape", "harness: input sizes don't satisfy Reformer's axial_pos_shape / chunk_length"),
     ("has to be a multiple of least common multiple chunk_length", "harness: input sizes don't satisfy Reformer's axial_pos_shape / chunk_length"),

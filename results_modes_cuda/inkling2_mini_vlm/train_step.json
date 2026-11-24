@@ -1,0 +1,296 @@
+{
+  "model": "inkling2_mini_vlm",
+  "hf_id": "thinkingmachines/Inkling-2-Mini",
+  "mode": "train_step",
+  "device": "cuda",
+  "status": "issues",
+  "experts_implementation": null,
+  "seconds": 189.9,
+  "timestamp": "2026-11-24T15:08:18+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "3 AdamW steps",
+      "status": "ok",
+      "losses_eager_compiled": [
+        [
+          12.27469539642334,
+          12.274696350097656
+        ],
+        [
+          8.911672592163086,
+          8.911670684814453
+        ],
+        [
+          6.700272560119629,
+          6.7002739906311035
+        ]
+      ],
+      "accurate": true,
+      "failed": [],
+      "graphs": 44,
+      "graph_breaks": [
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1583",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1583 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:276",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:277",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:278",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:280",
+          "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:112",
+          "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1591 in forward",
+            "transformers/vision_utils.py:112 in get_vision_position_ids"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+          "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1591 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1591)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1595\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+          "user_stack": [
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+            "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+            "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1587 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+            "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+            "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1588",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\nStack variable source attribution:\n  GetAttrVariable(TensorVariable(), split) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1588\n            image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1685 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1588 in get_image_features"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1613",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1691 in forward",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1613 in get_placeholder_mask"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "python/copy.py:137",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nAttempted to copy.deepcopy a tensor\n  Explanation: Dynamo does not support copy.deepcopy() on tensors.\n  Hint: Avoid calling copy.deepcopy() on tensors inside compiled regions.\n\n  Developer debug context: copy.deepcopy(TensorVariable())\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4198.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1696 in forward",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb4198.html",
+          "short_reason": "Attempted to copy.deepcopy a tensor",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357",
+          "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nUnsafe value live across comprehension graph break\n  Explanation: A context manager or local generator cannot be reconstructed safely after a comprehension graph break, so the frame falls back to eager.\n  Hint: Close the generator first, or move the comprehension into a helper.\n\n  Developer debug context: LocalGeneratorObjectVariable(__iter__), frame skipped: forward (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py line 1304)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb1891.html\n\nStack variable source attribution:\n  UserDefinedObjectVariable(DynamicCache) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/polyfills/__init__.py\", line 472\n        obj = cls.__new__(cls, *args, **kwargs)\n              ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  ListVariable(length=7) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 2065\n                layers = [\n                         ^\n                ...<2 lines>...\n                ]\n                ^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1357\n                cache.layers += [copy.deepcopy(layer) for layer in loop_cache_layers * (self.config.loop_num_passes - 1)]\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  ListVariable(length=6) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1357\n                cache.layers += [copy.deepcopy(layer) for layer in loop_cache_layers * (self.config.loop_num_passes - 1)]\n                                                                   ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1801 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1696 in forward",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2_loop/modeling_inkling2_loop.py:1357 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb1891.html",
+          "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+          "count": 1
+        },
+        {
+          "location": "torch/optim/optimizer.py:79",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nCall to `torch._dynamo.graph_break()`\n  Explanation: User-inserted graph break. Message: None\n  Hint: Remove the `torch._dynamo.graph_break()` call.\n\n  Developer debug context: Called `torch._dynamo.graph_break()` with args `[]`, kwargs `{}`\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/optim/optimizer.py\", line 552\n                with torch.autograd.profiler.record_function(profile_name):\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html",
+          "short_reason": "Call to `torch._dynamo.graph_break()`",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 106607145896608), type=<class 'transformers.models.inkling2_loop.modeling_inkling2_loop.Inkling2LoopForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2LoopForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py:326\n    triggered by the following guard failure(s):\n    - 5/0: ___check_obj_id(func.__code__, 106607175280816), type=<class 'code'>  # collected_outputs = {k.replace(\"output_\", \"\"): [] for k, v in recordable_keys.items() if v}  # transformers/src/transformers/utils/output_capturing.py:347 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 347, in wrapper\n    -     collected_outputs = {k.replace(\"output_\", \"\"): [] for k, v in recordable_keys.items() if v}",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: ___check_type_id(args[0], 106607145901984), type=<class 'transformers.models.inkling2_loop.modeling_inkling2_loop.Inkling2LoopModel'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2LoopModel)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: ___check_type_id(args[0], 106607145896608), type=<class 'transformers.models.inkling2_loop.modeling_inkling2_loop.Inkling2LoopForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2LoopForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/3: ___check_obj_id(func.__code__, 106607141261856), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/4: ___check_obj_id(func.__code__, 106607141287600), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/3: ___check_obj_id(func.__code__, 106607141261856), type=<class 'code'>  # func_name = func.__name__  # transformers/src/transformers/utils/deprecation.py:124 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 124, in wrapped_func\n    -     func_name = func.__name__\n    - 1/2: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(args) == 1                                           # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function get_relative_distance in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py:1249\n    triggered by the following guard failure(s):\n    - 38/0: is_sliding == False                                      # if not is_sliding:  # transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py:1258 in get_relative_distance\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 1258, in get_relative_distance\n    -     if not is_sliding:",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/1: tensor 'args[0]' stride mismatch at index 1. expected 512, actual 1\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/2: kwargs['cache'].layers[1].device is None                 # if self.device is None:  # transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 891, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 604, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 524, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 379, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 22/1: tensor 'args[0]' stride mismatch at index 1. expected 512, actual 1\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/3: kwargs['cache'].layers[2].device is None                 # if self.device is None:  # transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 891, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 604, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 524, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 379, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 22/2: kwargs['cache'].layers[1].device is None                 # if self.device is None:  # transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 891, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 604, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 524, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 379, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 22/1: tensor 'args[0]' stride mismatch at index 1. expected 512, actual 1\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/4: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/3: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/2: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/1: tensor 'args[0]' stride mismatch at index 1. expected 512, actual 1\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/5: kwargs['cache'].layers[4].device is None                 # if self.device is None:  # transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 969, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 604, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 524, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 379, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 22/4: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/3: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/2: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/1: tensor 'args[0]' stride mismatch at index 1. expected 512, actual 1\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/6: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/5: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/4: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/3: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/2: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/1: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py:158\n    triggered by the following guard failure(s):\n    - 39/0: loop_layer_idx == 0                                      # query_states = self.query[loop_layer_idx].float()  # transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py:165 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2_loop/modeling_inkling2_loop.py\", line 165, in forward\n    -     query_states = self.query[loop_layer_idx].float()",
+        "Recompiling function forward_with_checkpointing in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py:89\n    triggered by the following guard failure(s):\n    - 22/7: tensor 'args[1]' size mismatch at index 2. expected 1, actual 2\n    - 22/6: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/5: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/4: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/3: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/2: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/1: len(args) == 2                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    - 22/0: len(args) == 1                                           # return forward(self, *args, **kwargs)  # transformers/src/transformers/modeling_layers.py:124 in forward_with_checkpointing\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)",
+        "Recompiling function __init__ in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:459\n    triggered by the following guard failure(s):\n    - 28/0: ___check_obj_id(init.__code__, 130153030499216), type=<class 'code'>  # init(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:462 in __init__\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 462, in __init__\n    -     init(self, *args, **kwargs)"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

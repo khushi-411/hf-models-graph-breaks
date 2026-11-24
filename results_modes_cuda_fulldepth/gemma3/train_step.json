@@ -1,0 +1,76 @@
+{
+  "model": "gemma3",
+  "hf_id": "unsloth/gemma-3-1b-pt",
+  "mode": "train_step",
+  "device": "cuda",
+  "status": "mismatch",
+  "experts_implementation": null,
+  "seconds": 134.6,
+  "timestamp": "2026-11-24T17:40:11+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "3 AdamW steps",
+      "status": "ok",
+      "losses_eager_compiled": [
+        [
+          10.660634994506836,
+          10.659502029418945
+        ],
+        [
+          7.264206409454346,
+          NaN
+        ],
+        [
+          5.193347454071045,
+          NaN
+        ]
+      ],
+      "accurate": false,
+      "failed": [
+        "model.embed_tokens.weight",
+        "model.layers.0.self_attn.q_proj.weight",
+        "model.layers.0.self_attn.k_proj.weight",
+        "model.layers.0.self_attn.v_proj.weight",
+        "model.layers.0.self_attn.o_proj.weight",
+        "model.layers.0.self_attn.q_norm.weight",
+        "model.layers.0.self_attn.k_norm.weight",
+        "model.layers.0.mlp.gate_proj.weight",
+        "model.layers.0.mlp.up_proj.weight",
+        "model.layers.0.mlp.down_proj.weight",
+        "model.layers.0.input_layernorm.weight",
+        "model.layers.0.post_attention_layernorm.weight",
+        "model.layers.0.pre_feedforward_layernorm.weight",
+        "model.layers.0.post_feedforward_layernorm.weight",
+        "model.layers.1.self_attn.q_proj.weight",
+        "model.layers.1.self_attn.k_proj.weight",
+        "model.layers.1.self_attn.v_proj.weight",
+        "model.layers.1.self_attn.o_proj.weight",
+        "model.layers.1.self_attn.q_norm.weight",
+        "model.layers.1.self_attn.k_norm.weight"
+      ],
+      "graphs": 2,
+      "graph_breaks": [
+        {
+          "location": "torch/optim/optimizer.py:79",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nCall to `torch._dynamo.graph_break()`\n  Explanation: User-inserted graph break. Message: None\n  Hint: Remove the `torch._dynamo.graph_break()` call.\n\n  Developer debug context: Called `torch._dynamo.graph_break()` with args `[]`, kwargs `{}`\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html\n\nStack variable source attribution:\n  WithExitFunctionVariable() originated from:\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/optim/optimizer.py\", line 552\n                with torch.autograd.profiler.record_function(profile_name):\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0025.html",
+          "short_reason": "Call to `torch._dynamo.graph_break()`",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

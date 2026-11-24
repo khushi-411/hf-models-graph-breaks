@@ -104,11 +104,17 @@ def main(argv=None) -> None:
     import argparse
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--device", default="cpu", help="cpu (results/ -> SUMMARY.md) or cuda (results_cuda/ -> SUMMARY_CUDA.md)")
+    p.add_argument("--results-dir", default=None, help="summarize this results folder instead (e.g. results_fulldepth)")
+    p.add_argument("--out", default=None, help="summary file to write (default SUMMARY.md / SUMMARY_CUDA.md)")
     args = p.parse_args(argv)
     global RESULTS_DIR, SUMMARY
     if args.device.startswith("cuda"):
         RESULTS_DIR = ROOT / "results_cuda"
         SUMMARY = ROOT / "SUMMARY_CUDA.md"
+    if args.results_dir:
+        RESULTS_DIR = (ROOT / args.results_dir).resolve()
+    if args.out:
+        SUMMARY = (ROOT / args.out).resolve()
 
     issues = load_known_issues()
     rows, envs = [], set()

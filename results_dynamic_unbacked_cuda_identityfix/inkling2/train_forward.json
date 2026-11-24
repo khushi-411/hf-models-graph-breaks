@@ -1,0 +1,204 @@
+{
+  "model": "inkling2",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "scenario": "train_forward",
+  "device": "cuda",
+  "dynamic": true,
+  "backend": "inductor",
+  "unbacked": true,
+  "sizes": [
+    [
+      2,
+      32,
+      16000
+    ],
+    [
+      3,
+      40,
+      17600
+    ],
+    [
+      4,
+      56,
+      19200
+    ]
+  ],
+  "timestamp": "2026-11-24T15:55:57+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "status": "ok",
+  "graphs_first_run": 2,
+  "recompiled_graphs": 0,
+  "runs": [
+    {
+      "batch": 2,
+      "seq": 32,
+      "audio": 16000,
+      "new_graphs": 2,
+      "new_shape_events": 97
+    },
+    {
+      "batch": 3,
+      "seq": 40,
+      "audio": 17600,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    },
+    {
+      "batch": 4,
+      "seq": 56,
+      "audio": 19200,
+      "new_graphs": 0,
+      "new_shape_events": 0
+    }
+  ],
+  "recompile_reasons": [],
+  "inductor_specialization_sites": [],
+  "inductor_guard_sites": [
+    "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+    "torch/_inductor/lowering.py:sort_stable",
+    "torch/_inductor/scheduler.py:can_fuse"
+  ],
+  "events": [
+    {
+      "kind": "guard",
+      "phase": "model",
+      "site": "torch/nn/modules/module.py:_call_impl",
+      "line": 1799,
+      "count": 3,
+      "examples": [
+        "s27 >= 4",
+        "Eq(zf79, 2.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:conv",
+      "line": 2330,
+      "count": 16,
+      "examples": [
+        "128*s27*s52 < 2147483647",
+        "s27*(Mod(((128*s27*s52 - 1)//s27), 128)) + 128*s27*(Mod(((128*s27*s52 - 1)//(128*s27)), s52)) + (Mod(128*s27*s52 - 1, s27)) < 2147483647",
+        "128*s27 <= 2147483647",
+        "128*s27 + 384 <= 2147483647",
+        "512*s27*s52 < 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+      "line": 1559,
+      "count": 2,
+      "examples": [
+        "-s27 <= -15"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1541,
+      "count": 32,
+      "examples": [
+        "zf32 >= 0.0",
+        "zf32 <= 1.0",
+        "zf75 >= 0.0",
+        "zf75 <= 1.0",
+        "zf49 >= 0.0"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/nn/functional.py:dropout",
+      "line": 1544,
+      "count": 16,
+      "examples": [
+        "Eq(zf32, 0.0)",
+        "Eq(zf75, 0.0)",
+        "Eq(zf49, 0.0)",
+        "Eq(zf39, 0.0)",
+        "Eq(zf23, 0.0)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "aot/decomp",
+      "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+      "line": 267,
+      "count": 2,
+      "examples": [
+        "Ne(64*s27, 960)"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/lowering.py:sort_stable",
+      "line": 8670,
+      "count": 1,
+      "examples": [
+        "2*s27*s52 < 32767"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4685,
+      "count": 14,
+      "examples": [
+        "s27*s52 <= 2147483647",
+        "1024*s27*s52 <= 512*s27 + 2147483647",
+        "1024*s27*s52 <= 2147484159",
+        "8*s27*s52 <= 2147483647",
+        "128*s27*s52 + 384*s52 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/codegen/simd.py:can_use_32bit_indexing",
+      "line": 4683,
+      "count": 10,
+      "examples": [
+        "512*s52 <= 2147483647",
+        "s27**2 <= 2147483647",
+        "8*s27**2*s52 + 8*s27*s52 <= 2147483647",
+        "2048*s52 <= 2147483647",
+        "1024*s27*s52 <= 2147483647"
+      ],
+      "model_frames": []
+    },
+    {
+      "kind": "guard",
+      "phase": "inductor",
+      "site": "torch/_inductor/scheduler.py:can_fuse",
+      "line": 523,
+      "count": 1,
+      "examples": [
+        "512*s27*s52 < 5242880"
+      ],
+      "model_frames": []
+    }
+  ],
+  "graph_breaks": []
+}

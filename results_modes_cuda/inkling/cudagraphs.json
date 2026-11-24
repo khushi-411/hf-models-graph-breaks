@@ -1,0 +1,39 @@
+{
+  "model": "inkling",
+  "hf_id": "thinkingmachines/Inkling",
+  "mode": "cudagraphs",
+  "device": "cuda",
+  "status": "error",
+  "experts_implementation": null,
+  "seconds": 3.9,
+  "timestamp": "2026-11-24T14:46:50+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "eval_forward",
+      "scenario": "eval_forward",
+      "reference": "fp32",
+      "status": "error",
+      "error": "RuntimeError: CUDA error: CUBLAS_STATUS_EXECUTION_FAILED when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb, &fbeta, c, std::is_same_v<C_Dtype, float> ? CUDA_R_32F : CUDA_R_16BF, ldc, compute_type, CUBLAS_GEMM_DEFAULT_TENSOR_OP)`",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 190, in _compiled_vs_eager\n    eager = accuracy._run(model, inputs, train)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/accuracy.py\", line 114, in _run\n    out = model(**inputs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    return func(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling/modeling_inkling.py\", line 799, in forward\n    logits = self.lm_head(hidden_states)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1788, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/module.py\", line 1799, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/nn/modules/linear.py\", line 134, in forward\n    return F.linear(input, self.weight, self.bias)\n           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: CUDA error: CUBLAS_STATUS_EXECUTION_FAILED when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb, &fbeta, c, std::is_same_v<C_Dtype, float> ? CUDA_R_32F : CUDA_R_16BF, ldc, compute_type, CUBLAS_GEMM_DEFAULT_TENSOR_OP)`\n"
+    },
+    {
+      "name": "train_forward",
+      "scenario": "train_forward",
+      "status": "error",
+      "error": "AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nThe CUDA driver logged these messages, which may provide useful details:\nSticky error detected\nReturning 719 (CUDA_ERROR_LAUNCH_FAILED) from cuStreamGetCaptureInfo_v3\n\n",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 184, in _compiled_vs_eager\n    model = _build(spec, device)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 106, in _build\n    model = accuracy._build(spec, device)\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/accuracy.py\", line 70, in _build\n    torch.manual_seed(0)\n    ~~~~~~~~~~~~~~~~~^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_compile.py\", line 54, in inner\n    return disable_fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/_dynamo/eval_frame.py\", line 1653, in _fn\n    return fn(*args, **kwargs)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/random.py\", line 64, in manual_seed\n    return _manual_seed_impl(seed)\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/random.py\", line 72, in _manual_seed_impl\n    torch.cuda.manual_seed_all(seed)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/cuda/random.py\", line 128, in manual_seed_all\n    _lazy_call(cb, seed_all=True)\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/cuda/__init__.py\", line 544, in _lazy_call\n    callable()\n    ~~~~~~~~^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/cuda/random.py\", line 126, in cb\n    default_generator.manual_seed(seed)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\ntorch.AcceleratorError: CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nThe CUDA driver logged these messages, which may provide useful details:\nSticky error detected\nReturning 719 (CUDA_ERROR_LAUNCH_FAILED) from cuStreamGetCaptureInfo_v3\n\n\n"
+    }
+  ]
+}

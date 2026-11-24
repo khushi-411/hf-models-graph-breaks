@@ -1,0 +1,59 @@
+{
+  "model": "qwen3_8b",
+  "hf_id": "Qwen/Qwen3-8B",
+  "mode": "fp16",
+  "device": "cuda",
+  "status": "error",
+  "experts_implementation": null,
+  "seconds": 132.9,
+  "timestamp": "2026-11-24T17:31:05+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "eval_forward",
+      "scenario": "eval_forward",
+      "reference": "fp64",
+      "status": "ok",
+      "graphs": 1,
+      "accurate": true,
+      "failed": [],
+      "worst_rmse": 0.0024035410205881036,
+      "checked": 1,
+      "tol": 0.01,
+      "graph_breaks": [],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    },
+    {
+      "name": "train_forward",
+      "scenario": "train_forward",
+      "reference": "fp64",
+      "status": "ok",
+      "graphs": 1,
+      "accurate": true,
+      "failed": [],
+      "worst_rmse": 0.002403073139882231,
+      "checked": 401,
+      "tol": 0.01,
+      "graph_breaks": [],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    },
+    {
+      "name": "3 fp16 autocast + GradScaler steps",
+      "status": "error",
+      "error": "NotImplementedError: \"_amp_foreach_non_finite_check_and_unscale_cuda\" not implemented for 'BFloat16'",
+      "error_inductor_site": null,
+      "traceback": "Traceback (most recent call last):\n  File \"/admin/home/khushi_agrawal/Documents/hf-models-graph-breaks/graph_breaks/modes.py\", line 405, in mode_fp16_scaler_steps\n    sc.step(opt)\n    ~~~~~~~^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/amp/grad_scaler.py\", line 478, in step\n    self.unscale_(optimizer)\n    ~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/amp/grad_scaler.py\", line 363, in unscale_\n    optimizer_state[\"found_inf_per_device\"] = self._unscale_grads_(\n                                              ~~~~~~~~~~~~~~~~~~~~^\n        optimizer, inv_scale, found_inf, False\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/admin/home/khushi_agrawal/Documents/pytorch/torch/amp/grad_scaler.py\", line 299, in _unscale_grads_\n    torch._amp_foreach_non_finite_check_and_unscale_(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        grads,\n        ^^^^^^\n        per_device_found_inf.get(device),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        per_device_inv_scale.get(device),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nNotImplementedError: \"_amp_foreach_non_finite_check_and_unscale_cuda\" not implemented for 'BFloat16'\n"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "model": "inkling2",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "mode": "generate_dynamic",
+  "device": "cpu",
+  "status": "issues",
+  "experts_implementation": null,
+  "seconds": 171.5,
+  "timestamp": "2026-11-24T14:55:05+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "ok",
+      "new_graphs": 3,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 3.1597886628734594e-07
+    },
+    {
+      "name": "batch=3 prompt=40",
+      "batch": 3,
+      "prompt": 40,
+      "status": "ok",
+      "new_graphs": 2,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 3.259121067448723e-07
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": 3,
+      "recompiled_graphs": 2,
+      "inductor_specialization_sites": [],
+      "specializations": [
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:infer_size",
+          "line": 2513,
+          "count": 2,
+          "examples": [
+            "s63 = 0"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_prefill:4333"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_decomp/decompositions.py:matmul",
+          "line": 5450,
+          "count": 2,
+          "examples": [
+            "s35 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_prefill:4333"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims/__init__.py:_cat_meta",
+          "line": 1881,
+          "count": 81,
+          "examples": [
+            "s14 = 128",
+            "s15 = 2",
+            "s64 = 64",
+            "s2 = 2",
+            "s30 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims_common/__init__.py:validate_dim_length",
+          "line": 665,
+          "count": 1,
+          "examples": [
+            "s52 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+          "line": 1559,
+          "count": 4,
+          "examples": [
+            "s169 = 1",
+            "s177 = 1",
+            "s171 = 1",
+            "s170 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "model",
+          "site": "torch/nn/modules/module.py:_call_impl",
+          "line": 1798,
+          "count": 4,
+          "examples": [
+            "s95 = 2",
+            "s78 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+          "line": 267,
+          "count": 12,
+          "examples": [
+            "s90 = 64",
+            "s50 = 64",
+            "s56 = 64",
+            "s58 = 64",
+            "s68 = 64"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        }
+      ],
+      "graph_breaks": [],
+      "recompile_reasons": [
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: kwargs['cache'].layers[0].device is None                 # if self.device is None:  # Documents/transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1504, in forward\n    -     outputs = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1423, in forward\n    -     new_hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 896, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 607, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 481, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 336, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 2. expected 1, actual 64\n    - 0/0: kwargs['cache'].layers[0].device is None                 # if self.device is None:  # Documents/transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1504, in forward\n    -     outputs = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1423, in forward\n    -     new_hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 896, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 607, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 481, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 336, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: kwargs['cache'].layers[0].device is None                 # if self.device is None:  # Documents/transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1504, in forward\n    -     outputs = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1423, in forward\n    -     new_hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 896, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 607, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 481, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 336, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/3: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 2. expected 1, actual 64\n    - 0/0: kwargs['cache'].layers[0].device is None                 # if self.device is None:  # Documents/transformers/src/transformers/cache_utils.py:1219 in lazy_initialization\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1504, in forward\n    -     outputs = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1423, in forward\n    -     new_hidden_states = decoder_layer(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/modeling_layers.py\", line 124, in forward_with_checkpointing\n    -     return forward(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 896, in forward\n    -     hidden_states, _ = self.self_attn(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 607, in forward\n    -     key_states = self.k_proj(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 481, in forward\n    -     states = self.sconv(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/integrations/accelerate.py\", line 1012, in wrapped\n    -     output = forward_func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 336, in forward\n    -     hidden_states = cache.update_conv_state(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1661, in update_conv_state\n    -     conv_states = self.layers[layer_idx].update_conv_state(conv_states, state_idx, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1258, in update_conv_state\n    -     self.lazy_initialization(conv_states=conv_states, state_idx=state_idx, conv_kernel_size=conv_kernel_size)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1355, in lazy_initialization\n    -     LinearAttentionLayer.lazy_initialization(self, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1219, in lazy_initialization\n    -     if self.device is None:\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

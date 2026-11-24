@@ -6,8 +6,10 @@ Each model/scenario is run eagerly, compiled with Inductor, and eagerly in fp64.
 
 ## CPU
 
-- Runs: 505 · accurate: 424 · **mismatch: 51** · errors: 30
-- Without an fp64 reference (compared eager vs compiled only): 83
+`results_accuracy/`
+
+- Runs: 505 · accurate: 426 · **mismatch: 49** · errors: 30
+- Without an fp64 reference (compared eager vs compiled only): 80
 
 | model | scenario | dtype | failed tensors | worst (compiled vs fp64 / eager vs fp64) |
 |---|---|---|---|---|
@@ -37,8 +39,6 @@ Each model/scenario is run eagerly, compiled with Inductor, and eagerly in fp64.
 | hunyuan_v1_moe | eval_forward | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.00985 |
 | hunyuan_v1_moe | eval_with_cache | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.00985 |
 | hunyuan_v1_moe | train_forward | bfloat16 | 2 of 32 (e.g. `out.logits`) | vs eager 0.0185 |
-| inkling | eval_forward | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.000338 |
-| inkling | eval_with_cache | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.000338 |
 | jamba | eval_forward | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.018 |
 | jamba | eval_with_cache | bfloat16 | 1 of 1 (e.g. `out.logits`) | vs eager 0.018 |
 | jamba | train_forward | bfloat16 | 3 of 57 (e.g. `out.logits`) | vs eager 0.0231 |
@@ -96,7 +96,9 @@ Errors:
 - rwkv / eval_with_cache: RuntimeError: Calling torch.geqrf on a CPU tensor requires compiling PyTorch with LAPACK. Please use PyTorch built with LAPACK support.
 - rwkv / train_forward: RuntimeError: Calling torch.geqrf on a CPU tensor requires compiling PyTorch with LAPACK. Please use PyTorch built with LAPACK support.
 
-## CUDA
+## CUDA (H100 / B200, first pass)
+
+`results_accuracy_cuda/`
 
 - Runs: 283 · accurate: 251 · **mismatch: 17** · errors: 15
 - Without an fp64 reference (compared eager vs compiled only): 44
@@ -138,4 +140,146 @@ Errors:
 - qwen3_8_fp8 / eval_forward: TorchRuntimeError: RuntimeError when making fake tensor call
 - qwen3_8_fp8 / eval_with_cache: TorchRuntimeError: RuntimeError when making fake tensor call
 - qwen3_8_fp8 / train_forward: TorchRuntimeError: RuntimeError when making fake tensor call
+
+## CUDA (B300, torch-dev)
+
+`results_accuracy_cuda_b300/`
+
+- Runs: 414 · accurate: 310 · **mismatch: 17** · errors: 87
+- Without an fp64 reference (compared eager vs compiled only): 26
+
+| model | scenario | dtype | failed tensors | worst (compiled vs fp64 / eager vs fp64) |
+|---|---|---|---|---|
+| deit | train_forward | float32 | 12 of 46 (e.g. `grad.deit.layers.0.mlp.fc1.weight`) | 0.000231 / 8.76e-07 |
+| dinov3_vit | eval_forward | float32 | 1 of 2 (e.g. `out.last_hidden_state`) | 0.000296 / 6.07e-07 |
+| efficientnet | train_forward | float32 | 1 of 215 (e.g. `grad.efficientnet.encoder.top_bn.bias`) | 0.00692 / 1.3e-09 |
+| falcon_mamba | eval_forward | bfloat16 | 1 of 1 (e.g. `out.logits`) | 0.024 / 0.0268 |
+| falcon_mamba | eval_with_cache | bfloat16 | 1 of 1 (e.g. `out.logits`) | 0.024 / 0.0268 |
+| falcon_mamba | train_forward | bfloat16 | 1 of 25 (e.g. `out.logits`) | 0.0254 / 0.0268 |
+| gemma | train_forward | bfloat16 | 12 of 22 (e.g. `grad.model.embed_tokens.weight`) | nan / 1.49e-05 |
+| gemma3 | train_forward | bfloat16 | 17 of 30 (e.g. `grad.model.embed_tokens.weight`) | nan / 2.01e-05 |
+| hubert | train_forward | float32 | 1 of 74 (e.g. `out.loss`) | 11.1 / 8.11 |
+| nemotron_h | eval_forward | bfloat16 | 1 of 1 (e.g. `out.logits`) | 0.0028 / 0.00326 |
+| nemotron_h | eval_with_cache | bfloat16 | 1 of 1 (e.g. `out.logits`) | 0.0028 / 0.00326 |
+| nemotron_h | train_forward | bfloat16 | 1 of 22 (e.g. `out.logits`) | 0.00316 / 0.00326 |
+| paligemma | eval_forward | float32 | 1 of 3 (e.g. `out.image_outputs.last_hidden_state`) | 0.0003 / 8.91e-07 |
+| paligemma | eval_with_cache | float32 | 1 of 3 (e.g. `out.image_outputs.last_hidden_state`) | 0.0003 / 8.91e-07 |
+| paligemma | train_forward | float32 | 1 of 63 (e.g. `out.image_outputs.last_hidden_state`) | 0.0003 / 8.91e-07 |
+| wav2vec2 | train_forward | float32 | 1 of 55 (e.g. `out.loss`) | 5.59 / 7.07 |
+| wavlm | train_forward | float32 | 18 of 62 (e.g. `grad.wavlm.masked_spec_embed`) | 1.15 / 0.379 |
+
+Errors:
+
+- dac / train_forward: RuntimeError: grad can be implicitly created only for scalar outputs
+- deepseek_v2 / eval_forward: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- deepseek_v2 / eval_with_cache: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- deepseek_v2 / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- deepseek_v3 / eval_forward: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- deepseek_v3 / eval_with_cache: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- deepseek_v3 / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- dots3_note / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- dots3_note / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- dots3_note / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- dots3_note_vlm / eval_forward: RuntimeError: 
+- dots3_note_vlm / eval_with_cache: RuntimeError: 
+- dots3_note_vlm / train_forward: RuntimeError: 
+- ernie4_5_moe / eval_forward: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- ernie4_5_moe / eval_with_cache: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- ernie4_5_moe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- gemma3n / eval_forward: RuntimeError: 
+- gemma3n / eval_with_cache: RuntimeError: 
+- gemma3n / train_forward: RuntimeError: 
+- glm4_moe / eval_forward: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- glm4_moe / eval_with_cache: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- glm4_moe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoe / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoe / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoehybrid / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoehybrid / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- granitemoehybrid / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- hunyuan_v1_moe / eval_forward: RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb,
+- hunyuan_v1_moe / eval_with_cache: RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb,
+- hunyuan_v1_moe / train_forward: RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16BF, lda, b, CUDA_R_16BF, ldb,
+- hy_v4_vl / eval_forward: RuntimeError: 
+- hy_v4_vl / eval_with_cache: RuntimeError: 
+- hy_v4_vl / train_forward: RuntimeError: 
+- inkling / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- inkling / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- inkling / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- inkling2 / eval_forward: InductorError: ValueError: The argument '-((0))' is not comparable.
+- inkling2 / eval_with_cache: InductorError: ValueError: The argument '-((0))' is not comparable.
+- inkling2_mini / eval_forward: InductorError: ValueError: The argument '-((0))' is not comparable.
+- inkling2_mini_vlm / eval_forward: InductorError: ValueError: The argument '-((0))' is not comparable.
+- inkling2_vlm / eval_forward: InductorError: ValueError: The argument '-((0))' is not comparable.
+- inkling2_vlm / eval_with_cache: InductorError: ValueError: The argument '-((0))' is not comparable.
+- jamba / eval_forward: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- jamba / eval_with_cache: InternalTorchDynamoError: AcceleratorError: CUDA error: unspecified launch failure
+- jamba / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- lfm3_vl / eval_forward: RuntimeError: 
+- lfm3_vl / eval_with_cache: RuntimeError: 
+- lfm3_vl / train_forward: RuntimeError: 
+- mistral3 / eval_forward: RuntimeError: 
+- mistral3 / eval_with_cache: RuntimeError: 
+- mistral3 / train_forward: RuntimeError: 
+- mixtral / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- mixtral / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- mixtral / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- olmoe / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- olmoe / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- olmoe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- phimoe / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- phimoe / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- phimoe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen2_5_vl / eval_forward: RuntimeError: 
+- qwen2_5_vl / eval_with_cache: RuntimeError: 
+- qwen2_5_vl / train_forward: RuntimeError: 
+- qwen2_moe / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen2_moe / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- qwen2_moe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen2_vl / eval_forward: RuntimeError: 
+- qwen2_vl / eval_with_cache: RuntimeError: 
+- qwen2_vl / train_forward: RuntimeError: 
+- qwen3_8 / eval_forward: RuntimeError: 
+- qwen3_8 / eval_with_cache: RuntimeError: 
+- qwen3_8 / train_forward: RuntimeError: 
+- qwen3_moe / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_moe / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_moe / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_next / eval_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_next / eval_with_cache: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_next / train_forward: AcceleratorError: CUDA error: unspecified launch failure
+- qwen3_vl / eval_forward: RuntimeError: 
+- qwen3_vl / eval_with_cache: RuntimeError: 
+- qwen3_vl / train_forward: RuntimeError: 
+- rt_detr / eval_forward: RuntimeError: 
+- rwkv / eval_forward: RuntimeError: Calling torch.geqrf on a CPU tensor requires compiling PyTorch with LAPACK. Please use PyTorch built with LAPACK support.
+- rwkv / eval_with_cache: RuntimeError: Calling torch.geqrf on a CPU tensor requires compiling PyTorch with LAPACK. Please use PyTorch built with LAPACK support.
+- rwkv / train_forward: RuntimeError: Calling torch.geqrf on a CPU tensor requires compiling PyTorch with LAPACK. Please use PyTorch built with LAPACK support.
+- wavtokenizer / train_forward: RuntimeError: 
+
+## CUDA (B300), full depth (GB_FULL_DEPTH=1)
+
+`results_accuracy_cuda_fulldepth/`
+
+- Runs: 29 · accurate: 28 · **mismatch: 1** · errors: 0
+- Without an fp64 reference (compared eager vs compiled only): 12
+
+| model | scenario | dtype | failed tensors | worst (compiled vs fp64 / eager vs fp64) |
+|---|---|---|---|---|
+| gemma3 | train_forward | bfloat16 | 329 of 342 (e.g. `grad.model.embed_tokens.weight`) | nan / 6.69e-05 |
+
+## CUDA (B300), with the Identity fix (GB_PATCH=identity)
+
+`results_accuracy_cuda_b300_identityfix/`
+
+- Runs: 12 · accurate: 12 · **mismatch: 0** · errors: 0
+- Without an fp64 reference (compared eager vs compiled only): 12
+
+## CUDA (B300), MoE experts_implementation=eager (no torch._grouped_mm)
+
+`results_accuracy_cuda_b300_experts_eager/`
+
+- Runs: 3 · accurate: 3 · **mismatch: 0** · errors: 0
+- Without an fp64 reference (compared eager vs compiled only): 0
 

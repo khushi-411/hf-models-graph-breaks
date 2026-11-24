@@ -116,9 +116,9 @@ strides is needed, so specializing isn't necessary.
 | granitemoehybrid | `ibm-granite/granite-4.0-h-tiny` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
 | hubert | `facebook/hubert-large-ls960-ft` | – | – | train: recompiles (18 / 3 / 2) | – | – | – |
 | hy_v4_vl | `tencent/Hy4` | – | – | train: recompiles (34 / 6 / 5) | – | – | – |
-| inkling | `thinkingmachines/Inkling` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |
-| inkling2 | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (2 / 2 / 1) | – | – | – |
-| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (22 / 1 / 0) | – | – | – |
+| inkling | `thinkingmachines/Inkling` | – | – | train: recompiles (2 / 1 / 1) | – | train: recompiles (2 / 1 / 1) | – |
+| inkling2 | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (2 / 2 / 1) | – | train: recompiles (2 / 1 / 1) | – |
+| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (22 / 1 / 0) | – | train: recompiles (22 / 1 / 0) | – |
 | inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | – | – | train: recompiles (50 / 9 / 4) | – | – | – |
 | inkling2_vlm | `thinkingmachines/Inkling-2-Small-MXFP8` | – | – | train: recompiles (33 / 10 / 7) | – | – | – |
 | jamba | `ai21labs/Jamba-tiny-dev` | – | – | train: recompiles (2 / 1 / 1) | – | – | – |

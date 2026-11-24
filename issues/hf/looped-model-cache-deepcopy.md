@@ -107,7 +107,7 @@ extra pass. The second option is untested inside a compiled region.
 | model | config from | static CPU | static CUDA | dynamic CPU | dynamic CUDA | unbacked CPU | unbacked CUDA |
 |---|---|---|---|---|---|---|---|
 | dory | `nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-BF16` | cache 2 · train 2 | cache 2 · train 2 | train 2 | train 2 | – | train 2 |
-| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | cache 2 · train 2 | cache 2 · train 2 | train 2 | train 2 | – | – |
+| inkling2_mini | `thinkingmachines/Inkling-2-Mini` | cache 2 · train 2 | cache 2 · train 2 | train 2 | train 2 | train 2 | train 2 |
 | inkling2_mini_vlm | `thinkingmachines/Inkling-2-Mini` | cache 2 · train 2 | cache 2 · train 2 | train 2 | train 2 | – | – |
 
 <!-- affected-models:end -->

@@ -8,10 +8,12 @@ Dynamic-shape recompiles were triaged too (see [Dynamic-shape recompiles](#dynam
 [`SUMMARY.md`](SUMMARY.md) / [`SUMMARY_CUDA.md`](SUMMARY_CUDA.md) /
 [`DYNAMIC_SUMMARY.md`](DYNAMIC_SUMMARY.md) / [`DYNAMIC_CUDA_SUMMARY.md`](DYNAMIC_CUDA_SUMMARY.md).
 
-**Status:** 209 models · 0 unmatched graph breaks · 0 unexplained errors · 71 issue drafts
-(30 PyTorch, 40 transformers/HF Hub, 1 harness). Nothing is filed upstream yet. The Nov 23 batch (the 100
+**Status:** 209 models · 0 unmatched graph breaks · 0 unexplained errors · 77 issue drafts
+(33 PyTorch, 43 transformers/HF Hub, 1 harness). Nothing is filed upstream yet. The Nov 23 batch (the 100
 most-downloaded Hub models, [below](#nov-23-the-100-most-downloaded-hub-models)) added 52 models and 9 drafts.
 A partial `dynamic.py --unbacked` sweep (Nov 24, [below](#unbacked-dynamic-shapes-partial-stopped)) added 2 drafts.
+An Inkling deep dive (Nov 24, [below](#inkling-deep-dive-nov-24)) ran the five Inkling models through every
+compile path and added 6 drafts (3 PyTorch, 3 transformers), plus a tested fix for the Inkling merge-loops crash.
 
 ## Setup
 
@@ -276,6 +278,61 @@ rerun finished.
   `~/gb-jobs/run_accre_cuda.sbatch`, lists in `~/gb-jobs/acc_rerun_*.txt`), then
   `python -m graph_breaks.accuracy --summarize` → `ACCURACY.md`.
 
+## Inkling deep dive (Nov 24)
+
+The five Inkling models (`inkling`, `inkling2`, `inkling2_vlm`, `inkling2_mini`, `inkling2_mini_vlm`) were run
+through every check the harness has, on CPU (`torch-snap-57f02f8`) and CUDA (B300, `torch-dev` at `f29b6d5`):
+static graph breaks, dynamic and unbacked shapes, accuracy (fixed checker), and the new compile paths in
+[`graph_breaks/modes.py`](graph_breaks/modes.py) and [`graph_breaks/distributed.py`](graph_breaks/distributed.py).
+Results: [`MODES.md`](MODES.md) (all modes + DDP/FSDP2), [`ACCURACY.md`](ACCURACY.md), and the `*_FULLDEPTH*`,
+`*_IDENTITYFIX*` and `*_EXPERTS_EAGER*` summaries.
+
+New checks (`python -m graph_breaks.modes`): `generate()` with a dynamic cache and with a static cache,
+`torch.export` (strict / non-strict) + AOTInductor, `mode="reduce-overhead"` (CUDA graphs), `max-autotune`,
+`freezing`, bf16 and fp16 autocast (+ GradScaler steps), 3-step AdamW training with a compiled optimizer, compiled
+autograd, eager-vs-compiled perf. `python -m graph_breaks.distributed` (torchrun, 2 GPUs): DDP and FSDP2.
+Switches: `GB_FULL_DEPTH=1` (real layer count / pattern, reduced width), `GB_PRETRAINED=1` (real checkpoint),
+`GB_PATCH=identity` (apply the proposed merge-loops fix), `GB_EXPERTS_IMPL=eager`, `GB_RESULTS_SUFFIX`.
+
+Root causes for Inkling: 8 PyTorch, 8 transformers (one transformers entry, `moe-eager-experts-loop`, is
+`not-filing`: it only appears with the eager-experts workaround).
+
+| PyTorch | effect on Inkling | state |
+|---|---|---|
+| [inductor-merge-loops-minmax-not-comparable](issues/inductor-merge-loops-minmax-not-comparable.md) | every CUDA inference path of the 4 Inkling-2 models crashes | root cause (`Identity` has no `eval`), 10-line repro, **fix tested**: with it all 4 compile and match eager in every mode (eval ~2.6–3.6x vs eager) |
+| [symbolic-shapes-replacement-float-inverse-bound](issues/symbolic-shapes-replacement-float-inverse-bound.md) | unbacked: both VLMs crash | root cause (float division in `_set_replacement`), 15-line repro |
+| [duck-sizing-specializes-unrelated-dims](issues/duck-sizing-specializes-unrelated-dims.md) | `generate()` recompiles decode graphs per batch size | root cause, 20-line repro |
+| [grouped-mm-sm100-kernel-without-arch-specific-build](issues/grouped-mm-sm100-kernel-without-arch-specific-build.md) | bf16 MoE (inkling) crashes on a `TORCH_CUDA_ARCH_LIST=10.3` build | repro; device-only arch gate |
+| [sdpa-is-causal-symbool](issues/sdpa-is-causal-symbool.md) | export / AOTI of both VLMs (the workaround guards on an unbacked length) | export section added |
+| conv-backward-stride-guard, sdpa-efficient-backward-bias-align-guard, graph-break-in-loop | recompiles / break multiplication | unchanged |
+
+transformers: the 5 VLM / looped-model break drafts, plus
+[inkling-static-cache-sliding-position-bias](issues/hf/inkling-static-cache-sliding-position-bias.md) (static-cache
+`generate()` fails in eager, all 5 models), [moe-grouped-mm-fallback-cudagraph-unsafe](issues/hf/moe-grouped-mm-fallback-cudagraph-unsafe.md)
+(`reduce-overhead` crashes, 4 Inkling-2 models) and [position-bias-mask-fp16-overflow](issues/hf/position-bias-mask-fp16-overflow.md)
+(fp16 autocast, inkling, eager).
+
+Other results:
+- **Accuracy:** no wrong-value bug. Every accuracy run passes, including full-depth inkling against fp64 (66 layers,
+  1,386 gradients). The earlier inkling CPU "mismatch" (RMSE 3.4e-4) was first-pass checker noise.
+- **Full depth** finds the same root causes as the reduced configs.
+- **Perf** (B300, reduced width, with the merge-loops fix): Inkling-2 eval 2.6–3.6x, train 2.4–3.0x;
+  Inkling-2-Mini train ~1.0x because `looped-model-cache-deepcopy` makes the text model run eagerly.
+- **DDP:** correct for all 5. Its breaks (`Logger.set_runtime_stats_and_log`, `_inside_ddp_forward`) are by design.
+  **FSDP2:** the per-unit `_dynamo.disable` break is by design in this build; inkling needs its fp32 submodules as
+  separate units (FSDP2 uniform-dtype rule).
+- **Attention fusion:** Inkling-2's token attention (sinks + position bias + mask + GQA) matches no Inductor SDPA
+  pattern; the 2-per-layer `fuse_attention` rewrites are the cross-layer attention residual (`_sfdp_pattern_2`).
+  An "SDPA + sinks" rewrite (`out * sigmoid(lse - sink)`) would cover it.
+
+Open for Inkling: the real bf16 grouped-GEMM path and real Inkling-2-Mini weights (NVFP4) need a
+`TORCH_CUDA_ARCH_LIST=10.3a` build; MoE ran with `experts_implementation="eager"` meanwhile. Real Inkling (952B) and
+Inkling-2-Small (612B) weights don't fit one GPU.
+
+The 10-popular-model extension of these checks was stopped on request. Only its full-depth runs executed (the
+baseline tasks failed at launch because of a job-runner bug, since fixed); those results are in the
+`*_fulldepth` folders but are not triaged.
+
 ## Still to do
 
 1. **5 CPU dynamic runs not completed** (cancelled for compile time; they ran 1–3 h without finishing):
@@ -313,5 +370,9 @@ rerun finished.
   paths. `coverage.py` maps the new crash errors. `models.yaml`: + 52 models.
 - Nov 24: `coverage.py` / `affected.py` also read `results_dynamic_unbacked[_cuda]/` (`unbacked` rows in
   `COVERAGE.md`, two more columns in the drafts' affected-models tables). Job scripts in `~/gb-jobs/unbacked/`.
+- Nov 24 (Inkling deep dive): `graph_breaks/modes.py` (new) → `MODES.md`, `graph_breaks/distributed.py` (new),
+  `graph_breaks/__init__.py` (`GB_PATCH`), `GB_FULL_DEPTH` / `GB_PRETRAINED` / `GB_EXPERTS_IMPL` in `check.py` and
+  `accuracy.py`, `--results-dir` for `accuracy.py`, `--results-dir` / `--out` for `summarize.py`, `--summary-file`
+  for `dynamic.py`, `ACCURACY.md` covers every `results_accuracy*` folder. Job scripts in `~/gb-jobs/inkling/`.
 - Drafts split by repo: `issues/` (PyTorch) + `issues/repros/`, `issues/hf/` (transformers, HF Hub) +
   `issues/hf/repros/`, `issues/harness/`. Results: `results*/`, summaries.

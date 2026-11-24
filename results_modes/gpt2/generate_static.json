@@ -1,0 +1,56 @@
+{
+  "model": "gpt2",
+  "hf_id": "openai-community/gpt2",
+  "mode": "generate_static",
+  "device": "cpu",
+  "status": "ok",
+  "seconds": 20.5,
+  "timestamp": "2026-11-24T14:40:52+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "ok",
+      "new_graphs": 2,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 6.506461514634518e-07
+    },
+    {
+      "name": "batch=3 prompt=40",
+      "batch": 3,
+      "prompt": 40,
+      "status": "ok",
+      "new_graphs": 2,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 6.203423863629969e-07
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": 2,
+      "recompiled_graphs": 0,
+      "inductor_specialization_sites": [],
+      "specializations": [],
+      "graph_breaks": [],
+      "recompile_reasons": [
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 6",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: len(kwargs) != 7\n    - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/2: len(kwargs) != 6\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/0: len(kwargs) != 6"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

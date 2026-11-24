@@ -1,0 +1,234 @@
+{
+  "model": "inkling2_vlm",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "mode": "generate_dynamic",
+  "device": "cuda",
+  "status": "issues",
+  "experts_implementation": null,
+  "seconds": 1435.6,
+  "timestamp": "2026-11-24T16:47:39+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "ok",
+      "new_graphs": 7,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 4.499462482323077e-07
+    },
+    {
+      "name": "batch=3 prompt=40",
+      "batch": 3,
+      "prompt": 40,
+      "status": "ok",
+      "new_graphs": 6,
+      "tokens_equal": true,
+      "accurate": true,
+      "worst_rmse": 4.848389150169361e-07
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": 7,
+      "recompiled_graphs": 6,
+      "inductor_specialization_sites": [],
+      "specializations": [
+        {
+          "kind": "specialize",
+          "phase": "model",
+          "site": "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask",
+          "line": 1654,
+          "count": 2,
+          "examples": [
+            "s97 = 32",
+            "s97 = 48"
+          ],
+          "model_frames": [
+            "transformers/models/inkling2/modeling_inkling2.py:get_placeholder_mask:1654"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:infer_size",
+          "line": 2513,
+          "count": 8,
+          "examples": [
+            "s53 = 512",
+            "s32 = 0"
+          ],
+          "model_frames": [
+            "transformers/models/inkling2/modeling_inkling2.py:forward:1732"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "model",
+          "site": "transformers/models/inkling2/modeling_inkling2.py:forward",
+          "line": 1732,
+          "count": 4,
+          "examples": [
+            "s89 = 512"
+          ],
+          "model_frames": [
+            "transformers/models/inkling2/modeling_inkling2.py:forward:1732"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_decomp/decompositions.py:matmul",
+          "line": 5460,
+          "count": 2,
+          "examples": [
+            "s55 = 1"
+          ],
+          "model_frames": [
+            "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_meta_registrations.py:meta_mm",
+          "line": 2722,
+          "count": 2,
+          "examples": [
+            "s86 = 512"
+          ],
+          "model_frames": [
+            "transformers/models/inkling2/modeling_inkling2.py:forward:1842"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims/__init__.py:_cat_meta",
+          "line": 1881,
+          "count": 784,
+          "examples": [
+            "s14 = 128",
+            "s15 = 2",
+            "s64 = 64",
+            "s2 = 2",
+            "s31 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims_common/__init__.py:validate_dim_length",
+          "line": 665,
+          "count": 2,
+          "examples": [
+            "s52 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+          "line": 1559,
+          "count": 6,
+          "examples": [
+            "s1099 = 1",
+            "s1161 = 1",
+            "s1101 = 1",
+            "s1100 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "model",
+          "site": "torch/nn/modules/module.py:_call_impl",
+          "line": 1799,
+          "count": 6,
+          "examples": [
+            "s95 = 2",
+            "s78 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims_common/__init__.py:check_contiguous_sizes_strides",
+          "line": 267,
+          "count": 80,
+          "examples": [
+            "s90 = 64",
+            "s50 = 64",
+            "s53 = 64",
+            "s55 = 64",
+            "s58 = 64"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        }
+      ],
+      "graph_breaks": [
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1654",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/generation/utils.py:3008 in generate",
+            "transformers/generation/utils.py:3208 in _sample",
+            "transformers/generation/utils.py:4333 in _prefill",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1732 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1654 in get_placeholder_mask"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 7",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 100752893478768), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: len(kwargs) != 9\n    - 0/0: len(kwargs) != 7",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/2: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 2. expected 1, actual 64\n    - 0/1: len(kwargs) != 9\n    - 0/0: len(kwargs) != 7",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/3: len(kwargs) != 6\n    - 0/2: len(kwargs) != 6\n    - 0/1: len(kwargs) != 9\n    - 0/0: len(dict.__getitem__(kwargs['mm_encoder_outputs']['image'], list(dict.keys(kwargs['mm_encoder_outputs']['image']))[1])) == 2  # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/1: ___check_type_id(args[0], 100752892352224), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2Model'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2Model)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/0: len(dict.__getitem__(kwargs['mm_encoder_outputs']['image'], list(dict.keys(kwargs['mm_encoder_outputs']['image']))[1])) == 2  # return func(*args, **kwargs)  # transformers/src/transformers/utils/deprecation.py:173 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)",
+        "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1783\n    triggered by the following guard failure(s):\n    - 2/0: len(dict.__getitem__(mm_encoder_outputs['image'], list(dict.keys(mm_encoder_outputs['image']))[1])) == 2  # outputs = self.model(  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1842 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1842, in forward\n    -     outputs = self.model(",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/4: len(kwargs) != 7\n    - 0/3: len(kwargs) != 6\n    - 0/2: len(kwargs) != 6\n    - 0/1: len(dict.__getitem__(kwargs['mm_encoder_outputs']['image'], list(dict.keys(kwargs['mm_encoder_outputs']['image']))[1])) == 2  # output = func(self, *args, **kwargs)  # transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 7",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/2: ___check_type_id(args[0], 100752893478768), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"\n    - 1/1: len(dict.__getitem__(kwargs['mm_encoder_outputs']['image'], list(dict.keys(kwargs['mm_encoder_outputs']['image']))[1])) == 2  # return func(*args, **kwargs)  # transformers/src/transformers/utils/deprecation.py:173 in wrapped_func\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    - 1/0: ___check_type_id(args[0], 100752893478768), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1659\n    triggered by the following guard failure(s):\n    - 3/0: len(mm_encoder_outputs['image'].pooler_output) == 2      # image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output)  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1730 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1730, in forward\n    -     image_embeds = torch.cat(mm_encoder_outputs[\"image\"].pooler_output)",
+        "Recompiling function torch_dynamo_resume_in_get_placeholder_mask_at_1654 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1654\n    triggered by the following guard failure(s):\n    - 5/0: tensor 'features' size mismatch at index 0. expected 32, actual 48",
+        "Recompiling function torch_dynamo_resume_in_forward_at_1732 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1732\n    triggered by the following guard failure(s):\n    - 6/0: len(dict.__getitem__(mm_encoder_outputs['image'], list(dict.keys(mm_encoder_outputs['image']))[1])) == 2  # return Inkling2ModelOutputWithPast(  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1745 in torch_dynamo_resume_in_forward_at_1732\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1745, in torch_dynamo_resume_in_forward_at_1732\n    -     return Inkling2ModelOutputWithPast(",
+        "Recompiling function torch_dynamo_resume_in_forward_at_1842 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1842\n    triggered by the following guard failure(s):\n    - 7/0: len(dict.__getitem__(___stack0.image_outputs, list(dict.keys(___stack0.image_outputs))[1])) == 2  # return Inkling2CausalLMOutputWithPast(  # transformers/src/transformers/models/inkling2/modeling_inkling2.py:1863 in torch_dynamo_resume_in_forward_at_1842\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1863, in torch_dynamo_resume_in_forward_at_1842\n    -     return Inkling2CausalLMOutputWithPast(",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/5: len(kwargs) != 9\n    - 0/4: len(kwargs) != 7\n    - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: len(kwargs) != 9\n    - 0/0: len(kwargs) != 7",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/6: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 2. expected 1, actual 64\n    - 0/5: len(kwargs) != 9\n    - 0/4: len(kwargs) != 7\n    - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: len(kwargs) != 9\n    - 0/0: len(kwargs) != 7"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

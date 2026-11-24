@@ -1,0 +1,231 @@
+{
+  "model": "inkling2_vlm",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "mode": "freezing",
+  "device": "cpu",
+  "status": "issues",
+  "experts_implementation": null,
+  "seconds": 103.6,
+  "timestamp": "2026-11-24T15:01:14+00:00",
+  "env": {
+    "torch": "2.16.0a0+git57f02f8",
+    "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "12.8"
+  },
+  "checks": [
+    {
+      "name": "eval_forward",
+      "scenario": "eval_forward",
+      "reference": "fp32",
+      "status": "ok",
+      "graphs": 30,
+      "accurate": true,
+      "failed": [],
+      "worst_rmse": 5.589934068677356e-07,
+      "checked": 4,
+      "tol": 0.001,
+      "graph_breaks": [
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1583",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1583 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:276",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:276 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:277",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:277 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:278",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.repeat_interleave.Tensor`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.repeat_interleave.Tensor\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:278 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:280",
+          "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1587 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1233 in forward",
+            "transformers/vision_utils.py:280 in get_vision_interpolation_indices_and_weights"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/vision_utils.py:112",
+          "reason": "Encountered graph break when attempting to trace CALL_KW: a function call with keyword arguments, e.g. f(x=True):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1591 in forward",
+            "transformers/vision_utils.py:112 in get_vision_position_ids"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+          "reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\n*** While handling this graph break, another graph break occurred: ***\n\ngraph break in loop\n  Explanation: torch.compile detected a graph break in a for/while loop. Skipping the frame and falling back to eager, as graph breaks in loops are not supported.\n  Hint: This graph break may have been caused by an earlier graph break. Resolving the earlier graph break may resolve this one.\n\n  Developer debug context: frame skipped: torch_dynamo_resume_in_forward_at_1591 (/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py line 1591)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb7000.html\n\nStack variable source attribution:\n  DictValuesIterator() originated from:\n  File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/container.py\", line 416\n            return iter(self._modules.values())\n                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  NullVariable originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1595\n            for layer in self.layers:\n                         ^^^^^^^^^^^",
+          "user_stack": [
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+            "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+            "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Failed to handle graph break gracefully. Skipping the function and falling back to eager. Graph break encountered:",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1139",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "user_stack": [
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1628 in get_image_features",
+            "transformers/utils/output_capturing.py:361 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1596 in forward",
+            "transformers/modeling_layers.py:124 in forward_with_checkpointing",
+            "transformers/models/inkling2/modeling_inkling2.py:1139 in forward"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1629",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nData dependent operator\n  Explanation: Operator `aten._local_scalar_dense.default` has a non-Tensor output whose value is dependent on the data of Tensor inputs.\n  Hint: Enable tracing of data-dependent output operators with `torch._dynamo.config.capture_scalar_outputs = True`\n\n  Developer debug context: aten._local_scalar_dense.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html\n\nStack variable source attribution:\n  GetAttrVariable(TensorVariable(), split) originated from:\n  File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1629\n            image_outputs.pooler_output = image_outputs.pooler_output.split(image_grid_thw.prod(-1).tolist())\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1726 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/models/inkling2/modeling_inkling2.py:1629 in get_image_features"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0033.html",
+          "short_reason": "Data dependent operator",
+          "count": 1
+        },
+        {
+          "location": "transformers/models/inkling2/modeling_inkling2.py:1654",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nDynamic shape operator\n  Explanation: Operator `aten.nonzero.default`'s output shape depends on input Tensor data.\n  Hint: Enable tracing of dynamic shape operators with `torch._dynamo.config.capture_dynamic_output_shape_ops = True`\n\n  Developer debug context: aten.nonzero.default\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "user_stack": [
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1842 in forward",
+            "transformers/utils/generic.py:1036 in wrapper",
+            "transformers/utils/deprecation.py:173 in wrapped_func",
+            "transformers/models/inkling2/modeling_inkling2.py:1732 in forward",
+            "transformers/models/inkling2/modeling_inkling2.py:1654 in get_placeholder_mask"
+          ],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0036.html",
+          "short_reason": "Dynamic shape operator",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/0: len(kwargs) != 5",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 1/0: ___check_type_id(args[0], 109788599270000), type=<class 'transformers.models.inkling2.modeling_inkling2.Inkling2ForConditionalGeneration'>  # func_name = f\"{args[0].__class__.__name__}.{func_name}\"  # Documents/transformers/src/transformers/utils/deprecation.py:126 in wrapped_func (HINT: type Inkling2ForConditionalGeneration)\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 126, in wrapped_func\n    -     func_name = f\"{args[0].__class__.__name__}.{func_name}\"",
+        "Recompiling function wrapper in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py:1030\n    triggered by the following guard failure(s):\n    - 0/1: not args                                                 # output = func(self, *args, **kwargs)  # Documents/transformers/src/transformers/utils/generic.py:1036 in wrapper\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    - 0/0: len(kwargs) != 5",
+        "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1192\n    triggered by the following guard failure(s):\n    - 23/0: ___check_obj_id(self._modules['layernorm_before']._parameters['bias'], 128535917457200), type=<class 'torch.nn.parameter.Parameter'>  # input, self.normalized_shape, self.weight, self.bias, self.eps  # nn/modules/normalization.py:229 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1200, in forward\n    -     hidden_states = self.layernorm_before(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/normalization.py\", line 229, in forward\n    -     input, self.normalized_shape, self.weight, self.bias, self.eps",
+        "Recompiling function forward in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1084\n    triggered by the following guard failure(s):\n    - 24/0: ___check_obj_id(self._modules['k_proj']._parameters['bias'], 128535917456048), type=<class 'torch.nn.parameter.Parameter'>  # return F.linear(input, self.weight, self.bias)  # nn/modules/linear.py:134 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1103, in forward\n    -     key_states = self.k_proj(hidden_states).view(seq_length, self.num_heads, self.head_dim)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/linear.py\", line 134, in forward\n    -     return F.linear(input, self.weight, self.bias)",
+        "Recompiling function torch_dynamo_resume_in_forward_at_1138 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1138\n    triggered by the following guard failure(s):\n    - 25/0: ___check_obj_id(self._modules['out_proj']._parameters['bias'], 128535917456624), type=<class 'torch.nn.parameter.Parameter'>  # return F.linear(input, self.weight, self.bias)  # nn/modules/linear.py:134 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1161, in torch_dynamo_resume_in_forward_at_1138\n    -     attn_output = self.out_proj(attn_output)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/linear.py\", line 134, in forward\n    -     return F.linear(input, self.weight, self.bias)",
+        "Recompiling function torch_dynamo_resume_in_forward_at_1201 in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py:1201\n    triggered by the following guard failure(s):\n    - 26/0: ___check_obj_id(self._modules['mlp']._modules['fc1']._parameters['bias'], 128535917456816), type=<class 'torch.nn.parameter.Parameter'>  # return F.linear(input, self.weight, self.bias)  # nn/modules/linear.py:134 in forward\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1207, in torch_dynamo_resume_in_forward_at_1201\n    -     hidden_states = self.mlp(self.layernorm_after(hidden_states))\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/inkling2/modeling_inkling2.py\", line 1175, in forward\n    -     hidden_states = self.fc1(hidden_states)\n    -   File \"/admin/home/khushi_agrawal/miniforge3/envs/torch-snap-57f02f8/lib/python3.15/site-packages/torch/nn/modules/linear.py\", line 134, in forward\n    -     return F.linear(input, self.weight, self.bias)"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

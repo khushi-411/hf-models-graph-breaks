@@ -3,7 +3,7 @@
   "hf_id": "thinkingmachines/Inkling",
   "scenario": "eval_forward",
   "device": "cpu",
-  "timestamp": "2026-11-22T11:04:09+00:00",
+  "timestamp": "2026-11-24T14:31:44+00:00",
   "env": {
     "torch": "2.16.0a0+git57f02f8",
     "torch_git": "57f02f8db4f8ab613f55826dd1235500147f6681",
@@ -16,25 +16,26 @@
   },
   "status": "ok",
   "dtype": "bfloat16",
-  "fp64_reference": false,
+  "fp64_reference": true,
+  "reference": "fp32",
   "fp64_error": "RuntimeError: Expected mat_a to be Float32, BFloat16 or Float16 matrix, got Double",
-  "accurate": false,
+  "accurate": true,
   "tol": 0.01,
   "checked": 1,
-  "failed": [
-    "out.logits"
-  ],
+  "failed": [],
   "tensors": [
     {
       "name": "out.logits",
-      "ok": false,
+      "ok": true,
       "shape": [
         2,
         32,
         31000
       ],
       "max_abs_diff": 0.0111083984375,
-      "rmse_compiled_vs_eager": 0.00033766239807609446
+      "rmse_compiled_vs_eager": 0.0003376623980760945,
+      "rmse_eager_vs_fp64": 0.0003032655005333348,
+      "rmse_compiled_vs_fp64": 0.000436447911118526
     }
   ]
 }

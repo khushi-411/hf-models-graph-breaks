@@ -1,0 +1,75 @@
+{
+  "model": "inkling2",
+  "hf_id": "thinkingmachines/Inkling-2-Small-MXFP8",
+  "mode": "ddp",
+  "device": "cuda",
+  "world_size": 2,
+  "status": "issues",
+  "timestamp": "2026-11-24T17:20:50+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "ranks": [
+    {
+      "rank": 0,
+      "status": "ok",
+      "error": null
+    },
+    {
+      "rank": 1,
+      "status": "ok",
+      "error": null
+    }
+  ],
+  "checks": [
+    {
+      "name": "ddp x2 GPUs, 3 AdamW steps",
+      "status": "ok",
+      "seconds": 95.1,
+      "losses_eager_compiled": [
+        [
+          10.43787956237793,
+          10.437880516052246
+        ],
+        [
+          7.9124755859375,
+          7.912472724914551
+        ],
+        [
+          5.194927215576172,
+          5.194925308227539
+        ]
+      ],
+      "accurate": true,
+      "failed": [],
+      "graphs": 1,
+      "graph_breaks": [
+        {
+          "location": "torch/nn/parallel/distributed.py:1794",
+          "reason": "Encountered graph break when attempting to trace CALL_FUNCTION_EX: a variadic function call, e.g. f(*args):\n\nUnsupported method call\n  Explanation: Dynamo does not know how to trace method `set_runtime_stats_and_log` of class `Logger`\n  Hint: Avoid calling `Logger.set_runtime_stats_and_log` in your code.\n  Hint: Please report an issue to PyTorch.\n\n  Developer debug context: call_method UserDefinedObjectVariable(Logger) set_runtime_stats_and_log [] {}\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0156.html",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0156.html",
+          "short_reason": "Unsupported method call",
+          "count": 1
+        },
+        {
+          "location": "python/contextlib.py:171",
+          "reason": "Encountered graph break when attempting to trace CALL: a function call, e.g. f(x, y):\n\nAttempted to call function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `DistributedDataParallel._inside_ddp_forward` in file `/admin/home/khushi_agrawal/Documents/pytorch/torch/_compile.py` should not be traced.\n  Hint: Avoid calling the function `DistributedDataParallel._inside_ddp_forward`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `DistributedDataParallel._inside_ddp_forward` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: module: torch.nn.parallel.distributed, qualname: DistributedDataParallel._inside_ddp_forward, skip reason: file matches MOD_SKIPLIST (/admin/home/khushi_agrawal/Documents/pytorch/torch/_compile)\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+          "user_stack": [],
+          "doc_url": "https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html",
+          "short_reason": "Attempted to call function marked as skipped",
+          "count": 1
+        }
+      ],
+      "recompile_reasons": [],
+      "cudagraph_skips": []
+    }
+  ]
+}

@@ -22,6 +22,7 @@ import inspect
 import contextlib
 import json
 import logging
+import os
 import platform
 import re
 import subprocess
@@ -101,6 +102,13 @@ def _set_override(config, key: str, value):
     setattr(target, attr, value)
 
 
+_DEPTH_KEYS = {
+    "num_hidden_layers", "num_layers", "layer_types", "mlp_layer_types", "indexer_types", "first_k_dense_replace",
+    "n_layers_per_attn_res_block", "loop_layer_index_start", "loop_layer_index_end", "loop_num_passes",
+    "encoder_layers", "decoder_layers",
+}
+
+
 def build_config(spec: dict):
     if spec.get("config_class"):
         # No usable public checkpoint (unreleased or gated): use the config class defaults,
@@ -112,7 +120,13 @@ def build_config(spec: dict):
     if spec.get("use_text_config"):
         # Text-only LM built from a multimodal checkpoint (e.g. gemma3n, llama4).
         config = config.get_text_config()
-    for k, v in spec.get("config_overrides", {}).items():
+    # GB_PRETRAINED=1: the real checkpoint with its real config (no overrides), see build_model / accuracy._build.
+    overrides = {} if os.environ.get("GB_PRETRAINED") else spec.get("config_overrides", {})
+    for k, v in overrides.items():
+        # GB_FULL_DEPTH=1: keep the checkpoint's real depth and layer pattern (layer counts, per-layer types, loop /
+        # block structure), but keep the reduced widths, so every layer kind and position is traced and compiled.
+        if os.environ.get("GB_FULL_DEPTH") and k.rsplit(".", 1)[-1] in _DEPTH_KEYS:
+            continue
         _set_override(config, k, v)
     # Shrinking vocab_size can leave pad_token_id outside the embedding table.
     for cfg in {id(c): c for c in (config, config.get_text_config())}.values():
@@ -160,7 +174,7 @@ def build_model(spec: dict, pretrained: bool, device: str):
     config = build_config(spec)
     qconfig = pop_quantization_config(config) if spec.get("quantize") else None
     remote = {"trust_remote_code": True} if spec.get("trust_remote_code") else {}
-    if pretrained or spec.get("pretrained"):
+    if pretrained or spec.get("pretrained") or os.environ.get("GB_PRETRAINED"):
         # `pretrained: true` specs load the real checkpoint (truncated to the overridden layer count), for formats that
         # can't be reproduced from random weights (e.g. MXFP4 checkpoints: on-the-fly MXFP4 quantization fails in eager).
         kw = {"device_map": device} if spec.get("pretrained") else {}
@@ -175,6 +189,8 @@ def build_model(spec: dict, pretrained: bool, device: str):
                     p.normal_(0.0, 0.02)
         if qconfig is not None:
             return quantize_model(spec, model, qconfig, device)
+    if os.environ.get("GB_EXPERTS_IMPL") and hasattr(model, "set_experts_implementation"):
+        model.set_experts_implementation(os.environ["GB_EXPERTS_IMPL"])  # e.g. "eager": MoE without torch._grouped_mm
     return model.to(device)
 
 

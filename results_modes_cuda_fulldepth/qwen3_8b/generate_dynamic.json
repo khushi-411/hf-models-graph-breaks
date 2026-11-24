@@ -1,0 +1,117 @@
+{
+  "model": "qwen3_8b",
+  "hf_id": "Qwen/Qwen3-8B",
+  "mode": "generate_dynamic",
+  "device": "cuda",
+  "status": "mismatch",
+  "experts_implementation": null,
+  "seconds": 242.1,
+  "timestamp": "2026-11-24T17:30:23+00:00",
+  "env": {
+    "torch": "2.16.0a0+gitf29b6d5",
+    "torch_git": "f29b6d519223d9b95d601b3b08d9145bc34947c1",
+    "transformers": "5.24.0.dev0",
+    "transformers_git": "046bdb8cc2",
+    "torch_path": "/admin/home/khushi_agrawal/Documents/pytorch/torch",
+    "transformers_path": "/admin/home/khushi_agrawal/Documents/transformers/src/transformers",
+    "python": "3.15.2",
+    "cuda": "13.2"
+  },
+  "checks": [
+    {
+      "name": "batch=2 prompt=32",
+      "batch": 2,
+      "prompt": 32,
+      "status": "ok",
+      "new_graphs": 3,
+      "tokens_equal": false,
+      "accurate": false,
+      "worst_rmse": 0.13130614618820782
+    },
+    {
+      "name": "batch=3 prompt=40",
+      "batch": 3,
+      "prompt": 40,
+      "status": "ok",
+      "new_graphs": 2,
+      "tokens_equal": true,
+      "accurate": false,
+      "worst_rmse": 0.011186268877884365
+    },
+    {
+      "name": "summary",
+      "status": "ok",
+      "graphs_first_call": 3,
+      "recompiled_graphs": 2,
+      "inductor_specialization_sites": [],
+      "specializations": [
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_decomp/decompositions.py:matmul",
+          "line": 5460,
+          "count": 2,
+          "examples": [
+            "s185 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_prefill:4333"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims/__init__.py:_cat_meta",
+          "line": 1881,
+          "count": 156,
+          "examples": [
+            "s15 = 2",
+            "s79 = 128",
+            "s2 = 2",
+            "s46 = 2",
+            "s58 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_prims_common/__init__.py:validate_dim_length",
+          "line": 665,
+          "count": 2,
+          "examples": [
+            "s52 = 2"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        },
+        {
+          "kind": "specialize",
+          "phase": "aot/decomp",
+          "site": "torch/_subclasses/fake_impls.py:_compute_slice_index",
+          "line": 1559,
+          "count": 7,
+          "examples": [
+            "s329 = 1",
+            "s257 = 1",
+            "s331 = 1"
+          ],
+          "model_frames": [
+            "transformers/generation/utils.py:_sample:3236"
+          ]
+        }
+      ],
+      "graph_breaks": [],
+      "recompile_reasons": [
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized or self.keys.numel() == 0:  # transformers/src/transformers/cache_utils.py:148 in get_seq_length\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 472, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 397, in forward\n    -     \"full_attention\": create_causal_mask(**mask_kwargs),\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 960, in create_causal_mask\n    -     _preprocess_mask_arguments(config, inputs_embeds, attention_mask, cache, position_ids, layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 840, in _preprocess_mask_arguments\n    -     q_offset = cache.get_query_offset(layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1861, in get_query_offset\n    -     return self.get_seq_length(layer_idx=layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1778, in get_seq_length\n    -     return self.layers[layer_idx].get_seq_length()\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 148, in get_seq_length\n    -     if not self.is_initialized or self.keys.numel() == 0:",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/1: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 1. expected 128, actual 4224\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized or self.keys.numel() == 0:  # transformers/src/transformers/cache_utils.py:148 in get_seq_length\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 472, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 397, in forward\n    -     \"full_attention\": create_causal_mask(**mask_kwargs),\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 960, in create_causal_mask\n    -     _preprocess_mask_arguments(config, inputs_embeds, attention_mask, cache, position_ids, layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 840, in _preprocess_mask_arguments\n    -     q_offset = cache.get_query_offset(layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1861, in get_query_offset\n    -     return self.get_seq_length(layer_idx=layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1778, in get_seq_length\n    -     return self.layers[layer_idx].get_seq_length()\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 148, in get_seq_length\n    -     if not self.is_initialized or self.keys.numel() == 0:",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized or self.keys.numel() == 0:  # transformers/src/transformers/cache_utils.py:148 in get_seq_length\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 472, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 397, in forward\n    -     \"full_attention\": create_causal_mask(**mask_kwargs),\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 960, in create_causal_mask\n    -     _preprocess_mask_arguments(config, inputs_embeds, attention_mask, cache, position_ids, layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 840, in _preprocess_mask_arguments\n    -     q_offset = cache.get_query_offset(layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1861, in get_query_offset\n    -     return self.get_seq_length(layer_idx=layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1778, in get_seq_length\n    -     return self.layers[layer_idx].get_seq_length()\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 148, in get_seq_length\n    -     if not self.is_initialized or self.keys.numel() == 0:\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3",
+        "Recompiling function wrapped_func in /admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py:121\n    triggered by the following guard failure(s):\n    - 0/3: tensor 'kwargs['cache'].layers[0].keys' stride mismatch at index 1. expected 128, actual 5248\n    - 0/0: kwargs['cache'].layers[0].is_initialized == False        # if not self.is_initialized or self.keys.numel() == 0:  # transformers/src/transformers/cache_utils.py:148 in get_seq_length\n    - User stack trace:\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1036, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 472, in forward\n    -     outputs: BaseModelOutputWithPast = self.model(\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/generic.py\", line 1182, in wrapper\n    -     output = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/output_capturing.py\", line 361, in wrapper\n    -     outputs = func(self, *args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/models/qwen3/modeling_qwen3.py\", line 397, in forward\n    -     \"full_attention\": create_causal_mask(**mask_kwargs),\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/utils/deprecation.py\", line 173, in wrapped_func\n    -     return func(*args, **kwargs)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 960, in create_causal_mask\n    -     _preprocess_mask_arguments(config, inputs_embeds, attention_mask, cache, position_ids, layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/masking_utils.py\", line 840, in _preprocess_mask_arguments\n    -     q_offset = cache.get_query_offset(layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1861, in get_query_offset\n    -     return self.get_seq_length(layer_idx=layer_idx)\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 1778, in get_seq_length\n    -     return self.layers[layer_idx].get_seq_length()\n    -   File \"/admin/home/khushi_agrawal/Documents/transformers/src/transformers/cache_utils.py\", line 148, in get_seq_length\n    -     if not self.is_initialized or self.keys.numel() == 0:\n    - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3\n    - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 2, actual 3"
+      ],
+      "cudagraph_skips": []
+    }
+  ]
+}

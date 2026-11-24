@@ -208,7 +208,10 @@ issues:
     draft: issues/inductor-merge-loops-minmax-not-comparable.md
     notes: >
       Hard compile error. inkling2 and inkling2_vlm eval_forward with dynamic=True on CUDA (B200),
-      torch 57f02f8; train_forward compiles. Model-level repro only so far.
+      torch 57f02f8; train_forward compiles. Still on f29b6d5. Root cause: torch Identity has no eval, so
+      Identity(0) stays unevaluated and -Identity(0) is not comparable in Max (cat lowering Identity + relative
+      position clamp). Pure-sympy repro issues/repros/inductor_sympy_subs_identity_minmax.py; fix: Identity.eval
+      folds numbers.
 
   - id: dynamo-guard-python-mod-value-range
     title: "Dynamo guard building crashes: `value_ranges.python_mod` -> `ValueRangeError: Invalid ranges [0:-0.5]` with dynamic shapes"
@@ -397,9 +400,96 @@ issues:
       disentangled_att_bias) and encodec (padding computed from int64 buffers, used in F.pad after a graph break in
       _pad1d). Internal error; the backed dynamic runs are fine. Not reduced yet.
 
+  - id: symbolic-shapes-replacement-float-inverse-bound
+    title: "`torch._check(u0 == 32*s0)` -> `tgt_bound not a subset of src_bound`: ShapeEnv._set_replacement inverts the bound with float division (2**63-2)/32 -> 2**58"
+    file: torch/fx/experimental/symbolic_shapes.py
+    function: _set_replacement
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/symbolic-shapes-replacement-float-inverse-bound.md
+    notes: >
+      dynamic.py --unbacked, CPU and CUDA: inkling2_vlm and inkling2_mini_vlm eval and train crash in
+      get_placeholder_mask (torch_compilable_check(inputs_embeds[mask].numel() == features.numel())).
+      Reduced to 15 lines: issues/repros/check_eq_unbacked_backed_product_bound.py. Still on main (f29b6d5).
+
+  - id: grouped-mm-sm100-kernel-without-arch-specific-build
+    title: "bf16 `torch._grouped_mm` on B300 with a `TORCH_CUDA_ARCH_LIST=10.3` (no `a`) build launches the CUTLASS sm100 kernel without TMA/TMEM -> `unspecified launch failure`"
+    file: aten/src/ATen/native/cuda/GroupedBlas.cpp
+    function: _grouped_mm_cuda
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/grouped-mm-sm100-kernel-without-arch-specific-build.md
+    notes: >
+      scaled_mm_arch_allowed only checks the device major (10), not the compiled arch. Eager crash, not compile.
+      inkling (bf16 MoE) on B300 with torch-dev f29b6d5. Repro issues/repros/grouped_mm_sm103.py (fp32 ok, bf16
+      crashes). Likely also the earlier MoE B300 launch failures in the unbacked sweep (not re-verified).
+
+  - id: duck-sizing-specializes-unrelated-dims
+    title: "[dynamic shapes] Duck sizing merges batch with num_kv_heads in KV-cache decode; the constant head count specializes the batch, generate() recompiles per batch size"
+    file: transformers/cache_utils.py
+    function: update
+    repo: pytorch/pytorch
+    issue: null
+    status: draft
+    draft: issues/duck-sizing-specializes-unrelated-dims.md
+    notes: >
+      graph_breaks/modes.py generate_dynamic: all Inkling models compile 2 extra decode graphs on the 2nd batch size
+      (first batch 2 == 2 KV heads). use_duck_shape=False or first batch 3 -> 0. Pure-torch repro
+      issues/repros/duck_sizing_kv_cache_batch_heads.py.
+
   # ======================================================================= #
   # transformers-side root causes
   # ======================================================================= #
+  - id: moe-grouped-mm-fallback-cudagraph-unsafe
+    title: "MoE `transformers::grouped_mm_fallback` custom op does offs.tolist() (D2H) but isn't tagged cudagraph_unsafe -> reduce-overhead crashes during capture"
+    file: transformers/integrations/moe.py
+    function: _grouped_mm_fallback
+    match: "Cannot copy between CPU and CUDA tensors during CUDA graph capture"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/moe-grouped-mm-fallback-cudagraph-unsafe.md
+    notes: >
+      graph_breaks/modes.py cudagraphs: inkling2, inkling2_vlm, inkling2_mini, inkling2_mini_vlm train on CUDA (fp32 MoE).
+
+  - id: moe-eager-experts-loop
+    title: "MoE experts_implementation='eager': nonzero() over hit experts + Python loop with data-dependent branching (graph breaks by design)"
+    file: transformers/models/inkling/modeling_inkling.py
+    function: forward
+    repo: huggingface/transformers
+    issue: null
+    status: not-filing
+    notes: >
+      Only seen because runs on the TORCH_CUDA_ARCH_LIST=10.3 build force GB_EXPERTS_IMPL=eager (bf16 torch._grouped_mm
+      crashes there, see grouped-mm-sm100-kernel-without-arch-specific-build). transformers' compile-friendly experts
+      implementations are grouped_mm / batched_mm; the eager loop is not meant to compile as one graph.
+
+  - id: position-bias-mask-fp16-overflow
+    title: "create_position_bias_mask fills with finfo(key.dtype).min -> 'cannot be converted to c10::Half without overflow' when the position bias is fp16 (Inkling under autocast fp16)"
+    file: transformers/integrations/sdpa_attention.py
+    function: create_position_bias_mask
+    match: "cannot be converted to type c10::Half without overflow"
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/position-bias-mask-fp16-overflow.md
+    notes: >
+      graph_breaks/modes.py fp16 (CUDA): inkling eval and train, eager. Also at full depth.
+
+  - id: inkling-static-cache-sliding-position-bias
+    title: "Inkling: generate(cache_implementation='static') fails in eager: position bias sized from get_mask_sizes (39) vs static sliding-window keys (16)"
+    file: transformers/integrations/sdpa_attention.py
+    function: create_position_bias_mask
+    repo: huggingface/transformers
+    issue: null
+    status: draft
+    draft: issues/hf/inkling-static-cache-sliding-position-bias.md
+    notes: >
+      Found by graph_breaks/modes.py generate_static (CPU and CUDA). Eager failure in all five Inkling models
+      (inkling2 family: eager_attention_forward, 32 vs 39). Blocks the static-cache + reduce-overhead compile path.
+
   # --- Dynamic shapes (results_dynamic/): recompiles caused by model code ---
   - id: problem-type-config-mutation
     title: "`ForSequenceClassificationLoss` sets `config.problem_type` on the first call -> `problem_type is None` guard fails, recompile"
